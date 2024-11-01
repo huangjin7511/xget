@@ -84,7 +84,7 @@ async function handleRequest(request, env, ctx) {
 
 		// Serve homepage for root path
 		if (url.pathname === "/" || url.pathname === "") {
-			const HOME_PAGE_URL = "https://xixu-me.github.io/Xget/";
+			const HOME_PAGE_URL = "https://xixu-me.github.io/Xget-page/";
 			const requestHeaders = new Headers(request.headers);
 
 			const homePageRequest = new Request(HOME_PAGE_URL, {

@@ -79,7 +79,7 @@ async function handleRequest(request, env, ctx) {
 		// Serve homepage for root path
 		if (url.pathname === '/' || url.pathname === '') {
 			const headers = new Headers();
-			headers.set('Location', 'https://xget.us.kg');
+			headers.set('Location', 'https://xixu-me.github.io/Xget/');
 			addSecurityHeaders(headers);
 			return new Response(null, {
 				status: 301,

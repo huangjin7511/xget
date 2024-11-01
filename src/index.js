@@ -152,7 +152,7 @@ async function handleRequest(request, env, ctx) {
 				minify: {
 					javascript: true,
 					css: true,
-					html: true,
+					html: false,
 				},
 				preconnect: true,
 			},

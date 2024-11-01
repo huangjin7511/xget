@@ -1,4 +1,4 @@
-import { CONFIG } from './config';
+import { CONFIG } from "./config";
 
 /**
  * Monitors performance metrics during request processing
@@ -40,11 +40,11 @@ class PerformanceMonitor {
  */
 function validateRequest(request, url) {
 	if (!CONFIG.SECURITY.ALLOWED_METHODS.includes(request.method)) {
-		return { valid: false, error: 'Method not allowed', status: 405 };
+		return { valid: false, error: "Method not allowed", status: 405 };
 	}
 
 	if (url.pathname.length > CONFIG.SECURITY.MAX_PATH_LENGTH) {
-		return { valid: false, error: 'Path too long', status: 414 };
+		return { valid: false, error: "Path too long", status: 414 };
 	}
 
 	return { valid: true };
@@ -56,12 +56,18 @@ function validateRequest(request, url) {
  * @returns {Headers} Modified headers object
  */
 function addSecurityHeaders(headers) {
-	headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
-	headers.set('X-Frame-Options', 'DENY');
-	headers.set('X-XSS-Protection', '1; mode=block');
-	headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-	headers.set('Content-Security-Policy', "default-src 'none'; img-src 'self'; script-src 'none'");
-	headers.set('Permissions-Policy', 'interest-cohort=()');
+	headers.set(
+		"Strict-Transport-Security",
+		"max-age=31536000; includeSubDomains; preload"
+	);
+	headers.set("X-Frame-Options", "DENY");
+	headers.set("X-XSS-Protection", "1; mode=block");
+	headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+	headers.set(
+		"Content-Security-Policy",
+		"default-src 'none'; img-src 'self'; script-src 'none'"
+	);
+	headers.set("Permissions-Policy", "interest-cohort=()");
 	return headers;
 }
 
@@ -77,12 +83,30 @@ async function handleRequest(request, env, ctx) {
 		const url = new URL(request.url);
 
 		// Serve homepage for root path
-		if (url.pathname === '/' || url.pathname === '') {
-			const headers = new Headers();
-			headers.set('Location', 'https://xixu-me.github.io/Xget/');
+		if (url.pathname === "/" || url.pathname === "") {
+			const cache = caches.default;
+			const homePageCacheKey = new Request("https://xixu-me.github.io/Xget/");
+
+			let response = await cache.match(homePageCacheKey);
+
+			if (!response) {
+				response = await fetch("https://xixu-me.github.io/Xget/", {
+					cf: {
+						cacheTtl: CONFIG.CACHE_DURATION,
+						cacheEverything: true,
+					},
+				});
+
+				ctx.waitUntil(cache.put(homePageCacheKey, response.clone()));
+			}
+
+			const headers = new Headers({
+				"Content-Type": "text/html;charset=UTF-8",
+			});
 			addSecurityHeaders(headers);
-			return new Response(null, {
-				status: 301,
+
+			return new Response(response.body, {
+				status: 200,
 				headers: headers,
 			});
 		}
@@ -98,9 +122,9 @@ async function handleRequest(request, env, ctx) {
 		}
 
 		// Parse platform and path
-		const [_, platform, ...pathParts] = url.pathname.split('/');
+		const [_, platform, ...pathParts] = url.pathname.split("/");
 		if (!platform || !CONFIG.PLATFORMS[platform]) {
-			return new Response('Invalid or missing platform', {
+			return new Response("Invalid or missing platform", {
 				status: 400,
 				headers: addSecurityHeaders(new Headers()),
 			});
@@ -116,7 +140,7 @@ async function handleRequest(request, env, ctx) {
 		let response = await cache.match(cacheKey);
 
 		if (response) {
-			monitor.mark('cache_hit');
+			monitor.mark("cache_hit");
 			return response;
 		}
 
@@ -133,28 +157,31 @@ async function handleRequest(request, env, ctx) {
 				preconnect: true,
 			},
 			headers: {
-				'Accept-Encoding': 'gzip, deflate, br',
-				Connection: 'keep-alive',
-				'User-Agent': 'Wget/1.21.3',
-				Origin: request.headers.get('Origin') || '*',
+				"Accept-Encoding": "gzip, deflate, br",
+				Connection: "keep-alive",
+				"User-Agent": "Wget/1.21.3",
+				Origin: request.headers.get("Origin") || "*",
 			},
 		};
 
 		// Handle range requests
-		const rangeHeader = request.headers.get('Range');
+		const rangeHeader = request.headers.get("Range");
 		if (rangeHeader) {
-			fetchOptions.headers['Range'] = rangeHeader;
+			fetchOptions.headers["Range"] = rangeHeader;
 		}
 
 		// Implement retry mechanism
 		let attempts = 0;
 		while (attempts < CONFIG.MAX_RETRIES) {
 			try {
-				monitor.mark('attempt_' + attempts);
+				monitor.mark("attempt_" + attempts);
 
 				// Fetch with timeout
 				const controller = new AbortController();
-				const timeoutId = setTimeout(() => controller.abort(), CONFIG.TIMEOUT_SECONDS * 1000);
+				const timeoutId = setTimeout(
+					() => controller.abort(),
+					CONFIG.TIMEOUT_SECONDS * 1000
+				);
 
 				response = await fetch(targetUrl, {
 					...fetchOptions,
@@ -164,30 +191,35 @@ async function handleRequest(request, env, ctx) {
 				clearTimeout(timeoutId);
 
 				if (response.ok || response.status === 206) {
-					monitor.mark('success');
+					monitor.mark("success");
 					break;
 				}
 
 				attempts++;
 				if (attempts < CONFIG.MAX_RETRIES) {
-					await new Promise((resolve) => setTimeout(resolve, CONFIG.RETRY_DELAY_MS * attempts));
+					await new Promise((resolve) =>
+						setTimeout(resolve, CONFIG.RETRY_DELAY_MS * attempts)
+					);
 				}
 			} catch (error) {
 				attempts++;
-				if (error.name === 'AbortError') {
-					return new Response('Request timeout', { status: 408 });
+				if (error.name === "AbortError") {
+					return new Response("Request timeout", { status: 408 });
 				}
 				if (attempts >= CONFIG.MAX_RETRIES) {
-					return new Response(`Failed after ${CONFIG.MAX_RETRIES} attempts: ${error.message}`, { status: 500 });
+					return new Response(
+						`Failed after ${CONFIG.MAX_RETRIES} attempts: ${error.message}`,
+						{ status: 500 }
+					);
 				}
 			}
 		}
 
 		// Prepare response headers
 		const headers = new Headers(response.headers);
-		headers.set('Cache-Control', `public, max-age=${CONFIG.CACHE_DURATION}`);
-		headers.set('X-Content-Type-Options', 'nosniff');
-		headers.set('Accept-Ranges', 'bytes');
+		headers.set("Cache-Control", `public, max-age=${CONFIG.CACHE_DURATION}`);
+		headers.set("X-Content-Type-Options", "nosniff");
+		headers.set("Accept-Ranges", "bytes");
 		addSecurityHeaders(headers);
 
 		// Create final response
@@ -201,10 +233,10 @@ async function handleRequest(request, env, ctx) {
 			ctx.waitUntil(cache.put(cacheKey, finalResponse.clone()));
 		}
 
-		monitor.mark('complete');
+		monitor.mark("complete");
 		return addPerformanceHeaders(finalResponse, monitor);
 	} catch (error) {
-		console.error('Error handling request:', error);
+		console.error("Error handling request:", error);
 		return new Response(`Internal Server Error: ${error.message}`, {
 			status: 500,
 			headers: addSecurityHeaders(new Headers()),
@@ -220,7 +252,7 @@ async function handleRequest(request, env, ctx) {
  */
 function addPerformanceHeaders(response, monitor) {
 	const headers = new Headers(response.headers);
-	headers.set('X-Performance-Metrics', JSON.stringify(monitor.getMetrics()));
+	headers.set("X-Performance-Metrics", JSON.stringify(monitor.getMetrics()));
 	addSecurityHeaders(headers);
 	return new Response(response.body, {
 		status: response.status,

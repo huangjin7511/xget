@@ -84,28 +84,17 @@ async function handleRequest(request, env, ctx) {
 
 		// Serve homepage for root path
 		if (url.pathname === "/" || url.pathname === "") {
-			const cache = caches.default;
-			const homePageCacheKey = new Request("https://xixu-me.github.io/Xget/");
+			const HOME_PAGE_URL = "https://xixu-me.github.io/Xget/";
+			const requestHeaders = new Headers(request.headers);
 
-			let response = await cache.match(homePageCacheKey);
-
-			if (!response) {
-				response = await fetch("https://xixu-me.github.io/Xget/", {
-					cf: {
-						cacheTtl: CONFIG.CACHE_DURATION,
-						cacheEverything: true,
-					},
-				});
-				ctx.waitUntil(cache.put(homePageCacheKey, response.clone()));
-			}
-
-			const headers = new Headers(response.headers);
-			addSecurityHeaders(headers);
-
-			return new Response(response.body, {
-				status: 200,
-				headers: headers,
+			const homePageRequest = new Request(HOME_PAGE_URL, {
+				method: request.method,
+				headers: requestHeaders,
+				body: request.body,
+				redirect: "manual",
 			});
+
+			return fetch(homePageRequest, { redirect: "manual" });
 		}
 
 		const monitor = new PerformanceMonitor();

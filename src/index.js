@@ -8,7 +8,7 @@ class PerformanceMonitor {
 	 * Initializes a new performance monitor
 	 */
 	constructor() {
-		this.startTime = performance.now();
+		this.startTime = Date.now();
 		this.marks = new Map();
 	}
 
@@ -17,15 +17,10 @@ class PerformanceMonitor {
 	 * @param {string} name - The name of the timing mark
 	 */
 	mark(name) {
-		try {
-			if (this.marks.has(name)) {
-				console.warn(`Mark with name ${name} already exists.`);
-				return;
-			}
-			this.marks.set(name, performance.now() - this.startTime);
-		} catch (error) {
-			console.error(`Error setting mark ${name}:`, error);
+		if (this.marks.has(name)) {
+			console.warn(`Mark with name ${name} already exists.`);
 		}
+		this.marks.set(name, Date.now() - this.startTime);
 	}
 
 	/**
@@ -85,22 +80,21 @@ function addSecurityHeaders(headers) {
  */
 async function handleRequest(request, env, ctx) {
 	try {
-		monitor.mark("start");
 		const url = new URL(request.url);
 
 		// Serve homepage for root path
 		if (url.pathname === "/" || url.pathname === "") {
-			monitor.mark("homepage_redirect");
 			const HOME_PAGE_URL = "https://xixu-me.github.io/Xget/";
-			return fetch(
-				new Request(HOME_PAGE_URL, {
-					method: request.method,
-					headers: new Headers(request.headers),
-					body: request.body,
-					redirect: "manual",
-				}),
-				{ redirect: "manual" }
-			);
+			const requestHeaders = new Headers(request.headers);
+
+			const homePageRequest = new Request(HOME_PAGE_URL, {
+				method: request.method,
+				headers: requestHeaders,
+				body: request.body,
+				redirect: "manual",
+			});
+
+			return fetch(homePageRequest, { redirect: "manual" });
 		}
 
 		const monitor = new PerformanceMonitor();
@@ -228,14 +222,11 @@ async function handleRequest(request, env, ctx) {
 		monitor.mark("complete");
 		return addPerformanceHeaders(finalResponse, monitor);
 	} catch (error) {
-		monitor.mark("error");
 		console.error("Error handling request:", error);
 		return new Response(`Internal Server Error: ${error.message}`, {
 			status: 500,
 			headers: addSecurityHeaders(new Headers()),
 		});
-	} finally {
-		monitor.mark("complete");
 	}
 }
 

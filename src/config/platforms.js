@@ -5,7 +5,7 @@
 export const PLATFORMS = {
 	/** @type {{base: string, transform: function(string): string}} GitHub configuration */
 	gh: {
-		base: 'https://raw.githubusercontent.com',
+		base: 'https://github.com',
 		transform: (path) => path.replace(/^\/gh\//, '/'),
 	},
 	/** @type {{base: string, transform: function(string): string}} GitLab configuration */

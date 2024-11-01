@@ -96,13 +96,10 @@ async function handleRequest(request, env, ctx) {
 						cacheEverything: true,
 					},
 				});
-
 				ctx.waitUntil(cache.put(homePageCacheKey, response.clone()));
 			}
 
-			const headers = new Headers({
-				"Content-Type": "text/html;charset=UTF-8",
-			});
+			const headers = new Headers(response.headers);
 			addSecurityHeaders(headers);
 
 			return new Response(response.body, {
@@ -152,7 +149,7 @@ async function handleRequest(request, env, ctx) {
 				minify: {
 					javascript: true,
 					css: true,
-					html: false,
+					html: true,
 				},
 				preconnect: true,
 			},

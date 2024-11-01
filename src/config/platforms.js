@@ -13,7 +13,7 @@ export const PLATFORMS = {
 		base: 'https://gitlab.com',
 		transform: (path) => path.replace(/^\/gl\//, '/') + '/raw',
 	},
-	/** @type {{base: string, transform: function(string): string}} HuggingFace configuration */
+	/** @type {{base: string, transform: function(string): string}} Hugging Face configuration */
 	hf: {
 		base: 'https://huggingface.co',
 		transform: (path) => path.replace(/^\/hf\//, '/'),

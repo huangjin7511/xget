@@ -54,7 +54,7 @@ https://xget.xi-xu.me/gh/username/repository/archive/main.zip
 https://xget.xi-xu.me/gl/username/repository/-/archive/main.zip
 
 # Hugging Face download
-https://xget.us.kg/hf/username/model/resolve/main/model.bin
+https://xget.xi-xu.me/hf/username/model/resolve/main/model.bin
 
 # Kaggle download
 https://xget.xi-xu.me/kg/username/dataset/data

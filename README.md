@@ -2,7 +2,7 @@
 
 A high-performance, secure proxy service for accelerating downloads from popular platforms like GitHub, GitLab, Hugging Face, and Kaggle.
 
-🌐 [https://xget.us.kg](https://xget.us.kg)
+🌐 [https://Xget.xi-xu.me](https://xget.xi-xu.me)
 
 ## Features
 
@@ -37,7 +37,7 @@ A high-performance, secure proxy service for accelerating downloads from popular
 
 ## Usage
 
-Simply prefix your download URL with `https://xget.us.kg/<platform>/`, where `<platform>` is one of:
+Simply prefix your download URL with `https://xget.xi-xu.me/<platform>/`, where `<platform>` is one of:
 
 - `gh` for GitHub
 - `gl` for GitLab
@@ -48,16 +48,16 @@ Simply prefix your download URL with `https://xget.us.kg/<platform>/`, where `<p
 
 ```bash
 # GitHub download
-https://xget.us.kg/gh/username/repository/archive/main.zip
+https://xget.xi-xu.me/gh/username/repository/archive/main.zip
 
 # GitLab download
-https://xget.us.kg/gl/username/repository/-/archive/main.zip
+https://xget.xi-xu.me/gl/username/repository/-/archive/main.zip
 
 # Hugging Face download
 https://xget.us.kg/hf/username/model/resolve/main/model.bin
 
 # Kaggle download
-https://xget.us.kg/kg/username/dataset/data
+https://xget.xi-xu.me/kg/username/dataset/data
 ```
 
 ## Technical Details

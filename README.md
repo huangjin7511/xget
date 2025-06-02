@@ -73,7 +73,7 @@ Just click [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.co
 
 ## Status
 
-![Deploy to Cloudflare Workers](https://github.com/xixu-me/xget/workflows/Deploy%20to%20Cloudflare%20Workers/badge.svg)
+[![Deploy to Cloudflare Workers](https://github.com/xixu-me/xget/workflows/Deploy%20to%20Cloudflare%20Workers/badge.svg)](https://github.com/xixu-me/Xget/actions/workflows/deploy.yml)
 
 ## License
 

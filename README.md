@@ -1,6 +1,6 @@
 # Xget
 
-A high-performance, secure proxy service for accelerating downloads from popular platforms like GitHub, GitLab, Hugging Face, and Kaggle.
+A high-performance, secure proxy service for accelerating downloads from popular platforms like GitHub, GitLab and Hugging Face.
 
 🌐 [https://Xget.xi-xu.me](https://xget.xi-xu.me)
 
@@ -10,7 +10,6 @@ A high-performance, secure proxy service for accelerating downloads from popular
   - GitHub (`/gh/...`)
   - GitLab (`/gl/...`)
   - Hugging Face (`/hf/...`)
-  - Kaggle (`/kg/...`)
 
 - **Performance Optimizations**:
   - Intelligent caching with 30-minute TTL
@@ -42,7 +41,6 @@ Simply prefix your download URL with `https://xget.xi-xu.me/<platform>/`, where 
 - `gh` for GitHub
 - `gl` for GitLab
 - `hf` for Hugging Face
-- `kg` for Kaggle
 
 ### Examples
 
@@ -55,9 +53,6 @@ https://xget.xi-xu.me/gl/username/repository/-/archive/main.zip
 
 # Hugging Face download
 https://xget.xi-xu.me/hf/username/model/resolve/main/model.bin
-
-# Kaggle download
-https://xget.xi-xu.me/kg/username/dataset/data
 ```
 
 ## Technical Details

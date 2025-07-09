@@ -18,11 +18,6 @@ export const PLATFORMS = {
 		base: "https://huggingface.co",
 		transform: (path) => path.replace(/^\/hf\//, "/"),
 	},
-	/** @type {{base: string, transform: function(string): string}} Kaggle configuration */
-	kg: {
-		base: "https://www.kaggle.com",
-		transform: (path) => path.replace(/^\/kg\//, "/"),
-	},
 	// /** @type {{base: string, transform: function(string): string}} All platforms */
 	// link: {
 	// 	base: "https://",

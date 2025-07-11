@@ -36,7 +36,20 @@ A high-performance, secure proxy service for accelerating downloads from popular
 
 ## Usage
 
-Simply prefix your download URL with `https://xget.xi-xu.me/<platform>/`, where `<platform>` is one of:
+### Browser Extension (Recommended)
+
+For the best user experience, use the **Xget for Chrome** extension that automatically redirects downloads:
+
+🔗 **[Xget for Chrome Extension](https://github.com/xixu-me/Xget-for-Chrome)**
+
+Available on:
+
+- [Chrome Web Store](https://chromewebstore.google.com/detail/ajiejgobfcifcikbahpijopolfjoodgf)
+- [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/hbfflpongojnfojbgadppjgnkabkpjea)
+
+### Manual URL Prefixing
+
+Alternatively, you can manually prefix your download URL with `https://xget.xi-xu.me/<platform>/`, where `<platform>` is one of:
 
 - `gh` for GitHub
 - `gl` for GitLab

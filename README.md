@@ -45,7 +45,7 @@ For the best user experience, use the **Xget for Chrome** extension that automat
 Available on:
 
 - [Chrome Web Store](https://chromewebstore.google.com/detail/ajiejgobfcifcikbahpijopolfjoodgf)
-- [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/hbfflpongojnfojbgadppjgnkabkpjea)
+- [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/jigpfhbegabdenhihpplcjhpfdcgnalc)
 - All other Chromium-based browsers via .crx file
 
 ### Manual URL Prefixing

@@ -46,6 +46,7 @@ Available on:
 
 - [Chrome Web Store](https://chromewebstore.google.com/detail/ajiejgobfcifcikbahpijopolfjoodgf)
 - [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/hbfflpongojnfojbgadppjgnkabkpjea)
+- All other Chromium-based browsers via .crx file
 
 ### Manual URL Prefixing
 

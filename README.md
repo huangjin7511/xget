@@ -46,7 +46,9 @@
 
 - [Chrome 网上应用店](https://chromewebstore.google.com/detail/ajiejgobfcifcikbahpijopolfjoodgf)
 - [Microsoft Edge 插件商店](https://microsoftedge.microsoft.com/addons/detail/jigpfhbegabdenhihpplcjhpfdcgnalc)
-- 所有其他基于 Chromium 的浏览器可通过 .crx 文件安装
+- [GitHub Releases](https://github.com/xixu-me/Xget-for-Chrome/releases/latest)
+
+适用于一切基于 Chromium 的浏览器。
 
 ### 手动 URL 前缀
 

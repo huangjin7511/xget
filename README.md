@@ -40,7 +40,7 @@
 
 为了获得最佳用户体验，请使用 **Xget for Chrome** 扩展程序来自动重定向下载：
 
-🔗 **[Xget for Chrome 扩展程序](https://github.com/xixu-me/Xget-for-Chrome)**
+🔗 **[Xget for Chrome 存储库](https://github.com/xixu-me/Xget-for-Chrome)**
 
 可在以下平台获取：
 

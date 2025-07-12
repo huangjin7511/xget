@@ -1,6 +1,6 @@
 # Xget
 
-一个高性能、安全的代理服务，用于加速从 GitHub、GitLab 和 Hugging Face 热门平台的下载。
+一个高性能、安全的代理服务，用于加速从 GitHub、GitLab 和 Hugging Face 的下载。
 
 🌐 [https://Xget.xi-xu.me](https://xget.xi-xu.me)
 

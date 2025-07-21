@@ -11,8 +11,14 @@
   - GitLab (`/gl/...`)
   - Hugging Face (`/hf/...`)
 
+- **Git 操作支持**：
+  - 完整的 Git 克隆支持
+  - 智能 Git 协议检测
+  - 支持 `git clone`、`git fetch`、`git pull` 等操作
+  - 自动处理 Git 智能 HTTP 传输协议
+
 - **性能优化**：
-  - 智能缓存，TTL 为 30 分钟
+  - 智能缓存，TTL 为 30 分钟（Git 操作除外）
   - HTTP/3 支持
   - 指数退避的自动重试
   - 内容压缩（gzip、deflate、brotli）
@@ -50,6 +56,28 @@
 
 适用于一切基于 Chromium 的浏览器。
 
+### Git 克隆支持
+
+Xget 现在完全支持 Git 操作！您可以直接使用 Git 命令克隆仓库：
+
+```bash
+# 克隆 GitHub 仓库
+git clone https://xget.xi-xu.me/gh/username/repository.git
+
+# 克隆 GitLab 仓库  
+git clone https://xget.xi-xu.me/gl/username/repository.git
+
+# 克隆 Hugging Face 模型仓库
+git clone https://xget.xi-xu.me/hf/username/model.git
+```
+
+支持所有标准 Git 操作：
+
+- `git clone` - 克隆仓库
+- `git fetch` - 获取更新
+- `git pull` - 拉取更新
+- `git push` - 推送更改（如果有权限）
+
 ### 手动 URL 前缀
 
 或者，您可以手动在下载 URL 前面添加 `https://xget.xi-xu.me/<platform>/`，其中 `<platform>` 为以下之一：
@@ -61,22 +89,31 @@
 ### 示例
 
 ```bash
-# GitHub 下载
+# GitHub 文件下载
 https://xget.xi-xu.me/gh/username/repository/archive/main.zip
 
-# GitLab 下载
+# GitLab 文件下载
 https://xget.xi-xu.me/gl/username/repository/-/archive/main.zip
 
-# Hugging Face 下载
+# Hugging Face 文件下载
 https://xget.xi-xu.me/hf/username/model/resolve/main/model.bin
+
+# Git 克隆操作
+git clone https://xget.xi-xu.me/gh/username/repository.git
+
+# Git 其他操作
+git clone https://xget.xi-xu.me/gl/username/repository.git
+git clone https://xget.xi-xu.me/hf/username/model.git
 ```
 
 ## 技术细节
 
 - 基于 Cloudflare Workers 构建，实现全球边缘分发
+- 智能 Git 协议检测和处理，支持完整的 Git 操作
 - 实现了具有可配置延迟的智能重试机制
 - 全面的错误处理和日志记录
 - 性能指标跟踪，用于监控和优化
+- Git 操作绕过缓存以确保实时协议通信
 
 ## 部署
 

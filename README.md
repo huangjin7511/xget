@@ -6,7 +6,7 @@
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-一键部署)
 [![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?&logo=googlechrome&logoColor=white)](#-浏览器扩展-xget-for-chromium)
 
-一个基于 Cloudflare Workers 构建的高性能、安全的代理服务，专为加速 GitHub、GitLab 和 Hugging Face 的文件下载而设计。
+一个基于 Cloudflare Workers 构建的高性能、安全的代理服务，专为加速 GitHub、GitLab 和 Hugging Face 的文件下载和 Git 操作而设计。
 
 ## 🎯 快速使用
 
@@ -74,7 +74,9 @@
 
 使用公共实例 [**`xget.xi-xu.me`**](https://xget.xi-xu.me) 或你自己部署的实例：
 
-### GitHub
+### 文件下载
+
+#### GitHub
 
 ```url
 # 原始地址
@@ -84,7 +86,7 @@ https://github.com/user/repo/releases/download/v1.0/file.zip
 https://xget.xi-xu.me/gh/user/repo/releases/download/v1.0/file.zip
 ```
 
-### GitLab
+#### GitLab
 
 ```url
 # 原始地址
@@ -94,7 +96,7 @@ https://gitlab.com/user/repo/-/archive/main/repo-main.zip
 https://xget.xi-xu.me/gl/user/repo/-/archive/main/repo-main.zip
 ```
 
-### Hugging Face
+#### Hugging Face
 
 ```url
 # 模型文件下载
@@ -110,9 +112,9 @@ https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00
 https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 ```
 
-### Git 操作支持
+### Git 操作
 
-Xget 完全支持 Git 协议，你可以直接用于 clone、push、pull 等操作：
+Xget 完全支持 Git 操作，你可以直接用于 clone、push、pull 等操作：
 
 ```bash
 # Clone 仓库
@@ -220,7 +222,7 @@ export const PLATFORMS = {
 
 ## ⚠️ 免责声明
 
-- **合法使用**：本项目仅用于加速合法的公开文件下载，请遵守相关平台的使用条款和当地法律法规
+- **合法使用**：本项目仅用于加速合法的公开文件下载和 Git 操作，请遵守相关平台的使用条款和当地法律法规
 - **服务可用性**：公共实例 `xget.xi-xu.me` 为免费服务，不保证 100% 可用性，建议生产环境部署自己的实例
 - **数据安全**：虽然 Xget 不存储或记录用户数据，但请谨慎处理敏感信息的下载
 - **责任限制**：使用本服务造成的任何直接或间接损失，开发者不承担责任

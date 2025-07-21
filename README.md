@@ -50,8 +50,8 @@
 
 可在以下平台获取：
 
-- [Chrome 网上应用店](https://chromewebstore.google.com/detail/ajiejgobfcifcikbahpijopolfjoodgf)
-- [Microsoft Edge 插件商店](https://microsoftedge.microsoft.com/addons/detail/jigpfhbegabdenhihpplcjhpfdcgnalc)
+- [Chrome 应用商店](https://chromewebstore.google.com/detail/ajiejgobfcifcikbahpijopolfjoodgf?hl=zh-CN)
+- [Microsoft Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/jigpfhbegabdenhihpplcjhpfdcgnalc?hl=zh-CN&gl=CN)
 - [GitHub Releases](https://github.com/xixu-me/Xget-for-Chrome/releases/latest)
 
 适用于一切基于 Chromium 的浏览器。

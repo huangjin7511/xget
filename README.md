@@ -40,7 +40,7 @@
 
 #### 部署步骤
 
-1. **克隆仓库**
+1. **克隆存储库**
 
    ```bash
    git clone https://github.com/xixu-me/Xget.git
@@ -117,10 +117,10 @@ https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-
 Xget 完全支持 Git 操作，你可以直接用于 clone、push、pull 等操作：
 
 ```bash
-# Clone 仓库
+# 克隆存储库
 git clone https://xget.xi-xu.me/gh/user/repo.git
 
-# 添加为远程仓库
+# 添加为远程存储库
 git remote add xget https://xget.xi-xu.me/gh/user/repo.git
 ```
 
@@ -208,7 +208,7 @@ export const PLATFORMS = {
 使用 Xget 相比直接下载的性能提升：
 
 - **GitHub Releases**：下载速度提升 3-8 倍
-- **大型仓库**：clone 速度提升 2-5 倍
+- **大型存储库**：克隆速度提升 2-5 倍
 - **国际访问**：海外用户体验显著改善
 - **稳定性**：自动重试机制提高成功率
 

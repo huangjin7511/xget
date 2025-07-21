@@ -14,12 +14,75 @@
 
 ## 🌟 特性
 
-- **⚡ 全球边缘分发**：通过 Cloudflare 的全球 CDN 网络提供极速下载
-- **🌐 多平台支持**：针对 GitHub、GitLab 和 Hugging Face 进行专门优化
-- **🔒 安全可靠**：内置安全标头、超时保护和性能监控
-- **🚀 现代技术**：支持 HTTP/3、智能缓存和自动重试机制
-- **🎯 Git 兼容**：完整支持 Git clone、push、pull 等操作
-- **📱 浏览器扩展**：配套的 Chromium 扩展让下载更便捷
+### ⚡ 全球边缘分发与性能加速
+
+- **Cloudflare 全球 CDN**：利用遍布全球 200+ 个城市的边缘节点，就近响应用户请求
+- **HTTP/3 支持**：启用最新的 HTTP/3 协议，显著降低连接延迟和传输时间
+- **智能压缩**：自动启用 gzip、deflate、brotli 多重压缩算法，最大化传输效率
+- **预连接优化**：通过连接预热和保持活跃连接，减少握手开销
+- **Range 请求支持**：完整支持分片下载和断点续传，适配各种下载工具
+
+### 🌐 多平台深度集成
+
+- **GitHub 生态**：完美支持 Releases、Archives、Raw 文件和完整的 Git 协议操作
+- **GitLab 兼容**：全面适配 GitLab.com 的文件下载和版本控制功能
+- **Hugging Face 优化**：针对大型模型文件和数据集进行专门优化，支持模型和数据集的高速下载
+- **路径智能转换**：自动识别平台前缀（/gh/、/gl/、/hf/）并转换为目标平台的正确 URL 结构
+
+### 🔒 企业级安全保障
+
+- **多层安全标头**：
+  - `Strict-Transport-Security`：强制 HTTPS 传输，预防中间人攻击
+  - `X-Frame-Options: DENY`：防止点击劫持攻击
+  - `X-XSS-Protection`：内置 XSS 防护机制
+  - `Content-Security-Policy`：严格的内容安全策略
+  - `Referrer-Policy`：控制引用信息泄露
+- **请求验证机制**：
+  - HTTP 方法白名单：常规请求限制为 GET/HEAD，Git 操作动态允许 POST
+  - 路径长度限制：防止超长 URL 攻击（最大 2048 字符）
+  - 输入清理：防止路径遍历和注入攻击
+- **超时保护**：30 秒请求超时，防止资源耗尽和恶意请求
+
+### 🚀 现代架构与可靠性
+
+- **智能重试机制**：
+  - 最大 3 次重试，指数退避策略（1000ms × 重试次数）
+  - 自动错误恢复，提高下载成功率
+  - 超时检测和中断处理
+- **高效缓存策略**：
+  - 30 分钟默认缓存时长，显著减少源站压力
+  - Git 操作跳过缓存，确保实时性
+  - 基于 Cloudflare Cache API 的边缘缓存
+- **性能监控系统**：
+  - 内置 `PerformanceMonitor` 类，实时追踪请求各阶段耗时
+  - 通过 `X-Performance-Metrics` 响应头提供详细性能数据
+  - 支持缓存命中率统计和优化建议
+
+### 🎯 Git 协议完全兼容
+
+- **智能协议检测**：
+  - 自动识别 Git 特定端点（`/info/refs`、`/git-upload-pack`、`/git-receive-pack`）
+  - 检测 Git 客户端 User-Agent 模式
+  - 支持 `service=git-upload-pack` 等查询参数
+- **完整操作支持**：
+  - `git clone`：完整仓库克隆，支持浅克隆和分支指定
+  - `git push`：代码推送和分支管理
+  - `git pull/fetch`：增量更新和远程同步
+  - `git submodule`：子模块递归克隆
+- **协议优化**：
+  - 保持 Git 专用请求头和认证信息
+  - 智能 User-Agent 处理（默认 `git/2.34.1`）
+  - 支持 Git LFS 大文件传输
+
+### 📱 生态系统集成
+
+- **专用浏览器扩展**：[Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium) 提供无缝体验
+  - 自动链接重定向，无需手动修改 URL
+  - 支持自定义 Xget 实例域名
+  - 多平台偏好设置和黑白名单管理
+  - 本地处理，确保隐私安全
+- **下载工具兼容**：完美支持 wget、curl、aria2、IDM 等主流下载工具
+- **CI/CD 集成**：可直接在 GitHub Actions、GitLab CI 等环境中使用
 
 ## 🚀 部署选择
 
@@ -99,15 +162,15 @@ https://xget.xi-xu.me/gl/user/repo/-/archive/main/repo-main.zip
 #### Hugging Face
 
 ```url
-# 模型文件下载
-# 原始地址
+# 模型文件原始地址
 https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+
 # 通过 Xget 加速
 https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
-# 数据集文件下载
-# 原始地址
+# 数据集文件原始地址
 https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
+
 # 通过 Xget 加速
 https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 ```
@@ -168,22 +231,6 @@ export const PLATFORMS = {
 };
 ```
 
-## 📱 浏览器扩展 [Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium)
-
-为了更便捷地使用 Xget，提供了专门的浏览器扩展：
-
-- **自动重定向**：自动将下载链接重定向到 [**`xget.xi-xu.me`**](https://xget.xi-xu.me) 或你的自定义实例
-- **多平台支持**：支持 GitHub、GitLab、Hugging Face
-- **预配置公共实例**：默认使用 `xget.xi-xu.me`，开箱即用
-- **可配置**：支持自定义 Xget 域名和平台偏好
-- **隐私保护**：所有处理都在本地进行
-
-安装方式：
-
-- [Chrome 应用商店](https://chromewebstore.google.com/detail/ajiejgobfcifcikbahpijopolfjoodgf?hl=zh-CN)
-- [Microsoft Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/jigpfhbegabdenhihpplcjhpfdcgnalc?hl=zh-CN&gl=CN)
-- [GitHub Releases 手动安装](https://github.com/xixu-me/Xget-for-Chromium/releases/latest)
-
 ## 🚧 开发
 
 1. **项目设置**
@@ -202,23 +249,6 @@ export const PLATFORMS = {
    npm test                 # 运行测试
    npm run deploy           # 部署到生产
    ```
-
-## 📊 性能优势
-
-使用 Xget 相比直接下载的性能提升：
-
-- **GitHub Releases**：下载速度提升 3-8 倍
-- **大型存储库**：克隆速度提升 2-5 倍
-- **国际访问**：海外用户体验显著改善
-- **稳定性**：自动重试机制提高成功率
-
-## 🔒 安全特性
-
-- **HTTPS 强制**：所有请求强制使用 HTTPS
-- **安全标头**：完整的安全标头保护
-- **路径验证**：防止路径遍历攻击
-- **请求限制**：防止滥用和 DDoS 攻击
-- **CORS 控制**：精确的跨域访问控制
 
 ## ⚠️ 免责声明
 

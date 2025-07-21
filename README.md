@@ -46,11 +46,11 @@
 ### 🚀 现代架构与可靠性
 
 - **智能重试机制**：
-  - 最大 3 次重试，指数退避策略（1000ms × 重试次数）
+  - 最大 3 次重试，线性延迟策略（1000ms × 重试次数）
   - 自动错误恢复，提高下载成功率
   - 超时检测和中断处理
 - **高效缓存策略**：
-  - 30 分钟默认缓存时长，显著减少源站压力
+  - 1800 秒（30 分钟）默认缓存时长，显著减少源站压力
   - Git 操作跳过缓存，确保实时性
   - 基于 Cloudflare Cache API 的边缘缓存
 - **性能监控系统**：
@@ -203,17 +203,23 @@ git remote add xget https://xget.xi-xu.me/gh/user/repo.git
 
 ```javascript
 export const CONFIG = {
-  TIMEOUT_SECONDS: 30,       // 请求超时时间
+  TIMEOUT_SECONDS: 30,       // 请求超时时间（秒）
   MAX_RETRIES: 3,            // 最大重试次数
-  RETRY_DELAY_MS: 1000,      // 重试延迟时间
-  CACHE_DURATION: 1800,      // 缓存持续时间（秒）
+  RETRY_DELAY_MS: 1000,      // 重试延迟时间（毫秒）
+  CACHE_DURATION: 1800,      // 缓存持续时间（1800秒 = 30分钟）
   SECURITY: {
-    ALLOWED_METHODS: ["GET", "HEAD"],  // 允许的 HTTP 方法
+    ALLOWED_METHODS: ["GET", "HEAD"],  // 允许的 HTTP 方法（Git 操作会动态允许 POST）
     ALLOWED_ORIGINS: ["*"],            // 允许的 CORS 源
-    MAX_PATH_LENGTH: 2048,             // 最大路径长度
+    MAX_PATH_LENGTH: 2048,             // 最大路径长度（字符）
   },
 };
 ```
+
+### 性能调优建议
+
+- **缓存优化**：根据使用模式调整 `CACHE_DURATION`，频繁更新的仓库可适当降低
+- **超时设置**：网络条件较差时可适当增加 `TIMEOUT_SECONDS`
+- **重试策略**：高延迟环境下可增加 `MAX_RETRIES` 和 `RETRY_DELAY_MS`
 
 ### 添加新平台
 
@@ -249,6 +255,37 @@ export const PLATFORMS = {
    npm test                 # 运行测试
    npm run deploy           # 部署到生产
    ```
+
+## 🔍 故障排除
+
+### 常见问题
+
+**Q: 下载速度没有明显提升？**  
+A: 检查源文件是否已经在 CDN 边缘节点缓存，首次访问可能较慢，后续访问会显著提升。
+
+**Q: Git 操作失败？**  
+A: 确认使用了正确的 URL 格式，且 Git 客户端版本支持 HTTPS 代理。
+
+**Q: 部署后无法访问？**  
+A: 检查 Cloudflare Workers 域名是否正确绑定，确认 `wrangler.toml` 配置正确。
+
+**Q: 出现 400 错误？**  
+A: 检查 URL 路径格式，确认平台前缀（/gh/、/gl/、/hf/）正确使用。
+
+### 性能监控
+
+服务会在响应头中返回性能指标：
+
+- `X-Performance-Metrics`: 包含请求各阶段的耗时统计
+- `X-Cache-Status`: 显示缓存命中状态
+
+### 日志调试
+
+在开发环境中，你可以通过 Cloudflare Workers 控制台查看详细日志：
+
+```bash
+npx wrangler dev --log-level debug
+```
 
 ## ⚠️ 免责声明
 

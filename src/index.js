@@ -33,13 +33,52 @@ class PerformanceMonitor {
 }
 
 /**
+ * Detects if a request is a Git operation
+ * @param {Request} request - The incoming request object
+ * @param {URL} url - Parsed URL object
+ * @returns {boolean} True if this is a Git operation
+ */
+function isGitRequest(request, url) {
+	// Check for Git-specific endpoints
+	if (url.pathname.endsWith("/info/refs")) {
+		return true;
+	}
+
+	if (
+		url.pathname.endsWith("/git-upload-pack") ||
+		url.pathname.endsWith("/git-receive-pack")
+	) {
+		return true;
+	}
+
+	// Check for Git user agents
+	const userAgent = request.headers.get("User-Agent") || "";
+	if (userAgent.includes("git/")) {
+		return true;
+	}
+
+	// Check for Git-specific query parameters
+	if (url.searchParams.has("service")) {
+		const service = url.searchParams.get("service");
+		return service === "git-upload-pack" || service === "git-receive-pack";
+	}
+
+	return false;
+}
+
+/**
  * Validates incoming requests against security rules
  * @param {Request} request - The incoming request object
  * @param {URL} url - Parsed URL object
  * @returns {{valid: boolean, error?: string, status?: number}} Validation result
  */
 function validateRequest(request, url) {
-	if (!CONFIG.SECURITY.ALLOWED_METHODS.includes(request.method)) {
+	// Allow POST method for Git operations
+	const allowedMethods = isGitRequest(request, url)
+		? ["GET", "HEAD", "POST"]
+		: CONFIG.SECURITY.ALLOWED_METHODS;
+
+	if (!allowedMethods.includes(request.method)) {
 		return { valid: false, error: "Method not allowed", status: 405 };
 	}
 
@@ -118,42 +157,83 @@ async function handleRequest(request, env, ctx) {
 
 		// Transform URL based on platform
 		const targetPath = CONFIG.PLATFORMS[platform].transform(url.pathname);
-		const targetUrl = `${CONFIG.PLATFORMS[platform].base}${targetPath}`;
+		const targetUrl = `${CONFIG.PLATFORMS[platform].base}${targetPath}${url.search}`;
 
-		// Check cache first
+		// Check if this is a Git operation
+		const isGit = isGitRequest(request, url);
+
+		// Check cache first (skip cache for Git operations)
 		const cache = caches.default;
 		const cacheKey = new Request(targetUrl, request);
-		let response = await cache.match(cacheKey);
+		let response;
 
-		if (response) {
-			monitor.mark("cache_hit");
-			return response;
+		if (!isGit) {
+			response = await cache.match(cacheKey);
+			if (response) {
+				monitor.mark("cache_hit");
+				return response;
+			}
 		}
 
 		const fetchOptions = {
-			cf: {
-				http3: true,
-				cacheTtl: CONFIG.CACHE_DURATION,
-				cacheEverything: true,
-				minify: {
-					javascript: true,
-					css: true,
-					html: true,
-				},
-				preconnect: true,
-			},
-			headers: {
-				"Accept-Encoding": "gzip, deflate, br",
-				Connection: "keep-alive",
-				"User-Agent": "Wget/1.21.3",
-				Origin: request.headers.get("Origin") || "*",
-			},
+			method: request.method,
+			headers: new Headers(),
 		};
 
-		// Handle range requests
-		const rangeHeader = request.headers.get("Range");
-		if (rangeHeader) {
-			fetchOptions.headers["Range"] = rangeHeader;
+		// Add body for POST requests (Git operations)
+		if (request.method === "POST" && isGit) {
+			fetchOptions.body = request.body;
+		}
+
+		// Set appropriate headers for Git vs regular requests
+		if (isGit) {
+			// Copy important headers for Git operations
+			const gitHeaders = [
+				"Content-Type",
+				"Content-Length",
+				"Authorization",
+				"User-Agent",
+				"Accept",
+				"Accept-Encoding",
+			];
+
+			gitHeaders.forEach((header) => {
+				const value = request.headers.get(header);
+				if (value) {
+					fetchOptions.headers.set(header, value);
+				}
+			});
+
+			// Set Git-specific headers if not present
+			if (!fetchOptions.headers.has("User-Agent")) {
+				fetchOptions.headers.set("User-Agent", "git/2.34.1");
+			}
+		} else {
+			// Regular file download headers
+			Object.assign(fetchOptions, {
+				cf: {
+					http3: true,
+					cacheTtl: CONFIG.CACHE_DURATION,
+					cacheEverything: true,
+					minify: {
+						javascript: true,
+						css: true,
+						html: true,
+					},
+					preconnect: true,
+				},
+			});
+
+			fetchOptions.headers.set("Accept-Encoding", "gzip, deflate, br");
+			fetchOptions.headers.set("Connection", "keep-alive");
+			fetchOptions.headers.set("User-Agent", "Wget/1.21.3");
+			fetchOptions.headers.set("Origin", request.headers.get("Origin") || "*");
+
+			// Handle range requests
+			const rangeHeader = request.headers.get("Range");
+			if (rangeHeader) {
+				fetchOptions.headers.set("Range", rangeHeader);
+			}
 		}
 
 		// Implement retry mechanism
@@ -203,10 +283,26 @@ async function handleRequest(request, env, ctx) {
 
 		// Prepare response headers
 		const headers = new Headers(response.headers);
-		headers.set("Cache-Control", `public, max-age=${CONFIG.CACHE_DURATION}`);
-		headers.set("X-Content-Type-Options", "nosniff");
-		headers.set("Accept-Ranges", "bytes");
-		addSecurityHeaders(headers);
+
+		if (isGit) {
+			// For Git operations, preserve important headers
+			const preserveHeaders = [
+				"Content-Type",
+				"Content-Length",
+				"Transfer-Encoding",
+				"Content-Encoding",
+				"Cache-Control",
+			];
+
+			// Don't add security headers that might interfere with Git
+			headers.set("X-Content-Type-Options", "nosniff");
+		} else {
+			// Regular file download headers
+			headers.set("Cache-Control", `public, max-age=${CONFIG.CACHE_DURATION}`);
+			headers.set("X-Content-Type-Options", "nosniff");
+			headers.set("Accept-Ranges", "bytes");
+			addSecurityHeaders(headers);
+		}
 
 		// Create final response
 		const finalResponse = new Response(response.body, {
@@ -214,13 +310,15 @@ async function handleRequest(request, env, ctx) {
 			headers: headers,
 		});
 
-		// Cache successful responses
-		if (response.ok || response.status === 206) {
+		// Cache successful responses (skip caching for Git operations)
+		if (!isGit && (response.ok || response.status === 206)) {
 			ctx.waitUntil(cache.put(cacheKey, finalResponse.clone()));
 		}
 
 		monitor.mark("complete");
-		return addPerformanceHeaders(finalResponse, monitor);
+		return isGit
+			? finalResponse
+			: addPerformanceHeaders(finalResponse, monitor);
 	} catch (error) {
 		console.error("Error handling request:", error);
 		return new Response(`Internal Server Error: ${error.message}`, {

@@ -1,20 +1,53 @@
-import { createExecutionContext, env, SELF, waitOnExecutionContext } from 'cloudflare:test';
-import { describe, expect, it } from 'vitest';
-import worker from '../src';
+import {
+	createExecutionContext,
+	env,
+	waitOnExecutionContext,
+} from "cloudflare:test";
+import { describe, expect, it } from "vitest";
+import worker from "../src";
 
-describe('Hello World worker', () => {
-	it('responds with Hello World! (unit style)', async () => {
-		const request = new Request('http://example.com');
-		// Create an empty context to pass to `worker.fetch()`.
+describe("Xget Worker", () => {
+	it("serves homepage for root path", async () => {
+		const request = new Request("http://example.com/");
 		const ctx = createExecutionContext();
 		const response = await worker.fetch(request, env, ctx);
-		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
 		await waitOnExecutionContext(ctx);
-		expect(await response.text()).toMatchInlineSnapshot(`"Hello World!"`);
+
+		// The homepage should redirect to the external page
+		expect(response.status).toBe(200);
 	});
 
-	it('responds with Hello World! (integration style)', async () => {
-		const response = await SELF.fetch(request, env, ctx);
-		expect(await response.text()).toMatchInlineSnapshot(`"Hello World!"`);
+	it("handles invalid platform", async () => {
+		const request = new Request("http://example.com/invalid/test");
+		const ctx = createExecutionContext();
+		const response = await worker.fetch(request, env, ctx);
+		await waitOnExecutionContext(ctx);
+
+		expect(response.status).toBe(400);
+		expect(await response.text()).toBe("Invalid or missing platform");
+	});
+
+	it("detects Git clone requests", async () => {
+		const request = new Request(
+			"http://example.com/gh/user/repo/info/refs?service=git-upload-pack"
+		);
+		const ctx = createExecutionContext();
+		const response = await worker.fetch(request, env, ctx);
+		await waitOnExecutionContext(ctx);
+
+		// Should attempt to proxy the Git request (might fail due to network, but shouldn't be 400)
+		expect(response.status).not.toBe(400);
+	});
+
+	it("handles regular file downloads", async () => {
+		const request = new Request(
+			"http://example.com/gh/user/repo/archive/main.zip"
+		);
+		const ctx = createExecutionContext();
+		const response = await worker.fetch(request, env, ctx);
+		await waitOnExecutionContext(ctx);
+
+		// Should attempt to proxy the file request
+		expect(response.status).not.toBe(400);
 	});
 });

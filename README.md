@@ -44,15 +44,15 @@
 
 ### 浏览器扩展（推荐）
 
-为了获得最佳用户体验，请使用 **Xget for Chrome** 扩展程序来自动重定向下载：
+为了获得最佳用户体验，请使用 **Xget for Chromium** 扩展程序来自动重定向下载：
 
-🔗 **[Xget for Chrome 存储库](https://github.com/xixu-me/Xget-for-Chrome)**
+🔗 **[Xget for Chromium 存储库](https://github.com/xixu-me/Xget-for-Chromium)**
 
 可在以下平台获取：
 
 - [Chrome 应用商店](https://chromewebstore.google.com/detail/ajiejgobfcifcikbahpijopolfjoodgf?hl=zh-CN)
 - [Microsoft Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/jigpfhbegabdenhihpplcjhpfdcgnalc?hl=zh-CN&gl=CN)
-- [GitHub Releases](https://github.com/xixu-me/Xget-for-Chrome/releases/latest)
+- [GitHub Releases](https://github.com/xixu-me/Xget-for-Chromium/releases/latest)
 
 适用于一切基于 Chromium 的浏览器。
 

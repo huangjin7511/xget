@@ -146,7 +146,7 @@
 
 ### 各平台转换示例
 
-#### GitHub 文件加速
+#### GitHub
 
 ```url
 # 原始链接
@@ -156,7 +156,7 @@ https://github.com/microsoft/vscode/archive/refs/heads/main.zip
 https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 ```
 
-#### GitLab 文件加速
+#### GitLab
 
 ```url
 # 原始链接
@@ -166,7 +166,7 @@ https://gitlab.com/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 ```
 
-#### Hugging Face 模型/数据集加速
+#### Hugging Face
 
 ```url
 # 模型文件原始链接
@@ -176,10 +176,10 @@ https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
 # 数据集文件原始链接
-https://huggingface.co/datasets/squad/resolve/main/train-v1.1.json
+https://huggingface.co/datasets/wikitext/resolve/main/wikitext-103-v1/wiki.train.tokens
 
 # 转换后（添加 /hf/ 前缀）
-https://xget.xi-xu.me/hf/datasets/squad/resolve/main/train-v1.1.json
+https://xget.xi-xu.me/hf/datasets/wikitext/resolve/main/wikitext-103-v1/wiki.train.tokens
 ```
 
 ## 🎯 应用场景
@@ -347,7 +347,7 @@ download_dependencies:
     - wget https://xget.xi-xu.me/gl/gitlab-org/gitlab-runner/-/archive/main/gitlab-runner-main.zip
     - git clone https://xget.xi-xu.me/gh/external/dependency.git
     # 下载 Hugging Face 数据集
-    - curl -L -O https://xget.xi-xu.me/hf/datasets/squad/resolve/main/train-v1.1.json
+    - curl -L -O https://xget.xi-xu.me/hf/datasets/wikitext/resolve/main/wikitext-103-v1/wiki.train.tokens
   artifacts:
     paths:
       - "*.zip"

@@ -141,9 +141,9 @@
 
 | 平台 | 平台前缀 | 原始链接格式 | 加速链接格式 |
 |------|----------|--------------|--------------|
-| GitHub | `/gh/` | `https://github.com/...` | `https://xget.xi-xu.me/gh/[路径]` |
-| GitLab | `/gl/` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/[路径]` |
-| Hugging Face | `/hf/` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/[路径]` |
+| GitHub | `/gh/` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
+| GitLab | `/gl/` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
+| Hugging Face | `/hf/` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 
 ### 各平台转换示例
 

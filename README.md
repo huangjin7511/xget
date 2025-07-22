@@ -143,36 +143,36 @@
 
 ```url
 # 原始地址
-https://github.com/user/repo/releases/download/v1.0/file.zip
+https://github.com/xixu-me/Claude-Code-Toolkit/archive/refs/heads/main.zip
 
 # 通过 Xget 加速
-https://xget.xi-xu.me/gh/user/repo/releases/download/v1.0/file.zip
+https://xget.xi-xu.me/gh/xixu-me/Claude-Code-Toolkit/archive/refs/heads/main.zip
 ```
 
 #### GitLab
 
 ```url
 # 原始地址
-https://gitlab.com/user/repo/-/archive/main/repo-main.zip
+https://gitlab.com/xixu-me/Claude-Code-Toolkit/-/archive/main/Claude-Code-Toolkit-main.zip
 
 # 通过 Xget 加速
-https://xget.xi-xu.me/gl/user/repo/-/archive/main/repo-main.zip
+https://xget.xi-xu.me/gl/xixu-me/Claude-Code-Toolkit/-/archive/main/Claude-Code-Toolkit-main.zip
 ```
 
 #### Hugging Face
 
 ```url
 # 模型文件原始地址
-https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+https://huggingface.co/deepseek-ai/DeepSeek-R1-0528/resolve/main/model-00001-of-000163.safetensors
 
 # 通过 Xget 加速
-https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+https://xget.xi-xu.me/hf/deepseek-ai/DeepSeek-R1-0528/resolve/main/model-00001-of-000163.safetensors
 
 # 数据集文件原始地址
-https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
+https://huggingface.co/datasets/xixu-me/fsl-product-classification/resolve/main/data.tzst
 
 # 通过 Xget 加速
-https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
+https://xget.xi-xu.me/hf/datasets/xixu-me/fsl-product-classification/resolve/main/data.tzst
 ```
 
 ### Git 操作
@@ -181,19 +181,19 @@ Xget 完全支持 Git 操作，你可以直接用于 clone、push、pull 等操�
 
 ```bash
 # 克隆存储库
-git clone https://xget.xi-xu.me/gh/user/repo.git
+git clone https://xget.xi-xu.me/gh/microsoft/vscode.git
 
 # 添加为远程存储库
-git remote add xget https://xget.xi-xu.me/gh/user/repo.git
+git remote add xget https://xget.xi-xu.me/gh/microsoft/vscode.git
 ```
 
 ## 🌐 支持的平台
 
 | 平台 | 前缀 | 示例 |
 |------|------|------|
-| **GitHub** | `/gh/` | `xget.xi-xu.me/gh/user/repo/...` |
-| **GitLab** | `/gl/` | `xget.xi-xu.me/gl/user/repo/...` |
-| **Hugging Face** | `/hf/` | `xget.xi-xu.me/hf/user/model/...` 或 `xget.xi-xu.me/hf/datasets/user/dataset/...` |
+| **GitHub** | `/gh/` | `xget.xi-xu.me/gh/microsoft/vscode/...` |
+| **GitLab** | `/gl/` | `xget.xi-xu.me/gl/gitlab-org/gitlab/...` |
+| **Hugging Face** | `/hf/` | `xget.xi-xu.me/hf/microsoft/DialoGPT-medium/...` 或 `xget.xi-xu.me/hf/datasets/squad/...` |
 
 ## 🔧 配置
 

@@ -13,8 +13,14 @@ describe("Xget Worker", () => {
 		const response = await worker.fetch(request, env, ctx);
 		await waitOnExecutionContext(ctx);
 
-		// The homepage should redirect to the external page
+		// The homepage should return HTML content
 		expect(response.status).toBe(200);
+		expect(response.headers.get("content-type")).toContain("text/html");
+
+		const html = await response.text();
+		expect(html).toContain("<!DOCTYPE html>");
+		expect(html).toContain("Xget - 高性能代理服务");
+		expect(html).toContain("URL 转换器");
 	});
 
 	it("handles invalid platform", async () => {

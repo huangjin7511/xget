@@ -139,10 +139,11 @@
 
 ### 转换格式
 
-```
-原始链接：https://[平台域名]/[路径]
-加速链接：https://[Xget域名]/[平台前缀]/[路径]
-```
+| 平台 | 平台前缀 | 原始链接格式 | 加速链接格式 |
+|------|----------|--------------|--------------|
+| GitHub | `/gh/` | `https://github.com/...` | `https://xget.xi-xu.me/gh/[路径]` |
+| GitLab | `/gl/` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/[路径]` |
+| Hugging Face | `/hf/` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/[路径]` |
 
 ### 各平台转换示例
 

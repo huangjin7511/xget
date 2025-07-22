@@ -200,13 +200,13 @@ git clone -b main https://xget.xi-xu.me/gh/facebook/react.git
 git clone --depth 1 https://xget.xi-xu.me/gh/torvalds/linux.git
 
 # 添加远程仓库
-git remote add upstream https://xget.xi-xu.me/gh/original/repo.git
+git remote add upstream https://xget.xi-xu.me/gh/[用户名]/[仓库名].git
 
 # 拉取更新
 git pull https://xget.xi-xu.me/gh/microsoft/vscode.git main
 
 # 子模块递归克隆
-git clone --recursive https://xget.xi-xu.me/gh/project/with-submodules.git
+git clone --recursive https://xget.xi-xu.me/gh/[用户名]/[带子模块的仓库].git
 ```
 
 ### 主流下载工具集成
@@ -215,7 +215,7 @@ git clone --recursive https://xget.xi-xu.me/gh/project/with-submodules.git
 
 ```bash
 # 下载单个文件
-wget https://xget.xi-xu.me/gh/microsoft/vscode/releases/download/1.85.0/VSCode-linux-x64.tar.gz
+wget https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 
 # 断点续传
 wget -c https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_model.bin
@@ -228,7 +228,7 @@ wget -i urls.txt  # urls.txt 包含多个 Xget 链接
 
 ```bash
 # 基本下载
-curl -L -O https://xget.xi-xu.me/gh/golang/go/archive/refs/tags/go1.21.5.tar.gz
+curl -L -O https://xget.xi-xu.me/gh/golang/go/archive/refs/tags/go1.22.0.tar.gz
 
 # 显示进度条
 curl -L --progress-bar -o model.bin https://xget.xi-xu.me/hf/openai/whisper-large-v3/resolve/main/pytorch_model.bin
@@ -325,13 +325,13 @@ jobs:
       - name: Clone dependency repo
         run: |
           # 使用 Xget 加速 Git 克隆
-          git clone https://xget.xi-xu.me/gh/dependency/repo.git
+          git clone https://xget.xi-xu.me/gh/[依赖项目]/[仓库名].git
           
       - name: Download release assets
         run: |
           # 批量下载发布文件
-          curl -L -O https://xget.xi-xu.me/gh/project/releases/download/v1.0.0/asset1.tar.gz
-          curl -L -O https://xget.xi-xu.me/gh/project/releases/download/v1.0.0/asset2.zip
+          curl -L -O https://xget.xi-xu.me/gh/[项目名]/releases/download/v1.0.0/[文件名].tar.gz
+          curl -L -O https://xget.xi-xu.me/gh/[项目名]/releases/download/v1.0.0/[文件名].zip
 ```
 
 #### GitLab CI
@@ -346,7 +346,7 @@ download_dependencies:
   script:
     # 使用 Xget 加速下载
     - wget https://xget.xi-xu.me/gl/gitlab-org/gitlab-runner/-/archive/main/gitlab-runner-main.zip
-    - git clone https://xget.xi-xu.me/gh/external/dependency.git
+    - git clone https://xget.xi-xu.me/gh/[外部项目]/[依赖仓库].git
     # 下载 Hugging Face 数据集
     - curl -L -O https://xget.xi-xu.me/hf/datasets/wikitext/resolve/main/wikitext-103-v1/wiki.train.tokens
   artifacts:
@@ -368,7 +368,7 @@ RUN apt-get update && apt-get install -y wget curl git
 RUN wget https://xget.xi-xu.me/gh/microsoft/vscode/releases/download/1.85.0/code_1.85.0-1702462158_amd64.deb
 
 # 克隆源码
-RUN git clone https://xget.xi-xu.me/gh/project/source.git /app
+RUN git clone https://xget.xi-xu.me/gh/[项目名]/[源码仓库].git /app
 
 # 下载模型文件
 RUN curl -L -o /models/model.bin https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin

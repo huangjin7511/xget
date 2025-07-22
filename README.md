@@ -176,10 +176,10 @@ https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
 # 数据集文件原始链接
-https://huggingface.co/datasets/wikitext/resolve/main/wikitext-103-v1/wiki.train.tokens
+https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 
 # 转换后（添加 /hf/ 前缀）
-https://xget.xi-xu.me/hf/datasets/wikitext/resolve/main/wikitext-103-v1/wiki.train.tokens
+https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 ```
 
 ## 🎯 应用场景

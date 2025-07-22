@@ -255,21 +255,29 @@ aria2c -i download-list.txt  # 包含多个 Xget 链接的文件
 #### 作为 Hugging Face 镜像
 
 ```python
-# 设置环境变量使用 Xget 作为 Hugging Face 镜像
 import os
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+# 设置环境变量，让 transformers 库自动使用 Xget 镜像
 os.environ['HF_ENDPOINT'] = 'https://xget.xi-xu.me/hf'
 
-from transformers import AutoTokenizer, AutoModel
+# 定义模型名称
+model_name = 'microsoft/DialoGPT-medium'
 
-# 方法 1：通过环境变量（上面已设置）自动使用 Xget 加速
-tokenizer = AutoTokenizer.from_pretrained('microsoft/DialoGPT-medium')
-model = AutoModel.from_pretrained('microsoft/DialoGPT-medium')
+print(f"正在从镜像下载模型: {model_name}")
 
-# 方法 2：直接在代码中指定 Xget 镜像地址
-tokenizer = AutoTokenizer.from_pretrained('microsoft/DialoGPT-medium', 
-                                        mirror='https://xget.xi-xu.me/hf')
-model = AutoModel.from_pretrained('microsoft/DialoGPT-medium',
-                                mirror='https://xget.xi-xu.me/hf')
+# 使用 AutoModelForCausalLM 来加载对话生成模型
+# 由于上面设置了环境变量，这里无需添加任何额外参数
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+
+print("模型和分词器加载成功！")
+
+# 你现在可以使用 tokenizer 和 model 了
+# 例如:
+# new_user_input_ids = tokenizer.encode("Hello, how are you?", return_tensors='pt')
+# chat_history_ids = model.generate(new_user_input_ids, max_length=1000, pad_token_id=tokenizer.eos_token_id)
+# print(tokenizer.decode(chat_history_ids[:, new_user_input_ids.shape[-1]:][0], skip_special_tokens=True))
 ```
 
 #### 直接文件下载

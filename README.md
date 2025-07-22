@@ -133,67 +133,280 @@
 
 部署完成后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
 
-## 📖 使用方法
+## 📖 链接转换规则
 
-使用公共实例 [**`xget.xi-xu.me`**](https://xget.xi-xu.me) 或你自己部署的实例：
+使用公共实例 [**`xget.xi-xu.me`**](https://xget.xi-xu.me) 或你自己部署的实例，只需简单替换域名并添加平台前缀：
 
-### 文件下载
+### 转换格式
 
-#### GitHub
-
-```url
-# 原始地址
-https://github.com/xixu-me/Claude-Code-Toolkit/archive/refs/heads/main.zip
-
-# 通过 Xget 加速
-https://xget.xi-xu.me/gh/xixu-me/Claude-Code-Toolkit/archive/refs/heads/main.zip
+```
+原始链接：https://[平台域名]/[路径]
+加速链接：https://[Xget域名]/[平台前缀]/[路径]
 ```
 
-#### GitLab
+### 各平台转换示例
+
+#### GitHub 文件加速
 
 ```url
-# 原始地址
-https://gitlab.com/xixu-me/Claude-Code-Toolkit/-/archive/main/Claude-Code-Toolkit-main.zip
+# 原始链接
+https://github.com/microsoft/vscode/archive/refs/heads/main.zip
 
-# 通过 Xget 加速
-https://xget.xi-xu.me/gl/xixu-me/Claude-Code-Toolkit/-/archive/main/Claude-Code-Toolkit-main.zip
+# 转换后（添加 /gh/ 前缀）
+https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 ```
 
-#### Hugging Face
+#### GitLab 文件加速
 
 ```url
-# 模型文件原始地址
-https://huggingface.co/deepseek-ai/DeepSeek-R1-0528/resolve/main/model-00001-of-000163.safetensors
+# 原始链接
+https://gitlab.com/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 
-# 通过 Xget 加速
-https://xget.xi-xu.me/hf/deepseek-ai/DeepSeek-R1-0528/resolve/main/model-00001-of-000163.safetensors
-
-# 数据集文件原始地址
-https://huggingface.co/datasets/xixu-me/fsl-product-classification/resolve/main/data.tzst
-
-# 通过 Xget 加速
-https://xget.xi-xu.me/hf/datasets/xixu-me/fsl-product-classification/resolve/main/data.tzst
+# 转换后（添加 /gl/ 前缀）
+https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 ```
 
-### Git 操作
+#### Hugging Face 模型/数据集加速
 
-Xget 完全支持 Git 操作，你可以直接用于 clone、push、pull 等操作：
+```url
+# 模型文件原始链接
+https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+
+# 转换后（添加 /hf/ 前缀）
+https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+
+# 数据集文件原始链接
+https://huggingface.co/datasets/squad/resolve/main/train-v1.1.json
+
+# 转换后（添加 /hf/ 前缀）
+https://xget.xi-xu.me/hf/datasets/squad/resolve/main/train-v1.1.json
+```
+
+## 🎯 应用场景
+
+### Git 版本控制操作
+
+Xget 完全兼容 Git 协议，支持所有标准 Git 操作：
 
 ```bash
-# 克隆存储库
+# 克隆仓库
 git clone https://xget.xi-xu.me/gh/microsoft/vscode.git
 
-# 添加为远程存储库
-git remote add xget https://xget.xi-xu.me/gh/microsoft/vscode.git
+# 克隆指定分支
+git clone -b main https://xget.xi-xu.me/gh/facebook/react.git
+
+# 浅克隆（仅最新提交）
+git clone --depth 1 https://xget.xi-xu.me/gh/torvalds/linux.git
+
+# 添加远程仓库
+git remote add upstream https://xget.xi-xu.me/gh/original/repo.git
+
+# 拉取更新
+git pull https://xget.xi-xu.me/gh/microsoft/vscode.git main
+
+# 子模块递归克隆
+git clone --recursive https://xget.xi-xu.me/gh/project/with-submodules.git
 ```
 
-## 🌐 支持的平台
+### 主流下载工具集成
 
-| 平台 | 前缀 | 示例 |
-|------|------|------|
-| **GitHub** | `/gh/` | `xget.xi-xu.me/gh/microsoft/vscode/...` |
-| **GitLab** | `/gl/` | `xget.xi-xu.me/gl/gitlab-org/gitlab/...` |
-| **Hugging Face** | `/hf/` | `xget.xi-xu.me/hf/microsoft/DialoGPT-medium/...` 或 `xget.xi-xu.me/hf/datasets/squad/...` |
+#### wget 下载
+
+```bash
+# 下载单个文件
+wget https://xget.xi-xu.me/gh/microsoft/vscode/releases/download/1.85.0/VSCode-linux-x64.tar.gz
+
+# 断点续传
+wget -c https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_model.bin
+
+# 批量下载
+wget -i urls.txt  # urls.txt 包含多个 Xget 链接
+```
+
+#### curl 下载
+
+```bash
+# 基本下载
+curl -L -O https://xget.xi-xu.me/gh/golang/go/archive/refs/tags/go1.21.5.tar.gz
+
+# 显示进度条
+curl -L --progress-bar -o model.bin https://xget.xi-xu.me/hf/openai/whisper-large-v3/resolve/main/pytorch_model.bin
+
+# 设置用户代理
+curl -L -H "User-Agent: MyApp/1.0" https://xget.xi-xu.me/gl/gitlab-org/gitlab-runner/-/archive/main/gitlab-runner-main.zip
+```
+
+#### aria2 多线程下载
+
+```bash
+# 多线程下载大文件
+aria2c -x 16 -s 16 https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_model.bin
+
+# 断点续传
+aria2c -c https://xget.xi-xu.me/gh/microsoft/vscode/releases/download/1.85.0/VSCode-win32-x64.zip
+
+# 批量下载配置文件
+aria2c -i download-list.txt  # 包含多个 Xget 链接的文件
+```
+
+### Python 环境中的应用
+
+#### 作为 Hugging Face 镜像
+
+```python
+# 设置环境变量使用 Xget 作为 Hugging Face 镜像
+import os
+os.environ['HF_ENDPOINT'] = 'https://xget.xi-xu.me/hf'
+
+# 或者在代码中直接指定
+from transformers import AutoTokenizer, AutoModel
+
+# 下载模型时会自动通过 Xget 加速
+tokenizer = AutoTokenizer.from_pretrained('microsoft/DialoGPT-medium')
+model = AutoModel.from_pretrained('microsoft/DialoGPT-medium')
+```
+
+#### 直接文件下载
+
+```python
+import requests
+from urllib.parse import urlparse
+
+def download_with_xget(original_url, save_path):
+    """使用 Xget 加速下载文件"""
+    # 自动转换链接
+    if 'github.com' in original_url:
+        xget_url = original_url.replace('https://github.com', 'https://xget.xi-xu.me/gh')
+    elif 'gitlab.com' in original_url:
+        xget_url = original_url.replace('https://gitlab.com', 'https://xget.xi-xu.me/gl')
+    elif 'huggingface.co' in original_url:
+        xget_url = original_url.replace('https://huggingface.co', 'https://xget.xi-xu.me/hf')
+    else:
+        xget_url = original_url
+    
+    # 下载文件
+    response = requests.get(xget_url, stream=True)
+    response.raise_for_status()
+    
+    with open(save_path, 'wb') as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            f.write(chunk)
+    
+    print(f"文件已下载到: {save_path}")
+
+# 使用示例
+download_with_xget(
+    'https://github.com/microsoft/vscode/archive/refs/heads/main.zip',
+    'vscode-main.zip'
+)
+```
+
+### CI/CD 环境集成
+
+#### GitHub Actions
+
+```yaml
+name: Download Dependencies
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download model files
+        run: |
+          # 使用 Xget 加速下载大型模型文件
+          wget https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+          
+      - name: Clone dependency repo
+        run: |
+          # 使用 Xget 加速 Git 克隆
+          git clone https://xget.xi-xu.me/gh/dependency/repo.git
+          
+      - name: Download release assets
+        run: |
+          # 批量下载发布文件
+          curl -L -O https://xget.xi-xu.me/gh/project/releases/download/v1.0.0/asset1.tar.gz
+          curl -L -O https://xget.xi-xu.me/gh/project/releases/download/v1.0.0/asset2.zip
+```
+
+#### GitLab CI
+
+```yaml
+stages:
+  - download
+  - build
+
+download_dependencies:
+  stage: download
+  script:
+    # 使用 Xget 加速下载
+    - wget https://xget.xi-xu.me/gl/gitlab-org/gitlab-runner/-/archive/main/gitlab-runner-main.zip
+    - git clone https://xget.xi-xu.me/gh/external/dependency.git
+    # 下载 Hugging Face 数据集
+    - curl -L -O https://xget.xi-xu.me/hf/datasets/squad/resolve/main/train-v1.1.json
+  artifacts:
+    paths:
+      - "*.zip"
+      - "*.json"
+      - dependency/
+```
+
+#### Docker 构建优化
+
+```dockerfile
+FROM ubuntu:22.04
+
+# 在 Docker 构建中使用 Xget 加速下载
+RUN apt-get update && apt-get install -y wget curl git
+
+# 下载大型文件
+RUN wget https://xget.xi-xu.me/gh/microsoft/vscode/releases/download/1.85.0/code_1.85.0-1702462158_amd64.deb
+
+# 克隆源码
+RUN git clone https://xget.xi-xu.me/gh/project/source.git /app
+
+# 下载模型文件
+RUN curl -L -o /models/model.bin https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+
+WORKDIR /app
+```
+
+### 开发环境配置
+
+#### 配置 Git 全局加速
+
+```bash
+# 为特定域名配置 Git 使用 Xget
+git config --global url."https://xget.xi-xu.me/gh/".insteadOf "https://github.com/"
+git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.com/"
+
+# 验证配置
+git config --global --get-regexp url
+
+# 现在所有 git clone https://github.com/... 都会自动使用 Xget 加速
+git clone https://github.com/microsoft/vscode.git  # 自动转换为 Xget 链接
+```
+
+#### IDE 集成
+
+```bash
+# VS Code 中配置 Git 使用 Xget
+# 在 settings.json 中添加：
+{
+  "git.defaultCloneDirectory": "~/Projects",
+  "terminal.integrated.env.linux": {
+    "GIT_CONFIG_GLOBAL": "~/.gitconfig-xget"
+  }
+}
+
+# 创建专用的 Git 配置文件
+echo '[url "https://xget.xi-xu.me/gh/"]' > ~/.gitconfig-xget
+echo '    insteadOf = https://github.com/' >> ~/.gitconfig-xget
+```
 
 ## 🔧 配置
 

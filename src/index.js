@@ -51,9 +51,9 @@ function isGitRequest(request, url) {
 		return true;
 	}
 
-	// Check for Git user agents
+	// Check for Git user agents (more comprehensive check)
 	const userAgent = request.headers.get("User-Agent") || "";
-	if (userAgent.includes("git/")) {
+	if (userAgent.includes("git/") || userAgent.startsWith("git/")) {
 		return true;
 	}
 
@@ -61,6 +61,15 @@ function isGitRequest(request, url) {
 	if (url.searchParams.has("service")) {
 		const service = url.searchParams.get("service");
 		return service === "git-upload-pack" || service === "git-receive-pack";
+	}
+
+	// Check for Git-specific content types
+	const contentType = request.headers.get("Content-Type") || "";
+	if (
+		contentType.includes("git-upload-pack") ||
+		contentType.includes("git-receive-pack")
+	) {
+		return true;
 	}
 
 	return false;
@@ -147,7 +156,7 @@ async function handleRequest(request, env, ctx) {
 		}
 
 		// Parse platform and path
-		const [_, platform, ...pathParts] = url.pathname.split("/");
+		const [_, platform] = url.pathname.split("/");
 		if (!platform || !CONFIG.PLATFORMS[platform]) {
 			return new Response("Invalid or missing platform", {
 				status: 400,
@@ -182,43 +191,54 @@ async function handleRequest(request, env, ctx) {
 
 		// Add body for POST requests (Git operations)
 		if (request.method === "POST" && isGit) {
-			fetchOptions.body = await request.arrayBuffer();
+			// For Git operations, we need to preserve the original body stream
+			fetchOptions.body = request.body;
 		}
 
 		// Set appropriate headers for Git vs regular requests
 		if (isGit) {
-			// Copy important headers for Git operations
-			const gitHeaders = [
-				"Content-Type",
-				"Content-Length",
-				"Authorization",
-				"User-Agent",
-				"Accept",
-				"Accept-Encoding",
-				"Git-Protocol",
-			];
-
-			gitHeaders.forEach((header) => {
-				const value = request.headers.get(header);
-				if (value) {
-					fetchOptions.headers.set(header, value);
+			// For Git operations, copy all headers from the original request
+			// This ensures Git protocol compliance
+			for (const [key, value] of request.headers.entries()) {
+				// Skip headers that might cause issues with proxying
+				if (
+					!["host", "connection", "upgrade", "proxy-connection"].includes(
+						key.toLowerCase()
+					)
+				) {
+					fetchOptions.headers.set(key, value);
 				}
-			});
+			}
 
 			// Set Git-specific headers if not present
 			if (!fetchOptions.headers.has("User-Agent")) {
 				fetchOptions.headers.set("User-Agent", "git/2.34.1");
 			}
 
-			// Ensure proper content type for Git operations
+			// For Git upload-pack requests, ensure proper content type
 			if (
 				request.method === "POST" &&
-				!fetchOptions.headers.has("Content-Type")
+				url.pathname.endsWith("/git-upload-pack")
 			) {
-				fetchOptions.headers.set(
-					"Content-Type",
-					"application/x-git-upload-pack-request"
-				);
+				if (!fetchOptions.headers.has("Content-Type")) {
+					fetchOptions.headers.set(
+						"Content-Type",
+						"application/x-git-upload-pack-request"
+					);
+				}
+			}
+
+			// For Git receive-pack requests, ensure proper content type
+			if (
+				request.method === "POST" &&
+				url.pathname.endsWith("/git-receive-pack")
+			) {
+				if (!fetchOptions.headers.has("Content-Type")) {
+					fetchOptions.headers.set(
+						"Content-Type",
+						"application/x-git-receive-pack-request"
+					);
+				}
 			}
 		} else {
 			// Regular file download headers
@@ -261,10 +281,12 @@ async function handleRequest(request, env, ctx) {
 					CONFIG.TIMEOUT_SECONDS * 1000
 				);
 
-				response = await fetch(targetUrl, {
-					...fetchOptions,
-					signal: controller.signal,
-				});
+				// For Git operations, don't use Cloudflare-specific options
+				const finalFetchOptions = isGit
+					? { ...fetchOptions, signal: controller.signal }
+					: { ...fetchOptions, signal: controller.signal };
+
+				response = await fetch(targetUrl, finalFetchOptions);
 
 				clearTimeout(timeoutId);
 
@@ -333,17 +355,10 @@ async function handleRequest(request, env, ctx) {
 		const headers = new Headers(response.headers);
 
 		if (isGit) {
-			// For Git operations, preserve important headers
-			const preserveHeaders = [
-				"Content-Type",
-				"Content-Length",
-				"Transfer-Encoding",
-				"Content-Encoding",
-				"Cache-Control",
-			];
-
-			// Don't add security headers that might interfere with Git
-			headers.set("X-Content-Type-Options", "nosniff");
+			// For Git operations, preserve all headers from the upstream response
+			// Git protocol is very sensitive to header changes
+			// Don't add any additional headers that might interfere with Git protocol
+			// The response headers from GitHub/GitLab should be passed through as-is
 		} else {
 			// Regular file download headers
 			headers.set("Cache-Control", `public, max-age=${CONFIG.CACHE_DURATION}`);

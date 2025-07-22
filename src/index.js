@@ -1,4 +1,4 @@
-import { CONFIG } from "./config";
+import { CONFIG } from "./config/index.js";
 
 /**
  * Monitors performance metrics during request processing
@@ -182,7 +182,7 @@ async function handleRequest(request, env, ctx) {
 
 		// Add body for POST requests (Git operations)
 		if (request.method === "POST" && isGit) {
-			fetchOptions.body = request.body;
+			fetchOptions.body = await request.arrayBuffer();
 		}
 
 		// Set appropriate headers for Git vs regular requests
@@ -195,6 +195,7 @@ async function handleRequest(request, env, ctx) {
 				"User-Agent",
 				"Accept",
 				"Accept-Encoding",
+				"Git-Protocol",
 			];
 
 			gitHeaders.forEach((header) => {
@@ -207,6 +208,17 @@ async function handleRequest(request, env, ctx) {
 			// Set Git-specific headers if not present
 			if (!fetchOptions.headers.has("User-Agent")) {
 				fetchOptions.headers.set("User-Agent", "git/2.34.1");
+			}
+
+			// Ensure proper content type for Git operations
+			if (
+				request.method === "POST" &&
+				!fetchOptions.headers.has("Content-Type")
+			) {
+				fetchOptions.headers.set(
+					"Content-Type",
+					"application/x-git-upload-pack-request"
+				);
 			}
 		} else {
 			// Regular file download headers
@@ -261,6 +273,12 @@ async function handleRequest(request, env, ctx) {
 					break;
 				}
 
+				// Don't retry on client errors (4xx) - these won't improve with retries
+				if (response.status >= 400 && response.status < 500) {
+					monitor.mark("client_error");
+					break;
+				}
+
 				attempts++;
 				if (attempts < CONFIG.MAX_RETRIES) {
 					await new Promise((resolve) =>
@@ -270,15 +288,45 @@ async function handleRequest(request, env, ctx) {
 			} catch (error) {
 				attempts++;
 				if (error.name === "AbortError") {
-					return new Response("Request timeout", { status: 408 });
+					return new Response("Request timeout", {
+						status: 408,
+						headers: addSecurityHeaders(new Headers()),
+					});
 				}
 				if (attempts >= CONFIG.MAX_RETRIES) {
 					return new Response(
 						`Failed after ${CONFIG.MAX_RETRIES} attempts: ${error.message}`,
-						{ status: 500 }
+						{
+							status: 500,
+							headers: addSecurityHeaders(new Headers()),
+						}
 					);
 				}
+				// Wait before retrying
+				await new Promise((resolve) =>
+					setTimeout(resolve, CONFIG.RETRY_DELAY_MS * attempts)
+				);
 			}
+		}
+
+		// Check if we have a valid response after all attempts
+		if (!response) {
+			return new Response("No response received after all retry attempts", {
+				status: 500,
+				headers: addSecurityHeaders(new Headers()),
+			});
+		}
+
+		// If response is still not ok after all retries, return the error
+		if (!response.ok && response.status !== 206) {
+			const errorText = await response.text().catch(() => "Unknown error");
+			return new Response(
+				`Upstream server error (${response.status}): ${errorText}`,
+				{
+					status: response.status,
+					headers: addSecurityHeaders(new Headers()),
+				}
+			);
 		}
 
 		// Prepare response headers

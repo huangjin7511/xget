@@ -1,5 +1,4 @@
 import { CONFIG } from "./config/index.js";
-import { generateHomepage } from "./homepage.js";
 
 /**
  * Monitors performance metrics during request processing
@@ -133,13 +132,17 @@ async function handleRequest(request, env, ctx) {
 
 		// Serve homepage for root path
 		if (url.pathname === "/" || url.pathname === "") {
-			const homepageHTML = generateHomepage();
-			return new Response(homepageHTML, {
-				headers: {
-					"Content-Type": "text/html; charset=utf-8",
-					...addSecurityHeaders(new Headers()),
-				},
+			const HOME_PAGE_URL = "https://xixu-me.github.io/Xget-page/";
+			const requestHeaders = new Headers(request.headers);
+
+			const homePageRequest = new Request(HOME_PAGE_URL, {
+				method: request.method,
+				headers: requestHeaders,
+				body: request.body,
+				redirect: "manual",
 			});
+
+			return fetch(homePageRequest, { redirect: "manual" });
 		}
 
 		const monitor = new PerformanceMonitor();

@@ -378,7 +378,7 @@ FROM ubuntu:22.04
 RUN apt-get update && apt-get install -y wget curl git
 
 # 下载大型文件
-RUN wget https://xget.xi-xu.me/gh/microsoft/vscode/releases/download/1.85.0/code_1.85.0-1702462158_amd64.deb
+RUN wget https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 
 # 克隆源码
 RUN git clone https://xget.xi-xu.me/gh/[项目名]/[源码仓库].git /app
@@ -424,7 +424,7 @@ echo '    insteadOf = https://github.com/' >> ~/.gitconfig-xget
 
 ## 🔧 配置
 
-### 环境变量
+### 配置参数
 
 你可以通过修改 `src/config/index.js` 来自定义配置：
 

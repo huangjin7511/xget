@@ -244,7 +244,7 @@ curl -L -H "User-Agent: MyApp/1.0" https://xget.xi-xu.me/gl/gitlab-org/gitlab-ru
 aria2c -x 16 -s 16 https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_model.bin
 
 # 断点续传
-aria2c -c https://xget.xi-xu.me/gh/microsoft/vscode/releases/download/1.85.0/VSCode-win32-x64.zip
+aria2c -c https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 
 # 批量下载配置文件
 aria2c -i download-list.txt  # 包含多个 Xget 链接的文件
@@ -259,12 +259,17 @@ aria2c -i download-list.txt  # 包含多个 Xget 链接的文件
 import os
 os.environ['HF_ENDPOINT'] = 'https://xget.xi-xu.me/hf'
 
-# 或者在代码中直接指定
 from transformers import AutoTokenizer, AutoModel
 
-# 下载模型时会自动通过 Xget 加速
+# 方法 1：通过环境变量（上面已设置）自动使用 Xget 加速
 tokenizer = AutoTokenizer.from_pretrained('microsoft/DialoGPT-medium')
 model = AutoModel.from_pretrained('microsoft/DialoGPT-medium')
+
+# 方法 2：直接在代码中指定 Xget 镜像地址
+tokenizer = AutoTokenizer.from_pretrained('microsoft/DialoGPT-medium', 
+                                        mirror='https://xget.xi-xu.me/hf')
+model = AutoModel.from_pretrained('microsoft/DialoGPT-medium',
+                                mirror='https://xget.xi-xu.me/hf')
 ```
 
 #### 直接文件下载

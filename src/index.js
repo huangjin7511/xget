@@ -130,19 +130,10 @@ async function handleRequest(request, env, ctx) {
 	try {
 		const url = new URL(request.url);
 
-		// Serve homepage for root path
+		// Redirect root path to GitHub repository
 		if (url.pathname === "/" || url.pathname === "") {
 			const HOME_PAGE_URL = "https://github.com/xixu-me/Xget";
-			const requestHeaders = new Headers(request.headers);
-
-			const homePageRequest = new Request(HOME_PAGE_URL, {
-				method: request.method,
-				headers: requestHeaders,
-				body: request.body,
-				redirect: "manual",
-			});
-
-			return fetch(homePageRequest, { redirect: "manual" });
+			return Response.redirect(HOME_PAGE_URL, 302);
 		}
 
 		const monitor = new PerformanceMonitor();

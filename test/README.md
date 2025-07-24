@@ -345,4 +345,4 @@ it('应该包含所有安全头', async () => {
 
 ---
 
-如有问题或建议，请查看 [贡献指南](../CONTRIBUTING.md) 或提交 [Issue](https://github.com/xixu-me/Xget/issues)。
+如有问题或建议，请查看[贡献指南](../CONTRIBUTING.md)或提交 [Issue](https://github.com/xixu-me/Xget/issues)。

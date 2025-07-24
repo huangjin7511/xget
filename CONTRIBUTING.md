@@ -6,7 +6,7 @@
 
 ### 报告问题
 
-- 使用 [Issue 模板](https://github.com/xixu-me/Xget/issues/new/choose) 报告 bug 或提出功能请求
+- 使用 [Issue 模板](https://github.com/xixu-me/Xget/issues/new/choose)报告 bug 或提出功能请求
 - 搜索现有 issues 避免重复报告
 - 提供详细的重现步骤和环境信息
 
@@ -161,7 +161,7 @@ perf(proxy): optimize request handling performance
 
 ### PR 描述模板
 
-请使用 [PR 模板](.github/pull_request_template.md) 填写详细信息。
+请使用 [PR 模板](.github/pull_request_template.md)填写详细信息。
 
 ### 代码审查
 

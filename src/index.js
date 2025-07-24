@@ -147,7 +147,16 @@ async function handleRequest(request, env, ctx) {
 		}
 
 		// Parse platform and path
-		const [_, platform] = url.pathname.split("/");
+		let platform;
+
+		// Special handling for nested platforms like /conda/community/
+		if (url.pathname.startsWith("/conda/community/")) {
+			platform = "conda-community";
+		} else {
+			const [_, firstSegment] = url.pathname.split("/");
+			platform = firstSegment;
+		}
+
 		if (!platform || !CONFIG.PLATFORMS[platform]) {
 			return new Response("Invalid or missing platform", {
 				status: 400,

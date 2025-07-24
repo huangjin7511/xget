@@ -29,7 +29,7 @@
 - **Hugging Face 优化**：针对大型模型文件和数据集进行专门优化，支持模型和数据集的高速下载
 - **npm 注册表**：加速 npm 包下载和元数据获取，提升包管理器性能
 - **PyPI 支持**：加速 Python 包下载，提升 pip 安装速度和可靠性
-- **conda 生态**：支持 Anaconda 和 Miniconda 包下载，加速科学计算环境搭建
+- **conda 支持**：加速 conda 包管理器的包下载，支持默认频道和社区频道
 - **路径智能转换**：自动识别平台前缀（/gh/、/gl/、/hf/、/npm/、/pypi/、/conda/）并转换为目标平台的正确 URL 结构
 
 ### 🔒 企业级安全保障
@@ -224,17 +224,17 @@ https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.
 #### conda
 
 ```url
-# Anaconda 包文件原始链接
-https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_0.conda
+# 默认频道包文件原始链接
+https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
 # 转换后（添加 /conda/ 前缀）
-https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_0.conda
+https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
-# conda-forge 包文件原始链接
-https://repo.anaconda.com/pkgs/conda-forge/noarch/pip-23.1.2-pyhd8ed1ab_0.conda
+# 社区频道元数据原始链接
+https://conda.anaconda.org/conda-forge/linux-64/repodata.json
 
-# 转换后（添加 /conda/ 前缀）
-https://xget.xi-xu.me/conda/pkgs/conda-forge/noarch/pip-23.1.2-pyhd8ed1ab_0.conda
+# 转换后（添加 /conda/community/ 前缀）
+https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
 ```
 
 ## 🎯 应用场景
@@ -388,8 +388,8 @@ download_with_xget(
 
 # conda 包下载示例
 download_with_xget(
-    'https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_0.conda',
-    'numpy-1.24.3-py311h08b1b3b_0.conda'
+    'https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda',
+    'numpy-1.24.3.conda'
 )
 ```
 
@@ -463,6 +463,15 @@ RUN git clone https://xget.xi-xu.me/gh/[项目名]/[源码仓库].git /app
 
 # 下载模型文件
 RUN curl -L -o /models/model.bin https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+
+# 配置并安装 conda 包
+RUN echo "default_channels:" > ~/.condarc && \
+    echo "  - https://xget.xi-xu.me/conda/pkgs/main" >> ~/.condarc && \
+    echo "  - https://xget.xi-xu.me/conda/pkgs/r" >> ~/.condarc && \
+    echo "  - https://xget.xi-xu.me/conda/pkgs/msys2" >> ~/.condarc && \
+    echo "channel_alias: https://xget.xi-xu.me/conda/community" >> ~/.condarc && \
+    echo "channel_priority: strict" >> ~/.condarc && \
+    conda install -y numpy pandas matplotlib
 
 WORKDIR /app
 ```
@@ -590,48 +599,72 @@ matplotlib>=3.4.0
 #### 直接下载 conda 包
 
 ```bash
-# 下载特定平台的包文件
-wget https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_0.conda
+# 下载默认频道包文件
+wget https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
-# 下载跨平台包
-wget https://xget.xi-xu.me/conda/pkgs/conda-forge/noarch/pip-23.1.2-pyhd8ed1ab_0.conda
+# 下载社区频道包文件
+wget https://xget.xi-xu.me/conda/community/conda-forge/linux-64/pandas-2.0.3-py311hd9cb047_0.conda
 
-# 批量下载科学计算包
-for package in numpy scipy pandas matplotlib; do
-  echo "下载 $package (需要具体版本和平台信息)"
-  # 实际使用中建议通过 conda 配置镜像
+# 下载频道元数据
+curl -O https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
+
+# 批量下载常用包
+for package in numpy pandas matplotlib scipy; do
+  echo "下载 $package"
+  # 实际使用中需要先查询具体的包版本和构建号
 done
 ```
 
 #### 配置 conda 使用 Xget 镜像
 
 ```bash
-# 添加 Xget 镜像源
-conda config --add channels https://xget.xi-xu.me/conda/pkgs/main/
-conda config --add channels https://xget.xi-xu.me/conda/pkgs/conda-forge/
-conda config --add channels https://xget.xi-xu.me/conda/pkgs/free/
+# 配置默认频道镜像
+conda config --add default_channels https://xget.xi-xu.me/conda/pkgs/main
+conda config --add default_channels https://xget.xi-xu.me/conda/pkgs/r
+conda config --add default_channels https://xget.xi-xu.me/conda/pkgs/msys2
 
-# 设置镜像优先级
+# 配置所有社区频道镜像（推荐）
+conda config --set channel_alias https://xget.xi-xu.me/conda/community
+
+# 或配置特定社区频道
+conda config --add channels https://xget.xi-xu.me/conda/community/conda-forge
+conda config --add channels https://xget.xi-xu.me/conda/community/bioconda
+
+# 设置频道优先级
 conda config --set channel_priority strict
 
-# 查看当前配置
-conda config --show channels
-
-# 移除默认源（可选，提升速度）
-conda config --remove channels defaults
-
-# 恢复默认配置
-conda config --remove-key channels
+# 验证配置
+conda config --show
 ```
 
-#### 环境文件配置
+#### 在 .condarc 中配置
+
+.condarc 文件可以放在用户主目录（`~/.condarc`）或项目根目录下：
+
+##### 镜像默认频道
+
+```yaml
+default_channels:
+  - https://xget.xi-xu.me/conda/pkgs/msys2
+  - https://xget.xi-xu.me/conda/pkgs/r
+  - https://xget.xi-xu.me/conda/pkgs/main
+channel_alias: https://xget.xi-xu.me/conda/community
+channel_priority: strict
+show_channel_urls: true
+```
+
+#### 使用环境文件
+
+环境文件中可以直接指定完整的镜像 URL：
 
 ```yaml
 # environment.yml
 name: myproject
 channels:
-  - https://xget.xi-xu.me/conda/pkgs/conda-forge/
-  - https://xget.xi-xu.me/conda/pkgs/main/
+  - https://xget.xi-xu.me/conda/pkgs/main
+  - https://xget.xi-xu.me/conda/pkgs/r
+  - https://xget.xi-xu.me/conda/community/bioconda
+  - https://xget.xi-xu.me/conda/community/conda-forge
 dependencies:
   - python=3.11
   - numpy>=1.24.0
@@ -640,38 +673,15 @@ dependencies:
   - scipy>=1.10.0
   - pip
   - pip:
-    - requests>=2.31.0
+    - requests>=2.28.0
 ```
 
-#### 创建和管理环境
-
 ```bash
-# 使用 Xget 镜像创建环境
-conda create -n myenv python=3.11 numpy pandas matplotlib
-
-# 从环境文件创建（使用上面的 environment.yml）
+# 使用环境文件创建环境
 conda env create -f environment.yml
-
-# 安装包到现有环境
-conda install -n myenv scipy scikit-learn
 
 # 更新环境
 conda env update -f environment.yml
-```
-
-#### Mamba 加速安装
-
-```bash
-# 安装 mamba（更快的 conda 替代品）
-conda install mamba -n base -c conda-forge
-
-# 配置 mamba 使用 Xget 镜像
-mamba config --add channels https://xget.xi-xu.me/conda/pkgs/conda-forge/
-mamba config --add channels https://xget.xi-xu.me/conda/pkgs/main/
-
-# 使用 mamba 快速安装
-mamba install numpy pandas matplotlib scipy
-mamba create -n fastenv python=3.11 jupyter notebook
 ```
 
 ### 开发环境配置

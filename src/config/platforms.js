@@ -28,10 +28,15 @@ export const PLATFORMS = {
 		base: "https://files.pythonhosted.org",
 		transform: (path) => path.replace(/^\/pypi\//, "/"),
 	},
-	/** @type {{base: string, transform: function(string): string}} conda registry configuration */
+	/** @type {{base: string, transform: function(string): string}} conda default channels configuration */
 	conda: {
 		base: "https://repo.anaconda.com",
 		transform: (path) => path.replace(/^\/conda\//, "/"),
+	},
+	/** @type {{base: string, transform: function(string): string}} conda community channels configuration */
+	"conda-community": {
+		base: "https://conda.anaconda.org",
+		transform: (path) => path.replace(/^\/conda\/community\//, "/"),
 	},
 	// /** @type {{base: string, transform: function(string): string}} All platforms */
 	// link: {

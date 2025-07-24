@@ -23,6 +23,11 @@ export const PLATFORMS = {
 		base: "https://registry.npmjs.org",
 		transform: (path) => path.replace(/^\/npm\//, "/"),
 	},
+	/** @type {{base: string, transform: function(string): string}} PyPI registry configuration */
+	pypi: {
+		base: "https://files.pythonhosted.org",
+		transform: (path) => path.replace(/^\/pypi\//, "/"),
+	},
 	// /** @type {{base: string, transform: function(string): string}} All platforms */
 	// link: {
 	// 	base: "https://",

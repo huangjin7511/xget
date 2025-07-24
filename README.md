@@ -6,7 +6,7 @@
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-一键部署)
 [![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?&logo=googlechrome&logoColor=white)](#-生态系统集成)
 
-一个高性能、安全的代理服务，专为加速 GitHub、GitLab 和 Hugging Face 的文件下载和 Git 操作而设计。
+一个高性能、安全的代理服务，专为加速 GitHub、GitLab、Hugging Face、npm 和 PyPI 的文件下载和 Git 操作而设计。
 
 ## 🎯 快速使用
 
@@ -28,7 +28,8 @@
 - **GitLab 兼容**：全面适配 GitLab.com 的文件下载和版本控制功能
 - **Hugging Face 优化**：针对大型模型文件和数据集进行专门优化，支持模型和数据集的高速下载
 - **npm 注册表**：加速 npm 包下载和元数据获取，提升包管理器性能
-- **路径智能转换**：自动识别平台前缀（/gh/、/gl/、/hf/、/npm/）并转换为目标平台的正确 URL 结构
+- **PyPI 支持**：加速 Python 包下载，提升 pip 安装速度和可靠性
+- **路径智能转换**：自动识别平台前缀（/gh/、/gl/、/hf/、/npm/、/pypi/）并转换为目标平台的正确 URL 结构
 
 ### 🔒 企业级安全保障
 
@@ -146,6 +147,7 @@
 | GitLab | `/gl/` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
 | Hugging Face | `/hf/` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | npm | `/npm/` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
+| PyPI | `/pypi/` | `https://files.pythonhosted.org/...` | `https://xget.xi-xu.me/pypi/...` |
 
 ### 各平台转换示例
 
@@ -199,6 +201,22 @@ https://registry.npmjs.org/lodash
 
 # 转换后（添加 /npm/ 前缀）
 https://xget.xi-xu.me/npm/lodash
+```
+
+#### PyPI
+
+```url
+# Python 包文件原始链接
+https://files.pythonhosted.org/packages/source/r/requests/requests-2.31.0.tar.gz
+
+# 转换后（添加 /pypi/ 前缀）
+https://xget.xi-xu.me/pypi/packages/source/r/requests/requests-2.31.0.tar.gz
+
+# Wheel 文件原始链接
+https://files.pythonhosted.org/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
+
+# 转换后（添加 /pypi/ 前缀）
+https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
 ```
 
 ## 🎯 应用场景
@@ -315,6 +333,8 @@ def download_with_xget(original_url, save_path):
         xget_url = original_url.replace('https://huggingface.co', 'https://xget.xi-xu.me/hf')
     elif 'registry.npmjs.org' in original_url:
         xget_url = original_url.replace('https://registry.npmjs.org', 'https://xget.xi-xu.me/npm')
+    elif 'files.pythonhosted.org' in original_url:
+        xget_url = original_url.replace('https://files.pythonhosted.org', 'https://xget.xi-xu.me/pypi')
     else:
         xget_url = original_url
     
@@ -338,6 +358,12 @@ download_with_xget(
 download_with_xget(
     'https://registry.npmjs.org/react/-/react-18.2.0.tgz',
     'react-18.2.0.tgz'
+)
+
+# PyPI 包下载示例
+download_with_xget(
+    'https://files.pythonhosted.org/packages/source/r/requests/requests-2.31.0.tar.gz',
+    'requests-2.31.0.tar.gz'
 )
 ```
 
@@ -460,6 +486,77 @@ npm install
 # 或者使用 yarn
 yarn config set registry https://xget.xi-xu.me/npm/
 yarn install
+```
+
+### Python 包管理加速
+
+#### 直接下载 Python 包
+
+```bash
+# 下载特定版本的包（源码包）
+wget https://xget.xi-xu.me/pypi/packages/source/r/requests/requests-2.31.0.tar.gz
+
+# 下载 wheel 文件
+wget https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
+
+# 批量下载常用包
+for package in requests numpy pandas matplotlib; do
+  # 这里需要先获取具体的文件路径，实际使用中建议通过 pip 配置镜像
+  echo "下载 $package"
+done
+```
+
+#### 配置 pip 使用 Xget 镜像
+
+```bash
+# 临时使用 Xget 镜像
+pip install requests -i https://xget.xi-xu.me/pypi/simple/
+
+# 全局配置 pip 镜像
+pip config set global.index-url https://xget.xi-xu.me/pypi/simple/
+pip config set global.trusted-host xget.xi-xu.me
+
+# 验证配置
+pip config list
+
+# 恢复默认镜像
+pip config unset global.index-url
+pip config unset global.trusted-host
+```
+
+#### 在项目中使用
+
+```bash
+# 创建 pip.conf 文件（Linux/macOS）
+mkdir -p ~/.pip
+cat > ~/.pip/pip.conf << EOF
+[global]
+index-url = https://xget.xi-xu.me/pypi/simple/
+trusted-host = xget.xi-xu.me
+EOF
+
+# 或在项目根目录创建 pip.conf
+cat > pip.conf << EOF
+[global]
+index-url = https://xget.xi-xu.me/pypi/simple/
+trusted-host = xget.xi-xu.me
+EOF
+
+# 使用配置文件安装
+pip install -r requirements.txt --config-file pip.conf
+```
+
+#### 在 requirements.txt 中指定镜像
+
+```txt
+# requirements.txt
+--index-url https://xget.xi-xu.me/pypi/simple/
+--trusted-host xget.xi-xu.me
+
+requests>=2.25.0
+numpy>=1.21.0
+pandas>=1.3.0
+matplotlib>=3.4.0
 ```
 
 ### 开发环境配置

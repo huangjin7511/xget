@@ -27,7 +27,8 @@
 - **GitHub 生态**：完美支持 Releases、Archives、Raw 文件和完整的 Git 协议操作
 - **GitLab 兼容**：全面适配 GitLab.com 的文件下载和版本控制功能
 - **Hugging Face 优化**：针对大型模型文件和数据集进行专门优化，支持模型和数据集的高速下载
-- **路径智能转换**：自动识别平台前缀（/gh/、/gl/、/hf/）并转换为目标平台的正确 URL 结构
+- **npm 注册表**：加速 npm 包下载和元数据获取，提升包管理器性能
+- **路径智能转换**：自动识别平台前缀（/gh/、/gl/、/hf/、/npm/）并转换为目标平台的正确 URL 结构
 
 ### 🔒 企业级安全保障
 
@@ -144,6 +145,7 @@
 | GitHub | `/gh/` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
 | GitLab | `/gl/` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
 | Hugging Face | `/hf/` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
+| npm | `/npm/` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 
 ### 各平台转换示例
 
@@ -181,6 +183,22 @@ https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00
 
 # 转换后（添加 /hf/ 前缀）
 https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
+```
+
+#### npm
+
+```url
+# 包文件原始链接
+https://registry.npmjs.org/react/-/react-18.2.0.tgz
+
+# 转换后（添加 /npm/ 前缀）
+https://xget.xi-xu.me/npm/react/-/react-18.2.0.tgz
+
+# 包元数据原始链接
+https://registry.npmjs.org/lodash
+
+# 转换后（添加 /npm/ 前缀）
+https://xget.xi-xu.me/npm/lodash
 ```
 
 ## 🎯 应用场景
@@ -295,6 +313,8 @@ def download_with_xget(original_url, save_path):
         xget_url = original_url.replace('https://gitlab.com', 'https://xget.xi-xu.me/gl')
     elif 'huggingface.co' in original_url:
         xget_url = original_url.replace('https://huggingface.co', 'https://xget.xi-xu.me/hf')
+    elif 'registry.npmjs.org' in original_url:
+        xget_url = original_url.replace('https://registry.npmjs.org', 'https://xget.xi-xu.me/npm')
     else:
         xget_url = original_url
     
@@ -312,6 +332,12 @@ def download_with_xget(original_url, save_path):
 download_with_xget(
     'https://github.com/microsoft/vscode/archive/refs/heads/main.zip',
     'vscode-main.zip'
+)
+
+# npm 包下载示例
+download_with_xget(
+    'https://registry.npmjs.org/react/-/react-18.2.0.tgz',
+    'react-18.2.0.tgz'
 )
 ```
 
@@ -387,6 +413,53 @@ RUN git clone https://xget.xi-xu.me/gh/[项目名]/[源码仓库].git /app
 RUN curl -L -o /models/model.bin https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
 WORKDIR /app
+```
+
+### npm 包管理加速
+
+#### 直接下载 npm 包
+
+```bash
+# 下载特定版本的包
+wget https://xget.xi-xu.me/npm/react/-/react-18.2.0.tgz
+
+# 下载最新版本（通过包元数据获取）
+curl -s https://xget.xi-xu.me/npm/lodash | jq -r '.dist.tarball' | sed 's|https://registry.npmjs.org|https://xget.xi-xu.me/npm|' | xargs wget
+
+# 批量下载依赖包
+for package in react react-dom lodash axios; do
+  wget "https://xget.xi-xu.me/npm/$package/-/$package-latest.tgz"
+done
+```
+
+#### 配置 npm 使用 Xget 镜像
+
+```bash
+# 临时使用 Xget 镜像
+npm install --registry https://xget.xi-xu.me/npm/
+
+# 全局配置 npm 镜像
+npm config set registry https://xget.xi-xu.me/npm/
+
+# 验证配置
+npm config get registry
+
+# 恢复默认镜像
+npm config set registry https://registry.npmjs.org/
+```
+
+#### 在项目中使用
+
+```bash
+# 在 .npmrc 文件中配置项目级镜像
+echo "registry=https://xget.xi-xu.me/npm/" > .npmrc
+
+# 安装依赖
+npm install
+
+# 或者使用 yarn
+yarn config set registry https://xget.xi-xu.me/npm/
+yarn install
 ```
 
 ### 开发环境配置

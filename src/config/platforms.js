@@ -18,6 +18,11 @@ export const PLATFORMS = {
 		base: "https://huggingface.co",
 		transform: (path) => path.replace(/^\/hf\//, "/"),
 	},
+	/** @type {{base: string, transform: function(string): string}} npm registry configuration */
+	npm: {
+		base: "https://registry.npmjs.org",
+		transform: (path) => path.replace(/^\/npm\//, "/"),
+	},
 	// /** @type {{base: string, transform: function(string): string}} All platforms */
 	// link: {
 	// 	base: "https://",

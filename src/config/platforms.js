@@ -28,6 +28,11 @@ export const PLATFORMS = {
 		base: "https://pypi.org",
 		transform: (path) => path.replace(/^\/pypi\//, "/"),
 	},
+	/** @type {{base: string, transform: function(string): string}} PyPI files configuration */
+	"pypi-files": {
+		base: "https://files.pythonhosted.org",
+		transform: (path) => path.replace(/^\/pypi\/files\//, "/"),
+	},
 	/** @type {{base: string, transform: function(string): string}} conda default channels configuration */
 	conda: {
 		base: "https://repo.anaconda.com",

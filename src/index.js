@@ -149,13 +149,12 @@ async function handleRequest(request, env, ctx) {
 		// Parse platform and path
 		let platform;
 
-		// Special handling for nested platforms like /conda/community/
-		if (url.pathname.startsWith("/conda/community/")) {
-			platform = "conda-community";
-		} else {
-			const [_, firstSegment] = url.pathname.split("/");
-			platform = firstSegment;
-		}
+		// Platform detection using transform patterns
+		platform =
+			Object.keys(CONFIG.PLATFORMS).find((key) => {
+				const expectedPrefix = `/${key.replace("-", "/")}/`;
+				return url.pathname.startsWith(expectedPrefix);
+			}) || url.pathname.split("/")[1];
 
 		if (!platform || !CONFIG.PLATFORMS[platform]) {
 			return new Response("Invalid or missing platform", {
@@ -351,6 +350,21 @@ async function handleRequest(request, env, ctx) {
 			);
 		}
 
+		// Handle PyPI simple index URL rewriting
+		let responseBody = response.body;
+		if (
+			platform === "pypi" &&
+			response.headers.get("content-type")?.includes("text/html")
+		) {
+			const originalText = await response.text();
+			// Rewrite URLs in the response body to go through the Cloudflare Worker
+			const rewrittenText = originalText.replace(
+				/https:\/\/files\.pythonhosted\.org/g,
+				`${url.origin}/pypi/files`
+			);
+			responseBody = rewrittenText;
+		}
+
 		// Prepare response headers
 		const headers = new Headers(response.headers);
 
@@ -368,7 +382,7 @@ async function handleRequest(request, env, ctx) {
 		}
 
 		// Create final response
-		const finalResponse = new Response(response.body, {
+		const finalResponse = new Response(responseBody, {
 			status: response.status,
 			headers: headers,
 		});

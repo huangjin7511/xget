@@ -345,9 +345,6 @@ npm config set registry https://xget.xi-xu.me/npm/
 
 # 验证配置
 npm config get registry
-
-# 恢复默认镜像
-npm config set registry https://registry.npmjs.org/
 ```
 
 #### 在项目中使用
@@ -378,10 +375,6 @@ pip config set global.trusted-host xget.xi-xu.me
 
 # 验证配置
 pip config list
-
-# 恢复默认镜像
-pip config unset global.index-url
-pip config unset global.trusted-host
 ```
 
 #### 在项目中使用

@@ -1,10 +1,15 @@
 # Xget
 
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-一键部署)
+
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
 [![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-FFD21E?&logoColor=black)](#hugging-face)
-[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-一键部署)
-[![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?&logo=googlechrome&logoColor=white)](#-生态系统集成)
+[![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-包管理加速)
+[![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
+[![Conda](https://img.shields.io/badge/Conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)
+
+[![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-4285F4?logo=googlechrome&logoColor=white)](https://github.com/xixu-me/Xget-for-Chromium)
 
 一个高性能、安全的代理服务，专为加速 GitHub、GitLab、Hugging Face、npm、PyPI 和 conda 的文件下载和 Git 操作而设计。
 
@@ -68,7 +73,7 @@
   - 检测 Git 客户端 User-Agent 模式
   - 支持 `service=git-upload-pack` 等查询参数
 - **完整操作支持**：
-  - `git clone`：完整仓库克隆，支持浅克隆和分支指定
+  - `git clone`：完整存储库克隆，支持浅克隆和分支指定
   - `git push`：代码推送和分支管理
   - `git pull/fetch`：增量更新和远程同步
   - `git submodule`：子模块递归克隆
@@ -122,7 +127,7 @@
 
 3. **自定义配置（可选）**
 
-   编辑 `wrangler.toml` 文件设置你的项目名称：
+   编辑 `wrangler.toml` 文件设置你的存储库名称：
 
    ```toml
    name = "你的-xget-项目名"
@@ -244,7 +249,7 @@ https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
 Xget 完全兼容 Git 协议，支持所有标准 Git 操作：
 
 ```bash
-# 克隆仓库
+# 克隆存储库
 git clone https://xget.xi-xu.me/gh/microsoft/vscode.git
 
 # 克隆指定分支
@@ -253,14 +258,14 @@ git clone -b main https://xget.xi-xu.me/gh/facebook/react.git
 # 浅克隆（仅最新提交）
 git clone --depth 1 https://xget.xi-xu.me/gh/torvalds/linux.git
 
-# 添加远程仓库
-git remote add upstream https://xget.xi-xu.me/gh/[用户名]/[仓库名].git
+# 添加远程存储库
+git remote add upstream https://xget.xi-xu.me/gh/[所有者]/[存储库].git
 
 # 拉取更新
 git pull https://xget.xi-xu.me/gh/microsoft/vscode.git main
 
 # 子模块递归克隆
-git clone --recursive https://xget.xi-xu.me/gh/[用户名]/[带子模块的仓库].git
+git clone --recursive https://xget.xi-xu.me/gh/[用户名]/[带子模块的存储库].git
 ```
 
 ### 主流下载工具集成
@@ -537,13 +542,13 @@ jobs:
       - name: Clone dependency repo
         run: |
           # 使用 Xget 加速 Git 克隆
-          git clone https://xget.xi-xu.me/gh/[依赖项目]/[仓库名].git
+          git clone https://xget.xi-xu.me/gh/[所有者]/[存储库].git
           
       - name: Download release assets
         run: |
           # 批量下载发布文件
-          curl -L -O https://xget.xi-xu.me/gh/[项目名]/releases/download/v1.0.0/[文件名].tar.gz
-          curl -L -O https://xget.xi-xu.me/gh/[项目名]/releases/download/v1.0.0/[文件名].zip
+          curl -L -O https://xget.xi-xu.me/gh/[所有者]/[存储库]/releases/download/v1.0.0/[文件名].tar.gz
+          curl -L -O https://xget.xi-xu.me/gh/[所有者]/[存储库]/releases/download/v1.0.0/[文件名].zip
 ```
 
 #### GitLab CI
@@ -558,7 +563,7 @@ download_dependencies:
   script:
     # 使用 Xget 加速下载
     - wget https://xget.xi-xu.me/gl/gitlab-org/gitlab-runner/-/archive/main/gitlab-runner-main.zip
-    - git clone https://xget.xi-xu.me/gh/[外部项目]/[依赖仓库].git
+    - git clone https://xget.xi-xu.me/gh/[所有者]/[依赖存储库].git
     # 下载 Hugging Face 数据集
     - curl -L -O https://xget.xi-xu.me/hf/datasets/wikitext/resolve/main/wikitext-103-v1/wiki.train.tokens
   artifacts:
@@ -580,7 +585,7 @@ RUN apt-get update && apt-get install -y wget curl git
 RUN wget https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 
 # 克隆源码
-RUN git clone https://xget.xi-xu.me/gh/[项目名]/[源码仓库].git /app
+RUN git clone https://xget.xi-xu.me/gh/[所有者]/[源码存储库].git /app
 
 # 下载模型文件
 RUN curl -L -o /models/model.bin https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
@@ -619,7 +624,7 @@ export const CONFIG = {
 
 ### 性能调优建议
 
-- **缓存优化**：根据使用模式调整 `CACHE_DURATION`，频繁更新的仓库可适当降低
+- **缓存优化**：根据使用模式调整 `CACHE_DURATION`，频繁更新的存储库可适当降低
 - **超时设置**：网络条件较差时可适当增加 `TIMEOUT_SECONDS`
 - **重试策略**：高延迟环境下可增加 `MAX_RETRIES` 和 `RETRY_DELAY_MS`
 
@@ -641,7 +646,7 @@ export const PLATFORMS = {
 
 ## 🚧 开发
 
-1. **项目设置**
+1. **存储库设置**
 
    ```bash
    git clone https://github.com/xixu-me/Xget.git
@@ -663,7 +668,7 @@ export const PLATFORMS = {
 
 ## 🧪 测试
 
-项目包含完整的测试套件，确保代码质量和功能正确性。
+存储库包含完整的测试套件，确保代码质量和功能正确性。
 
 ### 完整测试
 
@@ -721,7 +726,7 @@ npx wrangler dev --log-level debug
 
 ## ⚠️ 免责声明
 
-- **合法使用**：本项目仅用于加速合法的公开文件下载和 Git 操作，请遵守相关平台的使用条款和当地法律法规
+- **合法使用**：本存储库仅用于加速合法的公开文件下载和 Git 操作，请遵守相关平台的使用条款和当地法律法规
 - **服务可用性**：公共实例 `xget.xi-xu.me` 为免费服务，不保证 100% 可用性，建议生产环境部署自己的实例
 - **数据安全**：虽然 Xget 不存储或记录用户数据，但请谨慎处理敏感信息的下载
 - **责任限制**：使用本服务造成的任何直接或间接损失，开发者不承担责任
@@ -729,19 +734,19 @@ npx wrangler dev --log-level debug
 
 ## 🤝 贡献
 
-我们欢迎各种形式的贡献！请查看 [贡献指南](CONTRIBUTING.md) 了解如何参与项目开发。
+我们欢迎各种形式的贡献！请查看 [贡献指南](CONTRIBUTING.md) 了解如何参与存储库开发。
 
 ### 快速开始贡献
 
 1. **报告问题**: 使用 [Issue 模板](https://github.com/xixu-me/Xget/issues/new/choose) 报告 bug 或提出功能请求
-2. **提交代码**: Fork 项目，创建功能分支，提交 Pull Request
+2. **提交代码**: Fork 存储库，创建功能分支，提交 Pull Request
 3. **改进文档**: 修正错误、添加示例、完善说明
 4. **测试反馈**: 在不同环境下测试并提供反馈
 
 ### 开发环境
 
 ```bash
-# 克隆项目
+# 克隆存储库
 git clone https://github.com/xixu-me/Xget.git
 cd Xget
 
@@ -761,7 +766,7 @@ npm test
 
 ## 🔗 相关链接
 
-- **项目主页**: [GitHub Repository](https://github.com/xixu-me/Xget)
+- **存储库主页**: [GitHub Repository](https://github.com/xixu-me/Xget)
 - **公共实例**: [xget.xi-xu.me](https://xget.xi-xu.me)
 - **浏览器扩展**: [Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium)
 - **问题反馈**: [GitHub Issues](https://github.com/xixu-me/Xget/issues)
@@ -780,7 +785,7 @@ npm test
 
 <div align="center">
 
-**如果这个项目对您有帮助，请考虑给它一个 ⭐ Star！**
+**如果这个存储库对您有帮助，请考虑给它一个 ⭐ Star！**
 
 Made with ❤️ by [Xi Xu](https://xi-xu.me)
 

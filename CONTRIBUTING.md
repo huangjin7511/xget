@@ -1,6 +1,6 @@
 # 贡献指南
 
-感谢您对 Xget 项目的关注！我们欢迎各种形式的贡献，包括但不限于代码、文档、测试、反馈和建议。
+感谢您对 Xget 的关注！我们欢迎各种形式的贡献，包括但不限于代码、文档、测试、反馈和建议。
 
 ## 🤝 贡献方式
 
@@ -12,7 +12,7 @@
 
 ### 提交代码
 
-- Fork 项目到您的 GitHub 账户
+- Fork 存储库到您的 GitHub 账户
 - 创建功能分支 (`git checkout -b feature/amazing-feature`)
 - 提交更改 (`git commit -m 'Add some amazing feature'`)
 - 推送到分支 (`git push origin feature/amazing-feature`)
@@ -37,7 +37,7 @@
 ### 本地开发
 
 ```bash
-# 克隆项目
+# 克隆存储库
 git clone https://github.com/xixu-me/Xget.git
 cd Xget
 
@@ -55,26 +55,6 @@ npm run format
 
 # 代码检查
 npm run lint
-```
-
-### 项目结构
-
-```
-Xget/
-├── src/
-│   ├── config/          # 配置文件
-│   │   ├── index.js     # 主配置
-│   │   └── platforms.js # 平台配置
-│   ├── utils/           # 工具函数
-│   └── index.js         # 主入口文件
-├── tests/               # 测试文件
-├── docs/                # 文档
-├── .github/             # GitHub 配置
-│   ├── ISSUE_TEMPLATE/  # Issue 模板
-│   └── workflows/       # CI/CD 工作流
-├── wrangler.toml        # Cloudflare Workers 配置
-├── package.json
-└── README.md
 ```
 
 ## 📝 代码规范
@@ -174,7 +154,7 @@ perf(proxy): optimize request handling performance
 ### 提交前检查
 
 - [ ] 代码通过所有测试
-- [ ] 代码符合项目规范
+- [ ] 代码符合存储库规范
 - [ ] 添加了必要的测试
 - [ ] 更新了相关文档
 - [ ] Commit 消息符合规范
@@ -199,7 +179,7 @@ perf(proxy): optimize request handling performance
 
 - 代码贡献会在 GitHub 贡献图中显示
 - 重要贡献会在 Release Notes 中特别提及
-- 长期贡献者可能被邀请成为项目维护者
+- 长期贡献者可能被邀请成为存储库维护者
 
 ## 📋 开发任务
 
@@ -240,11 +220,11 @@ A: 检查 CORS 配置，确保允许的源和方法设置正确。
 
 ## 📄 许可证
 
-通过贡献代码，您同意您的贡献将在与项目相同的 [GPL-3.0 许可证](LICENSE) 下发布。
+通过贡献代码，您同意您的贡献将在与存储库相同的 [GPL-3.0 许可证](LICENSE) 下发布。
 
 ## 🙏 致谢
 
-感谢所有为 Xget 项目做出贡献的开发者、测试者和用户。您的支持和反馈是项目持续改进的动力！
+感谢所有为 Xget 做出贡献的开发者、测试者和用户。您的支持和反馈是存储库持续改进的动力！
 
 ---
 

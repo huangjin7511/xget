@@ -193,7 +193,7 @@ body:
       label: 确认
       description: 在提交之前，请确认以下内容
       options:
-        - label: 我已经阅读了项目的 README 和部署文档
+        - label: 我已经阅读了存储库的 README 和部署文档
           required: true
         - label: 我已经搜索了现有的 issues 寻找类似问题
           required: true

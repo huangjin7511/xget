@@ -1,26 +1,6 @@
 # Xget 测试文档
 
-本目录包含 Xget 项目的完整测试套件，涵盖单元测试、集成测试、性能测试和安全测试。
-
-## 📁 目录结构
-
-```
-test/
-├── benchmark/           # 性能基准测试
-│   └── performance.bench.js
-├── fixtures/           # 测试数据和模拟响应
-│   └── responses.js
-├── helpers/            # 测试工具和辅助函数
-│   └── test-utils.js
-├── index.test.js       # 核心功能测试
-├── integration.test.js # 集成测试
-├── performance.test.js # 性能监控测试
-├── platforms.test.js   # 平台配置测试
-├── security.test.js    # 安全功能测试
-├── utils.test.js       # 工具函数测试
-├── setup.js           # 测试环境设置
-└── README.md          # 本文档
-```
+本目录包含 Xget 的完整测试套件，涵盖单元测试、集成测试、性能测试和安全测试。
 
 ## 🚀 运行测试
 
@@ -126,7 +106,7 @@ const response = createMockResponse(MOCK_RESPONSES.github.packageJson);
 
 ## 📊 测试覆盖率
 
-项目设置了以下覆盖率目标：
+存储库设置了以下覆盖率目标：
 
 - **分支覆盖率**: 80%
 - **函数覆盖率**: 80%
@@ -353,7 +333,7 @@ it('应该包含所有安全头', async () => {
 
 1. 确定测试类型和位置
 2. 使用现有的测试工具
-3. 遵循项目的测试风格
+3. 遵循存储库的测试风格
 4. 确保测试通过且有意义
 
 ### 修复测试

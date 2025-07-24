@@ -138,7 +138,7 @@ describe('Security Features', () => {
 
     it('should handle Unicode characters safely', async () => {
       const unicodePaths = [
-        '/gh/用户/仓库/文件.txt',
+        '/gh/所有者/存储库/文件.txt',
         '/gh/user/repo/файл.txt',
         '/gh/user/repo/ファイル.txt'
       ];

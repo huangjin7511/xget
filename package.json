@@ -3,6 +3,11 @@
 		"xget": "file:"
 	},
 	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.5.0",
+		"@cloudflare/workers-types": "^4.20241218.0",
+		"eslint": "^9.17.0",
+		"prettier": "^3.4.2",
+		"vitest": "^2.1.8",
 		"wrangler": "^4.18.0"
 	},
 	"name": "xget",
@@ -10,7 +15,21 @@
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
-		"start": "wrangler dev"
+		"format": "node scripts/test.js format",
+		"format:check": "prettier --check src/ test/ *.js *.json *.md",
+		"lint": "node scripts/test.js lint",
+		"lint:fix": "eslint src/ test/ --fix",
+		"start": "wrangler dev",
+		"test": "node scripts/test.js run",
+		"test:bench": "node scripts/test.js bench",
+		"test:ci": "node scripts/test.js ci",
+		"test:clean": "node scripts/test.js clean",
+		"test:coverage": "node scripts/test.js coverage",
+		"test:run": "vitest run",
+		"test:setup": "node scripts/test.js setup",
+		"test:ui": "vitest --ui",
+		"test:watch": "node scripts/test.js watch",
+		"type-check": "tsc --noEmit"
 	},
-	"version": "0.0.0"
+	"version": "1.0.0"
 }

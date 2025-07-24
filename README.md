@@ -697,6 +697,61 @@ npx wrangler dev --log-level debug
 - **责任限制**：使用本服务造成的任何直接或间接损失，开发者不承担责任
 - **第三方平台**：请尊重 GitHub、GitLab、Hugging Face 等平台的服务条款和速率限制
 
+## 🤝 贡献
+
+我们欢迎各种形式的贡献！请查看 [贡献指南](CONTRIBUTING.md) 了解如何参与项目开发。
+
+### 快速开始贡献
+
+1. **报告问题**: 使用 [Issue 模板](https://github.com/xixu-me/Xget/issues/new/choose) 报告 bug 或提出功能请求
+2. **提交代码**: Fork 项目，创建功能分支，提交 Pull Request
+3. **改进文档**: 修正错误、添加示例、完善说明
+4. **测试反馈**: 在不同环境下测试并提供反馈
+
+### 开发环境
+
+```bash
+# 克隆项目
+git clone https://github.com/xixu-me/Xget.git
+cd Xget
+
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 运行测试
+npm test
+```
+
+## 🌟 Star 历史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=xixu-me/Xget&type=Date)](https://star-history.com/#xixu-me/Xget&Date)
+
+## 🔗 相关链接
+
+- **项目主页**: [GitHub Repository](https://github.com/xixu-me/Xget)
+- **公共实例**: [xget.xi-xu.me](https://xget.xi-xu.me)
+- **浏览器扩展**: [Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium)
+- **问题反馈**: [GitHub Issues](https://github.com/xixu-me/Xget/issues)
+
+## 📞 联系方式
+
+- **作者**: [Xi Xu](https://xi-xu.me)
+- **邮箱**: [联系邮箱](mailto:contact@xi-xu.me)
+- **赞助**: [赞助链接](https://xi-xu.me/#sponsorships)
+
 ## 📝 许可证
 
 本存储库采用 GPL-3.0 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+
+---
+
+<div align="center">
+
+**如果这个项目对您有帮助，请考虑给它一个 ⭐ Star！**
+
+Made with ❤️ by [Xi Xu](https://xi-xu.me)
+
+</div>

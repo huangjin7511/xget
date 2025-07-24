@@ -150,8 +150,16 @@ async function handleRequest(request, env, ctx) {
 		let platform;
 
 		// Platform detection using transform patterns
+		// Sort platforms by path length (descending) to prioritize more specific paths
+		// e.g., conda/community should match before conda, pypi/files before pypi
+		const sortedPlatforms = Object.keys(CONFIG.PLATFORMS).sort((a, b) => {
+			const pathA = `/${a.replace("-", "/")}/`;
+			const pathB = `/${b.replace("-", "/")}/`;
+			return pathB.length - pathA.length;
+		});
+
 		platform =
-			Object.keys(CONFIG.PLATFORMS).find((key) => {
+			sortedPlatforms.find((key) => {
 				const expectedPrefix = `/${key.replace("-", "/")}/`;
 				return url.pathname.startsWith(expectedPrefix);
 			}) || url.pathname.split("/")[1];

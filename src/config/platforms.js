@@ -25,7 +25,7 @@ export const PLATFORMS = {
 	},
 	/** @type {{base: string, transform: function(string): string}} PyPI registry configuration */
 	pypi: {
-		base: "https://files.pythonhosted.org",
+		base: "https://pypi.org",
 		transform: (path) => path.replace(/^\/pypi\//, "/"),
 	},
 	/** @type {{base: string, transform: function(string): string}} conda default channels configuration */

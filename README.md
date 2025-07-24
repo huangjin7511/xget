@@ -148,7 +148,7 @@
 | GitLab | `/gl/` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
 | Hugging Face | `/hf/` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | npm | `/npm/` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
-| PyPI | `/pypi/` | `https://files.pythonhosted.org/...` | `https://xget.xi-xu.me/pypi/...` |
+| PyPI | `/pypi/` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
 | conda | `/conda/` | `https://repo.anaconda.com/...` 和 `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` 和 `https://xget.xi-xu.me/conda/community/...` |
 
 ### 各平台转换示例
@@ -209,13 +209,13 @@ https://xget.xi-xu.me/npm/lodash
 
 ```url
 # Python 包文件原始链接
-https://files.pythonhosted.org/packages/source/r/requests/requests-2.31.0.tar.gz
+https://pypi.org/packages/source/r/requests/requests-2.31.0.tar.gz
 
 # 转换后（添加 /pypi/ 前缀）
 https://xget.xi-xu.me/pypi/packages/source/r/requests/requests-2.31.0.tar.gz
 
 # Wheel 文件原始链接
-https://files.pythonhosted.org/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
+https://pypi.org/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
 
 # 转换后（添加 /pypi/ 前缀）
 https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
@@ -365,8 +365,6 @@ yarn install
 ```
 
 ### Python 包管理加速
-
-#### 直接下载 Python 包
 
 #### 配置 pip 使用 Xget 镜像
 

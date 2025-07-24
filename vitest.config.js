@@ -31,8 +31,6 @@ export default defineWorkersConfig({
 					statements: 80
 				}
 			}
-		},
-		globals: true,
-		environment: 'node'
+		}
 	},
 });

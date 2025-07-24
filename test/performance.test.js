@@ -53,14 +53,18 @@ describe('Performance Monitoring', () => {
     });
 
     it('should warn on duplicate mark names', () => {
-      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      // Mock console.warn for this test
+      const originalWarn = console.warn;
+      const mockWarn = vi ? vi.fn() : jest.fn();
+      console.warn = mockWarn;
       
       monitor.mark('duplicate');
       monitor.mark('duplicate');
       
-      expect(consoleSpy).toHaveBeenCalledWith('Mark with name duplicate already exists.');
+      expect(mockWarn).toHaveBeenCalledWith('Mark with name duplicate already exists.');
       
-      consoleSpy.mockRestore();
+      // Restore original console.warn
+      console.warn = originalWarn;
     });
 
     it('should return metrics as plain object', () => {

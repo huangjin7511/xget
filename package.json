@@ -3,32 +3,28 @@
 		"xget": "file:"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.5.0",
-		"@cloudflare/workers-types": "^4.20241218.0",
-		"eslint": "^9.17.0",
-		"prettier": "^3.4.2",
-		"vitest": "^2.1.8",
-		"wrangler": "^4.18.0"
+		"@cloudflare/vitest-pool-workers": "^0.8.36",
+		"@cloudflare/workers-types": "^4.20250724.0",
+		"eslint": "^9.31.0",
+		"prettier": "^3.6.2",
+		"vitest": "^3.1.4",
+		"wrangler": "^3.100.0"
 	},
 	"name": "xget",
 	"private": true,
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
-		"format": "node scripts/test.js format",
+		"format": "prettier --write src/ test/ *.js *.json *.md",
 		"format:check": "prettier --check src/ test/ *.js *.json *.md",
-		"lint": "node scripts/test.js lint",
+		"lint": "eslint src/ test/",
 		"lint:fix": "eslint src/ test/ --fix",
 		"start": "wrangler dev",
-		"test": "node scripts/test.js run",
-		"test:bench": "node scripts/test.js bench",
-		"test:ci": "node scripts/test.js ci",
-		"test:clean": "node scripts/test.js clean",
-		"test:coverage": "node scripts/test.js coverage",
+		"test": "vitest",
+		"test:coverage": "vitest run --coverage",
 		"test:run": "vitest run",
-		"test:setup": "node scripts/test.js setup",
 		"test:ui": "vitest --ui",
-		"test:watch": "node scripts/test.js watch",
+		"test:watch": "vitest --watch",
 		"type-check": "tsc --noEmit"
 	},
 	"version": "1.0.0"

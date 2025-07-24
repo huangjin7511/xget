@@ -28,6 +28,11 @@ export const PLATFORMS = {
 		base: "https://files.pythonhosted.org",
 		transform: (path) => path.replace(/^\/pypi\//, "/"),
 	},
+	/** @type {{base: string, transform: function(string): string}} conda registry configuration */
+	conda: {
+		base: "https://repo.anaconda.com",
+		transform: (path) => path.replace(/^\/conda\//, "/"),
+	},
 	// /** @type {{base: string, transform: function(string): string}} All platforms */
 	// link: {
 	// 	base: "https://",

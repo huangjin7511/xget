@@ -6,7 +6,7 @@
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-一键部署)
 [![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?&logo=googlechrome&logoColor=white)](#-生态系统集成)
 
-一个高性能、安全的代理服务，专为加速 GitHub、GitLab、Hugging Face、npm 和 PyPI 的文件下载和 Git 操作而设计。
+一个高性能、安全的代理服务，专为加速 GitHub、GitLab、Hugging Face、npm、PyPI 和 conda 的文件下载和 Git 操作而设计。
 
 ## 🎯 快速使用
 
@@ -29,7 +29,8 @@
 - **Hugging Face 优化**：针对大型模型文件和数据集进行专门优化，支持模型和数据集的高速下载
 - **npm 注册表**：加速 npm 包下载和元数据获取，提升包管理器性能
 - **PyPI 支持**：加速 Python 包下载，提升 pip 安装速度和可靠性
-- **路径智能转换**：自动识别平台前缀（/gh/、/gl/、/hf/、/npm/、/pypi/）并转换为目标平台的正确 URL 结构
+- **conda 生态**：支持 Anaconda 和 Miniconda 包下载，加速科学计算环境搭建
+- **路径智能转换**：自动识别平台前缀（/gh/、/gl/、/hf/、/npm/、/pypi/、/conda/）并转换为目标平台的正确 URL 结构
 
 ### 🔒 企业级安全保障
 
@@ -148,6 +149,7 @@
 | Hugging Face | `/hf/` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | npm | `/npm/` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `/pypi/` | `https://files.pythonhosted.org/...` | `https://xget.xi-xu.me/pypi/...` |
+| conda | `/conda/` | `https://repo.anaconda.com/...` | `https://xget.xi-xu.me/conda/...` |
 
 ### 各平台转换示例
 
@@ -217,6 +219,22 @@ https://files.pythonhosted.org/packages/py3/r/requests/requests-2.31.0-py3-none-
 
 # 转换后（添加 /pypi/ 前缀）
 https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
+```
+
+#### conda
+
+```url
+# Anaconda 包文件原始链接
+https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_0.conda
+
+# 转换后（添加 /conda/ 前缀）
+https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_0.conda
+
+# conda-forge 包文件原始链接
+https://repo.anaconda.com/pkgs/conda-forge/noarch/pip-23.1.2-pyhd8ed1ab_0.conda
+
+# 转换后（添加 /conda/ 前缀）
+https://xget.xi-xu.me/conda/pkgs/conda-forge/noarch/pip-23.1.2-pyhd8ed1ab_0.conda
 ```
 
 ## 🎯 应用场景
@@ -335,6 +353,8 @@ def download_with_xget(original_url, save_path):
         xget_url = original_url.replace('https://registry.npmjs.org', 'https://xget.xi-xu.me/npm')
     elif 'files.pythonhosted.org' in original_url:
         xget_url = original_url.replace('https://files.pythonhosted.org', 'https://xget.xi-xu.me/pypi')
+    elif 'repo.anaconda.com' in original_url:
+        xget_url = original_url.replace('https://repo.anaconda.com', 'https://xget.xi-xu.me/conda')
     else:
         xget_url = original_url
     
@@ -364,6 +384,12 @@ download_with_xget(
 download_with_xget(
     'https://files.pythonhosted.org/packages/source/r/requests/requests-2.31.0.tar.gz',
     'requests-2.31.0.tar.gz'
+)
+
+# conda 包下载示例
+download_with_xget(
+    'https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_0.conda',
+    'numpy-1.24.3-py311h08b1b3b_0.conda'
 )
 ```
 
@@ -557,6 +583,95 @@ requests>=2.25.0
 numpy>=1.21.0
 pandas>=1.3.0
 matplotlib>=3.4.0
+```
+
+### conda 包管理加速
+
+#### 直接下载 conda 包
+
+```bash
+# 下载特定平台的包文件
+wget https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_0.conda
+
+# 下载跨平台包
+wget https://xget.xi-xu.me/conda/pkgs/conda-forge/noarch/pip-23.1.2-pyhd8ed1ab_0.conda
+
+# 批量下载科学计算包
+for package in numpy scipy pandas matplotlib; do
+  echo "下载 $package (需要具体版本和平台信息)"
+  # 实际使用中建议通过 conda 配置镜像
+done
+```
+
+#### 配置 conda 使用 Xget 镜像
+
+```bash
+# 添加 Xget 镜像源
+conda config --add channels https://xget.xi-xu.me/conda/pkgs/main/
+conda config --add channels https://xget.xi-xu.me/conda/pkgs/conda-forge/
+conda config --add channels https://xget.xi-xu.me/conda/pkgs/free/
+
+# 设置镜像优先级
+conda config --set channel_priority strict
+
+# 查看当前配置
+conda config --show channels
+
+# 移除默认源（可选，提升速度）
+conda config --remove channels defaults
+
+# 恢复默认配置
+conda config --remove-key channels
+```
+
+#### 环境文件配置
+
+```yaml
+# environment.yml
+name: myproject
+channels:
+  - https://xget.xi-xu.me/conda/pkgs/conda-forge/
+  - https://xget.xi-xu.me/conda/pkgs/main/
+dependencies:
+  - python=3.11
+  - numpy>=1.24.0
+  - pandas>=2.0.0
+  - matplotlib>=3.7.0
+  - scipy>=1.10.0
+  - pip
+  - pip:
+    - requests>=2.31.0
+```
+
+#### 创建和管理环境
+
+```bash
+# 使用 Xget 镜像创建环境
+conda create -n myenv python=3.11 numpy pandas matplotlib
+
+# 从环境文件创建（使用上面的 environment.yml）
+conda env create -f environment.yml
+
+# 安装包到现有环境
+conda install -n myenv scipy scikit-learn
+
+# 更新环境
+conda env update -f environment.yml
+```
+
+#### Mamba 加速安装
+
+```bash
+# 安装 mamba（更快的 conda 替代品）
+conda install mamba -n base -c conda-forge
+
+# 配置 mamba 使用 Xget 镜像
+mamba config --add channels https://xget.xi-xu.me/conda/pkgs/conda-forge/
+mamba config --add channels https://xget.xi-xu.me/conda/pkgs/main/
+
+# 使用 mamba 快速安装
+mamba install numpy pandas matplotlib scipy
+mamba create -n fastenv python=3.11 jupyter notebook
 ```
 
 ### 开发环境配置

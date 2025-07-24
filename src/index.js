@@ -130,13 +130,13 @@ async function handleRequest(request, env, ctx) {
 	try {
 		const url = new URL(request.url);
 
-		// Redirect root path to GitHub repository
+		const monitor = new PerformanceMonitor();
+
+		// Redirect root path or invalid platforms to GitHub repository
 		if (url.pathname === "/" || url.pathname === "") {
 			const HOME_PAGE_URL = "https://github.com/xixu-me/Xget";
 			return Response.redirect(HOME_PAGE_URL, 302);
 		}
-
-		const monitor = new PerformanceMonitor();
 
 		const validation = validateRequest(request, url);
 		if (!validation.valid) {
@@ -157,10 +157,8 @@ async function handleRequest(request, env, ctx) {
 			}) || url.pathname.split("/")[1];
 
 		if (!platform || !CONFIG.PLATFORMS[platform]) {
-			return new Response("Invalid or missing platform", {
-				status: 400,
-				headers: addSecurityHeaders(new Headers()),
-			});
+			const HOME_PAGE_URL = "https://github.com/xixu-me/Xget";
+			return Response.redirect(HOME_PAGE_URL, 302);
 		}
 
 		// Transform URL based on platform
@@ -358,6 +356,7 @@ async function handleRequest(request, env, ctx) {
 		) {
 			const originalText = await response.text();
 			// Rewrite URLs in the response body to go through the Cloudflare Worker
+			// files.pythonhosted.org URLs should be rewritten to go through our pypi/files endpoint
 			const rewrittenText = originalText.replace(
 				/https:\/\/files\.pythonhosted\.org/g,
 				`${url.origin}/pypi/files`

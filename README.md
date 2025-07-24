@@ -149,7 +149,7 @@
 | Hugging Face | `/hf/` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | npm | `/npm/` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `/pypi/` | `https://files.pythonhosted.org/...` | `https://xget.xi-xu.me/pypi/...` |
-| conda | `/conda/` | `https://repo.anaconda.com/...` | `https://xget.xi-xu.me/conda/...` |
+| conda | `/conda/` | `https://repo.anaconda.com/...` 和 `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` 和 `https://xget.xi-xu.me/conda/community/...` |
 
 ### 各平台转换示例
 
@@ -304,9 +304,7 @@ aria2c -c https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 aria2c -i download-list.txt  # 包含多个 Xget 链接的文件
 ```
 
-### Python 环境中的应用
-
-#### 作为 Hugging Face 镜像
+### 作为 Hugging Face 镜像
 
 ```python
 import os
@@ -334,63 +332,195 @@ print("模型和分词器加载成功！")
 # print(tokenizer.decode(chat_history_ids[:, new_user_input_ids.shape[-1]:][0], skip_special_tokens=True))
 ```
 
-#### 直接文件下载
+### npm 包管理加速
 
-```python
-import requests
-from urllib.parse import urlparse
+#### 配置 npm 使用 Xget 镜像
 
-def download_with_xget(original_url, save_path):
-    """使用 Xget 加速下载文件"""
-    # 自动转换链接
-    if 'github.com' in original_url:
-        xget_url = original_url.replace('https://github.com', 'https://xget.xi-xu.me/gh')
-    elif 'gitlab.com' in original_url:
-        xget_url = original_url.replace('https://gitlab.com', 'https://xget.xi-xu.me/gl')
-    elif 'huggingface.co' in original_url:
-        xget_url = original_url.replace('https://huggingface.co', 'https://xget.xi-xu.me/hf')
-    elif 'registry.npmjs.org' in original_url:
-        xget_url = original_url.replace('https://registry.npmjs.org', 'https://xget.xi-xu.me/npm')
-    elif 'files.pythonhosted.org' in original_url:
-        xget_url = original_url.replace('https://files.pythonhosted.org', 'https://xget.xi-xu.me/pypi')
-    elif 'repo.anaconda.com' in original_url:
-        xget_url = original_url.replace('https://repo.anaconda.com', 'https://xget.xi-xu.me/conda')
-    else:
-        xget_url = original_url
-    
-    # 下载文件
-    response = requests.get(xget_url, stream=True)
-    response.raise_for_status()
-    
-    with open(save_path, 'wb') as f:
-        for chunk in response.iter_content(chunk_size=8192):
-            f.write(chunk)
-    
-    print(f"文件已下载到: {save_path}")
+```bash
+# 临时使用 Xget 镜像
+npm install --registry https://xget.xi-xu.me/npm/
 
-# 使用示例
-download_with_xget(
-    'https://github.com/microsoft/vscode/archive/refs/heads/main.zip',
-    'vscode-main.zip'
-)
+# 全局配置 npm 镜像
+npm config set registry https://xget.xi-xu.me/npm/
 
-# npm 包下载示例
-download_with_xget(
-    'https://registry.npmjs.org/react/-/react-18.2.0.tgz',
-    'react-18.2.0.tgz'
-)
+# 验证配置
+npm config get registry
 
-# PyPI 包下载示例
-download_with_xget(
-    'https://files.pythonhosted.org/packages/source/r/requests/requests-2.31.0.tar.gz',
-    'requests-2.31.0.tar.gz'
-)
+# 恢复默认镜像
+npm config set registry https://registry.npmjs.org/
+```
 
-# conda 包下载示例
-download_with_xget(
-    'https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda',
-    'numpy-1.24.3.conda'
-)
+#### 在项目中使用
+
+```bash
+# 在 .npmrc 文件中配置项目级镜像
+echo "registry=https://xget.xi-xu.me/npm/" > .npmrc
+
+# 安装依赖
+npm install
+
+# 或者使用 yarn
+yarn config set registry https://xget.xi-xu.me/npm/
+yarn install
+```
+
+### Python 包管理加速
+
+#### 直接下载 Python 包
+
+#### 配置 pip 使用 Xget 镜像
+
+```bash
+# 临时使用 Xget 镜像
+pip install requests -i https://xget.xi-xu.me/pypi/simple/
+
+# 全局配置 pip 镜像
+pip config set global.index-url https://xget.xi-xu.me/pypi/simple/
+pip config set global.trusted-host xget.xi-xu.me
+
+# 验证配置
+pip config list
+
+# 恢复默认镜像
+pip config unset global.index-url
+pip config unset global.trusted-host
+```
+
+#### 在项目中使用
+
+```bash
+# 创建 pip.conf 文件（Linux/macOS）
+mkdir -p ~/.pip
+cat > ~/.pip/pip.conf << EOF
+[global]
+index-url = https://xget.xi-xu.me/pypi/simple/
+trusted-host = xget.xi-xu.me
+EOF
+
+# 或在项目根目录创建 pip.conf
+cat > pip.conf << EOF
+[global]
+index-url = https://xget.xi-xu.me/pypi/simple/
+trusted-host = xget.xi-xu.me
+EOF
+
+# 使用配置文件安装
+pip install -r requirements.txt --config-file pip.conf
+```
+
+#### 在 requirements.txt 中指定镜像
+
+```txt
+# requirements.txt
+--index-url https://xget.xi-xu.me/pypi/simple/
+--trusted-host xget.xi-xu.me
+
+requests>=2.25.0
+numpy>=1.21.0
+pandas>=1.3.0
+matplotlib>=3.4.0
+```
+
+### conda 包管理加速
+
+#### 配置 conda 使用 Xget 镜像
+
+```bash
+# 配置默认频道镜像
+conda config --add default_channels https://xget.xi-xu.me/conda/pkgs/msys2
+conda config --add default_channels https://xget.xi-xu.me/conda/pkgs/r
+conda config --add default_channels https://xget.xi-xu.me/conda/pkgs/main
+
+# 配置所有社区频道镜像（推荐）
+conda config --set channel_alias https://xget.xi-xu.me/conda/community
+
+# 或配置特定社区频道
+conda config --add channels https://xget.xi-xu.me/conda/community/conda-forge
+conda config --add channels https://xget.xi-xu.me/conda/community/bioconda
+
+# 设置频道优先级
+conda config --set channel_priority strict
+
+# 验证配置
+conda config --show
+```
+
+#### 在 .condarc 中配置
+
+.condarc 文件可以放在用户主目录（`~/.condarc`）或项目根目录下：
+
+```yaml
+default_channels:
+  - https://xget.xi-xu.me/conda/pkgs/main
+  - https://xget.xi-xu.me/conda/pkgs/r
+  - https://xget.xi-xu.me/conda/pkgs/msys2
+channel_alias: https://xget.xi-xu.me/conda/community
+channel_priority: strict
+show_channel_urls: true
+```
+
+#### 使用环境文件
+
+环境文件中可以直接指定完整的镜像 URL：
+
+```yaml
+# environment.yml
+name: myproject
+channels:
+  - https://xget.xi-xu.me/conda/pkgs/main
+  - https://xget.xi-xu.me/conda/pkgs/r
+  - https://xget.xi-xu.me/conda/community/bioconda
+  - https://xget.xi-xu.me/conda/community/conda-forge
+dependencies:
+  - python=3.11
+  - numpy>=1.24.0
+  - pandas>=2.0.0
+  - matplotlib>=3.7.0
+  - scipy>=1.10.0
+  - pip
+  - pip:
+    - requests>=2.28.0
+```
+
+```bash
+# 使用环境文件创建环境
+conda env create -f environment.yml
+
+# 更新环境
+conda env update -f environment.yml
+```
+
+### 开发环境配置
+
+#### 配置 Git 全局加速
+
+```bash
+# 为特定域名配置 Git 使用 Xget
+git config --global url."https://xget.xi-xu.me/gh/".insteadOf "https://github.com/"
+git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.com/"
+
+# 验证配置
+git config --global --get-regexp url
+
+# 现在所有 git clone https://github.com/... 都会自动使用 Xget 加速
+git clone https://github.com/microsoft/vscode.git  # 自动转换为 Xget 链接
+```
+
+#### IDE 集成
+
+```bash
+# VS Code 中配置 Git 使用 Xget
+# 在 settings.json 中添加：
+{
+  "git.defaultCloneDirectory": "~/Projects",
+  "terminal.integrated.env.linux": {
+    "GIT_CONFIG_GLOBAL": "~/.gitconfig-xget"
+  }
+}
+
+# 创建专用的 Git 配置文件
+echo '[url "https://xget.xi-xu.me/gh/"]' > ~/.gitconfig-xget
+echo '    insteadOf = https://github.com/' >> ~/.gitconfig-xget
 ```
 
 ### CI/CD 环境集成
@@ -474,247 +604,6 @@ RUN echo "default_channels:" > ~/.condarc && \
     conda install -y numpy pandas matplotlib
 
 WORKDIR /app
-```
-
-### npm 包管理加速
-
-#### 直接下载 npm 包
-
-```bash
-# 下载特定版本的包
-wget https://xget.xi-xu.me/npm/react/-/react-18.2.0.tgz
-
-# 下载最新版本（通过包元数据获取）
-curl -s https://xget.xi-xu.me/npm/lodash | jq -r '.dist.tarball' | sed 's|https://registry.npmjs.org|https://xget.xi-xu.me/npm|' | xargs wget
-
-# 批量下载依赖包
-for package in react react-dom lodash axios; do
-  wget "https://xget.xi-xu.me/npm/$package/-/$package-latest.tgz"
-done
-```
-
-#### 配置 npm 使用 Xget 镜像
-
-```bash
-# 临时使用 Xget 镜像
-npm install --registry https://xget.xi-xu.me/npm/
-
-# 全局配置 npm 镜像
-npm config set registry https://xget.xi-xu.me/npm/
-
-# 验证配置
-npm config get registry
-
-# 恢复默认镜像
-npm config set registry https://registry.npmjs.org/
-```
-
-#### 在项目中使用
-
-```bash
-# 在 .npmrc 文件中配置项目级镜像
-echo "registry=https://xget.xi-xu.me/npm/" > .npmrc
-
-# 安装依赖
-npm install
-
-# 或者使用 yarn
-yarn config set registry https://xget.xi-xu.me/npm/
-yarn install
-```
-
-### Python 包管理加速
-
-#### 直接下载 Python 包
-
-```bash
-# 下载特定版本的包（源码包）
-wget https://xget.xi-xu.me/pypi/packages/source/r/requests/requests-2.31.0.tar.gz
-
-# 下载 wheel 文件
-wget https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
-
-# 批量下载常用包
-for package in requests numpy pandas matplotlib; do
-  # 这里需要先获取具体的文件路径，实际使用中建议通过 pip 配置镜像
-  echo "下载 $package"
-done
-```
-
-#### 配置 pip 使用 Xget 镜像
-
-```bash
-# 临时使用 Xget 镜像
-pip install requests -i https://xget.xi-xu.me/pypi/simple/
-
-# 全局配置 pip 镜像
-pip config set global.index-url https://xget.xi-xu.me/pypi/simple/
-pip config set global.trusted-host xget.xi-xu.me
-
-# 验证配置
-pip config list
-
-# 恢复默认镜像
-pip config unset global.index-url
-pip config unset global.trusted-host
-```
-
-#### 在项目中使用
-
-```bash
-# 创建 pip.conf 文件（Linux/macOS）
-mkdir -p ~/.pip
-cat > ~/.pip/pip.conf << EOF
-[global]
-index-url = https://xget.xi-xu.me/pypi/simple/
-trusted-host = xget.xi-xu.me
-EOF
-
-# 或在项目根目录创建 pip.conf
-cat > pip.conf << EOF
-[global]
-index-url = https://xget.xi-xu.me/pypi/simple/
-trusted-host = xget.xi-xu.me
-EOF
-
-# 使用配置文件安装
-pip install -r requirements.txt --config-file pip.conf
-```
-
-#### 在 requirements.txt 中指定镜像
-
-```txt
-# requirements.txt
---index-url https://xget.xi-xu.me/pypi/simple/
---trusted-host xget.xi-xu.me
-
-requests>=2.25.0
-numpy>=1.21.0
-pandas>=1.3.0
-matplotlib>=3.4.0
-```
-
-### conda 包管理加速
-
-#### 直接下载 conda 包
-
-```bash
-# 下载默认频道包文件
-wget https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
-
-# 下载社区频道包文件
-wget https://xget.xi-xu.me/conda/community/conda-forge/linux-64/pandas-2.0.3-py311hd9cb047_0.conda
-
-# 下载频道元数据
-curl -O https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
-
-# 批量下载常用包
-for package in numpy pandas matplotlib scipy; do
-  echo "下载 $package"
-  # 实际使用中需要先查询具体的包版本和构建号
-done
-```
-
-#### 配置 conda 使用 Xget 镜像
-
-```bash
-# 配置默认频道镜像
-conda config --add default_channels https://xget.xi-xu.me/conda/pkgs/main
-conda config --add default_channels https://xget.xi-xu.me/conda/pkgs/r
-conda config --add default_channels https://xget.xi-xu.me/conda/pkgs/msys2
-
-# 配置所有社区频道镜像（推荐）
-conda config --set channel_alias https://xget.xi-xu.me/conda/community
-
-# 或配置特定社区频道
-conda config --add channels https://xget.xi-xu.me/conda/community/conda-forge
-conda config --add channels https://xget.xi-xu.me/conda/community/bioconda
-
-# 设置频道优先级
-conda config --set channel_priority strict
-
-# 验证配置
-conda config --show
-```
-
-#### 在 .condarc 中配置
-
-.condarc 文件可以放在用户主目录（`~/.condarc`）或项目根目录下：
-
-##### 镜像默认频道
-
-```yaml
-default_channels:
-  - https://xget.xi-xu.me/conda/pkgs/msys2
-  - https://xget.xi-xu.me/conda/pkgs/r
-  - https://xget.xi-xu.me/conda/pkgs/main
-channel_alias: https://xget.xi-xu.me/conda/community
-channel_priority: strict
-show_channel_urls: true
-```
-
-#### 使用环境文件
-
-环境文件中可以直接指定完整的镜像 URL：
-
-```yaml
-# environment.yml
-name: myproject
-channels:
-  - https://xget.xi-xu.me/conda/pkgs/main
-  - https://xget.xi-xu.me/conda/pkgs/r
-  - https://xget.xi-xu.me/conda/community/bioconda
-  - https://xget.xi-xu.me/conda/community/conda-forge
-dependencies:
-  - python=3.11
-  - numpy>=1.24.0
-  - pandas>=2.0.0
-  - matplotlib>=3.7.0
-  - scipy>=1.10.0
-  - pip
-  - pip:
-    - requests>=2.28.0
-```
-
-```bash
-# 使用环境文件创建环境
-conda env create -f environment.yml
-
-# 更新环境
-conda env update -f environment.yml
-```
-
-### 开发环境配置
-
-#### 配置 Git 全局加速
-
-```bash
-# 为特定域名配置 Git 使用 Xget
-git config --global url."https://xget.xi-xu.me/gh/".insteadOf "https://github.com/"
-git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.com/"
-
-# 验证配置
-git config --global --get-regexp url
-
-# 现在所有 git clone https://github.com/... 都会自动使用 Xget 加速
-git clone https://github.com/microsoft/vscode.git  # 自动转换为 Xget 链接
-```
-
-#### IDE 集成
-
-```bash
-# VS Code 中配置 Git 使用 Xget
-# 在 settings.json 中添加：
-{
-  "git.defaultCloneDirectory": "~/Projects",
-  "terminal.integrated.env.linux": {
-    "GIT_CONFIG_GLOBAL": "~/.gitconfig-xget"
-  }
-}
-
-# 创建专用的 Git 配置文件
-echo '[url "https://xget.xi-xu.me/gh/"]' > ~/.gitconfig-xget
-echo '    insteadOf = https://github.com/' >> ~/.gitconfig-xget
 ```
 
 ## 🔧 配置

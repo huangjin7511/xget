@@ -5,7 +5,7 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
-[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-FFD21E?&logoColor=black)](#hugging-face)
+[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-FFD21E?&logoColor=black)](#作为-hugging-face-镜像)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-包管理加速)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)

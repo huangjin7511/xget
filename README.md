@@ -1,5 +1,7 @@
 # Xget
 
+**[English](README.en.md)**
+
 [![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-4285F4?logo=googlechrome&logoColor=white)](https://github.com/xixu-me/Xget-for-Chromium)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-一键部署)
 

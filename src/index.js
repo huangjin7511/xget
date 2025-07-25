@@ -254,16 +254,22 @@ async function handleRequest(request, env, ctx) {
 
     // Handle Docker registry paths specially
     if (isDocker) {
-      // For Docker requests (excluding version check which is handled above),
-      // check if they have /cr/ prefix
-      if (!url.pathname.startsWith('/cr/') && !url.pathname.startsWith('/v2/cr/')) {
-        return new Response('Docker registry requests must use /cr/ prefix', {
-          status: 400,
-          headers: addSecurityHeaders(new Headers())
-        });
+      // Special handling for Docker auth endpoint
+      if (url.pathname === '/v2/auth') {
+        // Docker auth endpoint should be allowed even without /cr/ prefix
+        // We'll determine the platform from query parameters or default to docker
+        effectivePath = url.pathname;
+      } else {
+        // For other Docker requests, check if they have /cr/ prefix
+        if (!url.pathname.startsWith('/cr/') && !url.pathname.startsWith('/v2/cr/')) {
+          return new Response('Docker registry requests must use /cr/ prefix', {
+            status: 400,
+            headers: addSecurityHeaders(new Headers())
+          });
+        }
+        // Remove /v2 from the path for Docker registry API consistency if present
+        effectivePath = url.pathname.replace(/^\/v2/, '');
       }
-      // Remove /v2 from the path for Docker registry API consistency if present
-      effectivePath = url.pathname.replace(/^\/v2/, '');
     }
 
     // Platform detection using transform patterns
@@ -280,6 +286,12 @@ async function handleRequest(request, env, ctx) {
         const expectedPrefix = `/${key.replace('-', '/')}/`;
         return effectivePath.startsWith(expectedPrefix);
       }) || effectivePath.split('/')[1];
+
+    // Special handling for Docker auth endpoint
+    if (isDocker && url.pathname === '/v2/auth') {
+      // For auth requests, default to Docker Hub since it's the most common registry
+      platform = 'cr-docker';
+    }
 
     if (!platform || !CONFIG.PLATFORMS[platform]) {
       const HOME_PAGE_URL = 'https://github.com/xixu-me/Xget';
@@ -482,44 +494,63 @@ async function handleRequest(request, env, ctx) {
         if (isDocker && response.status === 401) {
           monitor.mark('docker_auth_challenge');
 
-          // Try to get an anonymous token for public images
+          // For Docker Hub public images, try to get anonymous token
           const authenticateStr = response.headers.get('WWW-Authenticate');
-          if (authenticateStr) {
+          if (authenticateStr && isDockerHub) {
             try {
               const wwwAuthenticate = parseAuthenticate(authenticateStr);
-              let scope = null;
+              let scope = '';
 
-              // Extract scope from the original request path if it's a manifest request
-              if (url.pathname.includes('/manifests/')) {
+              // Extract scope for Docker Hub images
+              if (url.pathname.includes('/manifests/') || url.pathname.includes('/blobs/')) {
                 const pathParts = url.pathname.split('/');
-                const registryPrefix = platform.replace('cr-', '');
-                if (registryPrefix === 'docker') {
-                  // For Docker Hub, construct scope from path
-                  // /v2/cr/docker/library/nginx/manifests/latest -> repository:library/nginx:pull
-                  const imagePathStart = pathParts.indexOf('manifests');
-                  if (imagePathStart >= 3) {
-                    const imageName = pathParts.slice(3, imagePathStart).join('/');
+                // For /v2/cr/docker/library/nginx/manifests/latest
+                const crIndex = pathParts.indexOf('cr');
+                if (crIndex >= 0) {
+                  const manifestsIndex =
+                    pathParts.indexOf('manifests') || pathParts.indexOf('blobs');
+                  if (manifestsIndex > crIndex + 2) {
+                    const imageName = pathParts.slice(crIndex + 2, manifestsIndex).join('/');
                     scope = `repository:${imageName}:pull`;
                   }
                 }
               }
 
-              // Try to get anonymous token
-              const tokenResponse = await fetchToken(wwwAuthenticate, scope || '', '');
+              // Get anonymous token from Docker Hub
+              const tokenUrl = new URL(wwwAuthenticate.realm);
+              tokenUrl.searchParams.set('service', wwwAuthenticate.service);
+              if (scope) {
+                tokenUrl.searchParams.set('scope', scope);
+              }
+
+              const tokenResponse = await fetch(tokenUrl, {
+                method: 'GET',
+                headers: {
+                  'User-Agent': 'Docker-Client/20.10.0 (linux)'
+                }
+              });
+
               if (tokenResponse.ok) {
-                // Retry the original request with the token
                 const tokenData = await tokenResponse.json();
                 if (tokenData.token) {
-                  const retryHeaders = new Headers(request.headers);
+                  // Retry with anonymous token
+                  const retryHeaders = new Headers();
+                  for (const [key, value] of request.headers.entries()) {
+                    if (key.toLowerCase() !== 'authorization') {
+                      retryHeaders.set(key, value);
+                    }
+                  }
                   retryHeaders.set('Authorization', `Bearer ${tokenData.token}`);
 
                   const retryResponse = await fetch(targetUrl, {
-                    ...finalFetchOptions,
-                    headers: retryHeaders
+                    method: request.method,
+                    headers: retryHeaders,
+                    redirect: 'manual'
                   });
 
-                  if (retryResponse.ok) {
+                  if (retryResponse.ok || retryResponse.status === 206) {
                     response = retryResponse;
+                    monitor.mark('anonymous_success');
                     break;
                   }
                 }
@@ -529,8 +560,17 @@ async function handleRequest(request, env, ctx) {
             }
           }
 
-          // If anonymous access fails, return unauthorized response
-          return responseUnauthorized(url);
+          // If anonymous access fails or it's not Docker Hub, pass through original auth challenge
+          const originalHeaders = new Headers();
+          for (const [key, value] of response.headers.entries()) {
+            originalHeaders.set(key, value);
+          }
+
+          const responseClone = response.clone();
+          return new Response(responseClone.body, {
+            status: 401,
+            headers: originalHeaders
+          });
         }
 
         // Don't retry on client errors (4xx) - these won't improve with retries

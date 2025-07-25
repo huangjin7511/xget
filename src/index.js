@@ -188,10 +188,7 @@ async function fetchToken(wwwAuthenticate, scope, authorization) {
  */
 function responseUnauthorized(url) {
   const headers = new Headers();
-  headers.set(
-    'WWW-Authenticate',
-    `Bearer realm="https://${url.hostname}/v2/auth",service="cloudflare-docker-proxy"`
-  );
+  headers.set('WWW-Authenticate', `Bearer realm="https://${url.hostname}/v2/auth",service="Xget"`);
   return new Response(JSON.stringify({ message: 'UNAUTHORIZED' }), {
     status: 401,
     headers: headers
@@ -449,7 +446,7 @@ async function handleRequest(request, env, ctx) {
 
         clearTimeout(timeoutId);
 
-        // Handle Docker Hub blob redirects manually (similar to cloudflare-docker-proxy)
+        // Handle Docker Hub blob redirects manually
         if (isDocker && isDockerHub && response.status === 307) {
           const location = response.headers.get('Location');
           if (location) {
@@ -466,71 +463,46 @@ async function handleRequest(request, env, ctx) {
           break;
         }
 
-        // For Docker registry, handle authentication challenges more intelligently
+        // For Docker registry, handle authentication challenges
         if (isDocker && response.status === 401) {
           monitor.mark('docker_auth_challenge');
 
-          // For Docker registries, first check if we can get a token without credentials
-          // This allows access to public repositories
-          const authenticateStr = response.headers.get('WWW-Authenticate');
-          if (authenticateStr) {
-            try {
-              const wwwAuthenticate = parseAuthenticate(authenticateStr);
+          // Pass through the original 401 response with the WWW-Authenticate header
+          // This allows the Docker client to handle authentication properly
+          const authHeaders = new Headers();
 
-              // Infer scope from the request path for Docker registry requests
-              let scope = '';
-              const pathParts = url.pathname.split('/');
-              if (pathParts.length >= 4 && pathParts[1] === 'v2') {
-                // Extract repository name from path like /v2/cr/docker/library/nginx/manifests/latest
-                // Remove /v2 and platform prefix to get the repo path
-                const repoPath = pathParts.slice(4).join('/'); // Skip /v2/cr/docker
-                const repoParts = repoPath.split('/');
-                if (repoParts.length >= 1) {
-                  const repoName = repoParts.slice(0, -2).join('/'); // Remove /manifests/tag or /blobs/sha
-                  if (repoName) {
-                    scope = `repository:${repoName}:pull`;
-                  }
-                }
-              }
+          // Copy the WWW-Authenticate header from the upstream response
+          const wwwAuthHeader = response.headers.get('WWW-Authenticate');
+          if (wwwAuthHeader) {
+            // Modify the realm to point to our /v2/auth endpoint
+            const modifiedAuth = wwwAuthHeader.replace(
+              /realm="[^"]*"/,
+              `realm="https://${url.hostname}/v2/auth"`
+            );
+            authHeaders.set('WWW-Authenticate', modifiedAuth);
+          } else {
+            // Fallback if no WWW-Authenticate header is present
+            authHeaders.set(
+              'WWW-Authenticate',
+              `Bearer realm="https://${url.hostname}/v2/auth",service="registry"`
+            );
+          }
 
-              // For Docker Hub library images, adjust the scope
-              if (isDockerHub && scope) {
-                let scopeParts = scope.split(':');
-                if (scopeParts.length === 3 && !scopeParts[1].includes('/')) {
-                  scopeParts[1] = 'library/' + scopeParts[1];
-                  scope = scopeParts.join(':');
-                }
-              }
-
-              // Try to get a token for public access (without authorization)
-              const tokenResponse = await fetchToken(wwwAuthenticate, scope || '', '');
-              if (tokenResponse.ok) {
-                const tokenData = await tokenResponse.json();
-                if (tokenData.token) {
-                  // Retry the original request with the obtained token
-                  const retryHeaders = new Headers(requestHeaders);
-                  retryHeaders.set('Authorization', `Bearer ${tokenData.token}`);
-
-                  const retryResponse = await fetch(targetUrl, {
-                    ...finalFetchOptions,
-                    headers: retryHeaders
-                  });
-
-                  if (retryResponse.ok) {
-                    response = retryResponse;
-                    monitor.mark('success');
-                    break;
-                  }
-                }
-              }
-            } catch (error) {
-              console.log('Token fetch failed:', error);
+          // Copy other relevant headers
+          for (const [key, value] of response.headers.entries()) {
+            if (
+              key.toLowerCase() !== 'www-authenticate' &&
+              !key.toLowerCase().startsWith('cf-') &&
+              key.toLowerCase() !== 'server'
+            ) {
+              authHeaders.set(key, value);
             }
           }
 
-          // If token fetch failed or didn't work, return the unauthorized response
-          // Only return this if we truly can't access the resource
-          return responseUnauthorized(url);
+          return new Response(await response.text(), {
+            status: 401,
+            headers: authHeaders
+          });
         }
 
         // Don't retry on client errors (4xx) - these won't improve with retries
@@ -573,17 +545,33 @@ async function handleRequest(request, env, ctx) {
 
     // If response is still not ok after all retries, return the error
     if (!response.ok && response.status !== 206) {
-      // For Docker authentication errors that we couldn't resolve with anonymous tokens,
-      // return a more helpful error message
+      // For Docker authentication errors, pass through the authentication challenge
       if (isDocker && response.status === 401) {
-        const errorText = await response.text().catch(() => '');
-        return new Response(
-          `Authentication required for this Docker registry resource. This may be a private repository. Original error: ${errorText}`,
-          {
-            status: 401,
-            headers: addSecurityHeaders(new Headers())
+        const authHeaders = new Headers();
+        const wwwAuthHeader = response.headers.get('WWW-Authenticate');
+        if (wwwAuthHeader) {
+          const modifiedAuth = wwwAuthHeader.replace(
+            /realm="[^"]*"/,
+            `realm="https://${url.hostname}/v2/auth"`
+          );
+          authHeaders.set('WWW-Authenticate', modifiedAuth);
+        }
+
+        // Copy other relevant headers
+        for (const [key, value] of response.headers.entries()) {
+          if (
+            key.toLowerCase() !== 'www-authenticate' &&
+            !key.toLowerCase().startsWith('cf-') &&
+            key.toLowerCase() !== 'server'
+          ) {
+            authHeaders.set(key, value);
           }
-        );
+        }
+
+        return new Response(await response.text().catch(() => '{"message":"UNAUTHORIZED"}'), {
+          status: 401,
+          headers: authHeaders
+        });
       }
       const errorText = await response.text().catch(() => 'Unknown error');
       return new Response(`Upstream server error (${response.status}): ${errorText}`, {

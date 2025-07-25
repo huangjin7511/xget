@@ -216,6 +216,104 @@ async function handleRequest(request, env, ctx) {
 
     const monitor = new PerformanceMonitor();
 
+    // Handle Docker authentication FIRST - before any other processing
+    if (isDocker && url.pathname === '/v2/auth') {
+      console.log('Handling Docker auth request:', url.toString());
+
+      // Extract the platform from the URL for auth requests
+      let authPlatform = 'cr-docker'; // default to Docker Hub
+
+      // Check if the request came from a specific registry based on the referrer or service
+      const service = url.searchParams.get('service');
+      if (service && service !== 'cloudflare-docker-proxy') {
+        // If service is set to a real service name, try to infer the platform
+        if (service === 'registry.docker.io') authPlatform = 'cr-docker';
+        else if (service.includes('quay.io')) authPlatform = 'cr-quay';
+        else if (service.includes('gcr.io')) authPlatform = 'cr-gcr';
+        // Add more platform detection as needed
+      }
+
+      try {
+        const newUrl = new URL(CONFIG.PLATFORMS[authPlatform] + '/v2/');
+        const resp = await fetch(newUrl.toString(), {
+          method: 'GET',
+          redirect: 'follow'
+        });
+
+        if (resp.status !== 401) {
+          // If no auth required, just return success response with empty token
+          return new Response(JSON.stringify({ token: '', access_token: '' }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+
+        const authenticateStr = resp.headers.get('WWW-Authenticate');
+        if (authenticateStr === null) {
+          return new Response(JSON.stringify({ error: 'No authentication challenge found' }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+          });
+        }
+
+        const wwwAuthenticate = parseAuthenticate(authenticateStr);
+        let scope = url.searchParams.get('scope');
+
+        // Autocomplete repo part into scope for DockerHub library images
+        // Example: repository:busybox:pull => repository:library/busybox:pull
+        if (scope && authPlatform === 'cr-docker') {
+          let scopeParts = scope.split(':');
+          if (scopeParts.length == 3 && !scopeParts[1].includes('/')) {
+            scopeParts[1] = 'library/' + scopeParts[1];
+            scope = scopeParts.join(':');
+          }
+        }
+
+        const tokenResponse = await fetchToken(
+          wwwAuthenticate,
+          scope || '',
+          request.headers.get('Authorization') || ''
+        );
+
+        // Check if token request was successful
+        if (!tokenResponse.ok) {
+          const errorText = await tokenResponse.text().catch(() => 'Unknown error');
+          console.error('Token fetch failed:', errorText);
+          return new Response(
+            JSON.stringify({
+              error: 'Authentication failed',
+              details: errorText
+            }),
+            {
+              status: tokenResponse.status,
+              headers: { 'Content-Type': 'application/json' }
+            }
+          );
+        }
+
+        // Ensure the response has correct content type
+        const tokenData = await tokenResponse.text();
+        console.log('Token response:', tokenData);
+        return new Response(tokenData, {
+          status: tokenResponse.status,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      } catch (error) {
+        console.error('Error in Docker auth:', error);
+        const message = error instanceof Error ? error.message : String(error);
+        return new Response(
+          JSON.stringify({
+            error: 'Authentication error',
+            message: message
+          }),
+          {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+          }
+        );
+      }
+    }
+
     // Handle Docker API version check
     if (isDocker && (url.pathname === '/v2/' || url.pathname === '/v2')) {
       // For Docker v2 API endpoint, we need to check if authentication is required
@@ -320,9 +418,19 @@ async function handleRequest(request, env, ctx) {
         return effectivePath.startsWith(expectedPrefix);
       }) || effectivePath.split('/')[1];
 
+    // Special handling for Docker auth endpoint
+    if (isDocker && url.pathname === '/v2/auth') {
+      platform = 'cr-docker'; // Default to Docker Hub for auth
+    }
+
     if (!platform || !CONFIG.PLATFORMS[platform]) {
-      const HOME_PAGE_URL = 'https://github.com/xixu-me/Xget';
-      return Response.redirect(HOME_PAGE_URL, 302);
+      // Special case: if this is Docker auth endpoint, don't redirect
+      if (isDocker && url.pathname === '/v2/auth') {
+        platform = 'cr-docker';
+      } else {
+        const HOME_PAGE_URL = 'https://github.com/xixu-me/Xget';
+        return Response.redirect(HOME_PAGE_URL, 302);
+      }
     }
 
     // Transform URL based on platform using unified logic
@@ -351,74 +459,6 @@ async function handleRequest(request, env, ctx) {
     const targetUrl = `${CONFIG.PLATFORMS[platform]}${finalTargetPath}${url.search}`;
     const isDockerHub = platform === 'cr-docker';
     const authorization = request.headers.get('Authorization');
-
-    // Handle Docker authentication
-    if (isDocker && url.pathname === '/v2/auth') {
-      // Extract the platform from the URL for auth requests
-      let authPlatform = 'cr-docker'; // default to Docker Hub
-
-      // Check if the request came from a specific registry based on the referrer or service
-      const service = url.searchParams.get('service');
-      if (service && service !== 'cloudflare-docker-proxy') {
-        // If service is set to a real service name, try to infer the platform
-        if (service === 'registry.docker.io') authPlatform = 'cr-docker';
-        else if (service.includes('quay.io')) authPlatform = 'cr-quay';
-        else if (service.includes('gcr.io')) authPlatform = 'cr-gcr';
-        // Add more platform detection as needed
-      }
-
-      try {
-        const newUrl = new URL(CONFIG.PLATFORMS[authPlatform] + '/v2/');
-        const resp = await fetch(newUrl.toString(), {
-          method: 'GET',
-          redirect: 'follow'
-        });
-
-        if (resp.status !== 401) {
-          // If no auth required, just return success response with empty token
-          return new Response(JSON.stringify({ token: '', access_token: '' }), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' }
-          });
-        }
-
-        const authenticateStr = resp.headers.get('WWW-Authenticate');
-        if (authenticateStr === null) {
-          return new Response('No authentication challenge found', { status: 500 });
-        }
-
-        const wwwAuthenticate = parseAuthenticate(authenticateStr);
-        let scope = url.searchParams.get('scope');
-
-        // Autocomplete repo part into scope for DockerHub library images
-        // Example: repository:busybox:pull => repository:library/busybox:pull
-        if (scope && authPlatform === 'cr-docker') {
-          let scopeParts = scope.split(':');
-          if (scopeParts.length == 3 && !scopeParts[1].includes('/')) {
-            scopeParts[1] = 'library/' + scopeParts[1];
-            scope = scopeParts.join(':');
-          }
-        }
-
-        const tokenResponse = await fetchToken(wwwAuthenticate, scope || '', authorization || '');
-
-        // Check if token request was successful
-        if (!tokenResponse.ok) {
-          const errorText = await tokenResponse.text().catch(() => 'Unknown error');
-          console.error('Token fetch failed:', errorText);
-          return new Response(`Authentication failed: ${errorText}`, {
-            status: tokenResponse.status,
-            headers: { 'Content-Type': 'application/json' }
-          });
-        }
-
-        return tokenResponse;
-      } catch (error) {
-        console.error('Error in Docker auth:', error);
-        const message = error instanceof Error ? error.message : String(error);
-        return new Response(`Authentication error: ${message}`, { status: 500 });
-      }
-    }
 
     // Handle DockerHub library image redirects before making the request
     if (isDocker && isDockerHub) {

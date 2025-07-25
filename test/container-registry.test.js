@@ -24,7 +24,7 @@ describe('Container Registry Support', () => {
 
   describe('Container Registry URL Transformation', () => {
     it('should handle Quay.io registry requests', async () => {
-      const testUrl = 'https://example.com/cr/quay/v2/bitnami/nginx/manifests/latest';
+      const testUrl = 'https://example.com/cr/quay/v2/quay/redis/manifests/latest';
       const response = await SELF.fetch(testUrl, { method: 'HEAD' });
 
       // Should attempt to proxy to Quay.io
@@ -32,7 +32,7 @@ describe('Container Registry Support', () => {
     });
 
     it('should handle Google Container Registry requests', async () => {
-      const testUrl = 'https://example.com/cr/gcr/v2/google-containers/pause/manifests/3.9';
+      const testUrl = 'https://example.com/cr/gcr/v2/distroless/base/manifests/latest';
       const response = await SELF.fetch(testUrl, { method: 'HEAD' });
 
       // Should attempt to proxy to GCR
@@ -40,7 +40,7 @@ describe('Container Registry Support', () => {
     });
 
     it('should handle GitHub Container Registry requests', async () => {
-      const testUrl = 'https://example.com/cr/ghcr/v2/microsoft/vscode/manifests/latest';
+      const testUrl = 'https://example.com/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest';
       const response = await SELF.fetch(testUrl, { method: 'HEAD' });
 
       // Should attempt to proxy to GHCR
@@ -81,7 +81,7 @@ describe('Container Registry Support', () => {
   describe('Docker Request Detection', () => {
     it('should detect Docker requests by path', async () => {
       const response = await SELF.fetch(
-        'https://example.com/cr/ghcr/v2/library/nginx/manifests/latest',
+        'https://example.com/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest',
         {
           method: 'GET'
         }
@@ -117,7 +117,7 @@ describe('Container Registry Support', () => {
   describe('Docker HTTP Methods', () => {
     it('should allow GET for manifest requests', async () => {
       const response = await SELF.fetch(
-        'https://example.com/cr/ghcr/v2/library/nginx/manifests/latest',
+        'https://example.com/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest',
         {
           method: 'GET'
         }
@@ -128,7 +128,7 @@ describe('Container Registry Support', () => {
 
     it('should allow HEAD for manifest requests', async () => {
       const response = await SELF.fetch(
-        'https://example.com/cr/ghcr/v2/library/nginx/manifests/latest',
+        'https://example.com/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest',
         {
           method: 'HEAD'
         }
@@ -166,7 +166,9 @@ describe('Container Registry Support', () => {
 
   describe('Container Registry Error Handling', () => {
     it('should reject non-cr prefixed Docker requests', async () => {
-      const response = await SELF.fetch('https://example.com/v2/library/nginx/manifests/latest');
+      const response = await SELF.fetch(
+        'https://example.com/v2/nginxinc/nginx-unprivileged/manifests/latest'
+      );
 
       expect(response.status).toBe(400);
       expect(await response.text()).toContain('container registry requests must use /cr/ prefix');
@@ -176,7 +178,7 @@ describe('Container Registry Support', () => {
   describe('Container Registry Headers', () => {
     it('should preserve container-specific headers', async () => {
       const response = await SELF.fetch(
-        'https://example.com/cr/ghcr/v2/library/nginx/manifests/latest',
+        'https://example.com/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest',
         {
           headers: {
             'Container-Content-Digest': 'sha256:abc123',
@@ -191,7 +193,7 @@ describe('Container Registry Support', () => {
     });
 
     it('should not cache container registry responses', async () => {
-      const testUrl = 'https://example.com/cr/ghcr/v2/library/nginx/manifests/latest';
+      const testUrl = 'https://example.com/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest';
 
       const response = await SELF.fetch(testUrl);
 
@@ -221,8 +223,7 @@ describe('Container Registry Support', () => {
         prefix: 'cr/ghcr',
         expectedStatus: [200, 301, 302, 401, 404]
       },
-      { name: 'Amazon ECR Public', prefix: 'cr/ecr', expectedStatus: [200, 301, 302, 401, 404] },
-      { name: 'NVIDIA NGC', prefix: 'cr/nvidia', expectedStatus: [200, 301, 302, 401, 404] }
+      { name: 'Amazon ECR Public', prefix: 'cr/ecr', expectedStatus: [200, 301, 302, 401, 404] }
     ];
 
     containerRegistries.forEach(({ name, prefix, expectedStatus }) => {

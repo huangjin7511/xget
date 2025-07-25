@@ -84,12 +84,12 @@ describe('Platform Configuration', () => {
     });
 
     it('should transform container registry paths correctly', () => {
-      expect(transformPath('/cr/ghcr/v2/microsoft/vscode/manifests/latest', 'cr-ghcr')).toBe(
-        '/v2/microsoft/vscode/manifests/latest'
-      );
+      expect(
+        transformPath('/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest', 'cr-ghcr')
+      ).toBe('/v2/nginxinc/nginx-unprivileged/manifests/latest');
 
-      expect(transformPath('/cr/gcr/v2/google-containers/pause/manifests/3.9', 'cr-gcr')).toBe(
-        '/v2/google-containers/pause/manifests/3.9'
+      expect(transformPath('/cr/gcr/v2/distroless/base/manifests/latest', 'cr-gcr')).toBe(
+        '/v2/distroless/base/manifests/latest'
       );
     });
   });
@@ -128,7 +128,6 @@ describe('Platform Configuration', () => {
       expect(PLATFORMS['cr-ghcr']).toBe('https://ghcr.io');
       expect(PLATFORMS['cr-gcr']).toBe('https://gcr.io');
       expect(PLATFORMS['cr-mcr']).toBe('https://mcr.microsoft.com');
-      expect(PLATFORMS['cr-nvidia']).toBe('https://nvcr.io');
     });
   });
 
@@ -176,12 +175,12 @@ describe('Platform Configuration', () => {
     });
 
     it('should handle container registry URL construction', () => {
-      const testPath = '/cr/ghcr/v2/microsoft/vscode/manifests/latest';
+      const testPath = '/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest';
       const transformedPath = transformPath(testPath, 'cr-ghcr');
       const fullUrl = PLATFORMS['cr-ghcr'] + transformedPath;
 
       expect(() => new URL(fullUrl)).not.toThrow();
-      expect(fullUrl).toBe('https://ghcr.io/v2/microsoft/vscode/manifests/latest');
+      expect(fullUrl).toBe('https://ghcr.io/v2/nginxinc/nginx-unprivileged/manifests/latest');
     });
   });
 
@@ -195,7 +194,6 @@ describe('Platform Configuration', () => {
         'cr-ghcr',
         'cr-gitlab',
         'cr-redhat',
-        'cr-nvidia',
         'cr-oracle',
         'cr-cloudsmith',
         'cr-digitalocean',
@@ -223,7 +221,6 @@ describe('Platform Configuration', () => {
         'cr-ghcr',
         'cr-gitlab',
         'cr-redhat',
-        'cr-nvidia',
         'cr-oracle',
         'cr-cloudsmith',
         'cr-digitalocean',

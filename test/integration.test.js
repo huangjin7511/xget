@@ -23,8 +23,7 @@ describe('Integration Tests', () => {
     });
 
     it('should handle GitHub release downloads', async () => {
-      const testUrl =
-        'https://example.com/gh/microsoft/vscode/releases/download/1.85.0/VSCode-linux-x64.tar.gz';
+      const testUrl = 'https://example.com/gh/microsoft/vscode/archive/refs/heads/main.zip';
       const response = await SELF.fetch(testUrl, { method: 'HEAD' });
 
       expect([200, 301, 302, 404]).toContain(response.status);

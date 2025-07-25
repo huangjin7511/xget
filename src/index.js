@@ -433,7 +433,7 @@ async function handleRequest(request, env, ctx) {
               let scope = '';
               const pathParts = url.pathname.split('/');
               if (pathParts.length >= 4 && pathParts[1] === 'v2') {
-                // Extract repository name from path like /v2/cr/ghcr/library/nginx/manifests/latest
+                // Extract repository name from path like /v2/cr/ghcr/nginxinc/nginx-unprivileged/manifests/latest
                 // Remove /v2 and platform prefix to get the repo path
                 const repoPath = pathParts.slice(4).join('/'); // Skip /v2/cr/[registry]
                 const repoParts = repoPath.split('/');

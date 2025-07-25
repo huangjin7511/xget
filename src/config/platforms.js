@@ -20,7 +20,6 @@ export const PLATFORMS = {
   'cr-ghcr': 'https://ghcr.io',
   'cr-gitlab': 'https://registry.gitlab.com',
   'cr-redhat': 'https://registry.redhat.io',
-  'cr-nvidia': 'https://nvcr.io',
   'cr-oracle': 'https://container-registry.oracle.com',
   'cr-cloudsmith': 'https://docker.cloudsmith.io',
   'cr-digitalocean': 'https://registry.digitalocean.com',

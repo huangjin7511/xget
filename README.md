@@ -5,12 +5,13 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
-[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-FFD21E?&logoColor=black)](#作为-hugging-face-镜像)
+[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#作为-hugging-face-镜像)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-包管理加速)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)
+[![容器注册表](https://img.shields.io/badge/容器注册表-%23007EC6.svg?logo=docker&logoColor=white)](#容器注册表)
 
-一个超高性能、安全的加速服务，速度远超传统加速器，专为 GitHub、GitLab、Hugging Face、npm、PyPI 和 conda 的文件下载及 Git 操作设计。
+超高性能、安全加速服务，其速度远超传统加速器，专为在各类平台上快速获取各类开源资源而设计。
 
 ## 🎯 快速使用
 
@@ -31,8 +32,8 @@
 
 ### 🌐 多平台深度集成
 
-- **一站式多平台镜像**：统一支持代码仓库、包管理器、模型与数据集托管平台的高速下载
-- **智能识别与转换**：自动识别平台前缀（/gh/、/gl/、/hf/、/npm/、/pypi/、/conda/）并转换为目标平台的正确 URL 结构
+- **一站式多平台支持**：统一支持代码存储库、包管理器、容器注册表、模型与数据集托管平台的高速下载
+- **智能识别与转换**：自动识别平台前缀（/gh/、/gl/、/hf/、/npm/、/pypi/、/conda/、/cr/）并转换为目标平台的正确 URL 结构
 - **一致的加速体验**：无论文件类型或来源，均可享受统一且稳定的极速下载服务
 
 ### 🔒 企业级安全保障
@@ -90,55 +91,6 @@
 - **下载工具兼容**：完美支持 wget、curl、aria2、IDM 等主流下载工具
 - **CI/CD 集成**：可直接在 GitHub Actions、GitLab CI 等环境中使用
 
-## 🚀 部署选择
-
-### Cloudflare Workers 一键部署
-
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
-
-部署后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
-
-### 手动部署
-
-如果你更喜欢手动部署或需要自定义配置：
-
-#### 前置要求
-
-1. 注册 [Cloudflare 账户](https://dash.cloudflare.com/sign-up/workers-and-pages)
-2. 安装 [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-
-#### 部署步骤
-
-1. **克隆存储库**
-
-   ```bash
-   git clone https://github.com/xixu-me/Xget.git
-   cd Xget
-   ```
-
-2. **安装依赖并认证**
-
-   ```bash
-   npm install
-   npx wrangler auth login
-   ```
-
-3. **自定义配置（可选）**
-
-   编辑 `wrangler.toml` 文件设置你的存储库名称：
-
-   ```toml
-   name = "你的-xget-项目名"
-   ```
-
-4. **部署**
-
-   ```bash
-   npm run deploy
-   ```
-
-部署完成后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
-
 ## 📖 链接转换规则
 
 使用公共实例 [**`xget.xi-xu.me`**](https://xget.xi-xu.me) 或你自己部署的实例，只需简单替换域名并添加平台前缀：
@@ -147,12 +99,13 @@
 
 | 平台 | 平台前缀 | 原始链接格式 | 加速链接格式 |
 |------|----------|--------------|--------------|
-| GitHub | `/gh/` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
-| GitLab | `/gl/` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
-| Hugging Face | `/hf/` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
-| npm | `/npm/` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
-| PyPI | `/pypi/` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
-| conda | `/conda/` | `https://repo.anaconda.com/...` 和 `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` 和 `https://xget.xi-xu.me/conda/community/...` |
+| GitHub | `gh` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
+| GitLab | `gl` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
+| Hugging Face | `hf` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
+| npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
+| PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
+| conda | `conda` | `https://repo.anaconda.com/...` 和 `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` 和 `https://xget.xi-xu.me/conda/community/...` |
+| 容器注册表 | `cr` | 见[容器注册表](#容器注册表) | 见[容器注册表](#容器注册表) |
 
 ### 各平台转换示例
 
@@ -162,7 +115,7 @@
 # 原始链接
 https://github.com/microsoft/vscode/archive/refs/heads/main.zip
 
-# 转换后（添加 /gh/ 前缀）
+# 转换后（添加 gh 前缀）
 https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 ```
 
@@ -172,7 +125,7 @@ https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 # 原始链接
 https://gitlab.com/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 
-# 转换后（添加 /gl/ 前缀）
+# 转换后（添加 gl 前缀）
 https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 ```
 
@@ -182,13 +135,13 @@ https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 # 模型文件原始链接
 https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
-# 转换后（添加 /hf/ 前缀）
+# 转换后（添加 hf 前缀）
 https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
 # 数据集文件原始链接
 https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 
-# 转换后（添加 /hf/ 前缀）
+# 转换后（添加 hf 前缀）
 https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 ```
 
@@ -198,13 +151,13 @@ https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-
 # 包文件原始链接
 https://registry.npmjs.org/react/-/react-18.2.0.tgz
 
-# 转换后（添加 /npm/ 前缀）
+# 转换后（添加 npm 前缀）
 https://xget.xi-xu.me/npm/react/-/react-18.2.0.tgz
 
 # 包元数据原始链接
 https://registry.npmjs.org/lodash
 
-# 转换后（添加 /npm/ 前缀）
+# 转换后（添加 npm 前缀）
 https://xget.xi-xu.me/npm/lodash
 ```
 
@@ -214,13 +167,13 @@ https://xget.xi-xu.me/npm/lodash
 # Python 包文件原始链接
 https://pypi.org/packages/source/r/requests/requests-2.31.0.tar.gz
 
-# 转换后（添加 /pypi/ 前缀）
+# 转换后（添加 pypi 前缀）
 https://xget.xi-xu.me/pypi/packages/source/r/requests/requests-2.31.0.tar.gz
 
 # Wheel 文件原始链接
 https://pypi.org/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
 
-# 转换后（添加 /pypi/ 前缀）
+# 转换后（添加 pypi 前缀）
 https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
 ```
 
@@ -230,14 +183,51 @@ https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.
 # 默认频道包文件原始链接
 https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
-# 转换后（添加 /conda/ 前缀）
+# 转换后（添加 conda 前缀）
 https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
 # 社区频道元数据原始链接
 https://conda.anaconda.org/conda-forge/linux-64/repodata.json
 
-# 转换后（添加 /conda/community/ 前缀）
+# 转换后（添加 conda/community 前缀）
 https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
+```
+
+#### 容器注册表
+
+Xget 支持多个容器注册表，使用 `cr/[容器注册表前缀]` 格式：
+
+| 容器注册表 | 容器注册表前缀 | 原始链接格式 | 加速链接格式 |
+|----------|------|--------------|--------------|
+| Quay.io | `quay` | `https://quay.io/...` | `https://xget.xi-xu.me/cr/quay/...` |
+| 谷歌 | `gcr` | `https://gcr.io/...` | `https://xget.xi-xu.me/cr/gcr/...` |
+| 微软 | `mcr` | `https://mcr.microsoft.com/...` | `https://xget.xi-xu.me/cr/mcr/...` |
+| Amazon ECR | `ecr` | `https://public.ecr.aws/...` | `https://xget.xi-xu.me/cr/ecr/...` |
+| GitHub | `ghcr` | `https://ghcr.io/...` | `https://xget.xi-xu.me/cr/ghcr/...` |
+| GitLab | `gitlab` | `https://registry.gitlab.com/...` | `https://xget.xi-xu.me/cr/gitlab/...` |
+| Red Hat | `redhat` | `https://registry.redhat.io/...` | `https://xget.xi-xu.me/cr/redhat/...` |
+| Oracle | `oracle` | `https://container-registry.oracle.com/...` | `https://xget.xi-xu.me/cr/oracle/...` |
+| Cloudsmith | `cloudsmith` | `https://docker.cloudsmith.io/...` | `https://xget.xi-xu.me/cr/cloudsmith/...` |
+| DigitalOcean | `digitalocean` | `https://registry.digitalocean.com/...` | `https://xget.xi-xu.me/cr/digitalocean/...` |
+| VMware | `vmware` | `https://projects.registry.vmware.com/...` | `https://xget.xi-xu.me/cr/vmware/...` |
+| Kubernetes | `k8s` | `https://registry.k8s.io/...` | `https://xget.xi-xu.me/cr/k8s/...` |
+| Heroku | `heroku` | `https://registry.heroku.com/...` | `https://xget.xi-xu.me/cr/heroku/...` |
+| SUSE | `suse` | `https://registry.suse.com/...` | `https://xget.xi-xu.me/cr/suse/...` |
+| openSUSE | `opensuse` | `https://registry.opensuse.org/...` | `https://xget.xi-xu.me/cr/opensuse/...` |
+| Gitpod | `gitpod` | `https://registry.gitpod.io/...` | `https://xget.xi-xu.me/cr/gitpod/...` |
+
+```url
+# GitHub 容器容器注册表原始链接
+https://ghcr.io/v2/nginxinc/nginx-unprivileged/manifests/latest
+
+# 转换后（添加 cr/ghcr 前缀）
+https://xget.xi-xu.me/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest
+
+# Google 容器容器注册表原始链接
+https://gcr.io/v2/distroless/base/manifests/latest
+
+# 转换后（添加 cr/gcr 前缀）
+https://xget.xi-xu.me/cr/gcr/v2/distroless/base/manifests/latest
 ```
 
 ## 🎯 应用场景
@@ -484,6 +474,180 @@ conda env create -f environment.yml
 conda env update -f environment.yml
 ```
 
+### 容器镜像加速
+
+Xget 为容器镜像拉取提供全面的加速支持，兼容 Docker、Podman、containerd 等容器运行时。
+
+#### Docker 配置
+
+```bash
+# 配置 Docker 使用 Xget 镜像加速
+# 编辑 /etc/docker/daemon.json（Linux）或 ~/.docker/daemon.json（macOS/Windows）
+{
+  "registry-mirrors": [
+    "https://xget.xi-xu.me/cr/ghcr"
+  ]
+}
+
+# 重启 Docker 服务
+sudo systemctl restart docker  # Linux
+# 或在 Docker Desktop 中重启服务
+
+# 验证配置
+docker info | grep -A 10 "Registry Mirrors"
+```
+
+#### 直接拉取镜像
+
+```bash
+# 拉取 GitHub Container Registry 镜像
+docker pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
+
+# 拉取 Google Container Registry 镜像
+
+# 拉取 Microsoft Container Registry 镜像
+docker pull xget.xi-xu.me/cr/mcr/dotnet/runtime:8.0
+```
+
+#### Kubernetes 部署配置
+
+```yaml
+# deployment.yaml - 使用 Xget 加速的镜像
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
+        ports:
+        - containerPort: 80
+      - name: redis
+        image: xget.xi-xu.me/cr/ghcr/bitnami/redis:alpine
+        ports:
+        - containerPort: 6379
+```
+
+#### Docker Compose 配置
+
+```yaml
+# docker-compose.yml - 使用 Xget 加速镜像
+version: '3.8'
+services:
+  web:
+    image: xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+  
+  database:
+    image: xget.xi-xu.me/cr/mcr/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: "MyStrongPassword123!"
+    volumes:
+      - mssql_data:/var/opt/mssql
+  
+  cache:
+    image: xget.xi-xu.me/cr/ghcr/bitnami/redis:alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  mssql_data:
+```
+
+#### Dockerfile 优化
+
+```dockerfile
+# 在 Dockerfile 中使用 Xget 加速基础镜像
+FROM xget.xi-xu.me/cr/ghcr/nodejs/node:18-alpine AS builder
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+
+# 生产阶段
+FROM xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# 使用 Microsoft 容器容器注册表的 .NET 镜像
+FROM xget.xi-xu.me/cr/mcr/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+COPY --from=builder /app/publish .
+ENTRYPOINT ["dotnet", "MyApp.dll"]
+```
+
+#### CI/CD 集成
+
+```yaml
+# GitHub Actions - 使用 Xget 加速容器构建
+name: Build and Deploy
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build with accelerated base images
+        run: |
+          # 构建时使用 Xget 加速的基础镜像
+          docker build -t myapp:latest \
+            --build-arg BASE_IMAGE=xget.xi-xu.me/cr/ghcr/nodejs/node:18-alpine .
+          
+      - name: Test with accelerated images
+        run: |
+          # 使用加速镜像进行测试
+          docker run --rm \
+            xget.xi-xu.me/cr/mcr/dotnet/runtime:8.0 \
+            dotnet --version
+```
+
+#### Podman 配置
+
+```bash
+# 配置 Podman 使用 Xget 镜像加速
+# 编辑 /etc/containers/registries.conf
+[[registry]]
+prefix = "ghcr.io"
+location = "xget.xi-xu.me/cr/ghcr"
+
+# 或者直接拉取
+podman pull xget.xi-xu.me/cr/ghcr/alpine/alpine:latest
+podman pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
+```
+
+#### containerd 配置
+
+```toml
+# 配置 containerd 使用 Xget 加速
+# 编辑 /etc/containerd/config.toml
+[plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."ghcr.io"]
+    endpoint = ["https://xget.xi-xu.me/cr/ghcr"]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."gcr.io"]
+    endpoint = ["https://xget.xi-xu.me/cr/gcr"]
+
+# 重启 containerd
+sudo systemctl restart containerd
+```
+
 ### 开发环境配置
 
 #### 配置 Git 全局加速
@@ -599,6 +763,55 @@ RUN echo "default_channels:" > ~/.condarc && \
 
 WORKDIR /app
 ```
+
+## 🚀 部署选择
+
+### Cloudflare Workers 一键部署
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
+
+部署后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
+
+### 手动部署
+
+如果你更喜欢手动部署或需要自定义配置：
+
+#### 前置要求
+
+1. 注册 [Cloudflare 账户](https://dash.cloudflare.com/sign-up/workers-and-pages)
+2. 安装 [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+#### 部署步骤
+
+1. **克隆存储库**
+
+   ```bash
+   git clone https://github.com/xixu-me/Xget.git
+   cd Xget
+   ```
+
+2. **安装依赖并认证**
+
+   ```bash
+   npm install
+   npx wrangler auth login
+   ```
+
+3. **自定义配置（可选）**
+
+   编辑 `wrangler.toml` 文件设置你的存储库名称：
+
+   ```toml
+   name = "你的-xget-项目名"
+   ```
+
+4. **部署**
+
+   ```bash
+   npm run deploy
+   ```
+
+部署完成后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
 
 ## 🔧 配置
 

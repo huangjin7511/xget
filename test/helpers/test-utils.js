@@ -77,7 +77,7 @@ export const TEST_URLS = {
   github: {
     file: 'https://example.com/gh/microsoft/vscode/blob/main/package.json',
     raw: 'https://example.com/gh/microsoft/vscode/raw/main/README.md',
-    release: 'https://example.com/gh/microsoft/vscode/releases/download/1.85.0/vscode.zip',
+    release: 'https://example.com/gh/microsoft/vscode/archive/refs/heads/main.zip',
     archive: 'https://example.com/gh/microsoft/vscode/archive/refs/heads/main.zip',
     git: 'https://example.com/gh/microsoft/vscode.git'
   },

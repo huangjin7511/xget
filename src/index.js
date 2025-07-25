@@ -330,6 +330,13 @@ async function handleRequest(request, env, ctx) {
 
     // If response is still not ok after all retries, return the error
     if (!response.ok && response.status !== 206) {
+      // For Docker authentication, we must pass the 401 challenge through
+      if (isDocker && response.status === 401) {
+        return new Response(response.body, {
+          status: response.status,
+          headers: new Headers(response.headers)
+        });
+      }
       const errorText = await response.text().catch(() => 'Unknown error');
       return new Response(`Upstream server error (${response.status}): ${errorText}`, {
         status: response.status,

@@ -39,6 +39,27 @@ class PerformanceMonitor {
  * @param {URL} url - Parsed URL object
  * @returns {boolean} True if this is a Git operation
  */
+/**
+ * Detects if a request is a Docker operation
+ * @param {Request} request - The incoming request object
+ * @param {URL} url - Parsed URL object
+ * @returns {boolean} True if this is a Docker operation
+ */
+function isDockerRequest(/** @type {Request} */ request, /** @type {URL} */ url) {
+  if (url.pathname.startsWith('/v2/')) {
+    return true;
+  }
+  const userAgent = request.headers.get('User-Agent') || '';
+  if (userAgent.toLowerCase().startsWith('docker/')) {
+    return true;
+  }
+  const accept = request.headers.get('Accept') || '';
+  if (accept.includes('application/vnd.docker.distribution.manifest')) {
+    return true;
+  }
+  return false;
+}
+
 function isGitRequest(request, url) {
   // Check for Git-specific endpoints
   if (url.pathname.endsWith('/info/refs')) {
@@ -118,6 +139,21 @@ function addSecurityHeaders(headers) {
 async function handleRequest(request, env, ctx) {
   try {
     const url = new URL(request.url);
+    const isDocker = isDockerRequest(request, url);
+    let effectivePath = url.pathname;
+
+    // Handle Docker API version check
+    if (isDocker && (url.pathname === '/v2/' || url.pathname === '/v2')) {
+      const headers = new Headers({
+        'Docker-Distribution-Api-Version': 'registry/2.0',
+        'Content-Type': 'application/json'
+      });
+      return new Response('{}', { status: 200, headers });
+    }
+
+    if (isDocker) {
+      effectivePath = url.pathname.replace(/^\/v2/, '');
+    }
 
     const monitor = new PerformanceMonitor();
 
@@ -150,8 +186,8 @@ async function handleRequest(request, env, ctx) {
     platform =
       sortedPlatforms.find(key => {
         const expectedPrefix = `/${key.replace('-', '/')}/`;
-        return url.pathname.startsWith(expectedPrefix);
-      }) || url.pathname.split('/')[1];
+        return effectivePath.startsWith(expectedPrefix);
+      }) || effectivePath.split('/')[1];
 
     if (!platform || !CONFIG.PLATFORMS[platform]) {
       const HOME_PAGE_URL = 'https://github.com/xixu-me/Xget';
@@ -159,19 +195,20 @@ async function handleRequest(request, env, ctx) {
     }
 
     // Transform URL based on platform using unified logic
-    const targetPath = transformPath(url.pathname, platform);
-    const targetUrl = `${CONFIG.PLATFORMS[platform]}${targetPath}${url.search}`;
+    const targetPath = transformPath(effectivePath, platform);
+    const finalTargetPath = isDocker ? `/v2${targetPath}` : targetPath;
+    const targetUrl = `${CONFIG.PLATFORMS[platform]}${finalTargetPath}${url.search}`;
 
     // Check if this is a Git operation
     const isGit = isGitRequest(request, url);
 
-    // Check cache first (skip cache for Git operations)
+    // Check cache first (skip cache for Git and Docker operations)
     // @ts-ignore
     const cache = caches.default;
     const cacheKey = new Request(targetUrl, request);
     let response;
 
-    if (!isGit) {
+    if (!isGit && !isDocker) {
       response = await cache.match(cacheKey);
       if (response) {
         monitor.mark('cache_hit');
@@ -179,45 +216,25 @@ async function handleRequest(request, env, ctx) {
       }
     }
 
-    /** @type {RequestInit} */
+    /** @type {any} */
     const fetchOptions = {
       method: request.method,
       headers: new Headers()
     };
 
-    // Add body for POST requests (Git operations)
-    if (request.method === 'POST' && isGit) {
-      // For Git operations, we need to preserve the original body stream
+    // Add body for POST/PUT/PATCH requests (Git/Docker operations)
+    if (['POST', 'PUT', 'PATCH'].includes(request.method) && (isGit || isDocker)) {
       fetchOptions.body = request.body;
     }
 
-    // Set appropriate headers for Git vs regular requests
-    if (isGit) {
-      // For Git operations, copy all headers from the original request
-      // This ensures Git protocol compliance
+    // Set appropriate headers for Git/Docker vs regular requests
+    if (isGit || isDocker) {
+      // For Git/Docker operations, copy all headers from the original request
+      // This ensures protocol compliance
       for (const [key, value] of request.headers.entries()) {
         // Skip headers that might cause issues with proxying
         if (!['host', 'connection', 'upgrade', 'proxy-connection'].includes(key.toLowerCase())) {
           fetchOptions.headers.set(key, value);
-        }
-      }
-
-      // Set Git-specific headers if not present
-      if (!fetchOptions.headers.has('User-Agent')) {
-        fetchOptions.headers.set('User-Agent', 'git/2.34.1');
-      }
-
-      // For Git upload-pack requests, ensure proper content type
-      if (request.method === 'POST' && url.pathname.endsWith('/git-upload-pack')) {
-        if (!fetchOptions.headers.has('Content-Type')) {
-          fetchOptions.headers.set('Content-Type', 'application/x-git-upload-pack-request');
-        }
-      }
-
-      // For Git receive-pack requests, ensure proper content type
-      if (request.method === 'POST' && url.pathname.endsWith('/git-receive-pack')) {
-        if (!fetchOptions.headers.has('Content-Type')) {
-          fetchOptions.headers.set('Content-Type', 'application/x-git-receive-pack-request');
         }
       }
     } else {
@@ -258,10 +275,11 @@ async function handleRequest(request, env, ctx) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), CONFIG.TIMEOUT_SECONDS * 1000);
 
-        // For Git operations, don't use Cloudflare-specific options
-        const finalFetchOptions = isGit
-          ? { ...fetchOptions, signal: controller.signal }
-          : { ...fetchOptions, signal: controller.signal };
+        // For Git/Docker operations, don't use Cloudflare-specific options
+        const finalFetchOptions =
+          isGit || isDocker
+            ? { ...fetchOptions, signal: controller.signal }
+            : { ...fetchOptions, cf: { cacheTtl: 0 }, signal: controller.signal };
 
         response = await fetch(targetUrl, finalFetchOptions);
 
@@ -349,11 +367,9 @@ async function handleRequest(request, env, ctx) {
     // Prepare response headers
     const headers = new Headers(response.headers);
 
-    if (isGit) {
-      // For Git operations, preserve all headers from the upstream response
-      // Git protocol is very sensitive to header changes
-      // Don't add any additional headers that might interfere with Git protocol
-      // The response headers from GitHub/GitLab should be passed through as-is
+    if (isGit || isDocker) {
+      // For Git/Docker operations, preserve all headers from the upstream response
+      // These protocols are very sensitive to header changes
     } else {
       // Regular file download headers
       headers.set('Cache-Control', `public, max-age=${CONFIG.CACHE_DURATION}`);
@@ -368,13 +384,13 @@ async function handleRequest(request, env, ctx) {
       headers: headers
     });
 
-    // Cache successful responses (skip caching for Git operations)
-    if (!isGit && (response.ok || response.status === 206)) {
+    // Cache successful responses (skip caching for Git/Docker operations)
+    if (!isGit && !isDocker && (response.ok || response.status === 206)) {
       ctx.waitUntil(cache.put(cacheKey, finalResponse.clone()));
     }
 
     monitor.mark('complete');
-    return isGit ? finalResponse : addPerformanceHeaders(finalResponse, monitor);
+    return isGit || isDocker ? finalResponse : addPerformanceHeaders(finalResponse, monitor);
   } catch (error) {
     console.error('Error handling request:', error);
     const message = error instanceof Error ? error.message : String(error);

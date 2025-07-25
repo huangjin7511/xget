@@ -242,14 +242,15 @@ async function handleRequest(request, env, ctx) {
 
     // Handle Docker registry paths specially
     if (isDocker) {
-      // For Docker, path should start with /cr/ prefix
-      if (!url.pathname.startsWith('/cr/')) {
+      // For Docker requests (excluding version check which is handled above),
+      // check if they have /cr/ prefix
+      if (!url.pathname.startsWith('/cr/') && !url.pathname.startsWith('/v2/cr/')) {
         return new Response('Docker registry requests must use /cr/ prefix', {
           status: 400,
           headers: addSecurityHeaders(new Headers())
         });
       }
-      // Remove /v2 from the path for Docker registry API consistency
+      // Remove /v2 from the path for Docker registry API consistency if present
       effectivePath = url.pathname.replace(/^\/v2/, '');
     }
 

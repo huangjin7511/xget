@@ -504,6 +504,7 @@ docker info | grep -A 10 "Registry Mirrors"
 docker pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 
 # 拉取 Google Container Registry 镜像
+docker pull xget.xi-xu.me/cr/gcr/distroless/base:latest
 
 # 拉取 Microsoft Container Registry 镜像
 docker pull xget.xi-xu.me/cr/mcr/dotnet/runtime:8.0

@@ -84,10 +84,6 @@ describe('Platform Configuration', () => {
     });
 
     it('should transform container registry paths correctly', () => {
-      expect(transformPath('/cr/docker/v2/library/nginx/manifests/latest', 'cr-docker')).toBe(
-        '/v2/library/nginx/manifests/latest'
-      );
-
       expect(transformPath('/cr/ghcr/v2/microsoft/vscode/manifests/latest', 'cr-ghcr')).toBe(
         '/v2/microsoft/vscode/manifests/latest'
       );
@@ -129,7 +125,6 @@ describe('Platform Configuration', () => {
     });
 
     it('should have correct container registry base URLs', () => {
-      expect(PLATFORMS['cr-docker']).toBe('https://registry-1.docker.io');
       expect(PLATFORMS['cr-ghcr']).toBe('https://ghcr.io');
       expect(PLATFORMS['cr-gcr']).toBe('https://gcr.io');
       expect(PLATFORMS['cr-mcr']).toBe('https://mcr.microsoft.com');
@@ -181,19 +176,18 @@ describe('Platform Configuration', () => {
     });
 
     it('should handle container registry URL construction', () => {
-      const testPath = '/cr/docker/v2/library/nginx/manifests/latest';
-      const transformedPath = transformPath(testPath, 'cr-docker');
-      const fullUrl = PLATFORMS['cr-docker'] + transformedPath;
+      const testPath = '/cr/ghcr/v2/microsoft/vscode/manifests/latest';
+      const transformedPath = transformPath(testPath, 'cr-ghcr');
+      const fullUrl = PLATFORMS['cr-ghcr'] + transformedPath;
 
       expect(() => new URL(fullUrl)).not.toThrow();
-      expect(fullUrl).toBe('https://registry-1.docker.io/v2/library/nginx/manifests/latest');
+      expect(fullUrl).toBe('https://ghcr.io/v2/microsoft/vscode/manifests/latest');
     });
   });
 
   describe('Container Registry Support', () => {
     it('should have all major container registries defined', () => {
       const containerRegistries = [
-        'cr-docker',
         'cr-quay',
         'cr-gcr',
         'cr-mcr',
@@ -222,7 +216,6 @@ describe('Platform Configuration', () => {
 
     it('should transform all container registry paths correctly', () => {
       const containerRegistries = [
-        'cr-docker',
         'cr-quay',
         'cr-gcr',
         'cr-mcr',

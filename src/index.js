@@ -34,13 +34,13 @@ class PerformanceMonitor {
 }
 
 /**
- * Detects if a request is a Docker registry operation
+ * Detects if a request is a container registry operation
  * @param {Request} request - The incoming request object
  * @param {URL} url - Parsed URL object
- * @returns {boolean} True if this is a Docker registry operation
+ * @returns {boolean} True if this is a container registry operation
  */
 function isDockerRequest(request, url) {
-  // Check for Docker registry API endpoints
+  // Check for container registry API endpoints
   if (url.pathname.startsWith('/v2/')) {
     return true;
   }
@@ -160,7 +160,7 @@ function parseAuthenticate(authenticateStr) {
 }
 
 /**
- * Fetches authentication token from Docker registry
+ * Fetches authentication token from container registry
  * @param {{realm: string, service: string}} wwwAuthenticate - Authentication info
  * @param {string} scope - The scope for the token
  * @param {string} authorization - Authorization header value
@@ -182,16 +182,13 @@ async function fetchToken(wwwAuthenticate, scope, authorization) {
 }
 
 /**
- * Creates unauthorized response for Docker registry
+ * Creates unauthorized response for container registry
  * @param {URL} url - Request URL
  * @returns {Response} Unauthorized response
  */
 function responseUnauthorized(url) {
   const headers = new Headers();
-  headers.set(
-    'WWW-Authenticate',
-    `Bearer realm="https://${url.hostname}/v2/auth",service="Xget"`
-  );
+  headers.set('WWW-Authenticate', `Bearer realm="https://${url.hostname}/v2/auth",service="Xget"`);
   return new Response(JSON.stringify({ message: 'UNAUTHORIZED' }), {
     status: 401,
     headers: headers
@@ -240,17 +237,17 @@ async function handleRequest(request, env, ctx) {
     let platform;
     let effectivePath = url.pathname;
 
-    // Handle Docker registry paths specially
+    // Handle container registry paths specially
     if (isDocker) {
       // For Docker requests (excluding version check which is handled above),
       // check if they have /cr/ prefix
       if (!url.pathname.startsWith('/cr/') && !url.pathname.startsWith('/v2/cr/')) {
-        return new Response('Docker registry requests must use /cr/ prefix', {
+        return new Response('container registry requests must use /cr/ prefix', {
           status: 400,
           headers: addSecurityHeaders(new Headers())
         });
       }
-      // Remove /v2 from the path for Docker registry API consistency if present
+      // Remove /v2 from the path for container registry API consistency if present
       effectivePath = url.pathname.replace(/^\/v2/, '');
     }
 
@@ -277,27 +274,15 @@ async function handleRequest(request, env, ctx) {
     // Transform URL based on platform using unified logic
     const targetPath = transformPath(effectivePath, platform);
 
-    // For Docker registries, ensure we add the /v2 prefix for the Docker API
+    // For container registries, ensure we add the /v2 prefix for the Docker API
     let finalTargetPath;
     if (platform.startsWith('cr-')) {
       finalTargetPath = `/v2${targetPath}`;
-
-      // Handle Docker Hub library image path transformation
-      // Example: /v2/nginx/manifests/latest => /v2/library/nginx/manifests/latest
-      if (platform === 'cr-docker') {
-        const pathParts = finalTargetPath.split('/');
-        // Check if this is a library image path (no namespace)
-        if (pathParts.length === 5 && (pathParts[3] === 'manifests' || pathParts[3] === 'blobs')) {
-          pathParts.splice(2, 0, 'library');
-          finalTargetPath = pathParts.join('/');
-        }
-      }
     } else {
       finalTargetPath = targetPath;
     }
 
     const targetUrl = `${CONFIG.PLATFORMS[platform]}${finalTargetPath}${url.search}`;
-    const isDockerHub = platform === 'cr-docker';
     const authorization = request.headers.get('Authorization');
 
     // Handle Docker authentication
@@ -316,27 +301,7 @@ async function handleRequest(request, env, ctx) {
       }
       const wwwAuthenticate = parseAuthenticate(authenticateStr);
       let scope = url.searchParams.get('scope');
-      // autocomplete repo part into scope for DockerHub library images
-      // Example: repository:busybox:pull => repository:library/busybox:pull
-      if (scope && isDockerHub) {
-        let scopeParts = scope.split(':');
-        if (scopeParts.length == 3 && !scopeParts[1].includes('/')) {
-          scopeParts[1] = 'library/' + scopeParts[1];
-          scope = scopeParts.join(':');
-        }
-      }
       return await fetchToken(wwwAuthenticate, scope || '', authorization || '');
-    }
-
-    // Handle DockerHub library image redirects before making the request
-    if (isDocker && isDockerHub) {
-      const pathParts = url.pathname.split('/');
-      if (pathParts.length == 5) {
-        pathParts.splice(2, 0, 'library');
-        const redirectUrl = new URL(url);
-        redirectUrl.pathname = pathParts.join('/');
-        return Response.redirect(redirectUrl, 301);
-      }
     }
 
     // Check if this is a Git operation
@@ -360,8 +325,7 @@ async function handleRequest(request, env, ctx) {
     const fetchOptions = {
       method: request.method,
       headers: new Headers(),
-      // For Docker Hub, use manual redirect to handle blob redirects properly
-      redirect: isDockerHub ? 'manual' : 'follow'
+      redirect: 'follow'
     };
 
     // Add body for POST/PUT/PATCH requests (Git/Docker operations)
@@ -449,56 +413,35 @@ async function handleRequest(request, env, ctx) {
 
         clearTimeout(timeoutId);
 
-        // Handle Docker Hub blob redirects manually
-        if (isDocker && isDockerHub && response.status === 307) {
-          const location = response.headers.get('Location');
-          if (location) {
-            const redirectResponse = await fetch(location, {
-              method: 'GET',
-              redirect: 'follow'
-            });
-            response = redirectResponse;
-          }
-        }
-
         if (response.ok || response.status === 206) {
           monitor.mark('success');
           break;
         }
 
-        // For Docker registry, handle authentication challenges more intelligently
+        // For container registry, handle authentication challenges more intelligently
         if (isDocker && response.status === 401) {
           monitor.mark('docker_auth_challenge');
 
-          // For Docker registries, first check if we can get a token without credentials
+          // For container registries, first check if we can get a token without credentials
           // This allows access to public repositories
           const authenticateStr = response.headers.get('WWW-Authenticate');
           if (authenticateStr) {
             try {
               const wwwAuthenticate = parseAuthenticate(authenticateStr);
 
-              // Infer scope from the request path for Docker registry requests
+              // Infer scope from the request path for container registry requests
               let scope = '';
               const pathParts = url.pathname.split('/');
               if (pathParts.length >= 4 && pathParts[1] === 'v2') {
-                // Extract repository name from path like /v2/cr/docker/library/nginx/manifests/latest
+                // Extract repository name from path like /v2/cr/ghcr/library/nginx/manifests/latest
                 // Remove /v2 and platform prefix to get the repo path
-                const repoPath = pathParts.slice(4).join('/'); // Skip /v2/cr/docker
+                const repoPath = pathParts.slice(4).join('/'); // Skip /v2/cr/[registry]
                 const repoParts = repoPath.split('/');
                 if (repoParts.length >= 1) {
                   const repoName = repoParts.slice(0, -2).join('/'); // Remove /manifests/tag or /blobs/sha
                   if (repoName) {
                     scope = `repository:${repoName}:pull`;
                   }
-                }
-              }
-
-              // For Docker Hub library images, adjust the scope
-              if (isDockerHub && scope) {
-                let scopeParts = scope.split(':');
-                if (scopeParts.length === 3 && !scopeParts[1].includes('/')) {
-                  scopeParts[1] = 'library/' + scopeParts[1];
-                  scope = scopeParts.join(':');
                 }
               }
 
@@ -578,7 +521,7 @@ async function handleRequest(request, env, ctx) {
       if (isDocker && response.status === 401) {
         const errorText = await response.text().catch(() => '');
         return new Response(
-          `Authentication required for this Docker registry resource. This may be a private repository. Original error: ${errorText}`,
+          `Authentication required for this container registry resource. This may be a private repository. Original error: ${errorText}`,
           {
             status: 401,
             headers: addSecurityHeaders(new Headers())

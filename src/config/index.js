@@ -1,4 +1,4 @@
-import { PLATFORMS } from "./platforms";
+import { PLATFORMS } from './platforms';
 
 /**
  * @typedef {Object} SecurityConfig
@@ -19,14 +19,14 @@ import { PLATFORMS } from "./platforms";
 
 /** @type {ApplicationConfig} */
 export const CONFIG = {
-	TIMEOUT_SECONDS: 30,
-	MAX_RETRIES: 3,
-	RETRY_DELAY_MS: 1000,
-	CACHE_DURATION: 1800, // 30 minutes
-	SECURITY: {
-		ALLOWED_METHODS: ["GET", "HEAD"], // POST is allowed dynamically for Git operations
-		ALLOWED_ORIGINS: ["*"],
-		MAX_PATH_LENGTH: 2048,
-	},
-	PLATFORMS,
+  TIMEOUT_SECONDS: 30,
+  MAX_RETRIES: 3,
+  RETRY_DELAY_MS: 1000,
+  CACHE_DURATION: 1800, // 30 minutes
+  SECURITY: {
+    ALLOWED_METHODS: ['GET', 'HEAD'], // POST is allowed dynamically for Git operations
+    ALLOWED_ORIGINS: ['*'],
+    MAX_PATH_LENGTH: 2048
+  },
+  PLATFORMS
 };

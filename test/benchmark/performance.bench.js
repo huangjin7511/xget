@@ -73,7 +73,7 @@ describe('Performance Benchmarks', () => {
   describe('Security Header Processing', () => {
     bench('Security headers addition', async () => {
       const response = await SELF.fetch('https://example.com/gh/test/repo/file.txt');
-      
+
       // Verify headers are present (this adds to processing time)
       response.headers.get('Strict-Transport-Security');
       response.headers.get('X-Frame-Options');
@@ -101,22 +101,26 @@ describe('Performance Benchmarks', () => {
 
   describe('Concurrent Request Handling', () => {
     bench('10 concurrent requests', async () => {
-      const requests = Array(10).fill().map(() =>
-        SELF.fetch('https://example.com/gh/test/repo/file.txt', {
-          method: 'HEAD'
-        })
-      );
-      
+      const requests = Array(10)
+        .fill()
+        .map(() =>
+          SELF.fetch('https://example.com/gh/test/repo/file.txt', {
+            method: 'HEAD'
+          })
+        );
+
       await Promise.all(requests);
     });
 
     bench('50 concurrent requests', async () => {
-      const requests = Array(50).fill().map(() =>
-        SELF.fetch('https://example.com/gh/test/repo/file.txt', {
-          method: 'HEAD'
-        })
-      );
-      
+      const requests = Array(50)
+        .fill()
+        .map(() =>
+          SELF.fetch('https://example.com/gh/test/repo/file.txt', {
+            method: 'HEAD'
+          })
+        );
+
       await Promise.all(requests);
     });
   });
@@ -156,7 +160,9 @@ describe('Performance Benchmarks', () => {
     });
 
     bench('Complex URL parsing', async () => {
-      await SELF.fetch('https://example.com/gh/user/repo/file.txt?ref=feature/branch&path=src/components&line=123#L123');
+      await SELF.fetch(
+        'https://example.com/gh/user/repo/file.txt?ref=feature/branch&path=src/components&line=123#L123'
+      );
     });
   });
 
@@ -166,17 +172,17 @@ describe('Performance Benchmarks', () => {
         method: 'GET',
         headers: {
           'User-Agent': 'Test/1.0',
-          'Accept': '*/*'
+          Accept: '*/*'
         }
       });
-      
+
       // Process the request
       await SELF.fetch(request);
     });
 
     bench('Response object processing', async () => {
       const response = await SELF.fetch('https://example.com/gh/test/repo/file.txt');
-      
+
       // Access various response properties
       response.status;
       response.statusText;

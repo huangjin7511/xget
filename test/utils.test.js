@@ -5,35 +5,29 @@ import { describe, expect, it } from 'vitest';
 
 function isGitRequest(request, url) {
   // Check for Git-specific endpoints
-  if (url.pathname.endsWith("/info/refs")) {
+  if (url.pathname.endsWith('/info/refs')) {
     return true;
   }
 
-  if (
-    url.pathname.endsWith("/git-upload-pack") ||
-    url.pathname.endsWith("/git-receive-pack")
-  ) {
+  if (url.pathname.endsWith('/git-upload-pack') || url.pathname.endsWith('/git-receive-pack')) {
     return true;
   }
 
   // Check for Git user agents
-  const userAgent = request.headers.get("User-Agent") || "";
-  if (userAgent.includes("git/") || userAgent.startsWith("git/")) {
+  const userAgent = request.headers.get('User-Agent') || '';
+  if (userAgent.includes('git/') || userAgent.startsWith('git/')) {
     return true;
   }
 
   // Check for Git-specific query parameters
-  if (url.searchParams.has("service")) {
-    const service = url.searchParams.get("service");
-    return service === "git-upload-pack" || service === "git-receive-pack";
+  if (url.searchParams.has('service')) {
+    const service = url.searchParams.get('service');
+    return service === 'git-upload-pack' || service === 'git-receive-pack';
   }
 
   // Check for Git-specific content types
-  const contentType = request.headers.get("Content-Type") || "";
-  if (
-    contentType.includes("git-upload-pack") ||
-    contentType.includes("git-receive-pack")
-  ) {
+  const contentType = request.headers.get('Content-Type') || '';
+  if (contentType.includes('git-upload-pack') || contentType.includes('git-receive-pack')) {
     return true;
   }
 
@@ -43,40 +37,34 @@ function isGitRequest(request, url) {
 function validateRequest(request, url) {
   const CONFIG = {
     SECURITY: {
-      ALLOWED_METHODS: ["GET", "HEAD"],
+      ALLOWED_METHODS: ['GET', 'HEAD'],
       MAX_PATH_LENGTH: 2048
     }
   };
 
   // Allow POST method for Git operations
   const allowedMethods = isGitRequest(request, url)
-    ? ["GET", "HEAD", "POST"]
+    ? ['GET', 'HEAD', 'POST']
     : CONFIG.SECURITY.ALLOWED_METHODS;
 
   if (!allowedMethods.includes(request.method)) {
-    return { valid: false, error: "Method not allowed", status: 405 };
+    return { valid: false, error: 'Method not allowed', status: 405 };
   }
 
   if (url.pathname.length > CONFIG.SECURITY.MAX_PATH_LENGTH) {
-    return { valid: false, error: "Path too long", status: 414 };
+    return { valid: false, error: 'Path too long', status: 414 };
   }
 
   return { valid: true };
 }
 
 function addSecurityHeaders(headers) {
-  headers.set(
-    "Strict-Transport-Security",
-    "max-age=31536000; includeSubDomains; preload"
-  );
-  headers.set("X-Frame-Options", "DENY");
-  headers.set("X-XSS-Protection", "1; mode=block");
-  headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  headers.set(
-    "Content-Security-Policy",
-    "default-src 'none'; img-src 'self'; script-src 'none'"
-  );
-  headers.set("Permissions-Policy", "interest-cohort=()");
+  headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+  headers.set('X-Frame-Options', 'DENY');
+  headers.set('X-XSS-Protection', '1; mode=block');
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  headers.set('Content-Security-Policy', "default-src 'none'; img-src 'self'; script-src 'none'");
+  headers.set('Permissions-Policy', 'interest-cohort=()');
   return headers;
 }
 
@@ -85,21 +73,21 @@ describe('Utility Functions', () => {
     it('should identify Git info/refs requests', () => {
       const request = new Request('https://example.com/repo.git/info/refs');
       const url = new URL(request.url);
-      
+
       expect(isGitRequest(request, url)).toBe(true);
     });
 
     it('should identify Git upload-pack requests', () => {
       const request = new Request('https://example.com/repo.git/git-upload-pack');
       const url = new URL(request.url);
-      
+
       expect(isGitRequest(request, url)).toBe(true);
     });
 
     it('should identify Git receive-pack requests', () => {
       const request = new Request('https://example.com/repo.git/git-receive-pack');
       const url = new URL(request.url);
-      
+
       expect(isGitRequest(request, url)).toBe(true);
     });
 
@@ -108,14 +96,14 @@ describe('Utility Functions', () => {
         headers: { 'User-Agent': 'git/2.34.1' }
       });
       const url = new URL(request.url);
-      
+
       expect(isGitRequest(request, url)).toBe(true);
     });
 
     it('should identify Git requests by service parameter', () => {
       const request = new Request('https://example.com/repo.git/info/refs?service=git-upload-pack');
       const url = new URL(request.url);
-      
+
       expect(isGitRequest(request, url)).toBe(true);
     });
 
@@ -125,21 +113,21 @@ describe('Utility Functions', () => {
         headers: { 'Content-Type': 'application/x-git-upload-pack-request' }
       });
       const url = new URL(request.url);
-      
+
       expect(isGitRequest(request, url)).toBe(true);
     });
 
     it('should not identify regular file requests as Git', () => {
       const request = new Request('https://example.com/repo/file.txt');
       const url = new URL(request.url);
-      
+
       expect(isGitRequest(request, url)).toBe(false);
     });
 
     it('should handle edge cases gracefully', () => {
       const request = new Request('https://example.com/');
       const url = new URL(request.url);
-      
+
       expect(isGitRequest(request, url)).toBe(false);
     });
   });
@@ -148,7 +136,7 @@ describe('Utility Functions', () => {
     it('should allow GET requests', () => {
       const request = new Request('https://example.com/test', { method: 'GET' });
       const url = new URL(request.url);
-      
+
       const result = validateRequest(request, url);
       expect(result.valid).toBe(true);
     });
@@ -156,7 +144,7 @@ describe('Utility Functions', () => {
     it('should allow HEAD requests', () => {
       const request = new Request('https://example.com/test', { method: 'HEAD' });
       const url = new URL(request.url);
-      
+
       const result = validateRequest(request, url);
       expect(result.valid).toBe(true);
     });
@@ -164,7 +152,7 @@ describe('Utility Functions', () => {
     it('should reject PUT requests for non-Git operations', () => {
       const request = new Request('https://example.com/test', { method: 'PUT' });
       const url = new URL(request.url);
-      
+
       const result = validateRequest(request, url);
       expect(result.valid).toBe(false);
       expect(result.status).toBe(405);
@@ -176,7 +164,7 @@ describe('Utility Functions', () => {
         headers: { 'User-Agent': 'git/2.34.1' }
       });
       const url = new URL(request.url);
-      
+
       const result = validateRequest(request, url);
       expect(result.valid).toBe(true);
     });
@@ -185,7 +173,7 @@ describe('Utility Functions', () => {
       const longPath = '/' + 'a'.repeat(3000);
       const request = new Request(`https://example.com${longPath}`);
       const url = new URL(request.url);
-      
+
       const result = validateRequest(request, url);
       expect(result.valid).toBe(false);
       expect(result.status).toBe(414);
@@ -195,7 +183,7 @@ describe('Utility Functions', () => {
       const normalPath = '/gh/microsoft/vscode/archive/refs/heads/main.zip';
       const request = new Request(`https://example.com${normalPath}`);
       const url = new URL(request.url);
-      
+
       const result = validateRequest(request, url);
       expect(result.valid).toBe(true);
     });
@@ -205,7 +193,7 @@ describe('Utility Functions', () => {
     it('should add all required security headers', () => {
       const headers = new Headers();
       const result = addSecurityHeaders(headers);
-      
+
       expect(result.get('Strict-Transport-Security')).toBeTruthy();
       expect(result.get('X-Frame-Options')).toBe('DENY');
       expect(result.get('X-XSS-Protection')).toBe('1; mode=block');
@@ -217,7 +205,7 @@ describe('Utility Functions', () => {
     it('should set HSTS with proper directives', () => {
       const headers = new Headers();
       const result = addSecurityHeaders(headers);
-      
+
       const hsts = result.get('Strict-Transport-Security');
       expect(hsts).toContain('max-age=31536000');
       expect(hsts).toContain('includeSubDomains');
@@ -227,7 +215,7 @@ describe('Utility Functions', () => {
     it('should set CSP with restrictive policy', () => {
       const headers = new Headers();
       const result = addSecurityHeaders(headers);
-      
+
       const csp = result.get('Content-Security-Policy');
       expect(csp).toContain("default-src 'none'");
       expect(csp).toContain("script-src 'none'");
@@ -236,9 +224,9 @@ describe('Utility Functions', () => {
     it('should not overwrite existing headers', () => {
       const headers = new Headers();
       headers.set('X-Custom-Header', 'custom-value');
-      
+
       const result = addSecurityHeaders(headers);
-      
+
       expect(result.get('X-Custom-Header')).toBe('custom-value');
       expect(result.get('X-Frame-Options')).toBe('DENY');
     });
@@ -246,7 +234,7 @@ describe('Utility Functions', () => {
     it('should return the same Headers object', () => {
       const headers = new Headers();
       const result = addSecurityHeaders(headers);
-      
+
       expect(result).toBe(headers);
     });
   });
@@ -261,7 +249,7 @@ describe('Utility Functions', () => {
 
       testUrls.forEach(urlString => {
         expect(() => new URL(urlString)).not.toThrow();
-        
+
         const url = new URL(urlString);
         expect(url.protocol).toBe('https:');
         expect(url.hostname).toBe('example.com');
@@ -271,7 +259,7 @@ describe('Utility Functions', () => {
 
     it('should handle query parameters correctly', () => {
       const url = new URL('https://example.com/gh/repo?ref=main&path=src');
-      
+
       expect(url.searchParams.get('ref')).toBe('main');
       expect(url.searchParams.get('path')).toBe('src');
       expect(url.searchParams.has('nonexistent')).toBe(false);
@@ -279,7 +267,7 @@ describe('Utility Functions', () => {
 
     it('should handle URL fragments correctly', () => {
       const url = new URL('https://example.com/gh/repo/README.md#section');
-      
+
       expect(url.hash).toBe('#section');
       expect(url.pathname).toBe('/gh/repo/README.md');
     });
@@ -291,7 +279,7 @@ describe('Utility Functions', () => {
         method: 'GET',
         headers: {
           'User-Agent': 'Xget/1.0',
-          'Accept': 'application/json'
+          Accept: 'application/json'
         }
       });
 

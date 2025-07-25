@@ -34,7 +34,7 @@ describe('Performance Monitoring', () => {
 
     it('should create timing marks', () => {
       monitor.mark('test-mark');
-      
+
       const metrics = monitor.getMetrics();
       expect(metrics).toHaveProperty('test-mark');
       expect(typeof metrics['test-mark']).toBe('number');
@@ -44,7 +44,7 @@ describe('Performance Monitoring', () => {
       monitor.mark('mark1');
       monitor.mark('mark2');
       monitor.mark('mark3');
-      
+
       const metrics = monitor.getMetrics();
       expect(Object.keys(metrics)).toHaveLength(3);
       expect(metrics).toHaveProperty('mark1');
@@ -57,19 +57,19 @@ describe('Performance Monitoring', () => {
       const originalWarn = console.warn;
       const mockWarn = vi ? vi.fn() : jest.fn();
       console.warn = mockWarn;
-      
+
       monitor.mark('duplicate');
       monitor.mark('duplicate');
-      
+
       expect(mockWarn).toHaveBeenCalledWith('Mark with name duplicate already exists.');
-      
+
       // Restore original console.warn
       console.warn = originalWarn;
     });
 
     it('should return metrics as plain object', () => {
       monitor.mark('test');
-      
+
       const metrics = monitor.getMetrics();
       expect(metrics).toBeTypeOf('object');
       expect(Array.isArray(metrics)).toBe(false);
@@ -77,12 +77,12 @@ describe('Performance Monitoring', () => {
 
     it('should track elapsed time correctly', async () => {
       monitor.mark('start');
-      
+
       // Wait a small amount of time
       await new Promise(resolve => setTimeout(resolve, 10));
-      
+
       monitor.mark('end');
-      
+
       const metrics = monitor.getMetrics();
       expect(metrics.end).toBeGreaterThan(metrics.start);
     });
@@ -94,18 +94,18 @@ describe('Performance Monitoring', () => {
       monitor.mark('proxy-start');
       monitor.mark('proxy-end');
       monitor.mark('request-end');
-      
+
       const metrics = monitor.getMetrics();
-      
+
       expect(() => JSON.stringify(metrics)).not.toThrow();
     });
 
     it('should have reasonable timing values', () => {
       monitor.mark('test-mark');
-      
+
       const metrics = monitor.getMetrics();
       const timing = metrics['test-mark'];
-      
+
       // Should be a positive number and reasonable (less than 1 second for this test)
       expect(timing).toBeGreaterThanOrEqual(0);
       expect(timing).toBeLessThan(1000);
@@ -117,9 +117,9 @@ describe('Performance Monitoring', () => {
       monitor.mark('second');
       await new Promise(resolve => setTimeout(resolve, 5));
       monitor.mark('third');
-      
+
       const metrics = monitor.getMetrics();
-      
+
       expect(metrics.first).toBeLessThan(metrics.second);
       expect(metrics.second).toBeLessThan(metrics.third);
     });
@@ -133,9 +133,9 @@ describe('Performance Monitoring', () => {
       monitor.mark('proxy-start');
       monitor.mark('proxy-response');
       monitor.mark('response-sent');
-      
+
       const metrics = monitor.getMetrics();
-      
+
       expect(metrics).toHaveProperty('request-received');
       expect(metrics).toHaveProperty('validation-complete');
       expect(metrics).toHaveProperty('proxy-start');
@@ -148,9 +148,9 @@ describe('Performance Monitoring', () => {
       monitor.mark('cache-miss');
       monitor.mark('upstream-request');
       monitor.mark('cache-store');
-      
+
       const metrics = monitor.getMetrics();
-      
+
       expect(metrics).toHaveProperty('cache-check-start');
       expect(metrics).toHaveProperty('cache-miss');
       expect(metrics).toHaveProperty('upstream-request');
@@ -161,9 +161,9 @@ describe('Performance Monitoring', () => {
       monitor.mark('request-start');
       monitor.mark('error-occurred');
       monitor.mark('error-handled');
-      
+
       const metrics = monitor.getMetrics();
-      
+
       expect(metrics).toHaveProperty('request-start');
       expect(metrics).toHaveProperty('error-occurred');
       expect(metrics).toHaveProperty('error-handled');
@@ -173,24 +173,24 @@ describe('Performance Monitoring', () => {
   describe('Performance Thresholds', () => {
     it('should identify slow operations', () => {
       monitor.mark('operation-start');
-      
+
       // Simulate slow operation
       const slowTiming = 5000; // 5 seconds
       monitor.marks.set('operation-end', slowTiming);
-      
+
       const metrics = monitor.getMetrics();
       const operationTime = metrics['operation-end'] - (metrics['operation-start'] || 0);
-      
+
       // Should identify as slow (> 1 second)
       expect(operationTime).toBeGreaterThan(1000);
     });
 
     it('should identify fast operations', () => {
       monitor.mark('fast-operation');
-      
+
       const metrics = monitor.getMetrics();
       const timing = metrics['fast-operation'];
-      
+
       // Should be fast (< 100ms for this test)
       expect(timing).toBeLessThan(100);
     });
@@ -199,14 +199,14 @@ describe('Performance Monitoring', () => {
   describe('Memory and Resource Usage', () => {
     it('should not leak memory with many marks', () => {
       const initialSize = monitor.marks.size;
-      
+
       // Add many marks
       for (let i = 0; i < 1000; i++) {
         monitor.mark(`mark-${i}`);
       }
-      
+
       expect(monitor.marks.size).toBe(initialSize + 1000);
-      
+
       // Clear marks (if such method existed)
       monitor.marks.clear();
       expect(monitor.marks.size).toBe(0);
@@ -214,7 +214,7 @@ describe('Performance Monitoring', () => {
 
     it('should handle concurrent mark operations', () => {
       const promises = [];
-      
+
       for (let i = 0; i < 10; i++) {
         promises.push(
           new Promise(resolve => {
@@ -225,7 +225,7 @@ describe('Performance Monitoring', () => {
           })
         );
       }
-      
+
       return Promise.all(promises).then(() => {
         const metrics = monitor.getMetrics();
         expect(Object.keys(metrics)).toHaveLength(10);

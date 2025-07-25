@@ -20,7 +20,7 @@ export const MOCK_RESPONSES = {
         }
       })
     },
-    
+
     readme: {
       status: 200,
       headers: {
@@ -28,7 +28,7 @@ export const MOCK_RESPONSES = {
       },
       body: '# Visual Studio Code\n\nCode editing. Redefined.'
     },
-    
+
     release: {
       status: 200,
       headers: {
@@ -38,7 +38,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'binary-data-placeholder'
     },
-    
+
     notFound: {
       status: 404,
       headers: {
@@ -46,7 +46,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'Not Found'
     },
-    
+
     gitInfoRefs: {
       status: 200,
       headers: {
@@ -69,7 +69,7 @@ export const MOCK_RESPONSES = {
         description: 'GitLab Community Edition'
       })
     },
-    
+
     archive: {
       status: 200,
       headers: {
@@ -97,7 +97,7 @@ export const MOCK_RESPONSES = {
         n_head: 16
       })
     },
-    
+
     modelFile: {
       status: 200,
       headers: {
@@ -106,7 +106,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'model-binary-data-placeholder'
     },
-    
+
     datasetFile: {
       status: 200,
       headers: {
@@ -140,7 +140,7 @@ export const MOCK_RESPONSES = {
         license: 'MIT'
       })
     },
-    
+
     packageTarball: {
       status: 200,
       headers: {
@@ -167,7 +167,7 @@ export const MOCK_RESPONSES = {
 </body>
 </html>`
     },
-    
+
     packageFile: {
       status: 200,
       headers: {
@@ -176,7 +176,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'gzip-data-placeholder'
     },
-    
+
     wheelFile: {
       status: 200,
       headers: {
@@ -212,7 +212,7 @@ export const MOCK_RESPONSES = {
         }
       })
     },
-    
+
     packageFile: {
       status: 200,
       headers: {
@@ -231,7 +231,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'Bad Request'
     },
-    
+
     unauthorized: {
       status: 401,
       headers: {
@@ -239,7 +239,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'Unauthorized'
     },
-    
+
     forbidden: {
       status: 403,
       headers: {
@@ -247,7 +247,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'Forbidden'
     },
-    
+
     notFound: {
       status: 404,
       headers: {
@@ -255,16 +255,16 @@ export const MOCK_RESPONSES = {
       },
       body: 'Not Found'
     },
-    
+
     methodNotAllowed: {
       status: 405,
       headers: {
         'Content-Type': 'text/plain',
-        'Allow': 'GET, HEAD'
+        Allow: 'GET, HEAD'
       },
       body: 'Method Not Allowed'
     },
-    
+
     pathTooLong: {
       status: 414,
       headers: {
@@ -272,7 +272,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'URI Too Long'
     },
-    
+
     internalServerError: {
       status: 500,
       headers: {
@@ -280,7 +280,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'Internal Server Error'
     },
-    
+
     badGateway: {
       status: 502,
       headers: {
@@ -288,7 +288,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'Bad Gateway'
     },
-    
+
     serviceUnavailable: {
       status: 503,
       headers: {
@@ -296,7 +296,7 @@ export const MOCK_RESPONSES = {
       },
       body: 'Service Unavailable'
     },
-    
+
     gatewayTimeout: {
       status: 504,
       headers: {
@@ -345,7 +345,7 @@ function getStatusText(status) {
     503: 'Service Unavailable',
     504: 'Gateway Timeout'
   };
-  
+
   return statusTexts[status] || 'Unknown';
 }
 
@@ -356,34 +356,37 @@ function getStatusText(status) {
  * @returns {Promise<Response>} Mock response
  */
 export function mockFetchWithFixtures(url, options = {}) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     // Simulate network delay
-    setTimeout(() => {
-      const urlObj = new URL(url);
-      const path = urlObj.pathname;
-      
-      // Route to appropriate mock response based on URL pattern
-      if (path.includes('/gh/') && path.includes('package.json')) {
-        resolve(createMockResponse(MOCK_RESPONSES.github.packageJson));
-      } else if (path.includes('/gh/') && path.includes('README.md')) {
-        resolve(createMockResponse(MOCK_RESPONSES.github.readme));
-      } else if (path.includes('/gl/') && path.includes('package.json')) {
-        resolve(createMockResponse(MOCK_RESPONSES.gitlab.packageJson));
-      } else if (path.includes('/hf/') && path.includes('config.json')) {
-        resolve(createMockResponse(MOCK_RESPONSES.huggingface.modelConfig));
-      } else if (path.includes('/npm/') && !path.includes('.tgz')) {
-        resolve(createMockResponse(MOCK_RESPONSES.npm.packageMetadata));
-      } else if (path.includes('/pypi/simple/')) {
-        resolve(createMockResponse(MOCK_RESPONSES.pypi.simpleIndex));
-      } else if (path.includes('/conda/') && path.includes('repodata.json')) {
-        resolve(createMockResponse(MOCK_RESPONSES.conda.repodata));
-      } else if (options.method && !['GET', 'HEAD', 'POST'].includes(options.method)) {
-        resolve(createMockResponse(MOCK_RESPONSES.errors.methodNotAllowed));
-      } else if (path.length > 2048) {
-        resolve(createMockResponse(MOCK_RESPONSES.errors.pathTooLong));
-      } else {
-        resolve(createMockResponse(MOCK_RESPONSES.errors.notFound));
-      }
-    }, Math.random() * 50 + 10); // 10-60ms delay
+    setTimeout(
+      () => {
+        const urlObj = new URL(url);
+        const path = urlObj.pathname;
+
+        // Route to appropriate mock response based on URL pattern
+        if (path.includes('/gh/') && path.includes('package.json')) {
+          resolve(createMockResponse(MOCK_RESPONSES.github.packageJson));
+        } else if (path.includes('/gh/') && path.includes('README.md')) {
+          resolve(createMockResponse(MOCK_RESPONSES.github.readme));
+        } else if (path.includes('/gl/') && path.includes('package.json')) {
+          resolve(createMockResponse(MOCK_RESPONSES.gitlab.packageJson));
+        } else if (path.includes('/hf/') && path.includes('config.json')) {
+          resolve(createMockResponse(MOCK_RESPONSES.huggingface.modelConfig));
+        } else if (path.includes('/npm/') && !path.includes('.tgz')) {
+          resolve(createMockResponse(MOCK_RESPONSES.npm.packageMetadata));
+        } else if (path.includes('/pypi/simple/')) {
+          resolve(createMockResponse(MOCK_RESPONSES.pypi.simpleIndex));
+        } else if (path.includes('/conda/') && path.includes('repodata.json')) {
+          resolve(createMockResponse(MOCK_RESPONSES.conda.repodata));
+        } else if (options.method && !['GET', 'HEAD', 'POST'].includes(options.method)) {
+          resolve(createMockResponse(MOCK_RESPONSES.errors.methodNotAllowed));
+        } else if (path.length > 2048) {
+          resolve(createMockResponse(MOCK_RESPONSES.errors.pathTooLong));
+        } else {
+          resolve(createMockResponse(MOCK_RESPONSES.errors.notFound));
+        }
+      },
+      Math.random() * 50 + 10
+    ); // 10-60ms delay
   });
 }

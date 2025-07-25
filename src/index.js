@@ -190,12 +190,24 @@ function responseUnauthorized(url) {
   const headers = new Headers();
   headers.set(
     'WWW-Authenticate',
-    `Bearer realm="https://${url.hostname}/v2/auth",service="cloudflare-docker-proxy"`
+    `Bearer realm="https://${url.hostname}/v2/auth",service="xget.xi-xu.me"`
   );
-  return new Response(JSON.stringify({ message: 'UNAUTHORIZED' }), {
-    status: 401,
-    headers: headers
-  });
+  headers.set('Content-Type', 'application/json');
+  return new Response(
+    JSON.stringify({
+      errors: [
+        {
+          code: 'UNAUTHORIZED',
+          message: 'authentication required',
+          detail: null
+        }
+      ]
+    }),
+    {
+      status: 401,
+      headers: headers
+    }
+  );
 }
 
 /**
@@ -469,6 +481,55 @@ async function handleRequest(request, env, ctx) {
         // For Docker registry, handle authentication challenges
         if (isDocker && response.status === 401) {
           monitor.mark('docker_auth_challenge');
+
+          // Try to get an anonymous token for public images
+          const authenticateStr = response.headers.get('WWW-Authenticate');
+          if (authenticateStr) {
+            try {
+              const wwwAuthenticate = parseAuthenticate(authenticateStr);
+              let scope = null;
+
+              // Extract scope from the original request path if it's a manifest request
+              if (url.pathname.includes('/manifests/')) {
+                const pathParts = url.pathname.split('/');
+                const registryPrefix = platform.replace('cr-', '');
+                if (registryPrefix === 'docker') {
+                  // For Docker Hub, construct scope from path
+                  // /v2/cr/docker/library/nginx/manifests/latest -> repository:library/nginx:pull
+                  const imagePathStart = pathParts.indexOf('manifests');
+                  if (imagePathStart >= 3) {
+                    const imageName = pathParts.slice(3, imagePathStart).join('/');
+                    scope = `repository:${imageName}:pull`;
+                  }
+                }
+              }
+
+              // Try to get anonymous token
+              const tokenResponse = await fetchToken(wwwAuthenticate, scope || '', '');
+              if (tokenResponse.ok) {
+                // Retry the original request with the token
+                const tokenData = await tokenResponse.json();
+                if (tokenData.token) {
+                  const retryHeaders = new Headers(request.headers);
+                  retryHeaders.set('Authorization', `Bearer ${tokenData.token}`);
+
+                  const retryResponse = await fetch(targetUrl, {
+                    ...finalFetchOptions,
+                    headers: retryHeaders
+                  });
+
+                  if (retryResponse.ok) {
+                    response = retryResponse;
+                    break;
+                  }
+                }
+              }
+            } catch (error) {
+              console.log('Anonymous token fetch failed:', error);
+            }
+          }
+
+          // If anonymous access fails, return unauthorized response
           return responseUnauthorized(url);
         }
 

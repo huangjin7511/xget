@@ -77,12 +77,8 @@ async function main() {
  */
 async function runTests(args = []) {
   console.log('🏃 Running tests...');
-  
-  const vitestArgs = [
-    'run',
-    '--config', 'vitest.config.js',
-    ...args
-  ];
+
+  const vitestArgs = ['run', '--config', 'vitest.config.js', ...args];
 
   await runCommand('npx', ['vitest', ...vitestArgs]);
 }
@@ -92,12 +88,8 @@ async function runTests(args = []) {
  */
 async function watchTests(args = []) {
   console.log('👀 Watching tests...');
-  
-  const vitestArgs = [
-    '--config', 'vitest.config.js',
-    '--watch',
-    ...args
-  ];
+
+  const vitestArgs = ['--config', 'vitest.config.js', '--watch', ...args];
 
   await runCommand('npx', ['vitest', ...vitestArgs]);
 }
@@ -107,18 +99,13 @@ async function watchTests(args = []) {
  */
 async function runCoverage(args = []) {
   console.log('📊 Generating coverage report...');
-  
-  const vitestArgs = [
-    'run',
-    '--config', 'vitest.config.js',
-    '--coverage',
-    ...args
-  ];
+
+  const vitestArgs = ['run', '--config', 'vitest.config.js', '--coverage', ...args];
 
   await runCommand('npx', ['vitest', ...vitestArgs]);
-  
+
   console.log('📈 Coverage report generated in ./coverage/');
-  
+
   // Generate coverage summary
   await generateCoverageSummary();
 }
@@ -128,12 +115,8 @@ async function runCoverage(args = []) {
  */
 async function runBenchmarks(args = []) {
   console.log('⚡ Running performance benchmarks...');
-  
-  const vitestArgs = [
-    'bench',
-    '--config', 'vitest.config.js',
-    ...args
-  ];
+
+  const vitestArgs = ['bench', '--config', 'vitest.config.js', ...args];
 
   await runCommand('npx', ['vitest', ...vitestArgs]);
 }
@@ -143,9 +126,9 @@ async function runBenchmarks(args = []) {
  */
 async function runLinting() {
   console.log('🔍 Running ESLint...');
-  
+
   await runCommand('npx', ['eslint', 'src/', 'test/', '--ext', '.js']);
-  
+
   console.log('✅ Linting completed');
 }
 
@@ -154,9 +137,9 @@ async function runLinting() {
  */
 async function runFormatting() {
   console.log('💅 Running Prettier...');
-  
+
   await runCommand('npx', ['prettier', '--write', 'src/', 'test/', '*.js', '*.json', '*.md']);
-  
+
   console.log('✅ Formatting completed');
 }
 
@@ -165,20 +148,20 @@ async function runFormatting() {
  */
 async function runCITests() {
   console.log('🤖 Running CI test suite...');
-  
+
   // Run linting
   await runLinting();
-  
+
   // Check formatting
   console.log('📝 Checking code formatting...');
   await runCommand('npx', ['prettier', '--check', 'src/', 'test/', '*.js', '*.json', '*.md']);
-  
+
   // Run tests with coverage
   await runCoverage(['--reporter=json', '--reporter=text']);
-  
+
   // Run benchmarks
   await runBenchmarks(['--reporter=json']);
-  
+
   console.log('✅ CI test suite completed');
 }
 
@@ -187,7 +170,7 @@ async function runCITests() {
  */
 async function setupTestEnvironment() {
   console.log('🔧 Setting up test environment...');
-  
+
   // Create necessary directories
   const dirs = ['coverage', 'test/tmp', 'test/logs'];
   dirs.forEach(dir => {
@@ -197,19 +180,16 @@ async function setupTestEnvironment() {
       console.log(`📁 Created directory: ${dir}`);
     }
   });
-  
+
   // Create test configuration file
   const testConfig = {
     ...TEST_CONFIG,
     timestamp: new Date().toISOString(),
     version: process.env.npm_package_version || '1.0.0'
   };
-  
-  writeFileSync(
-    join(rootDir, 'test/config.json'),
-    JSON.stringify(testConfig, null, 2)
-  );
-  
+
+  writeFileSync(join(rootDir, 'test/config.json'), JSON.stringify(testConfig, null, 2));
+
   console.log('✅ Test environment setup completed');
 }
 
@@ -218,10 +198,10 @@ async function setupTestEnvironment() {
  */
 async function cleanTestArtifacts() {
   console.log('🧹 Cleaning test artifacts...');
-  
+
   const { rmSync } = await import('fs');
   const artifactDirs = ['coverage', 'test/tmp', 'test/logs'];
-  
+
   artifactDirs.forEach(dir => {
     const fullPath = join(rootDir, dir);
     if (existsSync(fullPath)) {
@@ -229,7 +209,7 @@ async function cleanTestArtifacts() {
       console.log(`🗑️  Removed: ${dir}`);
     }
   });
-  
+
   console.log('✅ Cleanup completed');
 }
 
@@ -238,20 +218,26 @@ async function cleanTestArtifacts() {
  */
 async function generateCoverageSummary() {
   const coverageFile = join(rootDir, 'coverage/coverage-summary.json');
-  
+
   if (existsSync(coverageFile)) {
     const { readFileSync } = await import('fs');
     const coverage = JSON.parse(readFileSync(coverageFile, 'utf8'));
-    
+
     console.log('\n📊 Coverage Summary:');
     console.log('===================');
-    
+
     const total = coverage.total;
     console.log(`Lines:      ${total.lines.pct}% (${total.lines.covered}/${total.lines.total})`);
-    console.log(`Functions:  ${total.functions.pct}% (${total.functions.covered}/${total.functions.total})`);
-    console.log(`Branches:   ${total.branches.pct}% (${total.branches.covered}/${total.branches.total})`);
-    console.log(`Statements: ${total.statements.pct}% (${total.statements.covered}/${total.statements.total})`);
-    
+    console.log(
+      `Functions:  ${total.functions.pct}% (${total.functions.covered}/${total.functions.total})`
+    );
+    console.log(
+      `Branches:   ${total.branches.pct}% (${total.branches.covered}/${total.branches.total})`
+    );
+    console.log(
+      `Statements: ${total.statements.pct}% (${total.statements.covered}/${total.statements.total})`
+    );
+
     // Check if coverage meets threshold
     const threshold = TEST_CONFIG.coverage.threshold;
     const meetsThreshold = [
@@ -260,7 +246,7 @@ async function generateCoverageSummary() {
       total.branches.pct >= threshold,
       total.statements.pct >= threshold
     ].every(Boolean);
-    
+
     if (meetsThreshold) {
       console.log(`\n✅ Coverage meets threshold (${threshold}%)`);
     } else {
@@ -279,16 +265,16 @@ function runCommand(command, args = [], options = {}) {
       cwd: rootDir,
       ...options
     });
-    
-    child.on('close', (code) => {
+
+    child.on('close', code => {
       if (code === 0) {
         resolve();
       } else {
         reject(new Error(`Command failed with exit code ${code}`));
       }
     });
-    
-    child.on('error', (error) => {
+
+    child.on('error', error => {
       reject(error);
     });
   });
@@ -332,4 +318,3 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 }
 
 export { main, runBenchmarks, runCoverage, runTests };
-

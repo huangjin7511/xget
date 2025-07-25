@@ -1,4 +1,4 @@
-import { PLATFORMS } from './platforms';
+import { PLATFORMS, transformPath } from './platforms';
 
 /**
  * @typedef {Object} SecurityConfig
@@ -28,5 +28,6 @@ export const CONFIG = {
     ALLOWED_ORIGINS: ['*'],
     MAX_PATH_LENGTH: 2048
   },
-  PLATFORMS
+  PLATFORMS,
+  transformPath
 };

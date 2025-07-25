@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PLATFORMS } from '../src/config/platforms.js';
+import { PLATFORMS, transformPath } from '../src/config/platforms.js';
 
 describe('Platform Configuration', () => {
   describe('Platform Definitions', () => {
@@ -13,167 +13,241 @@ describe('Platform Configuration', () => {
     });
 
     it('should have valid base URLs for all platforms', () => {
-      Object.entries(PLATFORMS).forEach(([key, config]) => {
-        expect(config.base).toBeDefined();
-        expect(config.base).toMatch(/^https?:\/\/.+/);
+      Object.values(PLATFORMS).forEach(baseUrl => {
+        expect(baseUrl).toBeDefined();
+        expect(baseUrl).toMatch(/^https?:\/\/.+/);
       });
     });
 
-    it('should have transform functions for all platforms', () => {
-      Object.entries(PLATFORMS).forEach(([key, config]) => {
-        expect(config.transform).toBeDefined();
-        expect(typeof config.transform).toBe('function');
-      });
+    it('should have unified transform function', () => {
+      expect(transformPath).toBeDefined();
+      expect(typeof transformPath).toBe('function');
     });
   });
 
-  describe('GitHub Platform', () => {
+  describe('Unified Transform Function', () => {
     it('should transform GitHub paths correctly', () => {
-      const transform = PLATFORMS.gh.transform;
-
-      expect(transform('/gh/microsoft/vscode/archive/main.zip')).toBe(
+      expect(transformPath('/gh/microsoft/vscode/archive/main.zip', 'gh')).toBe(
         '/microsoft/vscode/archive/main.zip'
       );
 
-      expect(transform('/gh/user/repo.git')).toBe('/user/repo.git');
+      expect(transformPath('/gh/user/repo.git', 'gh')).toBe('/user/repo.git');
     });
 
-    it('should have correct base URL', () => {
-      expect(PLATFORMS.gh.base).toBe('https://github.com');
-    });
-  });
-
-  describe('GitLab Platform', () => {
     it('should transform GitLab paths correctly', () => {
-      const transform = PLATFORMS.gl.transform;
-
-      expect(transform('/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip')).toBe(
+      expect(transformPath('/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip', 'gl')).toBe(
         '/gitlab-org/gitlab/-/archive/master/gitlab-master.zip'
       );
     });
 
-    it('should have correct base URL', () => {
-      expect(PLATFORMS.gl.base).toBe('https://gitlab.com');
-    });
-  });
-
-  describe('Hugging Face Platform', () => {
     it('should transform Hugging Face paths correctly', () => {
-      const transform = PLATFORMS.hf.transform;
-
-      expect(transform('/hf/microsoft/DialoGPT-medium/resolve/main/config.json')).toBe(
+      expect(transformPath('/hf/microsoft/DialoGPT-medium/resolve/main/config.json', 'hf')).toBe(
         '/microsoft/DialoGPT-medium/resolve/main/config.json'
       );
 
-      expect(transform('/hf/datasets/squad/resolve/main/train.json')).toBe(
+      expect(transformPath('/hf/datasets/squad/resolve/main/train.json', 'hf')).toBe(
         '/datasets/squad/resolve/main/train.json'
       );
     });
 
-    it('should have correct base URL', () => {
-      expect(PLATFORMS.hf.base).toBe('https://huggingface.co');
-    });
-  });
-
-  describe('npm Platform', () => {
     it('should transform npm paths correctly', () => {
-      const transform = PLATFORMS.npm.transform;
-
-      expect(transform('/npm/react/-/react-18.2.0.tgz')).toBe('/react/-/react-18.2.0.tgz');
-
-      expect(transform('/npm/lodash')).toBe('/lodash');
+      expect(transformPath('/npm/react/-/react-18.2.0.tgz', 'npm')).toBe(
+        '/react/-/react-18.2.0.tgz'
+      );
+      expect(transformPath('/npm/lodash', 'npm')).toBe('/lodash');
     });
 
-    it('should have correct base URL', () => {
-      expect(PLATFORMS.npm.base).toBe('https://registry.npmjs.org');
-    });
-  });
-
-  describe('PyPI Platform', () => {
     it('should transform PyPI paths correctly', () => {
-      const transform = PLATFORMS.pypi.transform;
-
-      expect(transform('/pypi/packages/source/r/requests/requests-2.31.0.tar.gz')).toBe(
+      expect(transformPath('/pypi/packages/source/r/requests/requests-2.31.0.tar.gz', 'pypi')).toBe(
         '/packages/source/r/requests/requests-2.31.0.tar.gz'
       );
 
-      expect(transform('/pypi/simple/requests/')).toBe('/simple/requests/');
+      expect(transformPath('/pypi/simple/requests/', 'pypi')).toBe('/simple/requests/');
     });
 
-    it('should have correct base URL', () => {
-      expect(PLATFORMS.pypi.base).toBe('https://pypi.org');
+    it('should transform PyPI files paths correctly', () => {
+      expect(
+        transformPath('/pypi/files/packages/source/r/requests/requests-2.31.0.tar.gz', 'pypi-files')
+      ).toBe('/packages/source/r/requests/requests-2.31.0.tar.gz');
     });
-  });
 
-  describe('conda Platform', () => {
     it('should transform conda default channel paths correctly', () => {
-      const transform = PLATFORMS.conda.transform;
-
-      expect(transform('/conda/pkgs/main/linux-64/numpy-1.24.3.conda')).toBe(
+      expect(transformPath('/conda/pkgs/main/linux-64/numpy-1.24.3.conda', 'conda')).toBe(
         '/pkgs/main/linux-64/numpy-1.24.3.conda'
       );
     });
 
     it('should transform conda community channel paths correctly', () => {
-      const transform = PLATFORMS.conda.transform;
-
-      expect(transform('/conda/community/conda-forge/linux-64/repodata.json')).toBe(
-        '/conda-forge/linux-64/repodata.json'
-      );
+      expect(
+        transformPath('/conda/community/conda-forge/linux-64/repodata.json', 'conda-community')
+      ).toBe('/conda-forge/linux-64/repodata.json');
     });
 
-    it('should have correct base URLs', () => {
-      expect(PLATFORMS.conda.base).toBe('https://repo.anaconda.com');
-      expect(PLATFORMS.conda.communityBase).toBe('https://conda.anaconda.org');
+    it('should transform container registry paths correctly', () => {
+      expect(transformPath('/cr/docker/v2/library/nginx/manifests/latest', 'cr-docker')).toBe(
+        '/v2/library/nginx/manifests/latest'
+      );
+
+      expect(transformPath('/cr/ghcr/v2/microsoft/vscode/manifests/latest', 'cr-ghcr')).toBe(
+        '/v2/microsoft/vscode/manifests/latest'
+      );
+
+      expect(transformPath('/cr/gcr/v2/google-containers/pause/manifests/3.9', 'cr-gcr')).toBe(
+        '/v2/google-containers/pause/manifests/3.9'
+      );
+    });
+  });
+
+  describe('Platform Base URLs', () => {
+    it('should have correct GitHub base URL', () => {
+      expect(PLATFORMS.gh).toBe('https://github.com');
+    });
+
+    it('should have correct GitLab base URL', () => {
+      expect(PLATFORMS.gl).toBe('https://gitlab.com');
+    });
+
+    it('should have correct Hugging Face base URL', () => {
+      expect(PLATFORMS.hf).toBe('https://huggingface.co');
+    });
+
+    it('should have correct npm base URL', () => {
+      expect(PLATFORMS.npm).toBe('https://registry.npmjs.org');
+    });
+
+    it('should have correct PyPI base URL', () => {
+      expect(PLATFORMS.pypi).toBe('https://pypi.org');
+    });
+
+    it('should have correct PyPI files base URL', () => {
+      expect(PLATFORMS['pypi-files']).toBe('https://files.pythonhosted.org');
+    });
+
+    it('should have correct conda base URLs', () => {
+      expect(PLATFORMS.conda).toBe('https://repo.anaconda.com');
+      expect(PLATFORMS['conda-community']).toBe('https://conda.anaconda.org');
+    });
+
+    it('should have correct container registry base URLs', () => {
+      expect(PLATFORMS['cr-docker']).toBe('https://registry-1.docker.io');
+      expect(PLATFORMS['cr-ghcr']).toBe('https://ghcr.io');
+      expect(PLATFORMS['cr-gcr']).toBe('https://gcr.io');
+      expect(PLATFORMS['cr-mcr']).toBe('https://mcr.microsoft.com');
+      expect(PLATFORMS['cr-nvidia']).toBe('https://nvcr.io');
     });
   });
 
   describe('Path Transformation Edge Cases', () => {
     it('should handle empty paths gracefully', () => {
-      Object.entries(PLATFORMS).forEach(([key, config]) => {
-        expect(() => config.transform('')).not.toThrow();
+      Object.keys(PLATFORMS).forEach(key => {
+        expect(() => transformPath('', key)).not.toThrow();
       });
     });
 
     it('should handle paths without platform prefix', () => {
-      Object.entries(PLATFORMS).forEach(([key, config]) => {
+      Object.keys(PLATFORMS).forEach(key => {
         const testPath = '/some/random/path';
-        expect(() => config.transform(testPath)).not.toThrow();
+        expect(() => transformPath(testPath, key)).not.toThrow();
       });
     });
 
-    it('should handle paths with query parameters', () => {
-      const transform = PLATFORMS.gh.transform;
+    it('should handle unknown platform keys', () => {
+      const testPath = '/unknown/test/path';
+      expect(transformPath(testPath, 'unknown')).toBe(testPath);
+    });
 
-      expect(transform('/gh/user/repo/file.txt?ref=main')).toBe('/user/repo/file.txt?ref=main');
+    it('should handle paths with query parameters', () => {
+      expect(transformPath('/gh/user/repo/file.txt?ref=main', 'gh')).toBe(
+        '/user/repo/file.txt?ref=main'
+      );
     });
 
     it('should handle paths with fragments', () => {
-      const transform = PLATFORMS.gh.transform;
-
-      expect(transform('/gh/user/repo/README.md#section')).toBe('/user/repo/README.md#section');
+      expect(transformPath('/gh/user/repo/README.md#section', 'gh')).toBe(
+        '/user/repo/README.md#section'
+      );
     });
   });
 
   describe('URL Construction', () => {
     it('should construct valid URLs for all platforms', () => {
-      Object.entries(PLATFORMS).forEach(([key, config]) => {
-        const testPath = `/${key}/test/path`;
-        const transformedPath = config.transform(testPath);
-        const fullUrl = config.base + transformedPath;
+      Object.entries(PLATFORMS).forEach(([key, baseUrl]) => {
+        const testPath = `/${key.replace('-', '/')}/test/path`;
+        const transformedPath = transformPath(testPath, key);
+        const fullUrl = baseUrl + transformedPath;
 
         expect(() => new URL(fullUrl)).not.toThrow();
       });
     });
 
-    it('should handle conda community URLs correctly', () => {
-      const config = PLATFORMS.conda;
-      const communityPath = '/conda/community/conda-forge/test';
-      const transformedPath = config.transform(communityPath);
-      const fullUrl = config.communityBase + transformedPath;
+    it('should handle container registry URL construction', () => {
+      const testPath = '/cr/docker/v2/library/nginx/manifests/latest';
+      const transformedPath = transformPath(testPath, 'cr-docker');
+      const fullUrl = PLATFORMS['cr-docker'] + transformedPath;
 
       expect(() => new URL(fullUrl)).not.toThrow();
-      expect(fullUrl).toContain('conda.anaconda.org');
+      expect(fullUrl).toBe('https://registry-1.docker.io/v2/library/nginx/manifests/latest');
+    });
+  });
+
+  describe('Container Registry Support', () => {
+    it('should have all major container registries defined', () => {
+      const containerRegistries = [
+        'cr-docker',
+        'cr-quay',
+        'cr-gcr',
+        'cr-mcr',
+        'cr-ecr',
+        'cr-ghcr',
+        'cr-gitlab',
+        'cr-redhat',
+        'cr-nvidia',
+        'cr-oracle',
+        'cr-cloudsmith',
+        'cr-digitalocean',
+        'cr-vmware',
+        'cr-k8s',
+        'cr-heroku',
+        'cr-suse',
+        'cr-opensuse',
+        'cr-gitpod'
+      ];
+
+      containerRegistries.forEach(registry => {
+        expect(PLATFORMS).toHaveProperty(registry);
+        expect(PLATFORMS[registry]).toBeDefined();
+        expect(typeof PLATFORMS[registry]).toBe('string');
+      });
+    });
+
+    it('should transform all container registry paths correctly', () => {
+      const containerRegistries = [
+        'cr-docker',
+        'cr-quay',
+        'cr-gcr',
+        'cr-mcr',
+        'cr-ecr',
+        'cr-ghcr',
+        'cr-gitlab',
+        'cr-redhat',
+        'cr-nvidia',
+        'cr-oracle',
+        'cr-cloudsmith',
+        'cr-digitalocean',
+        'cr-vmware',
+        'cr-k8s',
+        'cr-heroku',
+        'cr-suse',
+        'cr-opensuse',
+        'cr-gitpod'
+      ];
+
+      containerRegistries.forEach(registry => {
+        const prefix = registry.replace('cr-', 'cr/');
+        const testPath = `/${prefix}/v2/test/image/manifests/latest`;
+        const transformedPath = transformPath(testPath, registry);
+        expect(transformedPath).toBe('/v2/test/image/manifests/latest');
+      });
     });
   });
 });

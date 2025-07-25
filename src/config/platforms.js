@@ -1,51 +1,49 @@
 /**
- * Configuration object for different platform URLs and path transformations
- * @type {Object.<string, {base: string, transform: function(string): string}>}
+ * Configuration object for different platform base URLs
+ * @type {Object.<string, string>}
  */
 export const PLATFORMS = {
-  /** @type {{base: string, transform: function(string): string}} GitHub configuration */
-  gh: {
-    base: 'https://github.com',
-    transform: path => path.replace(/^\/gh\//, '/')
-  },
-  /** @type {{base: string, transform: function(string): string}} GitLab configuration */
-  gl: {
-    base: 'https://gitlab.com',
-    transform: path => path.replace(/^\/gl\//, '/')
-  },
-  /** @type {{base: string, transform: function(string): string}} Hugging Face configuration */
-  hf: {
-    base: 'https://huggingface.co',
-    transform: path => path.replace(/^\/hf\//, '/')
-  },
-  /** @type {{base: string, transform: function(string): string}} npm registry configuration */
-  npm: {
-    base: 'https://registry.npmjs.org',
-    transform: path => path.replace(/^\/npm\//, '/')
-  },
-  /** @type {{base: string, transform: function(string): string}} PyPI registry configuration */
-  pypi: {
-    base: 'https://pypi.org',
-    transform: path => path.replace(/^\/pypi\//, '/')
-  },
-  /** @type {{base: string, transform: function(string): string}} PyPI files configuration */
-  'pypi-files': {
-    base: 'https://files.pythonhosted.org',
-    transform: path => path.replace(/^\/pypi\/files\//, '/')
-  },
-  /** @type {{base: string, transform: function(string): string}} conda default channels configuration */
-  conda: {
-    base: 'https://repo.anaconda.com',
-    transform: path => path.replace(/^\/conda\//, '/')
-  },
-  /** @type {{base: string, transform: function(string): string}} conda community channels configuration */
-  'conda-community': {
-    base: 'https://conda.anaconda.org',
-    transform: path => path.replace(/^\/conda\/community\//, '/')
-  }
-  // /** @type {{base: string, transform: function(string): string}} All platforms */
-  // link: {
-  // 	base: "https://",
-  // 	transform: (path) => path.replace(/^\/link\//, "/"),
-  // },
+  gh: 'https://github.com',
+  gl: 'https://gitlab.com',
+  hf: 'https://huggingface.co',
+  npm: 'https://registry.npmjs.org',
+  pypi: 'https://pypi.org',
+  'pypi-files': 'https://files.pythonhosted.org',
+  conda: 'https://repo.anaconda.com',
+  'conda-community': 'https://conda.anaconda.org',
+
+  // Container Registries
+  'cr-docker': 'https://registry-1.docker.io',
+  'cr-quay': 'https://quay.io',
+  'cr-gcr': 'https://gcr.io',
+  'cr-mcr': 'https://mcr.microsoft.com',
+  'cr-ecr': 'https://public.ecr.aws',
+  'cr-ghcr': 'https://ghcr.io',
+  'cr-gitlab': 'https://registry.gitlab.com',
+  'cr-redhat': 'https://registry.redhat.io',
+  'cr-nvidia': 'https://nvcr.io',
+  'cr-oracle': 'https://container-registry.oracle.com',
+  'cr-cloudsmith': 'https://docker.cloudsmith.io',
+  'cr-digitalocean': 'https://registry.digitalocean.com',
+  'cr-vmware': 'https://projects.registry.vmware.com',
+  'cr-k8s': 'https://registry.k8s.io',
+  'cr-heroku': 'https://registry.heroku.com',
+  'cr-suse': 'https://registry.suse.com',
+  'cr-opensuse': 'https://registry.opensuse.org',
+  'cr-gitpod': 'https://registry.gitpod.io'
+  // link: "https://",
 };
+
+/**
+ * Unified path transformation function
+ * @param {string} path - The original path
+ * @param {string} platformKey - The platform key
+ * @returns {string} - The transformed path
+ */
+export function transformPath(path, platformKey) {
+  if (!PLATFORMS[platformKey]) {
+    return path;
+  }
+  const prefix = `/${platformKey.replace(/-/g, '/')}/`;
+  return path.replace(new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`), '/');
+}

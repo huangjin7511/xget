@@ -157,8 +157,8 @@ async function handleRequest(request, env, ctx) {
       return Response.redirect(HOME_PAGE_URL, 302);
     }
 
-    // Transform URL based on platform
-    const targetPath = CONFIG.PLATFORMS[platform].transform(url.pathname);
+    // Transform URL based on platform using unified logic
+    const targetPath = CONFIG.transformPath(url.pathname, platform);
     const targetUrl = `${CONFIG.PLATFORMS[platform].base}${targetPath}${url.search}`;
 
     // Check if this is a Git operation

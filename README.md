@@ -644,7 +644,9 @@ podman pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
     endpoint = ["https://xget.xi-xu.me/cr/ghcr"]
   [plugins."io.containerd.grpc.v1.cri".registry.mirrors."gcr.io"]
     endpoint = ["https://xget.xi-xu.me/cr/gcr"]
+```
 
+```bash
 # 重启 containerd
 sudo systemctl restart containerd
 ```

@@ -1,4 +1,4 @@
-import { PLATFORMS, transformPath } from './platforms';
+import { PLATFORMS } from './platforms';
 
 /**
  * @typedef {Object} SecurityConfig
@@ -14,7 +14,7 @@ import { PLATFORMS, transformPath } from './platforms';
  * @property {number} RETRY_DELAY_MS - Delay between retries in milliseconds
  * @property {number} CACHE_DURATION - Cache duration in seconds
  * @property {SecurityConfig} SECURITY - Security-related configurations
- * @property {Object} PLATFORMS - Platform-specific configurations
+ * @property {Object.<string, string>} PLATFORMS - Platform-specific configurations
  */
 
 /** @type {ApplicationConfig} */
@@ -28,6 +28,5 @@ export const CONFIG = {
     ALLOWED_ORIGINS: ['*'],
     MAX_PATH_LENGTH: 2048
   },
-  PLATFORMS,
-  transformPath
+  PLATFORMS
 };

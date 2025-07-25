@@ -1,4 +1,5 @@
 import { CONFIG } from './config/index.js';
+import { transformPath } from './config/platforms.js';
 
 /**
  * Monitors performance metrics during request processing
@@ -158,13 +159,14 @@ async function handleRequest(request, env, ctx) {
     }
 
     // Transform URL based on platform using unified logic
-    const targetPath = CONFIG.transformPath(url.pathname, platform);
-    const targetUrl = `${CONFIG.PLATFORMS[platform].base}${targetPath}${url.search}`;
+    const targetPath = transformPath(url.pathname, platform);
+    const targetUrl = `${CONFIG.PLATFORMS[platform]}${targetPath}${url.search}`;
 
     // Check if this is a Git operation
     const isGit = isGitRequest(request, url);
 
     // Check cache first (skip cache for Git operations)
+    // @ts-ignore
     const cache = caches.default;
     const cacheKey = new Request(targetUrl, request);
     let response;
@@ -177,6 +179,7 @@ async function handleRequest(request, env, ctx) {
       }
     }
 
+    /** @type {RequestInit} */
     const fetchOptions = {
       method: request.method,
       headers: new Headers()
@@ -281,14 +284,15 @@ async function handleRequest(request, env, ctx) {
         }
       } catch (error) {
         attempts++;
-        if (error.name === 'AbortError') {
+        if (error instanceof Error && error.name === 'AbortError') {
           return new Response('Request timeout', {
             status: 408,
             headers: addSecurityHeaders(new Headers())
           });
         }
         if (attempts >= CONFIG.MAX_RETRIES) {
-          return new Response(`Failed after ${CONFIG.MAX_RETRIES} attempts: ${error.message}`, {
+          const message = error instanceof Error ? error.message : String(error);
+          return new Response(`Failed after ${CONFIG.MAX_RETRIES} attempts: ${message}`, {
             status: 500,
             headers: addSecurityHeaders(new Headers())
           });
@@ -373,7 +377,8 @@ async function handleRequest(request, env, ctx) {
     return isGit ? finalResponse : addPerformanceHeaders(finalResponse, monitor);
   } catch (error) {
     console.error('Error handling request:', error);
-    return new Response(`Internal Server Error: ${error.message}`, {
+    const message = error instanceof Error ? error.message : String(error);
+    return new Response(`Internal Server Error: ${message}`, {
       status: 500,
       headers: addSecurityHeaders(new Headers())
     });

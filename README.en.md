@@ -7,54 +7,54 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
-[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#hugging-face-mirror)
-[![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-package-acceleration)
-[![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-package-acceleration)
-[![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-package-acceleration)
-[![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-registries)
+[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#as-hugging-face-mirror)
+[![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-package-management-acceleration)
+[![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-package-management-acceleration)
+[![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-package-management-acceleration)
+[![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-registry)
 
-An ultra-high-performance, secure, one-stop open source resource acquisition acceleration engine. Its performance far exceeds that of traditional accelerators, providing you with a unified and efficient download experience across multiple platforms, covering code repositories, package management, container images, models, datasets, etc.
+Ultra-high performance, secure, all-in-one open-source resource acceleration engine. Its performance far exceeds traditional accelerators, providing you with unified and efficient download experience across multiple platforms, covering code repositories, package management, container images, models and datasets.
 
 ## 🎯 Quick Start
 
 **Public Instance:** [**`xget.xi-xu.me`**](https://xget.xi-xu.me) - Ready to use, no deployment required!
 
-> **⚡ Experience Lightning Speed Now**: No registration, no configuration needed - feel the blazing fast download speeds instantly!
+> **⚡ Experience lightning-fast downloads instantly**: No registration, no configuration required, use directly to experience blazing fast download speeds!
 
 ## 🌟 Core Advantages - Why Choose Xget?
 
 ### ⚡ Extreme Performance - Breaking Traditional Accelerator Bottlenecks
 
-- **⚡ Millisecond Response**: Cloudflare's 330+ global edge nodes, average response time < 50ms
-- **🌐 HTTP/3 Ultra-fast Protocol**: Latest HTTP/3 protocol enabled, reducing connection latency by 40% and transfer speed by 30%
-- **📦 Intelligent Multi-compression**: Triple compression algorithms (gzip, deflate, brotli) improving transfer efficiency by 60%
-- **🔗 Zero-latency Pre-connection**: Connection warming and keep-alive, eliminating handshake overhead for instant response
-- **⚡ Parallel Chunked Downloads**: Full HTTP Range request support, multiplying multi-threaded download speeds
-- **🎯 Smart Route Optimization**: Automatically selects optimal transfer paths, avoiding network congestion nodes
+- **⚡ Millisecond Response**: Cloudflare's global 330+ edge nodes, average response time < 50ms
+- **🌐 HTTP/3 Ultra-fast Protocol**: Latest HTTP/3 protocol enabled, 40% reduction in connection latency, 30% improvement in transfer speed
+- **📦 Smart Multi-layer Compression**: Triple compression algorithms (gzip, deflate, brotli), 60% improvement in transfer efficiency
+- **🔗 Zero-latency Pre-connection**: Connection warm-up and keep-alive, eliminating handshake overhead for instant response
+- **⚡ Parallel Chunked Downloads**: Full HTTP Range request support, multi-threaded download speed multiplication
+- **🎯 Smart Route Optimization**: Automatic selection of optimal transmission paths, avoiding network congestion nodes
 
 ### 🌐 Deep Multi-platform Integration
 
-- **One-stop Multi-platform Support**: Unified support for high-speed downloads from code repositories, package managers, container registries, and model/dataset hosting platforms
-- **Intelligent Recognition & Conversion**: Automatically recognizes platform prefixes (gh, gl, hf, npm, pypi, conda, cr) and converts to correct target platform URL structures
+- **One-stop Multi-platform Support**: Unified support for high-speed downloads from code repositories, package managers, container registries, model and dataset hosting platforms
+- **Smart Recognition and Conversion**: Automatic recognition of platform prefixes (gh, gl, hf, npm, pypi, conda, cr) and conversion to correct URL structures for target platforms
 - **Consistent Acceleration Experience**: Enjoy unified and stable ultra-fast download service regardless of file type or source
 
-### 🔒 Enterprise-grade Security Protection
+### 🔒 Enterprise-grade Security Assurance
 
 - **Multi-layer Security Headers**:
-  - `Strict-Transport-Security`: Enforces HTTPS transport, preventing man-in-the-middle attacks
-  - `X-Frame-Options: DENY`: Prevents clickjacking attacks
+  - `Strict-Transport-Security`: Force HTTPS transmission, prevent man-in-the-middle attacks
+  - `X-Frame-Options: DENY`: Prevent clickjacking attacks
   - `X-XSS-Protection`: Built-in XSS protection mechanism
   - `Content-Security-Policy`: Strict content security policy
-  - `Referrer-Policy`: Controls referrer information leakage
+  - `Referrer-Policy`: Control referrer information leakage
 - **Request Validation Mechanism**:
   - HTTP method whitelist: Regular requests limited to GET/HEAD, Git operations dynamically allow POST
-  - Path length restriction: Prevents overly long URL attacks (max 2048 characters)
-  - Input sanitization: Prevents path traversal and injection attacks
-- **Timeout Protection**: 30-second request timeout, preventing resource exhaustion and malicious requests
+  - Path length limitation: Prevent overly long URL attacks (maximum 2048 characters)
+  - Input sanitization: Prevent path traversal and injection attacks
+- **Timeout Protection**: 30-second request timeout, prevent resource exhaustion and malicious requests
 
-### 🚀 Modern Architecture & Reliability
+### 🚀 Modern Architecture and Reliability
 
-- **Intelligent Retry Mechanism**:
+- **Smart Retry Mechanism**:
   - Maximum 3 retries with linear delay strategy (1000ms × retry count)
   - Automatic error recovery, improving download success rate
   - Timeout detection and interruption handling
@@ -63,35 +63,35 @@ An ultra-high-performance, secure, one-stop open source resource acquisition acc
   - Git operations skip cache to ensure real-time performance
   - Edge caching based on Cloudflare Cache API
 - **Performance Monitoring System**:
-  - Built-in `PerformanceMonitor` class, real-time tracking of request stage timings
-  - Detailed performance data via `X-Performance-Metrics` response header
-  - Cache hit rate statistics and optimization suggestions
+  - Built-in `PerformanceMonitor` class, real-time tracking of request stage timing
+  - Detailed performance data provided through `X-Performance-Metrics` response header
+  - Support for cache hit rate statistics and optimization suggestions
 
 ### 🎯 Full Git Protocol Compatibility
 
-- **Intelligent Protocol Detection**:
-  - Automatically recognizes Git-specific endpoints (`/info/refs`, `/git-upload-pack`, `/git-receive-pack`)
-  - Detects Git client User-Agent patterns
-  - Supports query parameters like `service=git-upload-pack`
+- **Smart Protocol Detection**:
+  - Automatic recognition of Git-specific endpoints (`/info/refs`, `/git-upload-pack`, `/git-receive-pack`)
+  - Detection of Git client User-Agent patterns
+  - Support for query parameters like `service=git-upload-pack`
 - **Complete Operation Support**:
-  - `git clone`: Full repository cloning, supports shallow cloning and branch specification
+  - `git clone`: Full repository cloning, support for shallow cloning and branch specification
   - `git push`: Code pushing and branch management
   - `git pull/fetch`: Incremental updates and remote synchronization
   - `git submodule`: Recursive submodule cloning
 - **Protocol Optimization**:
-  - Preserves Git-specific request headers and authentication information
-  - Intelligent User-Agent handling (default `git/2.34.1`)
-  - Supports Git LFS large file transfers
+  - Maintain Git-specific request headers and authentication information
+  - Smart User-Agent handling (default `git/2.34.1`)
+  - Support for Git LFS large file transfer
 
 ### 📱 Ecosystem Integration
 
 - **Dedicated Browser Extension**: [Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium) provides seamless experience
-  - Automatic link redirection without manual URL modification
+  - Automatic link redirection, no need to manually modify URLs
   - Support for custom Xget instance domains
   - Multi-platform preference settings and blacklist/whitelist management
-  - Local processing ensures privacy security
-- **Download Tool Compatibility**: Perfect support for wget, curl, aria2, IDM, and other mainstream download tools
-- **CI/CD Integration**: Can be directly used in GitHub Actions, GitLab CI, and other environments
+  - Local processing ensures privacy and security
+- **Download Tool Compatibility**: Perfect support for wget, cURL, aria2, IDM and other mainstream download tools
+- **CI/CD Integration**: Can be used directly in GitHub Actions, GitLab CI and other environments
 
 ## 📖 Link Conversion Rules
 
@@ -100,14 +100,14 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 ### Conversion Format
 
 | Platform | Platform Prefix | Original Link Format | Accelerated Link Format |
-|----------|-----------------|---------------------|------------------------|
+|----------|-----------------|---------------------|-------------------------|
 | GitHub | `gh` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
 | GitLab | `gl` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
 | Hugging Face | `hf` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
 | conda | `conda` | `https://repo.anaconda.com/...` and `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` and `https://xget.xi-xu.me/conda/community/...` |
-| Container Registry | `cr` | See [Container Registries](#container-registries) | See [Container Registries](#container-registries) |
+| Container Registry | `cr` | See [Container Registry](#container-registry) | See [Container Registry](#container-registry) |
 
 ### Platform Conversion Examples
 
@@ -134,13 +134,13 @@ https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 #### Hugging Face
 
 ```url
-# Original model file link
+# Model file original link
 https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
 # Converted (add hf prefix)
 https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
-# Original dataset file link
+# Dataset file original link
 https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 
 # Converted (add hf prefix)
@@ -150,13 +150,13 @@ https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-
 #### npm
 
 ```url
-# Original package file link
+# Package file original link
 https://registry.npmjs.org/react/-/react-18.2.0.tgz
 
 # Converted (add npm prefix)
 https://xget.xi-xu.me/npm/react/-/react-18.2.0.tgz
 
-# Original package metadata link
+# Package metadata original link
 https://registry.npmjs.org/lodash
 
 # Converted (add npm prefix)
@@ -166,13 +166,13 @@ https://xget.xi-xu.me/npm/lodash
 #### PyPI
 
 ```url
-# Original Python package file link
+# Python package file original link
 https://pypi.org/packages/source/r/requests/requests-2.31.0.tar.gz
 
 # Converted (add pypi prefix)
 https://xget.xi-xu.me/pypi/packages/source/r/requests/requests-2.31.0.tar.gz
 
-# Original wheel file link
+# Wheel file original link
 https://pypi.org/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
 
 # Converted (add pypi prefix)
@@ -182,25 +182,25 @@ https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.
 #### conda
 
 ```url
-# Original default channel package file link
+# Default channel package file original link
 https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
 # Converted (add conda prefix)
 https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
-# Original community channel metadata link
+# Community channel metadata original link
 https://conda.anaconda.org/conda-forge/linux-64/repodata.json
 
 # Converted (add conda/community prefix)
 https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
 ```
 
-#### Container Registries
+#### Container Registry
 
-Xget supports multiple container registries using the `cr/[registry-prefix]` format:
+Xget supports multiple container registries using the `cr/[container-registry-prefix]` format:
 
 | Container Registry | Registry Prefix | Original Link Format | Accelerated Link Format |
-|--------------------|-----------------|---------------------|------------------------|
+|-------------------|-----------------|---------------------|-------------------------|
 | Quay.io | `quay` | `https://quay.io/...` | `https://xget.xi-xu.me/cr/quay/...` |
 | Google | `gcr` | `https://gcr.io/...` | `https://xget.xi-xu.me/cr/gcr/...` |
 | Microsoft | `mcr` | `https://mcr.microsoft.com/...` | `https://xget.xi-xu.me/cr/mcr/...` |
@@ -219,13 +219,13 @@ Xget supports multiple container registries using the `cr/[registry-prefix]` for
 | Gitpod | `gitpod` | `https://registry.gitpod.io/...` | `https://xget.xi-xu.me/cr/gitpod/...` |
 
 ```url
-# Original GitHub Container Registry link
+# GitHub Container Registry original link
 https://ghcr.io/v2/nginxinc/nginx-unprivileged/manifests/latest
 
 # Converted (add cr/ghcr prefix)
 https://xget.xi-xu.me/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest
 
-# Original Google Container Registry link
+# Google Container Registry original link
 https://gcr.io/v2/distroless/base/manifests/latest
 
 # Converted (add cr/gcr prefix)
@@ -258,7 +258,7 @@ git pull https://xget.xi-xu.me/gh/microsoft/vscode.git main
 git clone --recursive https://xget.xi-xu.me/gh/[username]/[repository-with-submodules].git
 ```
 
-### Popular Download Tool Integration
+### Mainstream Download Tool Integration
 
 #### wget Downloads
 
@@ -273,7 +273,7 @@ wget -c https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_m
 wget -i urls.txt  # urls.txt contains multiple Xget links
 ```
 
-#### curl Downloads
+#### cURL Downloads
 
 ```bash
 # Basic download
@@ -289,7 +289,7 @@ curl -L -H "User-Agent: MyApp/1.0" https://xget.xi-xu.me/gl/gitlab-org/gitlab-ru
 #### aria2 Multi-threaded Downloads
 
 ```bash
-# Multi-threaded download for large files
+# Multi-threaded download of large files
 aria2c -x 16 -s 16 https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_model.bin
 
 # Resume download
@@ -299,7 +299,7 @@ aria2c -c https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 aria2c -i download-list.txt  # File containing multiple Xget links
 ```
 
-### Hugging Face Mirror
+### As Hugging Face Mirror
 
 ```python
 import os
@@ -313,21 +313,21 @@ model_name = 'microsoft/DialoGPT-medium'
 
 print(f"Downloading model from mirror: {model_name}")
 
-# Use AutoModelForCausalLM to load conversational generation model
-# No additional parameters needed due to environment variable setting
+# Use AutoModelForCausalLM to load dialogue generation model
+# Since we set the environment variable above, no additional parameters needed here
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
 print("Model and tokenizer loaded successfully!")
 
-# You can now use tokenizer and model
+# You can now use the tokenizer and model
 # For example:
 # new_user_input_ids = tokenizer.encode("Hello, how are you?", return_tensors='pt')
 # chat_history_ids = model.generate(new_user_input_ids, max_length=1000, pad_token_id=tokenizer.eos_token_id)
 # print(tokenizer.decode(chat_history_ids[:, new_user_input_ids.shape[-1]:][0], skip_special_tokens=True))
 ```
 
-### npm Package Acceleration
+### npm Package Management Acceleration
 
 #### Configure npm to use Xget mirror
 
@@ -335,14 +335,14 @@ print("Model and tokenizer loaded successfully!")
 # Temporarily use Xget mirror
 npm install --registry https://xget.xi-xu.me/npm/
 
-# Global npm mirror configuration
+# Globally configure npm mirror
 npm config set registry https://xget.xi-xu.me/npm/
 
 # Verify configuration
 npm config get registry
 ```
 
-#### Project Usage
+#### Use in projects
 
 ```bash
 # Configure project-level mirror in .npmrc file
@@ -356,7 +356,7 @@ yarn config set registry https://xget.xi-xu.me/npm/
 yarn install
 ```
 
-### Python Package Acceleration
+### Python Package Management Acceleration
 
 #### Configure pip to use Xget mirror
 
@@ -364,7 +364,7 @@ yarn install
 # Temporarily use Xget mirror
 pip install requests -i https://xget.xi-xu.me/pypi/simple/
 
-# Global pip mirror configuration
+# Globally configure pip mirror
 pip config set global.index-url https://xget.xi-xu.me/pypi/simple/
 pip config set global.trusted-host xget.xi-xu.me
 
@@ -372,7 +372,7 @@ pip config set global.trusted-host xget.xi-xu.me
 pip config list
 ```
 
-#### Python Project Usage
+#### Use in projects
 
 ```bash
 # Create pip.conf file (Linux/macOS)
@@ -407,7 +407,7 @@ pandas>=1.3.0
 matplotlib>=3.4.0
 ```
 
-### conda Package Acceleration
+### conda Package Management Acceleration
 
 #### Configure conda to use Xget mirror
 
@@ -445,7 +445,7 @@ channel_priority: strict
 show_channel_urls: true
 ```
 
-#### Using environment files
+#### Use environment files
 
 Environment files can directly specify complete mirror URLs:
 
@@ -478,7 +478,7 @@ conda env update -f environment.yml
 
 ### Container Image Acceleration
 
-Xget provides comprehensive acceleration support for container image pulling, compatible with Docker, Podman, containerd, and other container runtimes.
+Xget provides comprehensive acceleration support for container image pulling, compatible with Docker, Podman, containerd and other container runtimes.
 
 #### Docker Configuration
 
@@ -502,13 +502,13 @@ docker info | grep -A 10 "Registry Mirrors"
 #### Direct Image Pulling
 
 ```bash
-# Pull GitHub Container Registry image
+# Pull GitHub Container Registry images
 docker pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 
-# Pull Google Container Registry image
+# Pull Google Container Registry images
 docker pull xget.xi-xu.me/cr/gcr/distroless/base:latest
 
-# Pull Microsoft Container Registry image
+# Pull Microsoft Container Registry images
 docker pull xget.xi-xu.me/cr/mcr/dotnet/runtime:8.0
 ```
 
@@ -571,6 +571,88 @@ volumes:
   mssql_data:
 ```
 
+#### Dockerfile Optimization
+
+```dockerfile
+# Use Xget accelerated base images in Dockerfile
+FROM xget.xi-xu.me/cr/ghcr/nodejs/node:18-alpine AS builder
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+RUN npm run build
+
+# Production stage
+FROM xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Use Microsoft Container Registry .NET images
+FROM xget.xi-xu.me/cr/mcr/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+COPY --from=builder /app/publish .
+ENTRYPOINT ["dotnet", "MyApp.dll"]
+```
+
+#### CI/CD Integration
+
+```yaml
+# GitHub Actions - Using Xget accelerated container builds
+name: Build and Deploy
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build with accelerated base images
+        run: |
+          # Build using Xget accelerated base images
+          docker build -t myapp:latest \
+            --build-arg BASE_IMAGE=xget.xi-xu.me/cr/ghcr/nodejs/node:18-alpine .
+          
+      - name: Test with accelerated images
+        run: |
+          # Test using accelerated images
+          docker run --rm \
+            xget.xi-xu.me/cr/mcr/dotnet/runtime:8.0 \
+            dotnet --version
+```
+
+#### Podman Configuration
+
+```bash
+# Configure Podman to use Xget image acceleration
+# Edit /etc/containers/registries.conf
+[[registry]]
+prefix = "ghcr.io"
+location = "xget.xi-xu.me/cr/ghcr"
+
+# Or pull directly
+podman pull xget.xi-xu.me/cr/ghcr/alpine/alpine:latest
+podman pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
+```
+
+#### containerd Configuration
+
+```toml
+# Configure containerd to use Xget acceleration
+# Edit /etc/containerd/config.toml
+[plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."ghcr.io"]
+    endpoint = ["https://xget.xi-xu.me/cr/ghcr"]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."gcr.io"]
+    endpoint = ["https://xget.xi-xu.me/cr/gcr"]
+```
+
+```bash
+# Restart containerd
+sudo systemctl restart containerd
+```
+
 ### Development Environment Configuration
 
 #### Configure Git Global Acceleration
@@ -585,6 +667,23 @@ git config --global --get-regexp url
 
 # Now all git clone https://github.com/... will automatically use Xget acceleration
 git clone https://github.com/microsoft/vscode.git  # Automatically converted to Xget link
+```
+
+#### IDE Integration
+
+```bash
+# Configure Git to use Xget in VS Code
+# Add to settings.json:
+{
+  "git.defaultCloneDirectory": "~/Projects",
+  "terminal.integrated.env.linux": {
+    "GIT_CONFIG_GLOBAL": "~/.gitconfig-xget"
+  }
+}
+
+# Create dedicated Git configuration file
+echo '[url "https://xget.xi-xu.me/gh/"]' > ~/.gitconfig-xget
+echo '    insteadOf = https://github.com/' >> ~/.gitconfig-xget
 ```
 
 ### CI/CD Environment Integration
@@ -641,6 +740,35 @@ download_dependencies:
       - dependency/
 ```
 
+#### Docker Build Optimization
+
+```dockerfile
+FROM ubuntu:22.04
+
+# Use Xget acceleration for downloads in Docker builds
+RUN apt-get update && apt-get install -y wget curl git
+
+# Download large files
+RUN wget https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
+
+# Clone source code
+RUN git clone https://xget.xi-xu.me/gh/[owner]/[source-repository].git /app
+
+# Download model files
+RUN curl -L -O /models/model.bin https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+
+# Configure and install conda packages
+RUN echo "default_channels:" > ~/.condarc && \
+    echo "  - https://xget.xi-xu.me/conda/pkgs/main" >> ~/.condarc && \
+    echo "  - https://xget.xi-xu.me/conda/pkgs/r" >> ~/.condarc && \
+    echo "  - https://xget.xi-xu.me/conda/pkgs/msys2" >> ~/.condarc && \
+    echo "channel_alias: https://xget.xi-xu.me/conda/community" >> ~/.condarc && \
+    echo "channel_priority: strict" >> ~/.condarc && \
+    conda install -y numpy pandas matplotlib
+
+WORKDIR /app
+```
+
 ## 🚀 Deployment Options
 
 ### Cloudflare Workers One-Click Deployment
@@ -660,23 +788,23 @@ If you prefer manual deployment or need custom configuration:
 
 #### Deployment Steps
 
-1. **Clone the repository**
+1. **Clone Repository**
 
    ```bash
    git clone https://github.com/xixu-me/Xget.git
    cd Xget
    ```
 
-2. **Install dependencies and authenticate**
+2. **Install Dependencies and Authenticate**
 
    ```bash
    npm install
    npx wrangler auth login
    ```
 
-3. **Custom configuration (optional)**
+3. **Custom Configuration (Optional)**
 
-   Edit the `wrangler.toml` file to set your project name:
+   Edit the `wrangler.toml` file to set your repository name:
 
    ```toml
    name = "your-xget-project-name"
@@ -712,9 +840,9 @@ export const CONFIG = {
 
 ### Performance Tuning Recommendations
 
-- **Cache Optimization**: Adjust `CACHE_DURATION` based on usage patterns; frequently updated repositories can reduce duration appropriately
-- **Timeout Settings**: Increase `TIMEOUT_SECONDS` appropriately in poor network conditions
-- **Retry Strategy**: Increase `MAX_RETRIES` and `RETRY_DELAY_MS` in high-latency environments
+- **Cache Optimization**: Adjust `CACHE_DURATION` based on usage patterns, reduce for frequently updated repositories
+- **Timeout Settings**: Increase `TIMEOUT_SECONDS` appropriately for poor network conditions
+- **Retry Strategy**: Increase `MAX_RETRIES` and `RETRY_DELAY_MS` for high-latency environments
 
 ### Adding New Platforms
 
@@ -725,7 +853,10 @@ export const PLATFORMS = {
   // Existing platforms...
   
   // New platform example
-  custom: "https://example.com",
+  custom: {
+    base: "https://example.com",
+    transform: (path) => path.replace(/^\/custom\//, "/"),
+  },
 };
 ```
 
@@ -753,7 +884,7 @@ export const PLATFORMS = {
 
 ## 🧪 Testing
 
-The repository contains a complete test suite ensuring code quality and functional correctness.
+The repository includes a comprehensive test suite to ensure code quality and functionality.
 
 ### Complete Testing
 
@@ -773,32 +904,32 @@ npm run test:watch
 
 ### Test Coverage
 
-- **Unit Tests**: Core functions, platform configuration, performance monitoring
-- **Integration Tests**: End-to-end flows, platform integration, Git protocol
+- **Unit Tests**: Core functionality, platform configuration, performance monitoring
+- **Integration Tests**: End-to-end processes, platform integration, Git protocol
 - **Security Tests**: Input validation, security headers, permission control
-- **Performance Tests**: Response times, memory usage, concurrent processing
+- **Performance Tests**: Response time, memory usage, concurrent processing
 
 ## 🔍 Troubleshooting
 
 ### Common Issues
 
 **Q: Download speed not significantly improved?**  
-A: Check if source files are already cached on CDN edge nodes; first access may be slow, subsequent access will show significant improvement.
+A: Check if source files are already cached on CDN edge nodes. First access may be slower, subsequent accesses will be significantly faster.
 
 **Q: Git operations failing?**  
-A: Confirm correct URL format usage and that Git client version supports HTTPS proxy.
+A: Confirm correct URL format is used and Git client version supports HTTPS proxy.
 
 **Q: Cannot access after deployment?**  
 A: Check if Cloudflare Workers domain is correctly bound, confirm `wrangler.toml` configuration is correct.
 
 **Q: Getting 400 errors?**  
-A: Check URL path format, confirm platform prefixes are used correctly.
+A: Check URL path format, confirm platform prefix is used correctly.
 
 ### Performance Monitoring
 
 The service returns performance metrics in response headers:
 
-- `X-Performance-Metrics`: Contains timing statistics for various request stages
+- `X-Performance-Metrics`: Contains detailed timing statistics for request stages
 - `X-Cache-Status`: Shows cache hit status
 
 ### Debug Logging
@@ -812,19 +943,19 @@ npx wrangler dev --log-level debug
 ## ⚠️ Disclaimer
 
 - **Legal Use**: This repository is only for accelerating legal public file downloads and Git operations. Please comply with relevant platform terms of service and local laws and regulations
-- **Service Availability**: Public instance `xget.xi-xu.me` is a free service with no guarantee of 100% availability. Production environments are recommended to deploy their own instances
-- **Data Security**: While Xget does not store or log user data, please handle sensitive information downloads with caution
+- **Service Availability**: Public instance `xget.xi-xu.me` is a free service with no guarantee of 100% availability. Production environments should deploy their own instances
+- **Data Security**: Although Xget does not store or log user data, please handle sensitive information downloads carefully
 - **Liability Limitation**: Developers are not responsible for any direct or indirect losses caused by using this service
-- **Third-party Platforms**: Please respect the terms of service and rate limits of GitHub, GitLab, Hugging Face, and other platforms
+- **Third-party Platforms**: Please respect the terms of service and rate limits of platforms like GitHub, GitLab, Hugging Face, etc.
 
 ## 🤝 Contributing
 
-We welcome all forms of contribution! Please check the [Contributing Guidelines](CONTRIBUTING.md) to learn how to participate in project development.
+We welcome all forms of contributions! Please check the [Contributing Guide](CONTRIBUTING.md) to learn how to participate in repository development.
 
-1. **Report Issues**: Use [issue templates](https://github.com/xixu-me/Xget/issues/new/choose) to report bugs or submit feature requests
-2. **Submit Code**: Fork the repository, create feature branch, submit pull request
+1. **Report Issues**: Use [issue templates](https://github.com/xixu-me/Xget/issues/new/choose) to report bugs or request features
+2. **Submit Code**: Fork repository, create feature branch, submit pull request
 3. **Improve Documentation**: Fix errors, add examples, improve descriptions
-4. **Testing Feedback**: Test in different environments and provide feedback
+4. **Test Feedback**: Test in different environments and provide feedback
 
 ## 🌟 Star History
 
@@ -834,7 +965,7 @@ We welcome all forms of contribution! Please check the [Contributing Guidelines]
 
 - **Author**: [Xi Xu](https://xi-xu.me)
 - **Email**: [Contact Email](mailto:contact@xi-xu.me)
-- **Sponsorship**: [Sponsorship Link](https://xi-xu.me/#sponsorships)
+- **Sponsor**: [Sponsor Link](https://xi-xu.me/#sponsorships)
 
 ## 📝 License
 
@@ -842,6 +973,10 @@ This repository is licensed under the GPL-3.0 License - see the [LICENSE](LICENS
 
 ---
 
+<div align="center">
+
 **If this repository helps you, please consider giving it a ⭐ Star!**
 
 Made with ❤️ by [Xi Xu](https://xi-xu.me)
+
+</div>

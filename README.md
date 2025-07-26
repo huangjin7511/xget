@@ -90,7 +90,7 @@
   - 支持自定义 Xget 实例域名
   - 多平台偏好设置和黑白名单管理
   - 本地处理，确保隐私安全
-- **下载工具兼容**：完美支持 wget、curl、aria2、IDM 等主流下载工具
+- **下载工具兼容**：完美支持 wget、cURL、aria2、IDM 等主流下载工具
 - **CI/CD 集成**：可直接在 GitHub Actions、GitLab CI 等环境中使用
 
 ## 📖 链接转换规则
@@ -273,7 +273,7 @@ wget -c https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_m
 wget -i urls.txt  # urls.txt 包含多个 Xget 链接
 ```
 
-#### curl 下载
+#### cURL 下载
 
 ```bash
 # 基本下载
@@ -755,7 +755,7 @@ RUN wget https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 RUN git clone https://xget.xi-xu.me/gh/[所有者]/[源码存储库].git /app
 
 # 下载模型文件
-RUN curl -L -o /models/model.bin https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
+RUN curl -L -O /models/model.bin https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
 # 配置并安装 conda 包
 RUN echo "default_channels:" > ~/.condarc && \

@@ -13,7 +13,7 @@
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-package-acceleration)
 [![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-registries)
 
-Ultra-high performance, secure acceleration service that dramatically outperforms traditional accelerators, designed for fast retrieval of open source resources across various platforms.
+An ultra-high-performance, secure, one-stop open source resource acquisition acceleration engine. Its performance far exceeds that of traditional accelerators, providing you with a unified and efficient download experience across multiple platforms, covering code repositories, package management, container images, models, datasets, etc.
 
 ## 🎯 Quick Start
 

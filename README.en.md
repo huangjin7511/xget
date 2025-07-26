@@ -2,7 +2,7 @@
 
 ***[汉语](README.md)***
 
-[![Chromium Extension](https://img.shields.io/badge/Chrome%20Extension-4285F4?logo=googlechrome&logoColor=white)](#-ecosystem-integration)
+[![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?logo=googlechrome&logoColor=white)](#-ecosystem-integration)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-one-click-deployment)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
@@ -25,7 +25,7 @@ Ultra-high performance, secure acceleration service that dramatically outperform
 
 ### ⚡ Extreme Performance - Breaking Traditional Accelerator Bottlenecks
 
-- **⚡ Millisecond Response**: Cloudflare's 200+ global edge nodes, average response time < 50ms
+- **⚡ Millisecond Response**: Cloudflare's 330+ global edge nodes, average response time < 50ms
 - **🌐 HTTP/3 Ultra-fast Protocol**: Latest HTTP/3 protocol enabled, reducing connection latency by 40% and transfer speed by 30%
 - **📦 Intelligent Multi-compression**: Triple compression algorithms (gzip, deflate, brotli) improving transfer efficiency by 60%
 - **🔗 Zero-latency Pre-connection**: Connection warming and keep-alive, eliminating handshake overhead for instant response

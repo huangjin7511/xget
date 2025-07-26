@@ -961,13 +961,6 @@ npx wrangler dev --log-level debug
 
 [![Star History Chart](https://api.star-history.com/svg?repos=xixu-me/Xget&type=Date)](https://star-history.com/#xixu-me/Xget&Date)
 
-## 🔗 相关链接
-
-- **存储库主页**: [GitHub Repository](https://github.com/xixu-me/Xget)
-- **公共实例**: [xget.xi-xu.me](https://xget.xi-xu.me)
-- **浏览器扩展**: [Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium)
-- **问题反馈**: [GitHub Issues](https://github.com/xixu-me/Xget/issues)
-
 ## 📞 联系方式
 
 - **作者**: [Xi Xu](https://xi-xu.me)

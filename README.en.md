@@ -821,8 +821,8 @@ npx wrangler dev --log-level debug
 
 We welcome all forms of contribution! Please check the [Contributing Guidelines](CONTRIBUTING.md) to learn how to participate in project development.
 
-1. **Report Issues**: Use [Issue Templates](https://github.com/xixu-me/Xget/issues/new/choose) to report bugs or submit feature requests
-2. **Submit Code**: Fork the repository, create feature branch, submit Pull Request
+1. **Report Issues**: Use [issue templates](https://github.com/xixu-me/Xget/issues/new/choose) to report bugs or submit feature requests
+2. **Submit Code**: Fork the repository, create feature branch, submit pull request
 3. **Improve Documentation**: Fix errors, add examples, improve descriptions
 4. **Testing Feedback**: Test in different environments and provide feedback
 

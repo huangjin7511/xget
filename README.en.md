@@ -29,7 +29,7 @@ An ultra-high-performance, secure, one-stop open source resource acquisition acc
 - **🌐 HTTP/3 Ultra-fast Protocol**: Latest HTTP/3 protocol enabled, reducing connection latency by 40% and transfer speed by 30%
 - **📦 Intelligent Multi-compression**: Triple compression algorithms (gzip, deflate, brotli) improving transfer efficiency by 60%
 - **🔗 Zero-latency Pre-connection**: Connection warming and keep-alive, eliminating handshake overhead for instant response
-- **⚡ Parallel Chunked Downloads**: Full Range request support, multiplying multi-threaded download speeds
+- **⚡ Parallel Chunked Downloads**: Full HTTP Range request support, multiplying multi-threaded download speeds
 - **🎯 Smart Route Optimization**: Automatically selects optimal transfer paths, avoiding network congestion nodes
 
 ### 🌐 Deep Multi-platform Integration

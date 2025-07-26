@@ -13,7 +13,7 @@
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)
 [![容器注册表](https://img.shields.io/badge/容器注册表-%23007EC6.svg?logo=docker&logoColor=white)](#容器注册表)
 
-超高性能、安全加速服务，其速度远超传统加速器，专为在各类平台上快速获取各类开源资源而设计。
+超高性能、安全的一站式开源资源获取加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的下载体验，涵盖代码储存库、包管理、容器镜像、模型及数据集等。
 
 ## 🎯 快速使用
 

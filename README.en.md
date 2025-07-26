@@ -2,7 +2,7 @@
 
 ***[汉语](README.md)***
 
-[![Chrome Extension](https://img.shields.io/badge/Chrome%20Extension-4285F4?logo=googlechrome&logoColor=white)](https://github.com/xixu-me/Xget-for-Chromium)
+[![Chromium Extension](https://img.shields.io/badge/Chrome%20Extension-4285F4?logo=googlechrome&logoColor=white)](#-ecosystem-integration)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-one-click-deployment)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
@@ -35,7 +35,7 @@ Ultra-high performance, secure acceleration service that dramatically outperform
 ### 🌐 Deep Multi-platform Integration
 
 - **One-stop Multi-platform Support**: Unified support for high-speed downloads from code repositories, package managers, container registries, and model/dataset hosting platforms
-- **Intelligent Recognition & Conversion**: Automatically recognizes platform prefixes (/gh/, /gl/, /hf/, /npm/, /pypi/, /conda/, /cr/) and converts to correct target platform URL structures
+- **Intelligent Recognition & Conversion**: Automatically recognizes platform prefixes (gh, gl, hf, npm, pypi, conda, cr) and converts to correct target platform URL structures
 - **Consistent Acceleration Experience**: Enjoy unified and stable ultra-fast download service regardless of file type or source
 
 ### 🔒 Enterprise-grade Security Protection
@@ -792,7 +792,7 @@ A: Confirm correct URL format usage and that Git client version supports HTTPS p
 A: Check if Cloudflare Workers domain is correctly bound, confirm `wrangler.toml` configuration is correct.
 
 **Q: Getting 400 errors?**  
-A: Check URL path format, confirm platform prefixes (/gh/, /gl/, /hf/) are used correctly.
+A: Check URL path format, confirm platform prefixes are used correctly.
 
 ### Performance Monitoring
 

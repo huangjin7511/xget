@@ -952,8 +952,8 @@ npx wrangler dev --log-level debug
 
 我们欢迎各种形式的贡献！请查看[贡献指南](CONTRIBUTING.md)了解如何参与存储库开发。
 
-1. **报告问题**: 使用 [Issue 模板](https://github.com/xixu-me/Xget/issues/new/choose)报告 bug 或提出功能请求
-2. **提交代码**: Fork 存储库，创建功能分支，提交 Pull Request
+1. **报告问题**: 使用 [issue 模板](https://github.com/xixu-me/Xget/issues/new/choose)报告 bug 或提出功能请求
+2. **提交代码**: fork 存储库，创建功能分支，提交 pull request
 3. **改进文档**: 修正错误、添加示例、完善说明
 4. **测试反馈**: 在不同环境下测试并提供反馈
 

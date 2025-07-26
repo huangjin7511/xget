@@ -830,13 +830,6 @@ We welcome all forms of contribution! Please check the [Contributing Guidelines]
 
 [![Star History Chart](https://api.star-history.com/svg?repos=xixu-me/Xget&type=Date)](https://star-history.com/#xixu-me/Xget&Date)
 
-## 🔗 Related Links
-
-- **Repository Homepage**: [GitHub Repository](https://github.com/xixu-me/Xget)
-- **Public Instance**: [xget.xi-xu.me](https://xget.xi-xu.me)
-- **Browser Extension**: [Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium)
-- **Issue Feedback**: [GitHub Issues](https://github.com/xixu-me/Xget/issues)
-
 ## 📞 Contact
 
 - **Author**: [Xi Xu](https://xi-xu.me)

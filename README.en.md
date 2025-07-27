@@ -964,7 +964,7 @@ We welcome all forms of contributions! Please check the [Contributing Guide](CON
 ## 📞 Contact
 
 - **Author**: [Xi Xu](https://xi-xu.me)
-- **Email**: [Contact Email](mailto:contact@xi-xu.me)
+- **Email**: [Contact Email](mailto:i@xi-xu.me)
 - **Sponsor**: [Sponsor Link](https://xi-xu.me/#sponsorships)
 
 ## 📝 License

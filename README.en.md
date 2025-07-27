@@ -975,7 +975,7 @@ This repository is licensed under the GPL-3.0 License - see the [LICENSE](LICENS
 
 <div align="center">
 
-**If this repository helps you, please consider giving it a ⭐ Star!**
+**If this repository helps you, please consider giving it a ⭐ star!**
 
 Made with ❤️ by [Xi Xu](https://xi-xu.me)
 

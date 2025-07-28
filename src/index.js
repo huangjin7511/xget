@@ -141,59 +141,7 @@ function addSecurityHeaders(headers) {
   return headers;
 }
 
-/**
- * Parses Docker WWW-Authenticate header
- * @param {string} authenticateStr - The WWW-Authenticate header value
- * @returns {{realm: string, service: string}} Parsed authentication info
- */
-function parseAuthenticate(authenticateStr) {
-  // sample: Bearer realm="https://auth.ipv6.docker.com/token",service="registry.docker.io"
-  const re = /(?<=\=")(?:\\.|[^"\\])*(?=")/g;
-  const matches = authenticateStr.match(re);
-  if (matches == null || matches.length < 2) {
-    throw new Error(`invalid Www-Authenticate Header: ${authenticateStr}`);
-  }
-  return {
-    realm: matches[0],
-    service: matches[1]
-  };
-}
 
-/**
- * Fetches authentication token from container registry
- * @param {{realm: string, service: string}} wwwAuthenticate - Authentication info
- * @param {string} scope - The scope for the token
- * @param {string} authorization - Authorization header value
- * @returns {Promise<Response>} Token response
- */
-async function fetchToken(wwwAuthenticate, scope, authorization) {
-  const url = new URL(wwwAuthenticate.realm);
-  if (wwwAuthenticate.service.length) {
-    url.searchParams.set('service', wwwAuthenticate.service);
-  }
-  if (scope) {
-    url.searchParams.set('scope', scope);
-  }
-  const headers = new Headers();
-  if (authorization) {
-    headers.set('Authorization', authorization);
-  }
-  return await fetch(url, { method: 'GET', headers: headers });
-}
-
-/**
- * Creates unauthorized response for container registry
- * @param {URL} url - Request URL
- * @returns {Response} Unauthorized response
- */
-function responseUnauthorized(url) {
-  const headers = new Headers();
-  headers.set('WWW-Authenticate', `Bearer realm="https://${url.hostname}/v2/auth",service="Xget"`);
-  return new Response(JSON.stringify({ message: 'UNAUTHORIZED' }), {
-    status: 401,
-    headers: headers
-  });
-}
 
 /**
  * Handles incoming requests with caching, retries, and security measures
@@ -278,6 +226,11 @@ async function handleRequest(request, env, ctx) {
     let finalTargetPath;
     if (platform.startsWith('cr-')) {
       finalTargetPath = `/v2${targetPath}`;
+      
+      // Handle Docker Hub library image path transformation
+      if (platform === 'cr-docker') {
+        finalTargetPath = transformDockerHubPath(finalTargetPath);
+      }
     } else {
       finalTargetPath = targetPath;
     }
@@ -287,7 +240,8 @@ async function handleRequest(request, env, ctx) {
 
     // Handle Docker authentication
     if (isDocker && url.pathname === '/v2/auth') {
-      const newUrl = new URL(CONFIG.PLATFORMS[platform] + '/v2/');
+      const upstream = CONFIG.PLATFORMS[platform];
+      const newUrl = new URL(upstream + '/v2/');
       const resp = await fetch(newUrl.toString(), {
         method: 'GET',
         redirect: 'follow'
@@ -299,9 +253,15 @@ async function handleRequest(request, env, ctx) {
       if (authenticateStr === null) {
         return resp;
       }
-      const wwwAuthenticate = parseAuthenticate(authenticateStr);
+      const wwwAuthenticate = parseDockerAuthenticate(authenticateStr);
       let scope = url.searchParams.get('scope');
-      return await fetchToken(wwwAuthenticate, scope || '', authorization || '');
+      
+      // Handle Docker Hub library image scope transformation
+      if (isDockerHub(upstream) && scope) {
+        scope = transformDockerHubScope(scope);
+      }
+      
+      return await fetchDockerToken(wwwAuthenticate, scope || '', authorization || '');
     }
 
     // Check if this is a Git operation
@@ -427,13 +387,14 @@ async function handleRequest(request, env, ctx) {
           const authenticateStr = response.headers.get('WWW-Authenticate');
           if (authenticateStr) {
             try {
-              const wwwAuthenticate = parseAuthenticate(authenticateStr);
+              const wwwAuthenticate = parseDockerAuthenticate(authenticateStr);
+              const upstream = CONFIG.PLATFORMS[platform];
 
               // Infer scope from the request path for container registry requests
               let scope = '';
               const pathParts = url.pathname.split('/');
               if (pathParts.length >= 4 && pathParts[1] === 'v2') {
-                // Extract repository name from path like /v2/cr/ghcr/nginxinc/nginx-unprivileged/manifests/latest
+                // Extract repository name from path like /v2/cr/docker/nginxinc/nginx-unprivileged/manifests/latest
                 // Remove /v2 and platform prefix to get the repo path
                 const repoPath = pathParts.slice(4).join('/'); // Skip /v2/cr/[registry]
                 const repoParts = repoPath.split('/');
@@ -441,12 +402,17 @@ async function handleRequest(request, env, ctx) {
                   const repoName = repoParts.slice(0, -2).join('/'); // Remove /manifests/tag or /blobs/sha
                   if (repoName) {
                     scope = `repository:${repoName}:pull`;
+                    
+                    // Handle Docker Hub library image scope transformation
+                    if (isDockerHub(upstream)) {
+                      scope = transformDockerHubScope(scope);
+                    }
                   }
                 }
               }
 
               // Try to get a token for public access (without authorization)
-              const tokenResponse = await fetchToken(wwwAuthenticate, scope || '', '');
+              const tokenResponse = await fetchDockerToken(wwwAuthenticate, scope || '', '');
               if (tokenResponse.ok) {
                 const tokenData = await tokenResponse.json();
                 if (tokenData.token) {
@@ -473,7 +439,7 @@ async function handleRequest(request, env, ctx) {
 
           // If token fetch failed or didn't work, return the unauthorized response
           // Only return this if we truly can't access the resource
-          return responseUnauthorized(url);
+          return createDockerUnauthorizedResponse(url);
         }
 
         // Don't retry on client errors (4xx) - these won't improve with retries

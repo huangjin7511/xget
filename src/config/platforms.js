@@ -14,6 +14,8 @@ export const PLATFORMS = {
   'pypi-files': 'https://files.pythonhosted.org',
   conda: 'https://repo.anaconda.com',
   'conda-community': 'https://conda.anaconda.org',
+  maven: 'https://repo1.maven.org',
+  gradle: 'https://plugins.gradle.org',
 
   // Container Registries
   'cr-quay': 'https://quay.io',

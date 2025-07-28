@@ -14,6 +14,8 @@
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-包管理加速)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)
+[![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-包管理加速)
+[![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-包管理加速)
 [![容器注册表](https://img.shields.io/badge/容器注册表-%23007EC6.svg?logo=docker&logoColor=white)](#容器注册表)
 
 超高性能、安全的一站式开源资源获取加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的下载体验，涵盖代码储存库、包管理、容器镜像、模型及数据集等。
@@ -38,7 +40,7 @@
 ### 🌐 多平台深度集成
 
 - **一站式多平台支持**：统一支持代码存储库、包管理器、容器注册表、模型与数据集托管平台的高速下载
-- **智能识别与转换**：自动识别平台前缀（gh、gl、hf、npm、pypi、conda、cr）并转换为目标平台的正确 URL 结构
+- **智能识别与转换**：自动识别平台前缀并转换为目标平台的正确 URL 结构
 - **一致的加速体验**：无论文件类型或来源，均可享受统一且稳定的极速下载服务
 
 ### 🔒 企业级安全保障
@@ -113,6 +115,8 @@
 | npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
 | conda | `conda` | `https://repo.anaconda.com/...` 和 `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` 和 `https://xget.xi-xu.me/conda/community/...` |
+| Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
+| Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | 容器注册表 | `cr` | 见[容器注册表](#容器注册表) | 见[容器注册表](#容器注册表) |
 
 ### 各平台转换示例
@@ -231,6 +235,38 @@ https://conda.anaconda.org/conda-forge/linux-64/repodata.json
 https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
 ```
 
+#### Maven
+
+```url
+# Maven 中央仓库 JAR 文件原始链接
+https://repo1.maven.org/maven2/org/springframework/spring-core/5.3.21/spring-core-5.3.21.jar
+
+# 转换后（添加 maven 前缀）
+https://xget.xi-xu.me/maven/maven2/org/springframework/spring-core/5.3.21/spring-core-5.3.21.jar
+
+# Maven 元数据原始链接
+https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/maven-metadata.xml
+
+# 转换后（添加 maven 前缀）
+https://xget.xi-xu.me/maven/maven2/org/apache/commons/commons-lang3/maven-metadata.xml
+```
+
+#### Gradle
+
+```url
+# Gradle 插件门户 JAR 文件原始链接
+https://plugins.gradle.org/m2/org/gradle/gradle-enterprise-gradle-plugin/3.13.4/gradle-enterprise-gradle-plugin-3.13.4.jar
+
+# 转换后（添加 gradle 前缀）
+https://xget.xi-xu.me/gradle/m2/org/gradle/gradle-enterprise-gradle-plugin/3.13.4/gradle-enterprise-gradle-plugin-3.13.4.jar
+
+# Gradle 插件元数据原始链接
+https://plugins.gradle.org/api/gradle/7.6/plugin/use/org.springframework.boot
+
+# 转换后（添加 gradle 前缀）
+https://xget.xi-xu.me/gradle/api/gradle/7.6/plugin/use/org.springframework.boot
+```
+
 #### 容器注册表
 
 Xget 支持多个容器注册表，使用 `cr/[容器注册表前缀]` 格式：
@@ -273,6 +309,7 @@ https://xget.xi-xu.me/cr/gcr/v2/distroless/base/manifests/latest
 ### Git 操作与配置
 
 Xget 完全兼容 Git 协议，支持所有标准 Git 操作，并提供全局加速配置：
+
 #### Git 操作
 
 ```bash
@@ -497,6 +534,114 @@ conda config --set channel_priority strict
 
 # 验证配置
 conda config --show
+```
+
+### Maven 包管理加速
+
+#### 配置 Maven 使用 Xget 镜像
+
+```xml
+<!-- 在 ~/.m2/settings.xml 中配置 Maven 镜像 -->
+<settings>
+  <mirrors>
+    <mirror>
+      <id>xget-maven-central</id>
+      <mirrorOf>central</mirrorOf>
+      <name>Xget Maven Central Mirror</name>
+      <url>https://xget.xi-xu.me/maven/maven2</url>
+    </mirror>
+  </mirrors>
+</settings>
+```
+
+#### 在项目中使用
+
+```xml
+<!-- 在 pom.xml 中配置项目级镜像 -->
+<project>
+  <repositories>
+    <repository>
+      <id>xget-maven-central</id>
+      <name>Xget Maven Central</name>
+      <url>https://xget.xi-xu.me/maven/maven2</url>
+    </repository>
+  </repositories>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>xget-maven-central</id>
+      <name>Xget Maven Central</name>
+      <url>https://xget.xi-xu.me/maven/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
+</project>
+```
+
+```bash
+# 使用命令行指定镜像
+mvn clean install -Dmaven.repo.remote=https://xget.xi-xu.me/maven/maven2
+
+# 下载特定依赖
+mvn dependency:get -Dartifact=org.springframework:spring-core:5.3.21 \
+  -DremoteRepositories=https://xget.xi-xu.me/maven/maven2
+```
+
+### Gradle 包管理加速
+
+#### 配置 Gradle 使用 Xget 镜像
+
+```gradle
+// 在 build.gradle 中配置 Gradle 镜像
+repositories {
+    maven {
+        url 'https://xget.xi-xu.me/maven/maven2'
+    }
+    gradlePluginPortal {
+        url 'https://xget.xi-xu.me/gradle/m2'
+    }
+}
+
+// 配置插件仓库
+pluginManagement {
+    repositories {
+        maven {
+            url 'https://xget.xi-xu.me/gradle/m2'
+        }
+        gradlePluginPortal()
+    }
+}
+```
+
+#### 全局配置
+
+```gradle
+// 在 ~/.gradle/init.gradle 中配置全局镜像
+allprojects {
+    repositories {
+        maven {
+            url 'https://xget.xi-xu.me/maven/maven2'
+        }
+    }
+}
+
+settingsEvaluated { settings ->
+    settings.pluginManagement {
+        repositories {
+            maven {
+                url 'https://xget.xi-xu.me/gradle/m2'
+            }
+            gradlePluginPortal()
+        }
+    }
+}
+```
+
+```bash
+# 使用命令行指定镜像
+gradle build -Dmaven.repo.remote=https://xget.xi-xu.me/maven/maven2
+
+# 刷新依赖
+gradle build --refresh-dependencies
 ```
 
 #### 在 .condarc 中配置

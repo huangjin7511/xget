@@ -25,6 +25,7 @@ export const PLATFORMS = {
   fedora: 'https://dl.fedoraproject.org',
   rocky: 'https://download.rockylinux.org',
   arch: 'https://geo.mirror.pkgbuild.com',
+  arxiv: 'https://arxiv.org',
 
   // Container Registries
   'cr-quay': 'https://quay.io',

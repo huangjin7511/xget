@@ -16,6 +16,15 @@ export const PLATFORMS = {
   'conda-community': 'https://conda.anaconda.org',
   maven: 'https://repo1.maven.org',
   gradle: 'https://plugins.gradle.org',
+  rubygems: 'https://rubygems.org',
+  golang: 'https://proxy.golang.org',
+  nuget: 'https://api.nuget.org',
+  packagist: 'https://repo.packagist.org',
+  debian: 'https://deb.debian.org',
+  ubuntu: 'https://archive.ubuntu.com',
+  fedora: 'https://dl.fedoraproject.org',
+  rocky: 'https://download.rockylinux.org',
+  arch: 'https://geo.mirror.pkgbuild.com',
 
   // Container Registries
   'cr-quay': 'https://quay.io',
@@ -34,7 +43,6 @@ export const PLATFORMS = {
   'cr-suse': 'https://registry.suse.com',
   'cr-opensuse': 'https://registry.opensuse.org',
   'cr-gitpod': 'https://registry.gitpod.io'
-  // link: "https://",
 };
 
 /**

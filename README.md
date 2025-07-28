@@ -16,6 +16,15 @@
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)
 [![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-包管理加速)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-包管理加速)
+[![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-包管理加速)
+[![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](#go-模块加速)
+[![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-包管理加速)
+[![Packagist](https://img.shields.io/badge/Packagist-F28D1A?logo=packagist&logoColor=white)](#php-包管理加速)
+[![Debian](https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=white)](#linux-发行版加速)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](#linux-发行版加速)
+[![Fedora](https://img.shields.io/badge/Fedora-294172?logo=fedora&logoColor=white)](#linux-发行版加速)
+[![Rocky Linux](https://img.shields.io/badge/Rocky%20Linux-10B981?logo=rockylinux&logoColor=white)](#linux-发行版加速)
+[![Arch Linux](https://img.shields.io/badge/Arch%20Linux-1793D1?logo=archlinux&logoColor=white)](#linux-发行版加速)
 [![容器注册表](https://img.shields.io/badge/容器注册表-%23007EC6.svg?logo=docker&logoColor=white)](#容器注册表)
 
 超高性能、安全的一站式开源资源获取加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的下载体验，涵盖代码储存库、包管理、容器镜像、模型及数据集等。
@@ -117,6 +126,15 @@
 | conda | `conda` | `https://repo.anaconda.com/...` 和 `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` 和 `https://xget.xi-xu.me/conda/community/...` |
 | Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
+| RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
+| Go 模块 | `golang` | `https://proxy.golang.org/...` | `https://xget.xi-xu.me/golang/...` |
+| NuGet | `nuget` | `https://api.nuget.org/...` | `https://xget.xi-xu.me/nuget/...` |
+| Packagist | `packagist` | `https://repo.packagist.org/...` | `https://xget.xi-xu.me/packagist/...` |
+| Debian | `debian` | `https://deb.debian.org/...` | `https://xget.xi-xu.me/debian/...` |
+| Ubuntu | `ubuntu` | `https://archive.ubuntu.com/...` | `https://xget.xi-xu.me/ubuntu/...` |
+| Fedora | `fedora` | `https://dl.fedoraproject.org/...` | `https://xget.xi-xu.me/fedora/...` |
+| Rocky Linux | `rocky` | `https://download.rockylinux.org/...` | `https://xget.xi-xu.me/rocky/...` |
+| Arch Linux | `arch` | `https://geo.mirror.pkgbuild.com/...` | `https://xget.xi-xu.me/arch/...` |
 | 容器注册表 | `cr` | 见[容器注册表](#容器注册表) | 见[容器注册表](#容器注册表) |
 
 ### 各平台转换示例
@@ -265,6 +283,104 @@ https://plugins.gradle.org/api/gradle/7.6/plugin/use/org.springframework.boot
 
 # 转换后（添加 gradle 前缀）
 https://xget.xi-xu.me/gradle/api/gradle/7.6/plugin/use/org.springframework.boot
+```
+
+#### RubyGems
+
+```url
+# RubyGems 包文件原始链接
+https://rubygems.org/gems/rails-7.0.4.gem
+
+# 转换后（添加 rubygems 前缀）
+https://xget.xi-xu.me/rubygems/gems/rails-7.0.4.gem
+
+# RubyGems API 原始链接
+https://rubygems.org/api/v1/gems/nokogiri.json
+
+# 转换后（添加 rubygems 前缀）
+https://xget.xi-xu.me/rubygems/api/v1/gems/nokogiri.json
+```
+
+#### Go 模块
+
+```url
+# Go 模块代理原始链接
+https://proxy.golang.org/github.com/gin-gonic/gin/@v/v1.9.1.zip
+
+# 转换后（添加 golang 前缀）
+https://xget.xi-xu.me/golang/github.com/gin-gonic/gin/@v/v1.9.1.zip
+
+# Go 模块信息原始链接
+https://proxy.golang.org/github.com/gorilla/mux/@v/list
+
+# 转换后（添加 golang 前缀）
+https://xget.xi-xu.me/golang/github.com/gorilla/mux/@v/list
+```
+
+#### NuGet
+
+```url
+# NuGet 包下载原始链接
+https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg
+
+# 转换后（添加 nuget 前缀）
+https://xget.xi-xu.me/nuget/v3-flatcontainer/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg
+
+# NuGet 包元数据原始链接
+https://api.nuget.org/v3/registration5-semver1/microsoft.aspnetcore.app/index.json
+
+# 转换后（添加 nuget 前缀）
+https://xget.xi-xu.me/nuget/v3/registration5-semver1/microsoft.aspnetcore.app/index.json
+```
+
+#### Packagist
+
+```url
+# Packagist 包元数据原始链接
+https://repo.packagist.org/p2/symfony/console.json
+
+# 转换后（添加 packagist 前缀）
+https://xget.xi-xu.me/packagist/p2/symfony/console.json
+
+# Packagist 包列表原始链接
+https://repo.packagist.org/packages/list.json
+
+# 转换后（添加 packagist 前缀）
+https://xget.xi-xu.me/packagist/packages/list.json
+```
+
+#### Linux 发行版
+
+```url
+# Debian 包原始链接
+https://deb.debian.org/debian/pool/main/c/curl/curl_7.88.1-10+deb12u4_amd64.deb
+
+# 转换后（添加 debian 前缀）
+https://xget.xi-xu.me/debian/debian/pool/main/c/curl/curl_7.88.1-10+deb12u4_amd64.deb
+
+# Ubuntu 包原始链接
+https://archive.ubuntu.com/ubuntu/pool/main/g/git/git_2.34.1-1ubuntu1.9_amd64.deb
+
+# 转换后（添加 ubuntu 前缀）
+https://xget.xi-xu.me/ubuntu/ubuntu/pool/main/g/git/git_2.34.1-1ubuntu1.9_amd64.deb
+
+# Fedora 包原始链接
+https://dl.fedoraproject.org/pub/fedora/linux/releases/39/Everything/x86_64/os/Packages/n/nginx-1.24.0-1.fc39.x86_64.rpm
+
+# 转换后（添加 fedora 前缀）
+https://xget.xi-xu.me/fedora/pub/fedora/linux/releases/39/Everything/x86_64/os/Packages/n/nginx-1.24.0-1.fc39.x86_64.rpm
+
+# Rocky Linux 包原始链接
+https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1.8-6.el9.x86_64.rpm
+
+# 转换后（添加 rocky 前缀）
+https://xget.xi-xu.me/rocky/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1.8-6.el9.x86_64.rpm
+
+# Arch Linux 包原始链接
+https://geo.mirror.pkgbuild.com/core/os/x86_64/linux-6.6.10.arch1-1-x86_64.pkg.tar.zst
+
+# 转换后（添加 arch 前缀）
+https://xget.xi-xu.me/arch/core/os/x86_64/linux-6.6.10.arch1-1-x86_64.pkg.tar.zst
 ```
 
 #### 容器注册表
@@ -536,6 +652,51 @@ conda config --set channel_priority strict
 conda config --show
 ```
 
+#### 在 .condarc 中配置
+
+.condarc 文件可以放在用户主目录（`~/.condarc`）或项目根目录下：
+
+```yaml
+default_channels:
+  - https://xget.xi-xu.me/conda/pkgs/main
+  - https://xget.xi-xu.me/conda/pkgs/r
+  - https://xget.xi-xu.me/conda/pkgs/msys2
+channel_alias: https://xget.xi-xu.me/conda/community
+channel_priority: strict
+show_channel_urls: true
+```
+
+#### 使用环境文件
+
+环境文件中可以直接指定完整的镜像 URL：
+
+```yaml
+# environment.yml
+name: myproject
+channels:
+  - https://xget.xi-xu.me/conda/pkgs/main
+  - https://xget.xi-xu.me/conda/pkgs/r
+  - https://xget.xi-xu.me/conda/community/bioconda
+  - https://xget.xi-xu.me/conda/community/conda-forge
+dependencies:
+  - python=3.11
+  - numpy>=1.24.0
+  - pandas>=2.0.0
+  - matplotlib>=3.7.0
+  - scipy>=1.10.0
+  - pip
+  - pip:
+    - requests>=2.28.0
+```
+
+```bash
+# 使用环境文件创建环境
+conda env create -f environment.yml
+
+# 更新环境
+conda env update -f environment.yml
+```
+
 ### Maven 包管理加速
 
 #### 配置 Maven 使用 Xget 镜像
@@ -644,49 +805,181 @@ gradle build -Dmaven.repo.remote=https://xget.xi-xu.me/maven/maven2
 gradle build --refresh-dependencies
 ```
 
-#### 在 .condarc 中配置
+### Ruby 包管理加速
 
-.condarc 文件可以放在用户主目录（`~/.condarc`）或项目根目录下：
+#### 配置 RubyGems 使用 Xget 镜像
 
-```yaml
-default_channels:
-  - https://xget.xi-xu.me/conda/pkgs/main
-  - https://xget.xi-xu.me/conda/pkgs/r
-  - https://xget.xi-xu.me/conda/pkgs/msys2
-channel_alias: https://xget.xi-xu.me/conda/community
-channel_priority: strict
-show_channel_urls: true
+```bash
+# 临时使用 Xget 镜像
+gem install rails --source https://xget.xi-xu.me/rubygems/
+
+# 全局配置 RubyGems 镜像
+gem sources --add https://xget.xi-xu.me/rubygems/
+gem sources --remove https://rubygems.org/
+
+# 验证配置
+gem sources -l
 ```
 
-#### 使用环境文件
+#### 在项目中使用
 
-环境文件中可以直接指定完整的镜像 URL：
+```ruby
+# 在 Gemfile 中配置项目级镜像
+source 'https://xget.xi-xu.me/rubygems/'
 
-```yaml
-# environment.yml
-name: myproject
-channels:
-  - https://xget.xi-xu.me/conda/pkgs/main
-  - https://xget.xi-xu.me/conda/pkgs/r
-  - https://xget.xi-xu.me/conda/community/bioconda
-  - https://xget.xi-xu.me/conda/community/conda-forge
-dependencies:
-  - python=3.11
-  - numpy>=1.24.0
-  - pandas>=2.0.0
-  - matplotlib>=3.7.0
-  - scipy>=1.10.0
-  - pip
-  - pip:
-    - requests>=2.28.0
+gem 'rails', '~> 7.0.0'
+gem 'pg', '~> 1.1'
+gem 'puma', '~> 5.0'
 ```
 
 ```bash
-# 使用环境文件创建环境
-conda env create -f environment.yml
+# 使用 bundle 安装
+bundle config mirror.https://rubygems.org https://xget.xi-xu.me/rubygems/
+bundle install
+```
 
-# 更新环境
-conda env update -f environment.yml
+### Go 模块加速
+
+#### 配置 Go 使用 Xget 代理
+
+```bash
+# 配置 Go 模块代理
+export GOPROXY=https://xget.xi-xu.me/golang,direct
+export GOSUMDB=off
+
+# 或者永久配置
+go env -w GOPROXY=https://xget.xi-xu.me/golang,direct
+go env -w GOSUMDB=off
+
+# 验证配置
+go env GOPROXY
+```
+
+#### 在项目中使用
+
+```bash
+# 下载依赖
+go mod download
+
+# 更新依赖
+go get -u ./...
+
+# 清理模块缓存
+go clean -modcache
+```
+
+### NuGet 包管理加速
+
+#### 配置 NuGet 使用 Xget 镜像
+
+```bash
+# 添加 Xget 包源
+dotnet nuget add source https://xget.xi-xu.me/nuget/v3/index.json -n xget
+
+# 列出包源
+dotnet nuget list source
+
+# 在项目中使用
+dotnet restore --source https://xget.xi-xu.me/nuget/v3/index.json
+```
+
+#### 在 NuGet.Config 中配置
+
+```xml
+<!-- NuGet.Config -->
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="xget" value="https://xget.xi-xu.me/nuget/v3/index.json" />
+  </packageSources>
+</configuration>
+```
+
+### PHP 包管理加速
+
+#### 配置 Composer 使用 Xget 镜像
+
+```bash
+# 全局配置 Composer 镜像
+composer config -g repo.packagist composer https://xget.xi-xu.me/packagist/
+
+# 项目级配置
+composer config repo.packagist composer https://xget.xi-xu.me/packagist/
+
+# 验证配置
+composer config -l
+```
+
+#### 在 composer.json 中配置
+
+```json
+{
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://xget.xi-xu.me/packagist/"
+    }
+  ],
+  "require": {
+    "symfony/console": "^6.0",
+    "guzzlehttp/guzzle": "^7.0"
+  }
+}
+```
+
+### Linux 发行版加速
+
+#### Debian/Ubuntu APT 配置
+
+```bash
+# 备份原始源列表
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+
+# 配置 Debian 镜像
+echo "deb https://xget.xi-xu.me/debian/debian bookworm main" | sudo tee /etc/apt/sources.list
+echo "deb https://xget.xi-xu.me/debian/debian-security bookworm-security main" | sudo tee -a /etc/apt/sources.list
+
+# 配置 Ubuntu 镜像
+echo "deb https://xget.xi-xu.me/ubuntu/ubuntu jammy main restricted universe multiverse" | sudo tee /etc/apt/sources.list
+echo "deb https://xget.xi-xu.me/ubuntu/ubuntu jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+
+# 更新包列表
+sudo apt update
+```
+
+#### Fedora DNF 配置
+
+```bash
+# 配置 Fedora 镜像
+sudo sed -i 's|^metalink=|#metalink=|g' /etc/yum.repos.d/fedora*.repo
+sudo sed -i 's|^#baseurl=http://download.example/pub/fedora/linux|baseurl=https://xget.xi-xu.me/fedora/pub/fedora/linux|g' /etc/yum.repos.d/fedora*.repo
+
+# 更新包缓存
+sudo dnf makecache
+```
+
+#### Rocky Linux DNF 配置
+
+```bash
+# 配置 Rocky Linux 镜像
+sudo sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/rocky*.repo
+sudo sed -i 's|^#baseurl=http://dl.rockylinux.org|baseurl=https://xget.xi-xu.me/rocky|g' /etc/yum.repos.d/rocky*.repo
+
+# 更新包缓存
+sudo dnf makecache
+```
+
+#### Arch Linux Pacman 配置
+
+```bash
+# 备份原始镜像列表
+sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+
+# 配置 Arch Linux 镜像
+echo 'Server = https://xget.xi-xu.me/arch/$repo/os/$arch' | sudo tee /etc/pacman.d/mirrorlist
+
+# 更新包数据库
+sudo pacman -Sy
 ```
 
 ### 容器镜像加速

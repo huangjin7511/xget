@@ -1,19 +1,34 @@
 # Xget
 
-***[汉语](README.md)***
+**[汉语](README.md)**
 
 [![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?logo=googlechrome&logoColor=white)](#-ecosystem-integration)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-one-click-deployment)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
+[![Gitea](https://img.shields.io/badge/Gitea-609926?&logo=gitea&logoColor=white)](#gitea)
+[![Codeberg](https://img.shields.io/badge/Codeberg-2185D0?&logo=codeberg&logoColor=white)](#codeberg)
+[![SourceForge](https://img.shields.io/badge/SourceForge-FF6600?&logo=sourceforge&logoColor=white)](#sourceforge)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#as-hugging-face-mirror)
-[![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-package-management-acceleration)
-[![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-package-management-acceleration)
-[![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-package-management-acceleration)
+[![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-package-acceleration)
+[![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-package-acceleration)
+[![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-package-acceleration)
+[![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-package-acceleration)
+[![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-package-acceleration)
+[![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-package-acceleration)
+[![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](#go-module-acceleration)
+[![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-package-acceleration)
+[![Packagist](https://img.shields.io/badge/Packagist-F28D1A?logo=packagist&logoColor=white)](#php-package-acceleration)
+[![Debian](https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=white)](#linux-distribution-acceleration)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](#linux-distribution-acceleration)
+[![Fedora](https://img.shields.io/badge/Fedora-294172?logo=fedora&logoColor=white)](#linux-distribution-acceleration)
+[![Rocky Linux](https://img.shields.io/badge/Rocky%20Linux-10B981?logo=rockylinux&logoColor=white)](#linux-distribution-acceleration)
+[![Arch Linux](https://img.shields.io/badge/Arch%20Linux-1793D1?logo=archlinux&logoColor=white)](#linux-distribution-acceleration)
+[![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#academic-resource-acceleration)
 [![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-registry)
 
-Ultra-high performance, secure, all-in-one open-source resource acceleration engine. Its performance far exceeds traditional accelerators, providing you with unified and efficient download experience across multiple platforms, covering code repositories, package management, container images, models and datasets.
+Ultra-high performance, secure all-in-one open source resource acceleration engine. Its performance far exceeds traditional accelerators, providing you with unified and efficient download experience across multiple platforms, covering code repositories, package management, container images, models and datasets.
 
 ## 🎯 Quick Start
 
@@ -26,16 +41,16 @@ Ultra-high performance, secure, all-in-one open-source resource acceleration eng
 ### ⚡ Extreme Performance - Breaking Traditional Accelerator Bottlenecks
 
 - **⚡ Millisecond Response**: Cloudflare's global 330+ edge nodes, average response time < 50ms
-- **🌐 HTTP/3 Ultra-fast Protocol**: Latest HTTP/3 protocol enabled, 40% reduction in connection latency, 30% improvement in transfer speed
-- **📦 Smart Multi-layer Compression**: Triple compression algorithms (gzip, deflate, brotli), 60% improvement in transfer efficiency
+- **🌐 HTTP/3 Ultra-fast Protocol**: Latest HTTP/3 protocol enabled, 40% reduced connection latency, 30% improved transfer speed
+- **📦 Smart Multi-layer Compression**: Triple compression algorithms (gzip, deflate, brotli), 60% improved transfer efficiency
 - **🔗 Zero-latency Pre-connection**: Connection warm-up and keep-alive, eliminating handshake overhead for instant response
-- **⚡ Parallel Chunked Downloads**: Full HTTP Range request support, multi-threaded download speed multiplication
-- **🎯 Smart Route Optimization**: Automatic selection of optimal transmission paths, avoiding network congestion nodes
+- **⚡ Parallel Chunked Downloads**: Full HTTP Range request support, multi-threaded download speed multiplied
+- **🎯 Smart Route Optimization**: Automatically select optimal transmission paths, avoiding network congestion nodes
 
 ### 🌐 Deep Multi-platform Integration
 
 - **One-stop Multi-platform Support**: Unified support for high-speed downloads from code repositories, package managers, container registries, model and dataset hosting platforms
-- **Smart Recognition and Conversion**: Automatic recognition of platform prefixes (gh, gl, hf, npm, pypi, conda, cr) and conversion to correct URL structures for target platforms
+- **Smart Recognition and Conversion**: Automatically recognize platform prefixes and convert to correct URL structure for target platforms
 - **Consistent Acceleration Experience**: Enjoy unified and stable ultra-fast download service regardless of file type or source
 
 ### 🔒 Enterprise-grade Security Assurance
@@ -48,7 +63,7 @@ Ultra-high performance, secure, all-in-one open-source resource acceleration eng
   - `Referrer-Policy`: Control referrer information leakage
 - **Request Validation Mechanism**:
   - HTTP method whitelist: Regular requests limited to GET/HEAD, Git operations dynamically allow POST
-  - Path length limitation: Prevent overly long URL attacks (maximum 2048 characters)
+  - Path length limit: Prevent overly long URL attacks (maximum 2048 characters)
   - Input sanitization: Prevent path traversal and injection attacks
 - **Timeout Protection**: 30-second request timeout, prevent resource exhaustion and malicious requests
 
@@ -56,7 +71,7 @@ Ultra-high performance, secure, all-in-one open-source resource acceleration eng
 
 - **Smart Retry Mechanism**:
   - Maximum 3 retries with linear delay strategy (1000ms × retry count)
-  - Automatic error recovery, improving download success rate
+  - Automatic error recovery, improved download success rate
   - Timeout detection and interruption handling
 - **Efficient Caching Strategy**:
   - 1800 seconds (30 minutes) default cache duration, significantly reducing origin server pressure
@@ -64,32 +79,32 @@ Ultra-high performance, secure, all-in-one open-source resource acceleration eng
   - Edge caching based on Cloudflare Cache API
 - **Performance Monitoring System**:
   - Built-in `PerformanceMonitor` class, real-time tracking of request stage timing
-  - Detailed performance data provided through `X-Performance-Metrics` response header
+  - Detailed performance data via `X-Performance-Metrics` response header
   - Support for cache hit rate statistics and optimization suggestions
 
 ### 🎯 Full Git Protocol Compatibility
 
 - **Smart Protocol Detection**:
-  - Automatic recognition of Git-specific endpoints (`/info/refs`, `/git-upload-pack`, `/git-receive-pack`)
-  - Detection of Git client User-Agent patterns
-  - Support for query parameters like `service=git-upload-pack`
+  - Automatically recognize Git-specific endpoints (`/info/refs`, `/git-upload-pack`, `/git-receive-pack`)
+  - Detect Git client User-Agent patterns
+  - Support query parameters like `service=git-upload-pack`
 - **Complete Operation Support**:
-  - `git clone`: Full repository cloning, support for shallow cloning and branch specification
+  - `git clone`: Full repository cloning, support shallow cloning and branch specification
   - `git push`: Code pushing and branch management
   - `git pull/fetch`: Incremental updates and remote synchronization
   - `git submodule`: Recursive submodule cloning
 - **Protocol Optimization**:
   - Maintain Git-specific request headers and authentication information
   - Smart User-Agent handling (default `git/2.34.1`)
-  - Support for Git LFS large file transfer
+  - Support Git LFS large file transfer
 
 ### 📱 Ecosystem Integration
 
 - **Dedicated Browser Extension**: [Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium) provides seamless experience
-  - Automatic link redirection, no need to manually modify URLs
-  - Support for custom Xget instance domains
+  - Automatic link redirection, no manual URL modification needed
+  - Support custom Xget instance domain names
   - Multi-platform preference settings and blacklist/whitelist management
-  - Local processing ensures privacy and security
+  - Local processing ensures privacy security
 - **Download Tool Compatibility**: Perfect support for wget, cURL, aria2, IDM and other mainstream download tools
 - **CI/CD Integration**: Can be used directly in GitHub Actions, GitLab CI and other environments
 
@@ -103,10 +118,25 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 |----------|-----------------|---------------------|-------------------------|
 | GitHub | `gh` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
 | GitLab | `gl` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
+| Gitea | `gitea` | `https://gitea.com/...` | `https://xget.xi-xu.me/gitea/...` |
+| Codeberg | `codeberg` | `https://codeberg.org/...` | `https://xget.xi-xu.me/codeberg/...` |
+| SourceForge | `sf` | `https://sourceforge.net/...` | `https://xget.xi-xu.me/sf/...` |
 | Hugging Face | `hf` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
 | conda | `conda` | `https://repo.anaconda.com/...` and `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` and `https://xget.xi-xu.me/conda/community/...` |
+| Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
+| Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
+| RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
+| Go Modules | `golang` | `https://proxy.golang.org/...` | `https://xget.xi-xu.me/golang/...` |
+| NuGet | `nuget` | `https://api.nuget.org/...` | `https://xget.xi-xu.me/nuget/...` |
+| Packagist | `packagist` | `https://repo.packagist.org/...` | `https://xget.xi-xu.me/packagist/...` |
+| Debian | `debian` | `https://deb.debian.org/...` | `https://xget.xi-xu.me/debian/...` |
+| Ubuntu | `ubuntu` | `https://archive.ubuntu.com/...` | `https://xget.xi-xu.me/ubuntu/...` |
+| Fedora | `fedora` | `https://dl.fedoraproject.org/...` | `https://xget.xi-xu.me/fedora/...` |
+| Rocky Linux | `rocky` | `https://download.rockylinux.org/...` | `https://xget.xi-xu.me/rocky/...` |
+| Arch Linux | `arch` | `https://geo.mirror.pkgbuild.com/...` | `https://xget.xi-xu.me/arch/...` |
+| arXiv | `arxiv` | `https://arxiv.org/...` | `https://xget.xi-xu.me/arxiv/...` |
 | Container Registry | `cr` | See [Container Registry](#container-registry) | See [Container Registry](#container-registry) |
 
 ### Platform Conversion Examples
@@ -129,6 +159,36 @@ https://gitlab.com/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 
 # Converted (add gl prefix)
 https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
+```
+
+#### Gitea
+
+```url
+# Original link
+https://gitea.com/gitea/gitea/archive/main.zip
+
+# Converted (add gitea prefix)
+https://xget.xi-xu.me/gitea/gitea/gitea/archive/main.zip
+```
+
+#### Codeberg
+
+```url
+# Original link
+https://codeberg.org/forgejo/forgejo/archive/forgejo.zip
+
+# Converted (add codeberg prefix)
+https://xget.xi-xu.me/codeberg/forgejo/forgejo/archive/forgejo.zip
+```
+
+#### SourceForge
+
+```url
+# Original link
+https://sourceforge.net/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download
+
+# Converted (add sf prefix)
+https://xget.xi-xu.me/sf/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download
 ```
 
 #### Hugging Face
@@ -195,6 +255,152 @@ https://conda.anaconda.org/conda-forge/linux-64/repodata.json
 https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
 ```
 
+#### Maven
+
+```url
+# Maven Central Repository JAR file original link
+https://repo1.maven.org/maven2/org/springframework/spring-core/5.3.21/spring-core-5.3.21.jar
+
+# Converted (add maven prefix)
+https://xget.xi-xu.me/maven/maven2/org/springframework/spring-core/5.3.21/spring-core-5.3.21.jar
+
+# Maven metadata original link
+https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/maven-metadata.xml
+
+# Converted (add maven prefix)
+https://xget.xi-xu.me/maven/maven2/org/apache/commons/commons-lang3/maven-metadata.xml
+```
+
+#### Gradle
+
+```url
+# Gradle Plugin Portal JAR file original link
+https://plugins.gradle.org/m2/org/gradle/gradle-enterprise-gradle-plugin/3.13.4/gradle-enterprise-gradle-plugin-3.13.4.jar
+
+# Converted (add gradle prefix)
+https://xget.xi-xu.me/gradle/m2/org/gradle/gradle-enterprise-gradle-plugin/3.13.4/gradle-enterprise-gradle-plugin-3.13.4.jar
+
+# Gradle plugin metadata original link
+https://plugins.gradle.org/api/gradle/7.6/plugin/use/org.springframework.boot
+
+# Converted (add gradle prefix)
+https://xget.xi-xu.me/gradle/api/gradle/7.6/plugin/use/org.springframework.boot
+```
+
+#### RubyGems
+
+```url
+# RubyGems package file original link
+https://rubygems.org/gems/rails-7.0.4.gem
+
+# Converted (add rubygems prefix)
+https://xget.xi-xu.me/rubygems/gems/rails-7.0.4.gem
+
+# RubyGems API original link
+https://rubygems.org/api/v1/gems/nokogiri.json
+
+# Converted (add rubygems prefix)
+https://xget.xi-xu.me/rubygems/api/v1/gems/nokogiri.json
+```
+
+#### Go Modules
+
+```url
+# Go module proxy original link
+https://proxy.golang.org/github.com/gin-gonic/gin/@v/v1.9.1.zip
+
+# Converted (add golang prefix)
+https://xget.xi-xu.me/golang/github.com/gin-gonic/gin/@v/v1.9.1.zip
+
+# Go module info original link
+https://proxy.golang.org/github.com/gorilla/mux/@v/list
+
+# Converted (add golang prefix)
+https://xget.xi-xu.me/golang/github.com/gorilla/mux/@v/list
+```
+
+#### NuGet
+
+```url
+# NuGet package download original link
+https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg
+
+# Converted (add nuget prefix)
+https://xget.xi-xu.me/nuget/v3-flatcontainer/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg
+
+# NuGet package metadata original link
+https://api.nuget.org/v3/registration5-semver1/microsoft.aspnetcore.app/index.json
+
+# Converted (add nuget prefix)
+https://xget.xi-xu.me/nuget/v3/registration5-semver1/microsoft.aspnetcore.app/index.json
+```
+
+#### Packagist
+
+```url
+# Packagist package metadata original link
+https://repo.packagist.org/p2/symfony/console.json
+
+# Converted (add packagist prefix)
+https://xget.xi-xu.me/packagist/p2/symfony/console.json
+
+# Packagist package list original link
+https://repo.packagist.org/packages/list.json
+
+# Converted (add packagist prefix)
+https://xget.xi-xu.me/packagist/packages/list.json
+```
+
+#### Linux Distributions
+
+```url
+# Debian package original link
+https://deb.debian.org/debian/pool/main/c/curl/curl_7.88.1-10+deb12u4_amd64.deb
+
+# Converted (add debian prefix)
+https://xget.xi-xu.me/debian/debian/pool/main/c/curl/curl_7.88.1-10+deb12u4_amd64.deb
+
+# Ubuntu package original link
+https://archive.ubuntu.com/ubuntu/pool/main/g/git/git_2.34.1-1ubuntu1.9_amd64.deb
+
+# Converted (add ubuntu prefix)
+https://xget.xi-xu.me/ubuntu/ubuntu/pool/main/g/git/git_2.34.1-1ubuntu1.9_amd64.deb
+
+# Fedora package original link
+https://dl.fedoraproject.org/pub/fedora/linux/releases/39/Everything/x86_64/os/Packages/n/nginx-1.24.0-1.fc39.x86_64.rpm
+
+# Converted (add fedora prefix)
+https://xget.xi-xu.me/fedora/pub/fedora/linux/releases/39/Everything/x86_64/os/Packages/n/nginx-1.24.0-1.fc39.x86_64.rpm
+
+# Rocky Linux package original link
+https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1.8-6.el9.x86_64.rpm
+
+# Converted (add rocky prefix)
+https://xget.xi-xu.me/rocky/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1.8-6.el9.x86_64.rpm
+
+# Arch Linux package original link
+https://geo.mirror.pkgbuild.com/core/os/x86_64/linux-6.6.10.arch1-1-x86_64.pkg.tar.zst
+
+# Converted (add arch prefix)
+https://xget.xi-xu.me/arch/core/os/x86_64/linux-6.6.10.arch1-1-x86_64.pkg.tar.zst
+```
+
+#### arXiv
+
+```url
+# arXiv paper PDF original link
+https://arxiv.org/pdf/2301.07041.pdf
+
+# Converted (add arxiv prefix)
+https://xget.xi-xu.me/arxiv/pdf/2301.07041.pdf
+
+# arXiv paper source original link
+https://arxiv.org/e-print/2301.07041
+
+# Converted (add arxiv prefix)
+https://xget.xi-xu.me/arxiv/e-print/2301.07041
+```
+
 #### Container Registry
 
 Xget supports multiple container registries using the `cr/[container-registry-prefix]` format:
@@ -234,9 +440,11 @@ https://xget.xi-xu.me/cr/gcr/v2/distroless/base/manifests/latest
 
 ## 🎯 Use Cases
 
-### Git Version Control Operations
+### Git Operations and Configuration
 
-Xget is fully compatible with Git protocol, supporting all standard Git operations:
+Xget is fully compatible with Git protocol, supports all standard Git operations, and provides global acceleration configuration:
+
+#### Git Operations
 
 ```bash
 # Clone repository
@@ -248,6 +456,18 @@ git clone -b main https://xget.xi-xu.me/gh/facebook/react.git
 # Shallow clone (latest commit only)
 git clone --depth 1 https://xget.xi-xu.me/gh/torvalds/linux.git
 
+# Clone GitLab repository
+git clone https://xget.xi-xu.me/gl/gitlab-org/gitlab.git
+
+# Clone Gitea repository
+git clone https://xget.xi-xu.me/gitea/gitea/gitea.git
+
+# Clone Codeberg repository
+git clone https://xget.xi-xu.me/codeberg/forgejo/forgejo.git
+
+# Clone SourceForge repository
+git clone https://xget.xi-xu.me/sf/projects/mingw-w64/code.git
+
 # Add remote repository
 git remote add upstream https://xget.xi-xu.me/gh/[owner]/[repository].git
 
@@ -256,6 +476,25 @@ git pull https://xget.xi-xu.me/gh/microsoft/vscode.git main
 
 # Recursive submodule clone
 git clone --recursive https://xget.xi-xu.me/gh/[username]/[repository-with-submodules].git
+```
+
+#### Git Global Acceleration Configuration
+
+```bash
+# Configure Git to use Xget for specific domains
+git config --global url."https://xget.xi-xu.me/gh/".insteadOf "https://github.com/"
+git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.com/"
+git config --global url."https://xget.xi-xu.me/gitea/".insteadOf "https://gitea.com/"
+git config --global url."https://xget.xi-xu.me/codeberg/".insteadOf "https://codeberg.org/"
+git config --global url."https://xget.xi-xu.me/sf/".insteadOf "https://sourceforge.net/"
+
+# Verify configuration
+git config --global --get-regexp url
+
+# Now all git clone operations for related platforms will automatically use Xget acceleration
+git clone https://github.com/microsoft/vscode.git  # Automatically converted to Xget link
+git clone https://gitlab.com/gitlab-org/gitlab.git  # Automatically converted to Xget link
+git clone https://codeberg.org/forgejo/forgejo.git  # Automatically converted to Xget link
 ```
 
 ### Mainstream Download Tool Integration
@@ -289,13 +528,13 @@ curl -L -H "User-Agent: MyApp/1.0" https://xget.xi-xu.me/gl/gitlab-org/gitlab-ru
 #### aria2 Multi-threaded Downloads
 
 ```bash
-# Multi-threaded download of large files
+# Multi-threaded download for large files
 aria2c -x 16 -s 16 https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_model.bin
 
 # Resume download
 aria2c -c https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 
-# Batch download configuration file
+# Batch download with config file
 aria2c -i download-list.txt  # File containing multiple Xget links
 ```
 
@@ -313,8 +552,8 @@ model_name = 'microsoft/DialoGPT-medium'
 
 print(f"Downloading model from mirror: {model_name}")
 
-# Use AutoModelForCausalLM to load dialogue generation model
-# Since we set the environment variable above, no additional parameters needed here
+# Use AutoModelForCausalLM to load conversational generation model
+# No additional parameters needed due to environment variable set above
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
@@ -327,7 +566,7 @@ print("Model and tokenizer loaded successfully!")
 # print(tokenizer.decode(chat_history_ids[:, new_user_input_ids.shape[-1]:][0], skip_special_tokens=True))
 ```
 
-### npm Package Management Acceleration
+### npm Package Acceleration
 
 #### Configure npm to use Xget mirror
 
@@ -356,7 +595,7 @@ yarn config set registry https://xget.xi-xu.me/npm/
 yarn install
 ```
 
-### Python Package Management Acceleration
+### Python Package Acceleration
 
 #### Configure pip to use Xget mirror
 
@@ -390,7 +629,7 @@ index-url = https://xget.xi-xu.me/pypi/simple/
 trusted-host = xget.xi-xu.me
 EOF
 
-# Install using configuration file
+# Install using config file
 pip install -r requirements.txt --config-file pip.conf
 ```
 
@@ -407,7 +646,7 @@ pandas>=1.3.0
 matplotlib>=3.4.0
 ```
 
-### conda Package Management Acceleration
+### conda Package Acceleration
 
 #### Configure conda to use Xget mirror
 
@@ -474,6 +713,291 @@ conda env create -f environment.yml
 
 # Update environment
 conda env update -f environment.yml
+```
+
+### Maven Package Acceleration
+
+#### Configure Maven to use Xget mirror
+
+```xml
+<!-- Configure Maven mirror in ~/.m2/settings.xml -->
+<settings>
+  <mirrors>
+    <mirror>
+      <id>xget-maven-central</id>
+      <mirrorOf>central</mirrorOf>
+      <name>Xget Maven Central Mirror</name>
+      <url>https://xget.xi-xu.me/maven/maven2</url>
+    </mirror>
+  </mirrors>
+</settings>
+```
+
+#### Use in projects
+
+```xml
+<!-- Configure project-level mirror in pom.xml -->
+<project>
+  <repositories>
+    <repository>
+      <id>xget-maven-central</id>
+      <name>Xget Maven Central</name>
+      <url>https://xget.xi-xu.me/maven/maven2</url>
+    </repository>
+  </repositories>
+  
+  <pluginRepositories>
+    <pluginRepository>
+      <id>xget-maven-central</id>
+      <name>Xget Maven Central</name>
+      <url>https://xget.xi-xu.me/maven/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
+</project>
+```
+
+```bash
+# Use command line to specify mirror
+mvn clean install -Dmaven.repo.remote=https://xget.xi-xu.me/maven/maven2
+
+# Download specific dependency
+mvn dependency:get -Dartifact=org.springframework:spring-core:5.3.21 \
+  -DremoteRepositories=https://xget.xi-xu.me/maven/maven2
+```
+
+### Gradle Package Acceleration
+
+#### Configure Gradle to use Xget mirror
+
+```gradle
+// Configure Gradle mirror in build.gradle
+repositories {
+    maven {
+        url 'https://xget.xi-xu.me/maven/maven2'
+    }
+    gradlePluginPortal {
+        url 'https://xget.xi-xu.me/gradle/m2'
+    }
+}
+
+// Configure plugin repositories
+pluginManagement {
+    repositories {
+        maven {
+            url 'https://xget.xi-xu.me/gradle/m2'
+        }
+        gradlePluginPortal()
+    }
+}
+```
+
+#### Global configuration
+
+```gradle
+// Configure global mirror in ~/.gradle/init.gradle
+allprojects {
+    repositories {
+        maven {
+            url 'https://xget.xi-xu.me/maven/maven2'
+        }
+    }
+}
+
+settingsEvaluated { settings ->
+    settings.pluginManagement {
+        repositories {
+            maven {
+                url 'https://xget.xi-xu.me/gradle/m2'
+            }
+            gradlePluginPortal()
+        }
+    }
+}
+```
+
+```bash
+# Use command line to specify mirror
+gradle build -Dmaven.repo.remote=https://xget.xi-xu.me/maven/maven2
+
+# Refresh dependencies
+gradle build --refresh-dependencies
+```
+
+### Ruby Package Acceleration
+
+#### Configure RubyGems to use Xget mirror
+
+```bash
+# Temporarily use Xget mirror
+gem install rails --source https://xget.xi-xu.me/rubygems/
+
+# Globally configure RubyGems mirror
+gem sources --add https://xget.xi-xu.me/rubygems/
+gem sources --remove https://rubygems.org/
+
+# Verify configuration
+gem sources -l
+```
+
+#### Use in projects
+
+```ruby
+# Configure project-level mirror in Gemfile
+source 'https://xget.xi-xu.me/rubygems/'
+
+gem 'rails', '~> 7.0.0'
+gem 'pg', '~> 1.1'
+gem 'puma', '~> 5.0'
+```
+
+```bash
+# Use bundle to install
+bundle config mirror.https://rubygems.org https://xget.xi-xu.me/rubygems/
+bundle install
+```
+
+### Go Module Acceleration
+
+#### Configure Go to use Xget proxy
+
+```bash
+# Configure Go module proxy
+export GOPROXY=https://xget.xi-xu.me/golang,direct
+export GOSUMDB=off
+
+# Or configure permanently
+go env -w GOPROXY=https://xget.xi-xu.me/golang,direct
+go env -w GOSUMDB=off
+
+# Verify configuration
+go env GOPROXY
+```
+
+#### Use in projects
+
+```bash
+# Download dependencies
+go mod download
+
+# Update dependencies
+go get -u ./...
+
+# Clean module cache
+go clean -modcache
+```
+
+### NuGet Package Acceleration
+
+#### Configure NuGet to use Xget mirror
+
+```bash
+# Add Xget package source
+dotnet nuget add source https://xget.xi-xu.me/nuget/v3/index.json -n xget
+
+# List package sources
+dotnet nuget list source
+
+# Use in project
+dotnet restore --source https://xget.xi-xu.me/nuget/v3/index.json
+```
+
+#### Configure in NuGet.Config
+
+```xml
+<!-- NuGet.Config -->
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <packageSources>
+    <add key="xget" value="https://xget.xi-xu.me/nuget/v3/index.json" />
+  </packageSources>
+</configuration>
+```
+
+### PHP Package Acceleration
+
+#### Configure Composer to use Xget mirror
+
+```bash
+# Globally configure Composer mirror
+composer config -g repo.packagist composer https://xget.xi-xu.me/packagist/
+
+# Project-level configuration
+composer config repo.packagist composer https://xget.xi-xu.me/packagist/
+
+# Verify configuration
+composer config -l
+```
+
+#### Configure in composer.json
+
+```json
+{
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://xget.xi-xu.me/packagist/"
+    }
+  ],
+  "require": {
+    "symfony/console": "^6.0",
+    "guzzlehttp/guzzle": "^7.0"
+  }
+}
+```
+
+### Linux Distribution Acceleration
+
+#### Debian/Ubuntu APT Configuration
+
+```bash
+# Backup original sources list
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+
+# Configure Debian mirror
+echo "deb https://xget.xi-xu.me/debian/debian bookworm main" | sudo tee /etc/apt/sources.list
+echo "deb https://xget.xi-xu.me/debian/debian-security bookworm-security main" | sudo tee -a /etc/apt/sources.list
+
+# Configure Ubuntu mirror
+echo "deb https://xget.xi-xu.me/ubuntu/ubuntu jammy main restricted universe multiverse" | sudo tee /etc/apt/sources.list
+echo "deb https://xget.xi-xu.me/ubuntu/ubuntu jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+
+# Update package list
+sudo apt update
+```
+
+#### Fedora DNF Configuration
+
+```bash
+# Configure Fedora mirror
+sudo sed -i 's|^metalink=|#metalink=|g' /etc/yum.repos.d/fedora*.repo
+sudo sed -i 's|^#baseurl=http://download.example/pub/fedora/linux|baseurl=https://xget.xi-xu.me/fedora/pub/fedora/linux|g' /etc/yum.repos.d/fedora*.repo
+
+# Update package cache
+sudo dnf makecache
+```
+
+#### Rocky Linux DNF Configuration
+
+```bash
+# Configure Rocky Linux mirror
+sudo sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/rocky*.repo
+sudo sed -i 's|^#baseurl=http://dl.rockylinux.org|baseurl=https://xget.xi-xu.me/rocky|g' /etc/yum.repos.d/rocky*.repo
+
+# Update package cache
+sudo dnf makecache
+```
+
+#### Arch Linux Pacman Configuration
+
+```bash
+# Backup original mirror list
+sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+
+# Configure Arch Linux mirror
+echo 'Server = https://xget.xi-xu.me/arch/$repo/os/$arch' | sudo tee /etc/pacman.d/mirrorlist
+
+# Update package database
+sudo pacman -Sy
 ```
 
 ### Container Image Acceleration
@@ -653,37 +1177,42 @@ podman pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 sudo systemctl restart containerd
 ```
 
-### Development Environment Configuration
+### Academic Resource Acceleration
 
-#### Configure Git Global Acceleration
+#### arXiv Paper Downloads
 
 ```bash
-# Configure Git to use Xget for specific domains
-git config --global url."https://xget.xi-xu.me/gh/".insteadOf "https://github.com/"
-git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.com/"
+# Download arXiv paper PDF
+wget https://xget.xi-xu.me/arxiv/pdf/2301.07041.pdf
 
-# Verify configuration
-git config --global --get-regexp url
+# Download paper source
+curl -L -O https://xget.xi-xu.me/arxiv/e-print/2301.07041
 
-# Now all git clone https://github.com/... will automatically use Xget acceleration
-git clone https://github.com/microsoft/vscode.git  # Automatically converted to Xget link
+# Batch download multiple papers
+for id in 2301.07041 2302.13971 2303.08774; do
+  wget https://xget.xi-xu.me/arxiv/pdf/${id}.pdf
+done
 ```
 
-#### IDE Integration
+#### Use in academic tools
 
-```bash
-# Configure Git to use Xget in VS Code
-# Add to settings.json:
-{
-  "git.defaultCloneDirectory": "~/Projects",
-  "terminal.integrated.env.linux": {
-    "GIT_CONFIG_GLOBAL": "~/.gitconfig-xget"
-  }
-}
+```python
+# Use arXiv acceleration downloads in Python
+import requests
 
-# Create dedicated Git configuration file
-echo '[url "https://xget.xi-xu.me/gh/"]' > ~/.gitconfig-xget
-echo '    insteadOf = https://github.com/' >> ~/.gitconfig-xget
+def download_arxiv_paper(arxiv_id, output_path):
+    url = f"https://xget.xi-xu.me/arxiv/pdf/{arxiv_id}.pdf"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        with open(output_path, 'wb') as f:
+            f.write(response.content)
+        print(f"Downloaded {arxiv_id} to {output_path}")
+    else:
+        print(f"Failed to download {arxiv_id}")
+
+# Download paper
+download_arxiv_paper("2301.07041", "attention_is_all_you_need.pdf")
 ```
 
 ### CI/CD Environment Integration
@@ -703,12 +1232,12 @@ jobs:
       
       - name: Download model files
         run: |
-          # Use Xget to accelerate large model file downloads
+          # Use Xget acceleration to download large model files
           wget https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
           
       - name: Clone dependency repo
         run: |
-          # Use Xget to accelerate Git cloning
+          # Use Xget acceleration for Git cloning
           git clone https://xget.xi-xu.me/gh/[owner]/[repository].git
           
       - name: Download release assets
@@ -788,21 +1317,21 @@ If you prefer manual deployment or need custom configuration:
 
 #### Deployment Steps
 
-1. **Clone Repository**
+1. **Clone the repository**
 
    ```bash
    git clone https://github.com/xixu-me/Xget.git
    cd Xget
    ```
 
-2. **Install Dependencies and Authenticate**
+2. **Install dependencies and authenticate**
 
    ```bash
    npm install
    npx wrangler auth login
    ```
 
-3. **Custom Configuration (Optional)**
+3. **Custom configuration (optional)**
 
    Edit the `wrangler.toml` file to set your repository name:
 
@@ -884,7 +1413,7 @@ export const PLATFORMS = {
 
 ## 🧪 Testing
 
-The repository includes a comprehensive test suite to ensure code quality and functionality.
+The repository includes a complete test suite to ensure code quality and functional correctness.
 
 ### Complete Testing
 
@@ -914,7 +1443,7 @@ npm run test:watch
 ### Common Issues
 
 **Q: Download speed not significantly improved?**  
-A: Check if source files are already cached on CDN edge nodes. First access may be slower, subsequent accesses will be significantly faster.
+A: Check if source files are already cached on CDN edge nodes. First access may be slower, subsequent access will be significantly improved.
 
 **Q: Git operations failing?**  
 A: Confirm correct URL format is used and Git client version supports HTTPS proxy.
@@ -929,7 +1458,7 @@ A: Check URL path format, confirm platform prefix is used correctly.
 
 The service returns performance metrics in response headers:
 
-- `X-Performance-Metrics`: Contains detailed timing statistics for request stages
+- `X-Performance-Metrics`: Contains timing statistics for various request stages
 - `X-Cache-Status`: Shows cache hit status
 
 ### Debug Logging
@@ -943,17 +1472,17 @@ npx wrangler dev --log-level debug
 ## ⚠️ Disclaimer
 
 - **Legal Use**: This repository is only for accelerating legal public file downloads and Git operations. Please comply with relevant platform terms of service and local laws and regulations
-- **Service Availability**: Public instance `xget.xi-xu.me` is a free service with no guarantee of 100% availability. Production environments should deploy their own instances
+- **Service Availability**: Public instance `xget.xi-xu.me` is a free service with no guarantee of 100% availability. Recommend deploying your own instance for production environments
 - **Data Security**: Although Xget does not store or log user data, please handle sensitive information downloads carefully
 - **Liability Limitation**: Developers are not responsible for any direct or indirect losses caused by using this service
-- **Third-party Platforms**: Please respect the terms of service and rate limits of platforms like GitHub, GitLab, Hugging Face, etc.
+- **Third-party Platforms**: Please respect the terms of service and rate limits of GitHub, GitLab, Gitea, Codeberg, SourceForge, Hugging Face and other platforms
 
 ## 🤝 Contributing
 
 We welcome all forms of contributions! Please check the [Contributing Guide](CONTRIBUTING.md) to learn how to participate in repository development.
 
 1. **Report Issues**: Use [issue templates](https://github.com/xixu-me/Xget/issues/new/choose) to report bugs or request features
-2. **Submit Code**: Fork repository, create feature branch, submit pull request
+2. **Submit Code**: Fork the repository, create feature branches, submit pull requests
 3. **Improve Documentation**: Fix errors, add examples, improve descriptions
 4. **Test Feedback**: Test in different environments and provide feedback
 

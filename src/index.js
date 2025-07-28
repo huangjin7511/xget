@@ -1,3 +1,11 @@
+import {
+  createDockerUnauthorizedResponse,
+  fetchDockerToken,
+  isDockerHub,
+  parseDockerAuthenticate,
+  transformDockerHubPath,
+  transformDockerHubScope
+} from './config/docker.js';
 import { CONFIG } from './config/index.js';
 import { transformPath } from './config/platforms.js';
 
@@ -41,7 +49,7 @@ class PerformanceMonitor {
  */
 function isDockerRequest(request, url) {
   // Check for container registry API endpoints
-  if (url.pathname.startsWith('/v2/')) {
+  if (url.pathname.startsWith('/v2/') || url.pathname.startsWith('/cr/')) {
     return true;
   }
 
@@ -225,7 +233,8 @@ async function handleRequest(request, env, ctx) {
     // For container registries, ensure we add the /v2 prefix for the Docker API
     let finalTargetPath;
     if (platform.startsWith('cr-')) {
-      finalTargetPath = `/v2${targetPath}`;
+      // Only add /v2 prefix if it's not already there
+      finalTargetPath = targetPath.startsWith('/v2') ? targetPath : `/v2${targetPath}`;
       
       // Handle Docker Hub library image path transformation
       if (platform === 'cr-docker') {

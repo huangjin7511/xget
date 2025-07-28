@@ -1,4 +1,4 @@
-import { PLATFORMS } from './platforms';
+import { PLATFORMS } from './platforms.js';
 
 /**
  * @typedef {Object} SecurityConfig

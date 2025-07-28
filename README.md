@@ -201,7 +201,6 @@ Xget 支持多个容器注册表，使用 `cr/[容器注册表前缀]` 格式：
 
 | 容器注册表 | 容器注册表前缀 | 原始链接格式 | 加速链接格式 |
 |----------|------|--------------|--------------|
-| Docker Hub | `docker` | `https://registry-1.docker.io/...` | `https://xget.xi-xu.me/cr/docker/...` |
 | Quay.io | `quay` | `https://quay.io/...` | `https://xget.xi-xu.me/cr/quay/...` |
 | 谷歌 | `gcr` | `https://gcr.io/...` | `https://xget.xi-xu.me/cr/gcr/...` |
 | 微软 | `mcr` | `https://mcr.microsoft.com/...` | `https://xget.xi-xu.me/cr/mcr/...` |
@@ -220,18 +219,6 @@ Xget 支持多个容器注册表，使用 `cr/[容器注册表前缀]` 格式：
 | Gitpod | `gitpod` | `https://registry.gitpod.io/...` | `https://xget.xi-xu.me/cr/gitpod/...` |
 
 ```url
-# Docker Hub 原始链接（library 镜像）
-https://registry-1.docker.io/v2/library/nginx/manifests/latest
-
-# 转换后（添加 cr/docker 前缀，自动处理 library 前缀）
-https://xget.xi-xu.me/cr/docker/v2/nginx/manifests/latest
-
-# Docker Hub 原始链接（用户镜像）
-https://registry-1.docker.io/v2/nginxinc/nginx-unprivileged/manifests/latest
-
-# 转换后（添加 cr/docker 前缀）
-https://xget.xi-xu.me/cr/docker/v2/nginxinc/nginx-unprivileged/manifests/latest
-
 # GitHub 容器容器注册表原始链接
 https://ghcr.io/v2/nginxinc/nginx-unprivileged/manifests/latest
 
@@ -515,14 +502,6 @@ docker info | grep -A 10 "Registry Mirrors"
 #### 直接拉取镜像
 
 ```bash
-# 拉取 Docker Hub 官方镜像（library 镜像）
-docker pull xget.xi-xu.me/cr/docker/v2/nginx:latest
-docker pull xget.xi-xu.me/cr/docker/v2/alpine:latest
-docker pull xget.xi-xu.me/cr/docker/v2/ubuntu:22.04
-
-# 拉取 Docker Hub 用户镜像
-docker pull xget.xi-xu.me/cr/docker/v2/nginxinc/nginx-unprivileged:latest
-
 # 拉取 GitHub Container Registry 镜像
 docker pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 

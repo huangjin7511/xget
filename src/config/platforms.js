@@ -13,7 +13,6 @@ export const PLATFORMS = {
   'conda-community': 'https://conda.anaconda.org',
 
   // Container Registries
-  'cr-docker': 'https://registry-1.docker.io',
   'cr-quay': 'https://quay.io',
   'cr-gcr': 'https://gcr.io',
   'cr-mcr': 'https://mcr.microsoft.com',

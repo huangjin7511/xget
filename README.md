@@ -270,9 +270,10 @@ https://xget.xi-xu.me/cr/gcr/v2/distroless/base/manifests/latest
 
 ## 🎯 应用场景
 
-### Git 版本控制操作
+### Git 操作与配置
 
-Xget 完全兼容 Git 协议，支持所有标准 Git 操作：
+Xget 完全兼容 Git 协议，支持所有标准 Git 操作，并提供全局加速配置：
+#### Git 操作
 
 ```bash
 # 克隆存储库
@@ -304,6 +305,25 @@ git pull https://xget.xi-xu.me/gh/microsoft/vscode.git main
 
 # 子模块递归克隆
 git clone --recursive https://xget.xi-xu.me/gh/[用户名]/[带子模块的存储库].git
+```
+
+#### Git 全局加速配置
+
+```bash
+# 为特定域名配置 Git 使用 Xget
+git config --global url."https://xget.xi-xu.me/gh/".insteadOf "https://github.com/"
+git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.com/"
+git config --global url."https://xget.xi-xu.me/gitea/".insteadOf "https://gitea.com/"
+git config --global url."https://xget.xi-xu.me/codeberg/".insteadOf "https://codeberg.org/"
+git config --global url."https://xget.xi-xu.me/sf/".insteadOf "https://sourceforge.net/"
+
+# 验证配置
+git config --global --get-regexp url
+
+# 现在所有相关平台的 git clone 都会自动使用 Xget 加速
+git clone https://github.com/microsoft/vscode.git  # 自动转换为 Xget 链接
+git clone https://gitlab.com/gitlab-org/gitlab.git  # 自动转换为 Xget 链接
+git clone https://codeberg.org/forgejo/forgejo.git  # 自动转换为 Xget 链接
 ```
 
 ### 主流下载工具集成
@@ -699,44 +719,6 @@ podman pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 ```bash
 # 重启 containerd
 sudo systemctl restart containerd
-```
-
-### 开发环境配置
-
-#### 配置 Git 全局加速
-
-```bash
-# 为特定域名配置 Git 使用 Xget
-git config --global url."https://xget.xi-xu.me/gh/".insteadOf "https://github.com/"
-git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.com/"
-git config --global url."https://xget.xi-xu.me/gitea/".insteadOf "https://gitea.com/"
-git config --global url."https://xget.xi-xu.me/codeberg/".insteadOf "https://codeberg.org/"
-git config --global url."https://xget.xi-xu.me/sf/".insteadOf "https://sourceforge.net/"
-
-# 验证配置
-git config --global --get-regexp url
-
-# 现在所有相关平台的 git clone 都会自动使用 Xget 加速
-git clone https://github.com/microsoft/vscode.git  # 自动转换为 Xget 链接
-git clone https://gitlab.com/gitlab-org/gitlab.git  # 自动转换为 Xget 链接
-git clone https://codeberg.org/forgejo/forgejo.git  # 自动转换为 Xget 链接
-```
-
-#### IDE 集成
-
-```bash
-# VS Code 中配置 Git 使用 Xget
-# 在 settings.json 中添加：
-{
-  "git.defaultCloneDirectory": "~/Projects",
-  "terminal.integrated.env.linux": {
-    "GIT_CONFIG_GLOBAL": "~/.gitconfig-xget"
-  }
-}
-
-# 创建专用的 Git 配置文件
-echo '[url "https://xget.xi-xu.me/gh/"]' > ~/.gitconfig-xget
-echo '    insteadOf = https://github.com/' >> ~/.gitconfig-xget
 ```
 
 ### CI/CD 环境集成

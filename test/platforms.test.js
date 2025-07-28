@@ -4,7 +4,17 @@ import { PLATFORMS, transformPath } from '../src/config/platforms.js';
 describe('Platform Configuration', () => {
   describe('Platform Definitions', () => {
     it('should have all required platforms defined', () => {
-      const requiredPlatforms = ['gh', 'gl', 'hf', 'npm', 'pypi', 'conda'];
+      const requiredPlatforms = [
+        'gh',
+        'gl',
+        'sf',
+        'gitea',
+        'codeberg',
+        'hf',
+        'npm',
+        'pypi',
+        'conda'
+      ];
 
       requiredPlatforms.forEach(platform => {
         expect(PLATFORMS).toHaveProperty(platform);
@@ -37,6 +47,24 @@ describe('Platform Configuration', () => {
     it('should transform GitLab paths correctly', () => {
       expect(transformPath('/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip', 'gl')).toBe(
         '/gitlab-org/gitlab/-/archive/master/gitlab-master.zip'
+      );
+    });
+
+    it('should transform SourceForge paths correctly', () => {
+      expect(
+        transformPath('/sf/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download', 'sf')
+      ).toBe('/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download');
+    });
+
+    it('should transform Gitea paths correctly', () => {
+      expect(transformPath('/gitea/gitea/gitea/archive/main.zip', 'gitea')).toBe(
+        '/gitea/gitea/archive/main.zip'
+      );
+    });
+
+    it('should transform Codeberg paths correctly', () => {
+      expect(transformPath('/codeberg/forgejo/forgejo/archive/forgejo.zip', 'codeberg')).toBe(
+        '/forgejo/forgejo/archive/forgejo.zip'
       );
     });
 
@@ -101,6 +129,18 @@ describe('Platform Configuration', () => {
 
     it('should have correct GitLab base URL', () => {
       expect(PLATFORMS.gl).toBe('https://gitlab.com');
+    });
+
+    it('should have correct SourceForge base URL', () => {
+      expect(PLATFORMS.sf).toBe('https://sourceforge.net');
+    });
+
+    it('should have correct Gitea base URL', () => {
+      expect(PLATFORMS.gitea).toBe('https://gitea.com');
+    });
+
+    it('should have correct Codeberg base URL', () => {
+      expect(PLATFORMS.codeberg).toBe('https://codeberg.org');
     });
 
     it('should have correct Hugging Face base URL', () => {

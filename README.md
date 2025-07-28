@@ -7,6 +7,9 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
+[![Gitea](https://img.shields.io/badge/Gitea-609926?&logo=gitea&logoColor=white)](#gitea)
+[![Codeberg](https://img.shields.io/badge/Codeberg-2185D0?&logo=codeberg&logoColor=white)](#codeberg)
+[![SourceForge](https://img.shields.io/badge/SourceForge-FF6600?&logo=sourceforge&logoColor=white)](#sourceforge)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#作为-hugging-face-镜像)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-包管理加速)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
@@ -103,6 +106,9 @@
 |------|----------|--------------|--------------|
 | GitHub | `gh` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
 | GitLab | `gl` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
+| Gitea | `gitea` | `https://gitea.com/...` | `https://xget.xi-xu.me/gitea/...` |
+| Codeberg | `codeberg` | `https://codeberg.org/...` | `https://xget.xi-xu.me/codeberg/...` |
+| SourceForge | `sf` | `https://sourceforge.net/...` | `https://xget.xi-xu.me/sf/...` |
 | Hugging Face | `hf` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
@@ -129,6 +135,36 @@ https://gitlab.com/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 
 # 转换后（添加 gl 前缀）
 https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
+```
+
+#### Gitea
+
+```url
+# 原始链接
+https://gitea.com/gitea/gitea/archive/main.zip
+
+# 转换后（添加 gitea 前缀）
+https://xget.xi-xu.me/gitea/gitea/gitea/archive/main.zip
+```
+
+#### Codeberg
+
+```url
+# 原始链接
+https://codeberg.org/forgejo/forgejo/archive/forgejo.zip
+
+# 转换后（添加 codeberg 前缀）
+https://xget.xi-xu.me/codeberg/forgejo/forgejo/archive/forgejo.zip
+```
+
+#### SourceForge
+
+```url
+# 原始链接
+https://sourceforge.net/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download
+
+# 转换后（添加 sf 前缀）
+https://xget.xi-xu.me/sf/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download
 ```
 
 #### Hugging Face
@@ -247,6 +283,18 @@ git clone -b main https://xget.xi-xu.me/gh/facebook/react.git
 
 # 浅克隆（仅最新提交）
 git clone --depth 1 https://xget.xi-xu.me/gh/torvalds/linux.git
+
+# 克隆 GitLab 存储库
+git clone https://xget.xi-xu.me/gl/gitlab-org/gitlab.git
+
+# 克隆 Gitea 存储库
+git clone https://xget.xi-xu.me/gitea/gitea/gitea.git
+
+# 克隆 Codeberg 存储库
+git clone https://xget.xi-xu.me/codeberg/forgejo/forgejo.git
+
+# 克隆 SourceForge 存储库
+git clone https://xget.xi-xu.me/sf/projects/mingw-w64/code.git
 
 # 添加远程存储库
 git remote add upstream https://xget.xi-xu.me/gh/[所有者]/[存储库].git
@@ -661,12 +709,17 @@ sudo systemctl restart containerd
 # 为特定域名配置 Git 使用 Xget
 git config --global url."https://xget.xi-xu.me/gh/".insteadOf "https://github.com/"
 git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.com/"
+git config --global url."https://xget.xi-xu.me/gitea/".insteadOf "https://gitea.com/"
+git config --global url."https://xget.xi-xu.me/codeberg/".insteadOf "https://codeberg.org/"
+git config --global url."https://xget.xi-xu.me/sf/".insteadOf "https://sourceforge.net/"
 
 # 验证配置
 git config --global --get-regexp url
 
-# 现在所有 git clone https://github.com/... 都会自动使用 Xget 加速
+# 现在所有相关平台的 git clone 都会自动使用 Xget 加速
 git clone https://github.com/microsoft/vscode.git  # 自动转换为 Xget 链接
+git clone https://gitlab.com/gitlab-org/gitlab.git  # 自动转换为 Xget 链接
+git clone https://codeberg.org/forgejo/forgejo.git  # 自动转换为 Xget 链接
 ```
 
 #### IDE 集成
@@ -946,7 +999,7 @@ npx wrangler dev --log-level debug
 - **服务可用性**：公共实例 `xget.xi-xu.me` 为免费服务，不保证 100% 可用性，建议生产环境部署自己的实例
 - **数据安全**：虽然 Xget 不存储或记录用户数据，但请谨慎处理敏感信息的下载
 - **责任限制**：使用本服务造成的任何直接或间接损失，开发者不承担责任
-- **第三方平台**：请尊重 GitHub、GitLab、Hugging Face 等平台的服务条款和速率限制
+- **第三方平台**：请尊重 GitHub、GitLab、Gitea、Codeberg、SourceForge、Hugging Face 等平台的服务条款和速率限制
 
 ## 🤝 贡献
 

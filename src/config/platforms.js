@@ -5,6 +5,9 @@
 export const PLATFORMS = {
   gh: 'https://github.com',
   gl: 'https://gitlab.com',
+  gitea: 'https://gitea.com',
+  codeberg: 'https://codeberg.org',
+  sf: 'https://sourceforge.net',
   hf: 'https://huggingface.co',
   npm: 'https://registry.npmjs.org',
   pypi: 'https://pypi.org',

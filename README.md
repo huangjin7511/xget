@@ -1000,6 +1000,44 @@ echo 'Server = https://xget.xi-xu.me/arch/$repo/os/$arch' | sudo tee /etc/pacman
 sudo pacman -Sy
 ```
 
+### 学术资源加速
+
+#### arXiv 论文下载
+
+```bash
+# 下载 arXiv 论文 PDF
+wget https://xget.xi-xu.me/arxiv/pdf/2301.07041.pdf
+
+# 下载论文源码
+curl -L -O https://xget.xi-xu.me/arxiv/e-print/2301.07041
+
+# 批量下载多篇论文
+for id in 2301.07041 2302.13971 2303.08774; do
+  wget https://xget.xi-xu.me/arxiv/pdf/${id}.pdf
+done
+```
+
+#### 在学术工具中使用
+
+```python
+# 在 Python 中使用 arXiv 加速下载
+import requests
+
+def download_arxiv_paper(arxiv_id, output_path):
+    url = f"https://xget.xi-xu.me/arxiv/pdf/{arxiv_id}.pdf"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        with open(output_path, 'wb') as f:
+            f.write(response.content)
+        print(f"Downloaded {arxiv_id} to {output_path}")
+    else:
+        print(f"Failed to download {arxiv_id}")
+
+# 下载论文
+download_arxiv_paper("2301.07041", "attention_is_all_you_need.pdf")
+```
+
 ### 容器镜像加速
 
 Xget 为容器镜像拉取提供全面的加速支持，兼容 Docker、Podman、containerd 等容器运行时。
@@ -1175,44 +1213,6 @@ podman pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 ```bash
 # 重启 containerd
 sudo systemctl restart containerd
-```
-
-### 学术资源加速
-
-#### arXiv 论文下载
-
-```bash
-# 下载 arXiv 论文 PDF
-wget https://xget.xi-xu.me/arxiv/pdf/2301.07041.pdf
-
-# 下载论文源码
-curl -L -O https://xget.xi-xu.me/arxiv/e-print/2301.07041
-
-# 批量下载多篇论文
-for id in 2301.07041 2302.13971 2303.08774; do
-  wget https://xget.xi-xu.me/arxiv/pdf/${id}.pdf
-done
-```
-
-#### 在学术工具中使用
-
-```python
-# 在 Python 中使用 arXiv 加速下载
-import requests
-
-def download_arxiv_paper(arxiv_id, output_path):
-    url = f"https://xget.xi-xu.me/arxiv/pdf/{arxiv_id}.pdf"
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        with open(output_path, 'wb') as f:
-            f.write(response.content)
-        print(f"Downloaded {arxiv_id} to {output_path}")
-    else:
-        print(f"Failed to download {arxiv_id}")
-
-# 下载论文
-download_arxiv_paper("2301.07041", "attention_is_all_you_need.pdf")
 ```
 
 ### CI/CD 环境集成

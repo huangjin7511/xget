@@ -1000,6 +1000,44 @@ echo 'Server = https://xget.xi-xu.me/arch/$repo/os/$arch' | sudo tee /etc/pacman
 sudo pacman -Sy
 ```
 
+### Academic Resource Acceleration
+
+#### arXiv Paper Downloads
+
+```bash
+# Download arXiv paper PDF
+wget https://xget.xi-xu.me/arxiv/pdf/2301.07041.pdf
+
+# Download paper source
+curl -L -O https://xget.xi-xu.me/arxiv/e-print/2301.07041
+
+# Batch download multiple papers
+for id in 2301.07041 2302.13971 2303.08774; do
+  wget https://xget.xi-xu.me/arxiv/pdf/${id}.pdf
+done
+```
+
+#### Use in academic tools
+
+```python
+# Use arXiv acceleration downloads in Python
+import requests
+
+def download_arxiv_paper(arxiv_id, output_path):
+    url = f"https://xget.xi-xu.me/arxiv/pdf/{arxiv_id}.pdf"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        with open(output_path, 'wb') as f:
+            f.write(response.content)
+        print(f"Downloaded {arxiv_id} to {output_path}")
+    else:
+        print(f"Failed to download {arxiv_id}")
+
+# Download paper
+download_arxiv_paper("2301.07041", "attention_is_all_you_need.pdf")
+```
+
 ### Container Image Acceleration
 
 Xget provides comprehensive acceleration support for container image pulling, compatible with Docker, Podman, containerd and other container runtimes.
@@ -1175,44 +1213,6 @@ podman pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 ```bash
 # Restart containerd
 sudo systemctl restart containerd
-```
-
-### Academic Resource Acceleration
-
-#### arXiv Paper Downloads
-
-```bash
-# Download arXiv paper PDF
-wget https://xget.xi-xu.me/arxiv/pdf/2301.07041.pdf
-
-# Download paper source
-curl -L -O https://xget.xi-xu.me/arxiv/e-print/2301.07041
-
-# Batch download multiple papers
-for id in 2301.07041 2302.13971 2303.08774; do
-  wget https://xget.xi-xu.me/arxiv/pdf/${id}.pdf
-done
-```
-
-#### Use in academic tools
-
-```python
-# Use arXiv acceleration downloads in Python
-import requests
-
-def download_arxiv_paper(arxiv_id, output_path):
-    url = f"https://xget.xi-xu.me/arxiv/pdf/{arxiv_id}.pdf"
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        with open(output_path, 'wb') as f:
-            f.write(response.content)
-        print(f"Downloaded {arxiv_id} to {output_path}")
-    else:
-        print(f"Failed to download {arxiv_id}")
-
-# Download paper
-download_arxiv_paper("2301.07041", "attention_is_all_you_need.pdf")
 ```
 
 ### CI/CD Environment Integration

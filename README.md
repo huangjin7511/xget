@@ -17,6 +17,7 @@
 [![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-包管理加速)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-包管理加速)
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-包管理加速)
+[![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-包管理加速)
 [![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](#go-模块加速)
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-包管理加速)
 [![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](#rust-包管理加速)
@@ -129,6 +130,7 @@
 | Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
+| CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
 | Go 模块 | `golang` | `https://proxy.golang.org/...` | `https://xget.xi-xu.me/golang/...` |
 | NuGet | `nuget` | `https://api.nuget.org/...` | `https://xget.xi-xu.me/nuget/...` |
 | Rust Crates | `crates` | `https://crates.io/...` | `https://xget.xi-xu.me/crates/...` |
@@ -303,6 +305,22 @@ https://rubygems.org/api/v1/gems/nokogiri.json
 
 # 转换后（添加 rubygems 前缀）
 https://xget.xi-xu.me/rubygems/api/v1/gems/nokogiri.json
+```
+
+#### CRAN
+
+```url
+# CRAN 包文件原始链接
+https://cran.r-project.org/src/contrib/ggplot2_3.4.4.tar.gz
+
+# 转换后（添加 cran 前缀）
+https://xget.xi-xu.me/cran/src/contrib/ggplot2_3.4.4.tar.gz
+
+# CRAN 包元数据原始链接
+https://cran.r-project.org/web/packages/dplyr/DESCRIPTION
+
+# 转换后（添加 cran 前缀）
+https://xget.xi-xu.me/cran/web/packages/dplyr/DESCRIPTION
 ```
 
 #### Go 模块
@@ -878,6 +896,62 @@ gem 'puma', '~> 5.0'
 # 使用 bundle 安装
 bundle config mirror.https://rubygems.org https://xget.xi-xu.me/rubygems/
 bundle install
+```
+
+### R 包管理加速
+
+#### 配置 R 使用 Xget CRAN 镜像
+
+```r
+# 在 R 中临时使用 Xget CRAN 镜像
+install.packages("ggplot2", repos = "https://xget.xi-xu.me/cran/")
+
+# 全局配置 CRAN 镜像
+options(repos = c(CRAN = "https://xget.xi-xu.me/cran/"))
+
+# 验证配置
+getOption("repos")
+```
+
+#### 在 .Rprofile 中配置
+
+```r
+# 在用户主目录的 .Rprofile 文件中配置全局镜像
+options(repos = c(
+  CRAN = "https://xget.xi-xu.me/cran/",
+  BioCsoft = "https://bioconductor.org/packages/release/bioc",
+  BioCann = "https://bioconductor.org/packages/release/data/annotation",
+  BioCexp = "https://bioconductor.org/packages/release/data/experiment"
+))
+
+# 设置下载方法
+options(download.file.method = "libcurl")
+```
+
+#### 在项目中使用
+
+```r
+# 在项目的 renv.lock 或脚本中指定镜像
+renv::init()
+renv::settings$repos.override(c(CRAN = "https://xget.xi-xu.me/cran/"))
+
+# 安装包
+install.packages(c("dplyr", "ggplot2", "tidyr"))
+
+# 或使用 pak 包管理器
+pak::pkg_install("tidyverse", repos = "https://xget.xi-xu.me/cran/")
+```
+
+```bash
+# 在命令行中使用 R 脚本安装包
+Rscript -e "options(repos = c(CRAN = 'https://xget.xi-xu.me/cran/')); install.packages('ggplot2')"
+
+# 批量安装包
+Rscript -e "
+options(repos = c(CRAN = 'https://xget.xi-xu.me/cran/'))
+packages <- c('dplyr', 'ggplot2', 'tidyr', 'readr')
+install.packages(packages)
+"
 ```
 
 ### Go 模块加速

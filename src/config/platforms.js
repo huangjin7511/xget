@@ -17,8 +17,10 @@ export const PLATFORMS = {
   maven: 'https://repo1.maven.org',
   gradle: 'https://plugins.gradle.org',
   rubygems: 'https://rubygems.org',
+  cran: 'https://cran.r-project.org',
   golang: 'https://proxy.golang.org',
   nuget: 'https://api.nuget.org',
+  crates: 'https://crates.io',
   packagist: 'https://repo.packagist.org',
   debian: 'https://deb.debian.org',
   ubuntu: 'https://archive.ubuntu.com',
@@ -26,7 +28,6 @@ export const PLATFORMS = {
   rocky: 'https://download.rockylinux.org',
   arch: 'https://geo.mirror.pkgbuild.com',
   arxiv: 'https://arxiv.org',
-  crates: 'https://crates.io',
 
   // Container Registries
   'cr-quay': 'https://quay.io',

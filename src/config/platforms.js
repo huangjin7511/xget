@@ -26,6 +26,7 @@ export const PLATFORMS = {
   rocky: 'https://download.rockylinux.org',
   arch: 'https://geo.mirror.pkgbuild.com',
   arxiv: 'https://arxiv.org',
+  crates: 'https://crates.io',
 
   // Container Registries
   'cr-quay': 'https://quay.io',
@@ -56,6 +57,30 @@ export function transformPath(path, platformKey) {
   if (!PLATFORMS[platformKey]) {
     return path;
   }
+
   const prefix = `/${platformKey.replace(/-/g, '/')}/`;
-  return path.replace(new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`), '/');
+  let transformedPath = path.replace(
+    new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`),
+    '/'
+  );
+
+  // Special handling for crates.io API paths
+  if (platformKey === 'crates') {
+    // Transform paths to include the API prefix
+    if (transformedPath.startsWith('/')) {
+      // Handle different API endpoints:
+      // /serde/1.0.0/download -> /api/v1/crates/serde/1.0.0/download
+      // /serde -> /api/v1/crates/serde
+      // /?q=query -> /api/v1/crates?q=query
+      if (transformedPath === '/' || transformedPath.startsWith('/?')) {
+        // Search endpoint
+        transformedPath = transformedPath.replace('/', '/api/v1/crates');
+      } else {
+        // Crate-specific endpoints
+        transformedPath = `/api/v1/crates${transformedPath}`;
+      }
+    }
+  }
+
+  return transformedPath;
 }

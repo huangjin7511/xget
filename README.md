@@ -19,6 +19,7 @@
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-包管理加速)
 [![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](#go-模块加速)
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-包管理加速)
+[![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](#rust-包管理加速)
 [![Packagist](https://img.shields.io/badge/Packagist-F28D1A?logo=packagist&logoColor=white)](#php-包管理加速)
 [![Debian](https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=white)](#linux-发行版加速)
 [![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](#linux-发行版加速)
@@ -130,6 +131,7 @@
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | Go 模块 | `golang` | `https://proxy.golang.org/...` | `https://xget.xi-xu.me/golang/...` |
 | NuGet | `nuget` | `https://api.nuget.org/...` | `https://xget.xi-xu.me/nuget/...` |
+| Rust Crates | `crates` | `https://crates.io/...` | `https://xget.xi-xu.me/crates/...` |
 | Packagist | `packagist` | `https://repo.packagist.org/...` | `https://xget.xi-xu.me/packagist/...` |
 | Debian | `debian` | `https://deb.debian.org/...` | `https://xget.xi-xu.me/debian/...` |
 | Ubuntu | `ubuntu` | `https://archive.ubuntu.com/...` | `https://xget.xi-xu.me/ubuntu/...` |
@@ -333,6 +335,28 @@ https://api.nuget.org/v3/registration5-semver1/microsoft.aspnetcore.app/index.js
 
 # 转换后（添加 nuget 前缀）
 https://xget.xi-xu.me/nuget/v3/registration5-semver1/microsoft.aspnetcore.app/index.json
+```
+
+#### Rust Crates
+
+```url
+# Crate 下载原始链接
+https://crates.io/api/v1/crates/serde/1.0.0/download
+
+# 转换后（添加 crates 前缀）
+https://xget.xi-xu.me/crates/serde/1.0.0/download
+
+# Crate 元数据原始链接
+https://crates.io/api/v1/crates/serde
+
+# 转换后（添加 crates 前缀）
+https://xget.xi-xu.me/crates/serde
+
+# Crate 搜索原始链接
+https://crates.io/api/v1/crates?q=serde
+
+# 转换后（添加 crates 前缀）
+https://xget.xi-xu.me/crates/?q=serde
 ```
 
 #### Packagist
@@ -911,6 +935,46 @@ dotnet restore --source https://xget.xi-xu.me/nuget/v3/index.json
     <add key="xget" value="https://xget.xi-xu.me/nuget/v3/index.json" />
   </packageSources>
 </configuration>
+```
+
+### Rust 包管理加速
+
+#### 配置 Cargo 使用 Xget 镜像
+
+```bash
+# 配置 Cargo 使用 Xget 镜像（在 ~/.cargo/config.toml 中）
+mkdir -p ~/.cargo
+cat >> ~/.cargo/config.toml << EOF
+[source.crates-io]
+replace-with = "xget"
+
+[source.xget]
+registry = "https://xget.xi-xu.me/crates/"
+EOF
+
+# 验证配置
+cargo search serde
+```
+
+#### 在项目中使用
+
+```toml
+# 在 Cargo.toml 中可以正常使用依赖
+[dependencies]
+serde = "1.0"
+tokio = "1.0"
+reqwest = "0.11"
+```
+
+```bash
+# 构建项目时会自动使用 Xget 加速
+cargo build
+
+# 更新依赖
+cargo update
+
+# 添加新依赖
+cargo add clap
 ```
 
 ### PHP 包管理加速

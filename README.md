@@ -28,7 +28,9 @@
 [![Rocky Linux](https://img.shields.io/badge/Rocky%20Linux-10B981?logo=rockylinux&logoColor=white)](#rocky-linux-dnf-配置)
 [![openSUSE](https://img.shields.io/badge/openSUSE-73BA25?logo=opensuse&logoColor=white)](#opensuse-zypper-配置)
 [![Arch Linux](https://img.shields.io/badge/Arch%20Linux-1793D1?logo=archlinux&logoColor=white)](#arch-linux-pacman-配置)
-[![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#学术资源加速)
+[![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#arxiv-论文下载)
+[![F-Droid](https://img.shields.io/badge/F--Droid-1976D2?logo=f-droid&logoColor=white)](#f-droid-应用下载)
+[![APKMirror](https://img.shields.io/badge/APKMirror-00C853?logo=android&logoColor=white)](#apkmirror-应用下载)
 [![容器注册表](https://img.shields.io/badge/容器注册表-%23007EC6.svg?logo=docker&logoColor=white)](#容器注册表)
 
 超高性能、安全的一站式开源资源获取加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的下载体验，涵盖代码储存库、包管理、容器镜像、模型及数据集等。
@@ -143,6 +145,8 @@
 | openSUSE | `opensuse` | `https://download.opensuse.org/...` | `https://xget.xi-xu.me/opensuse/...` |
 | Arch Linux | `arch` | `https://geo.mirror.pkgbuild.com/...` | `https://xget.xi-xu.me/arch/...` |
 | arXiv | `arxiv` | `https://arxiv.org/...` | `https://xget.xi-xu.me/arxiv/...` |
+| F-Droid | `fdroid` | `https://f-droid.org/...` | `https://xget.xi-xu.me/fdroid/...` |
+| APKMirror | `apkmirror` | `https://www.apkmirror.com/...` | `https://xget.xi-xu.me/apkmirror/...` |
 | 容器注册表 | `cr` | 见[容器注册表](#容器注册表) | 见[容器注册表](#容器注册表) |
 
 ### 各平台转换示例
@@ -449,6 +453,38 @@ https://arxiv.org/e-print/2301.07041
 
 # 转换后（添加 arxiv 前缀）
 https://xget.xi-xu.me/arxiv/e-print/2301.07041
+```
+
+#### F-Droid
+
+```url
+# F-Droid 应用 APK 原始链接
+https://f-droid.org/repo/org.fdroid.fdroid_1016050.apk
+
+# 转换后（添加 fdroid 前缀）
+https://xget.xi-xu.me/fdroid/repo/org.fdroid.fdroid_1016050.apk
+
+# F-Droid 应用元数据原始链接
+https://f-droid.org/api/v1/packages/org.fdroid.fdroid
+
+# 转换后（添加 fdroid 前缀）
+https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
+```
+
+#### APKMirror
+
+```url
+# APKMirror 应用下载原始链接
+https://www.apkmirror.com/apk/google-inc/chrome/chrome-119-0-6045-66-release/chrome-119-0-6045-66-android-apk-download/
+
+# 转换后（添加 apkmirror 前缀）
+https://xget.xi-xu.me/apkmirror/apk/google-inc/chrome/chrome-119-0-6045-66-release/chrome-119-0-6045-66-android-apk-download/
+
+# APKMirror 应用页面原始链接
+https://www.apkmirror.com/apk/whatsapp-inc/whatsapp/
+
+# 转换后（添加 apkmirror 前缀）
+https://xget.xi-xu.me/apkmirror/apk/whatsapp-inc/whatsapp/
 ```
 
 #### 容器注册表
@@ -1460,6 +1496,164 @@ RUN echo "default_channels:" > ~/.condarc && \
     conda install -y numpy pandas matplotlib
 
 WORKDIR /app
+```
+
+### Android 应用加速
+
+Xget 为 Android 应用下载提供全面的加速支持，涵盖开源应用商店和第三方 APK 托管平台。
+
+#### F-Droid 应用下载
+
+F-Droid 是一个专注于自由开源软件（FOSS）的 Android 应用商店。
+
+```bash
+# 下载 F-Droid 客户端
+wget https://xget.xi-xu.me/fdroid/repo/org.fdroid.fdroid_1016050.apk
+
+# 下载热门开源应用
+wget https://xget.xi-xu.me/fdroid/repo/org.mozilla.firefox_2015524325.apk  # Firefox
+wget https://xget.xi-xu.me/fdroid/repo/com.termux_118.apk                   # Termux
+wget https://xget.xi-xu.me/fdroid/repo/org.videolan.vlc_13040309.apk       # VLC
+
+# 批量下载应用
+for app in org.fdroid.fdroid org.mozilla.firefox com.termux; do
+  wget "https://xget.xi-xu.me/fdroid/repo/${app}_*.apk"
+done
+```
+
+#### F-Droid API 使用
+
+```bash
+# 获取应用信息
+curl https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
+
+# 搜索应用
+curl "https://xget.xi-xu.me/fdroid/api/v1/search?q=browser"
+
+# 获取应用版本历史
+curl https://xget.xi-xu.me/fdroid/api/v1/packages/org.mozilla.firefox/versions
+```
+
+#### APKMirror 应用下载
+
+APKMirror 是最受欢迎的 Android APK 文件托管平台之一。
+
+```bash
+# 下载 Google Chrome
+wget "https://xget.xi-xu.me/apkmirror/apk/google-inc/chrome/chrome-119-0-6045-66-release/chrome-119-0-6045-66-android-apk-download/"
+
+# 下载 WhatsApp
+wget "https://xget.xi-xu.me/apkmirror/apk/whatsapp-inc/whatsapp/whatsapp-2-23-24-79-release/whatsapp-2-23-24-79-android-apk-download/"
+
+# 下载 Instagram
+wget "https://xget.xi-xu.me/apkmirror/apk/instagram/instagram-instagram/instagram-instagram-302-0-0-34-114-release/"
+```
+
+#### 在自动化脚本中使用
+
+```python
+# Python 脚本：批量下载 F-Droid 应用
+import requests
+import json
+
+def download_fdroid_app(package_name, output_dir="./apks/"):
+    # 获取应用信息
+    api_url = f"https://xget.xi-xu.me/fdroid/api/v1/packages/{package_name}"
+    response = requests.get(api_url)
+    
+    if response.status_code == 200:
+        app_info = response.json()
+        latest_version = app_info['packages'][0]
+        apk_name = latest_version['apkName']
+        
+        # 下载 APK
+        download_url = f"https://xget.xi-xu.me/fdroid/repo/{apk_name}"
+        apk_response = requests.get(download_url)
+        
+        if apk_response.status_code == 200:
+            with open(f"{output_dir}{apk_name}", 'wb') as f:
+                f.write(apk_response.content)
+            print(f"Downloaded {package_name}: {apk_name}")
+        else:
+            print(f"Failed to download {package_name}")
+    else:
+        print(f"Failed to get info for {package_name}")
+
+# 下载常用开源应用
+apps = [
+    "org.fdroid.fdroid",      # F-Droid 客户端
+    "org.mozilla.firefox",    # Firefox 浏览器
+    "com.termux",             # Termux 终端
+    "org.videolan.vlc",       # VLC 媒体播放器
+    "org.signal.android"      # Signal 消息应用
+]
+
+for app in apps:
+    download_fdroid_app(app)
+```
+
+```bash
+# Shell 脚本：自动化 APK 下载和安装
+#!/bin/bash
+
+# 定义应用列表
+declare -A apps=(
+    ["chrome"]="https://xget.xi-xu.me/apkmirror/apk/google-inc/chrome/chrome-119-0-6045-66-release/chrome-119-0-6045-66-android-apk-download/"
+    ["firefox"]="https://xget.xi-xu.me/fdroid/repo/org.mozilla.firefox_2015524325.apk"
+    ["vlc"]="https://xget.xi-xu.me/fdroid/repo/org.videolan.vlc_13040309.apk"
+)
+
+# 创建下载目录
+mkdir -p ./android-apps
+
+# 下载应用
+for app_name in "${!apps[@]}"; do
+    echo "Downloading $app_name..."
+    wget -P ./android-apps "${apps[$app_name]}"
+    
+    # 如果连接了 Android 设备，自动安装
+    if adb devices | grep -q "device$"; then
+        echo "Installing $app_name on connected device..."
+        adb install "./android-apps/$(basename "${apps[$app_name]}")"
+    fi
+done
+
+echo "All apps downloaded to ./android-apps/"
+```
+
+#### 在 CI/CD 中使用
+
+```yaml
+# GitHub Actions: 自动化 Android 应用测试
+name: Android App Testing
+on: [push, pull_request]
+
+jobs:
+  test-apps:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Download test APKs
+      run: |
+        mkdir -p test-apks
+        # 下载测试用的开源应用
+        wget -P test-apks https://xget.xi-xu.me/fdroid/repo/org.fdroid.fdroid_1016050.apk
+        wget -P test-apks https://xget.xi-xu.me/fdroid/repo/com.termux_118.apk
+    
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+    
+    - name: Start Android Emulator
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 29
+        script: |
+          # 安装下载的 APK 进行测试
+          adb install test-apks/org.fdroid.fdroid_1016050.apk
+          adb install test-apks/com.termux_118.apk
+          # 运行应用测试
+          adb shell am start -n org.fdroid.fdroid/.MainActivity
 ```
 
 ## 🚀 部署选择

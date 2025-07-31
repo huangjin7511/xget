@@ -30,7 +30,6 @@ export const PLATFORMS = {
   arch: 'https://geo.mirror.pkgbuild.com',
   arxiv: 'https://arxiv.org',
   fdroid: 'https://f-droid.org',
-  apkmirror: 'https://www.apkmirror.com',
 
   // Container Registries
   'cr-quay': 'https://quay.io',

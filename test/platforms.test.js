@@ -57,8 +57,8 @@ describe('Platform Configuration', () => {
     });
 
     it('should transform Gitea paths correctly', () => {
-      expect(transformPath('/gitea/gitea/gitea/archive/main.zip', 'gitea')).toBe(
-        '/gitea/gitea/archive/main.zip'
+      expect(transformPath('/gitea/gitea/gitea/archive/master.zip', 'gitea')).toBe(
+        '/gitea/gitea/archive/master.zip'
       );
     });
 

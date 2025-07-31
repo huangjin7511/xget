@@ -173,10 +173,10 @@ https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 
 ```url
 # 原始链接
-https://gitea.com/gitea/gitea/archive/main.zip
+https://gitea.com/gitea/gitea/archive/master.zip
 
 # 转换后（添加 gitea 前缀）
-https://xget.xi-xu.me/gitea/gitea/gitea/archive/main.zip
+https://xget.xi-xu.me/gitea/gitea/gitea/archive/master.zip
 ```
 
 #### Codeberg

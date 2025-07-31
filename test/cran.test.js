@@ -9,8 +9,8 @@ describe('CRAN Platform Configuration', () => {
   it('should transform CRAN paths correctly', () => {
     const testCases = [
       {
-        input: '/cran/src/contrib/ggplot2_3.4.4.tar.gz',
-        expected: '/src/contrib/ggplot2_3.4.4.tar.gz',
+        input: '/cran/src/contrib/ggplot2_3.5.2.tar.gz',
+        expected: '/src/contrib/ggplot2_3.5.2.tar.gz',
         description: 'package source file'
       },
       {
@@ -47,7 +47,7 @@ describe('CRAN Platform Configuration', () => {
   });
 
   it('should handle paths without platform prefix', () => {
-    const result = transformPath('/src/contrib/ggplot2_3.4.4.tar.gz', 'cran');
-    expect(result).toBe('/src/contrib/ggplot2_3.4.4.tar.gz');
+    const result = transformPath('/src/contrib/ggplot2_3.5.2.tar.gz', 'cran');
+    expect(result).toBe('/src/contrib/ggplot2_3.5.2.tar.gz');
   });
 });

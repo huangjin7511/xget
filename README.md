@@ -315,10 +315,10 @@ https://xget.xi-xu.me/rubygems/api/v1/gems/nokogiri.json
 
 ```url
 # CRAN 包文件原始链接
-https://cran.r-project.org/src/contrib/ggplot2_3.4.4.tar.gz
+https://cran.r-project.org/src/contrib/ggplot2_3.5.2.tar.gz
 
 # 转换后（添加 cran 前缀）
-https://xget.xi-xu.me/cran/src/contrib/ggplot2_3.4.4.tar.gz
+https://xget.xi-xu.me/cran/src/contrib/ggplot2_3.5.2.tar.gz
 
 # CRAN 包元数据原始链接
 https://cran.r-project.org/web/packages/dplyr/DESCRIPTION

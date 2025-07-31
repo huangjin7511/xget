@@ -10,22 +10,26 @@
 [![Gitea](https://img.shields.io/badge/Gitea-609926?&logo=gitea&logoColor=white)](#gitea)
 [![Codeberg](https://img.shields.io/badge/Codeberg-2185D0?&logo=codeberg&logoColor=white)](#codeberg)
 [![SourceForge](https://img.shields.io/badge/SourceForge-FF6600?&logo=sourceforge&logoColor=white)](#sourceforge)
-[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#as-hugging-face-mirror)
+[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#hugging-face-mirror)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-package-acceleration)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-package-acceleration)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-package-acceleration)
 [![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-package-acceleration)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-package-acceleration)
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-package-acceleration)
+[![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-package-acceleration)
 [![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](#go-module-acceleration)
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-package-acceleration)
+[![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](#rust-package-acceleration)
 [![Packagist](https://img.shields.io/badge/Packagist-F28D1A?logo=packagist&logoColor=white)](#php-package-acceleration)
-[![Debian](https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=white)](#linux-distribution-acceleration)
-[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](#linux-distribution-acceleration)
-[![Fedora](https://img.shields.io/badge/Fedora-294172?logo=fedora&logoColor=white)](#linux-distribution-acceleration)
-[![Rocky Linux](https://img.shields.io/badge/Rocky%20Linux-10B981?logo=rockylinux&logoColor=white)](#linux-distribution-acceleration)
-[![Arch Linux](https://img.shields.io/badge/Arch%20Linux-1793D1?logo=archlinux&logoColor=white)](#linux-distribution-acceleration)
-[![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#academic-resource-acceleration)
+[![Debian](https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=white)](#debianubuntu-apt-configuration)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](#debianubuntu-apt-configuration)
+[![Fedora](https://img.shields.io/badge/Fedora-294172?logo=fedora&logoColor=white)](#fedora-dnf-configuration)
+[![Rocky Linux](https://img.shields.io/badge/Rocky%20Linux-10B981?logo=rockylinux&logoColor=white)](#rocky-linux-dnf-configuration)
+[![openSUSE](https://img.shields.io/badge/openSUSE-73BA25?logo=opensuse&logoColor=white)](#opensuse-zypper-configuration)
+[![Arch Linux](https://img.shields.io/badge/Arch%20Linux-1793D1?logo=archlinux&logoColor=white)](#arch-linux-pacman-configuration)
+[![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#arxiv-paper-download)
+[![F-Droid](https://img.shields.io/badge/F--Droid-1976D2?logo=f-droid&logoColor=white)](#f-droid-repository-mirror)
 [![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-registry)
 
 Ultra-high performance, secure all-in-one open source resource acceleration engine. Its performance far exceeds traditional accelerators, providing you with unified and efficient download experience across multiple platforms, covering code repositories, package management, container images, models and datasets, etc.
@@ -34,28 +38,28 @@ Ultra-high performance, secure all-in-one open source resource acceleration engi
 
 **Public Instance:** [**`xget.xi-xu.me`**](https://xget.xi-xu.me) - Ready to use, no deployment required!
 
-> **⚡ Experience lightning-fast downloads instantly**: No registration, no configuration required, use directly to experience blazing fast download speeds!
+> **⚡ Experience Lightning-Fast Downloads Now**: No registration, no configuration required - just use it directly to experience blazing-fast download speeds!
 
 ## 🌟 Core Advantages - Why Choose Xget?
 
 ### ⚡ Extreme Performance - Breaking Traditional Accelerator Bottlenecks
 
 - **⚡ Millisecond Response**: Cloudflare's global 330+ edge nodes, average response time < 50ms
-- **🌐 HTTP/3 Ultra-fast Protocol**: Latest HTTP/3 protocol enabled, 40% reduced connection latency, 30% improved transfer speed
-- **📦 Smart Multi-layer Compression**: Triple compression algorithms (gzip, deflate, brotli), 60% improved transfer efficiency
-- **🔗 Zero-latency Pre-connection**: Connection warm-up and keep-alive, eliminating handshake overhead for instant response
-- **⚡ Parallel Chunked Downloads**: Full HTTP Range request support, multi-threaded download speed multiplied
-- **🎯 Smart Route Optimization**: Automatically select optimal transmission paths, avoiding network congestion nodes
+- **🌐 HTTP/3 Ultra-Fast Protocol**: Latest HTTP/3 protocol enabled, 40% reduced connection latency, 30% improved transfer speed
+- **📦 Smart Multi-Layer Compression**: Triple compression algorithms (gzip, deflate, brotli), 60% improved transfer efficiency
+- **🔗 Zero-Latency Pre-connection**: Connection warm-up and keep-alive, eliminating handshake overhead for instant response
+- **⚡ Parallel Chunked Downloads**: Full HTTP Range request support, multi-threaded download speed multiplication
+- **🎯 Smart Route Optimization**: Automatic optimal path selection, avoiding network congestion nodes
 
-### 🌐 Deep Multi-platform Integration
+### 🌐 Deep Multi-Platform Integration
 
-- **One-stop Multi-platform Support**: Unified support for high-speed downloads from code repositories, package managers, container registries, model and dataset hosting platforms
-- **Smart Recognition and Conversion**: Automatically recognize platform prefixes and convert to correct URL structure for target platforms
+- **One-Stop Multi-Platform Support**: Unified support for high-speed downloads from code repositories, package managers, container registries, model and dataset hosting platforms
+- **Smart Recognition and Conversion**: Automatic platform prefix recognition and conversion to correct URL structure for target platforms
 - **Consistent Acceleration Experience**: Enjoy unified and stable ultra-fast download service regardless of file type or source
 
-### 🔒 Enterprise-grade Security Assurance
+### 🔒 Enterprise-Grade Security Assurance
 
-- **Multi-layer Security Headers**:
+- **Multi-Layer Security Headers**:
   - `Strict-Transport-Security`: Force HTTPS transmission, prevent man-in-the-middle attacks
   - `X-Frame-Options: DENY`: Prevent clickjacking attacks
   - `X-XSS-Protection`: Built-in XSS protection mechanism
@@ -63,7 +67,7 @@ Ultra-high performance, secure all-in-one open source resource acceleration engi
   - `Referrer-Policy`: Control referrer information leakage
 - **Request Validation Mechanism**:
   - HTTP method whitelist: Regular requests limited to GET/HEAD, Git operations dynamically allow POST
-  - Path length limit: Prevent overly long URL attacks (maximum 2048 characters)
+  - Path length limit: Prevent overly long URL attacks (max 2048 characters)
   - Input sanitization: Prevent path traversal and injection attacks
 - **Timeout Protection**: 30-second request timeout, prevent resource exhaustion and malicious requests
 
@@ -75,34 +79,34 @@ Ultra-high performance, secure all-in-one open source resource acceleration engi
   - Timeout detection and interruption handling
 - **Efficient Caching Strategy**:
   - 1800 seconds (30 minutes) default cache duration, significantly reducing origin server pressure
-  - Git operations skip cache to ensure real-time performance
+  - Git operations skip cache to ensure real-time updates
   - Edge caching based on Cloudflare Cache API
 - **Performance Monitoring System**:
   - Built-in `PerformanceMonitor` class, real-time tracking of request stage timing
   - Detailed performance data via `X-Performance-Metrics` response header
-  - Support for cache hit rate statistics and optimization suggestions
+  - Cache hit rate statistics and optimization recommendations
 
 ### 🎯 Full Git Protocol Compatibility
 
 - **Smart Protocol Detection**:
-  - Automatically recognize Git-specific endpoints (`/info/refs`, `/git-upload-pack`, `/git-receive-pack`)
-  - Detect Git client User-Agent patterns
-  - Support query parameters like `service=git-upload-pack`
+  - Automatic recognition of Git-specific endpoints (`/info/refs`, `/git-upload-pack`, `/git-receive-pack`)
+  - Detection of Git client User-Agent patterns
+  - Support for query parameters like `service=git-upload-pack`
 - **Complete Operation Support**:
-  - `git clone`: Full repository cloning, support shallow cloning and branch specification
+  - `git clone`: Full repository cloning, supports shallow cloning and branch specification
   - `git push`: Code pushing and branch management
   - `git pull/fetch`: Incremental updates and remote synchronization
   - `git submodule`: Recursive submodule cloning
 - **Protocol Optimization**:
-  - Maintain Git-specific request headers and authentication information
+  - Preserve Git-specific request headers and authentication information
   - Smart User-Agent handling (default `git/2.34.1`)
-  - Support Git LFS large file transfer
+  - Support for Git LFS large file transfer
 
 ### 📱 Ecosystem Integration
 
 - **Dedicated Browser Extension**: [Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium) provides seamless experience
-  - Automatic link redirection, no manual URL modification needed
-  - Support custom Xget instance domain names
+  - Automatic link redirection without manual URL modification
+  - Support for custom Xget instance domains
   - Multi-platform preference settings and blacklist/whitelist management
   - Local processing ensures privacy security
 - **Download Tool Compatibility**: Perfect support for wget, cURL, aria2, IDM and other mainstream download tools
@@ -115,7 +119,7 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 ### Conversion Format
 
 | Platform | Platform Prefix | Original Link Format | Accelerated Link Format |
-|----------|-----------------|---------------------|-------------------------|
+|----------|-----------------|---------------------|------------------------|
 | GitHub | `gh` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
 | GitLab | `gl` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
 | Gitea | `gitea` | `https://gitea.com/...` | `https://xget.xi-xu.me/gitea/...` |
@@ -128,15 +132,19 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 | Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
+| CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
 | Go Modules | `golang` | `https://proxy.golang.org/...` | `https://xget.xi-xu.me/golang/...` |
 | NuGet | `nuget` | `https://api.nuget.org/...` | `https://xget.xi-xu.me/nuget/...` |
+| Rust Crates | `crates` | `https://crates.io/...` | `https://xget.xi-xu.me/crates/...` |
 | Packagist | `packagist` | `https://repo.packagist.org/...` | `https://xget.xi-xu.me/packagist/...` |
 | Debian | `debian` | `https://deb.debian.org/...` | `https://xget.xi-xu.me/debian/...` |
 | Ubuntu | `ubuntu` | `https://archive.ubuntu.com/...` | `https://xget.xi-xu.me/ubuntu/...` |
 | Fedora | `fedora` | `https://dl.fedoraproject.org/...` | `https://xget.xi-xu.me/fedora/...` |
 | Rocky Linux | `rocky` | `https://download.rockylinux.org/...` | `https://xget.xi-xu.me/rocky/...` |
+| openSUSE | `opensuse` | `https://download.opensuse.org/...` | `https://xget.xi-xu.me/opensuse/...` |
 | Arch Linux | `arch` | `https://geo.mirror.pkgbuild.com/...` | `https://xget.xi-xu.me/arch/...` |
 | arXiv | `arxiv` | `https://arxiv.org/...` | `https://xget.xi-xu.me/arxiv/...` |
+| F-Droid | `fdroid` | `https://f-droid.org/...` | `https://xget.xi-xu.me/fdroid/...` |
 | Container Registry | `cr` | See [Container Registry](#container-registry) | See [Container Registry](#container-registry) |
 
 ### Platform Conversion Examples
@@ -303,6 +311,22 @@ https://rubygems.org/api/v1/gems/nokogiri.json
 https://xget.xi-xu.me/rubygems/api/v1/gems/nokogiri.json
 ```
 
+#### CRAN
+
+```url
+# CRAN package file original link
+https://cran.r-project.org/src/contrib/ggplot2_3.4.4.tar.gz
+
+# Converted (add cran prefix)
+https://xget.xi-xu.me/cran/src/contrib/ggplot2_3.4.4.tar.gz
+
+# CRAN package metadata original link
+https://cran.r-project.org/web/packages/dplyr/DESCRIPTION
+
+# Converted (add cran prefix)
+https://xget.xi-xu.me/cran/web/packages/dplyr/DESCRIPTION
+```
+
 #### Go Modules
 
 ```url
@@ -333,6 +357,28 @@ https://api.nuget.org/v3/registration5-semver1/microsoft.aspnetcore.app/index.js
 
 # Converted (add nuget prefix)
 https://xget.xi-xu.me/nuget/v3/registration5-semver1/microsoft.aspnetcore.app/index.json
+```
+
+#### Rust Crates
+
+```url
+# Crate download original link
+https://crates.io/api/v1/crates/serde/1.0.0/download
+
+# Converted (add crates prefix)
+https://xget.xi-xu.me/crates/serde/1.0.0/download
+
+# Crate metadata original link
+https://crates.io/api/v1/crates/serde
+
+# Converted (add crates prefix)
+https://xget.xi-xu.me/crates/serde
+
+# Crate search original link
+https://crates.io/api/v1/crates?q=serde
+
+# Converted (add crates prefix)
+https://xget.xi-xu.me/crates/?q=serde
 ```
 
 #### Packagist
@@ -378,6 +424,12 @@ https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1
 # Converted (add rocky prefix)
 https://xget.xi-xu.me/rocky/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1.8-6.el9.x86_64.rpm
 
+# openSUSE package original link
+https://download.opensuse.org/distribution/leap/15.5/repo/oss/x86_64/vim-9.0.1572-150500.20.8.1.x86_64.rpm
+
+# Converted (add opensuse prefix)
+https://xget.xi-xu.me/opensuse/distribution/leap/15.5/repo/oss/x86_64/vim-9.0.1572-150500.20.8.1.x86_64.rpm
+
 # Arch Linux package original link
 https://geo.mirror.pkgbuild.com/core/os/x86_64/linux-6.6.10.arch1-1-x86_64.pkg.tar.zst
 
@@ -401,12 +453,28 @@ https://arxiv.org/e-print/2301.07041
 https://xget.xi-xu.me/arxiv/e-print/2301.07041
 ```
 
+#### F-Droid
+
+```url
+# F-Droid app APK original link
+https://f-droid.org/repo/org.fdroid.fdroid_1016050.apk
+
+# Converted (add fdroid prefix)
+https://xget.xi-xu.me/fdroid/repo/org.fdroid.fdroid_1016050.apk
+
+# F-Droid app metadata original link
+https://f-droid.org/api/v1/packages/org.fdroid.fdroid
+
+# Converted (add fdroid prefix)
+https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
+```
+
 #### Container Registry
 
-Xget supports multiple container registries using the `cr/[container-registry-prefix]` format:
+Xget supports multiple container registries using the `cr/[registry-prefix]` format:
 
 | Container Registry | Registry Prefix | Original Link Format | Accelerated Link Format |
-|-------------------|-----------------|---------------------|-------------------------|
+|-------------------|-----------------|---------------------|------------------------|
 | Quay.io | `quay` | `https://quay.io/...` | `https://xget.xi-xu.me/cr/quay/...` |
 | Google | `gcr` | `https://gcr.io/...` | `https://xget.xi-xu.me/cr/gcr/...` |
 | Microsoft | `mcr` | `https://mcr.microsoft.com/...` | `https://xget.xi-xu.me/cr/mcr/...` |
@@ -538,7 +606,7 @@ aria2c -c https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 aria2c -i download-list.txt  # File containing multiple Xget links
 ```
 
-### As Hugging Face Mirror
+### Hugging Face Mirror
 
 ```python
 import os
@@ -552,14 +620,14 @@ model_name = 'microsoft/DialoGPT-medium'
 
 print(f"Downloading model from mirror: {model_name}")
 
-# Use AutoModelForCausalLM to load conversational generation model
-# No additional parameters needed due to environment variable set above
+# Use AutoModelForCausalLM to load dialogue generation model
+# No additional parameters needed due to environment variable setting above
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
 print("Model and tokenizer loaded successfully!")
 
-# You can now use the tokenizer and model
+# You can now use tokenizer and model
 # For example:
 # new_user_input_ids = tokenizer.encode("Hello, how are you?", return_tensors='pt')
 # chat_history_ids = model.generate(new_user_input_ids, max_length=1000, pad_token_id=tokenizer.eos_token_id)
@@ -622,7 +690,7 @@ index-url = https://xget.xi-xu.me/pypi/simple/
 trusted-host = xget.xi-xu.me
 EOF
 
-# Or create pip.conf in project root directory
+# Or create pip.conf in project root
 cat > pip.conf << EOF
 [global]
 index-url = https://xget.xi-xu.me/pypi/simple/
@@ -672,7 +740,7 @@ conda config --show
 
 #### Configure in .condarc
 
-The .condarc file can be placed in the user home directory (`~/.condarc`) or project root directory:
+The .condarc file can be placed in the user home directory (`~/.condarc`) or project root:
 
 ```yaml
 default_channels:
@@ -856,6 +924,62 @@ bundle config mirror.https://rubygems.org https://xget.xi-xu.me/rubygems/
 bundle install
 ```
 
+### R Package Acceleration
+
+#### Configure R to use Xget CRAN mirror
+
+```r
+# Temporarily use Xget CRAN mirror in R
+install.packages("ggplot2", repos = "https://xget.xi-xu.me/cran/")
+
+# Globally configure CRAN mirror
+options(repos = c(CRAN = "https://xget.xi-xu.me/cran/"))
+
+# Verify configuration
+getOption("repos")
+```
+
+#### Configure in .Rprofile
+
+```r
+# Configure global mirror in .Rprofile file in user home directory
+options(repos = c(
+  CRAN = "https://xget.xi-xu.me/cran/",
+  BioCsoft = "https://bioconductor.org/packages/release/bioc",
+  BioCann = "https://bioconductor.org/packages/release/data/annotation",
+  BioCexp = "https://bioconductor.org/packages/release/data/experiment"
+))
+
+# Set download method
+options(download.file.method = "libcurl")
+```
+
+#### Use in projects
+
+```r
+# Specify mirror in project's renv.lock or scripts
+renv::init()
+renv::settings$repos.override(c(CRAN = "https://xget.xi-xu.me/cran/"))
+
+# Install packages
+install.packages(c("dplyr", "ggplot2", "tidyr"))
+
+# Or use pak package manager
+pak::pkg_install("tidyverse", repos = "https://xget.xi-xu.me/cran/")
+```
+
+```bash
+# Use R script to install packages from command line
+Rscript -e "options(repos = c(CRAN = 'https://xget.xi-xu.me/cran/')); install.packages('ggplot2')"
+
+# Batch install packages
+Rscript -e "
+options(repos = c(CRAN = 'https://xget.xi-xu.me/cran/'))
+packages <- c('dplyr', 'ggplot2', 'tidyr', 'readr')
+install.packages(packages)
+"
+```
+
 ### Go Module Acceleration
 
 #### Configure Go to use Xget proxy
@@ -911,6 +1035,46 @@ dotnet restore --source https://xget.xi-xu.me/nuget/v3/index.json
     <add key="xget" value="https://xget.xi-xu.me/nuget/v3/index.json" />
   </packageSources>
 </configuration>
+```
+
+### Rust Package Acceleration
+
+#### Configure Cargo to use Xget mirror
+
+```bash
+# Configure Cargo to use Xget mirror (in ~/.cargo/config.toml)
+mkdir -p ~/.cargo
+cat >> ~/.cargo/config.toml << EOF
+[source.crates-io]
+replace-with = "xget"
+
+[source.xget]
+registry = "https://xget.xi-xu.me/crates/"
+EOF
+
+# Verify configuration
+cargo search serde
+```
+
+#### Use in projects
+
+```toml
+# Dependencies can be used normally in Cargo.toml
+[dependencies]
+serde = "1.0"
+tokio = "1.0"
+reqwest = "0.11"
+```
+
+```bash
+# Xget acceleration will be used automatically when building project
+cargo build
+
+# Update dependencies
+cargo update
+
+# Add new dependency
+cargo add clap
 ```
 
 ### PHP Package Acceleration
@@ -987,6 +1151,24 @@ sudo sed -i 's|^#baseurl=http://dl.rockylinux.org|baseurl=https://xget.xi-xu.me/
 sudo dnf makecache
 ```
 
+#### openSUSE Zypper Configuration
+
+```bash
+# Configure openSUSE Leap mirror
+sudo zypper mr -d repo-oss
+sudo zypper ar -f https://xget.xi-xu.me/opensuse/distribution/leap/15.5/repo/oss/ repo-oss-xget
+
+# Configure openSUSE Tumbleweed mirror
+sudo zypper mr -d repo-oss
+sudo zypper ar -f https://xget.xi-xu.me/opensuse/tumbleweed/repo/oss/ repo-oss-xget
+
+# Refresh repositories
+sudo zypper refresh
+
+# Verify configuration
+sudo zypper lr -u
+```
+
 #### Arch Linux Pacman Configuration
 
 ```bash
@@ -1020,7 +1202,7 @@ done
 #### Use in academic tools
 
 ```python
-# Use arXiv acceleration downloads in Python
+# Use arXiv acceleration download in Python
 import requests
 
 def download_arxiv_paper(arxiv_id, output_path):
@@ -1036,6 +1218,99 @@ def download_arxiv_paper(arxiv_id, output_path):
 
 # Download paper
 download_arxiv_paper("2301.07041", "attention_is_all_you_need.pdf")
+```
+
+### F-Droid Repository Mirror
+
+F-Droid is the largest open-source app store on the Android platform. Xget provides high-speed mirror services for F-Droid repositories, significantly improving app download and update speeds.
+
+#### Configure F-Droid client to use Xget mirror
+
+1. In the F-Droid app, go to **Settings** → **Repositories**
+2. Click **+** and enter repository URL: `https://xget.xi-xu.me/fdroid/repo`
+3. Click **Add** then click **Add Mirror**
+
+#### Supported F-Droid services
+
+```url
+# F-Droid app APK download
+https://xget.xi-xu.me/fdroid/repo/[package-name]_[version].apk
+
+# F-Droid repository index
+https://xget.xi-xu.me/fdroid/repo/index-v1.jar
+
+# F-Droid app icons
+https://xget.xi-xu.me/fdroid/repo/icons-640/[package-name].[version].png
+
+# F-Droid API endpoints
+https://xget.xi-xu.me/fdroid/api/v1/packages/[package-name]
+```
+
+#### Usage examples
+
+```bash
+# Directly download F-Droid client APK
+wget https://xget.xi-xu.me/fdroid/repo/org.fdroid.fdroid_1016050.apk
+
+# Download other open-source apps
+curl -L -O https://xget.xi-xu.me/fdroid/repo/org.mozilla.fennec_fdroid_1014000.apk
+
+# Get app information
+curl https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
+```
+
+#### Batch app management
+
+```bash
+# Create app download script
+cat > download_fdroid_apps.sh << 'EOF'
+#!/bin/bash
+
+# Define list of apps to download
+apps=(
+    "org.fdroid.fdroid_1016050.apk"
+    "org.mozilla.fennec_fdroid_1014000.apk"
+    "com.termux_1180.apk"
+    "org.videolan.vlc_13050399.apk"
+)
+
+# Create download directory
+mkdir -p fdroid_apps
+
+# Batch download apps
+for app in "${apps[@]}"; do
+    echo "Downloading: $app"
+    wget -P fdroid_apps "https://xget.xi-xu.me/fdroid/repo/$app"
+done
+
+echo "All apps downloaded!"
+EOF
+
+chmod +x download_fdroid_apps.sh
+./download_fdroid_apps.sh
+```
+
+#### Developer integration
+
+For Android developers, F-Droid mirror can be integrated into build scripts:
+
+```gradle
+// Configure F-Droid dependency check in build.gradle
+task checkFDroidAvailability {
+    doLast {
+        def fdroidUrl = "https://xget.xi-xu.me/fdroid/api/v1/packages/${project.name}"
+        try {
+            def connection = new URL(fdroidUrl).openConnection()
+            connection.requestMethod = 'GET'
+            def responseCode = connection.responseCode
+            if (responseCode == 200) {
+                println "App available on F-Droid: $fdroidUrl"
+            }
+        } catch (Exception e) {
+            println "Error checking F-Droid availability: ${e.message}"
+        }
+    }
+}
 ```
 
 ### Container Image Acceleration
@@ -1061,20 +1336,20 @@ sudo systemctl restart docker  # Linux
 docker info | grep -A 10 "Registry Mirrors"
 ```
 
-#### Direct Image Pulling
+#### Direct image pulling
 
 ```bash
-# Pull GitHub Container Registry images
+# Pull GitHub Container Registry image
 docker pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 
-# Pull Google Container Registry images
+# Pull Google Container Registry image
 docker pull xget.xi-xu.me/cr/gcr/distroless/base:latest
 
-# Pull Microsoft Container Registry images
+# Pull Microsoft Container Registry image
 docker pull xget.xi-xu.me/cr/mcr/dotnet/runtime:8.0
 ```
 
-#### Kubernetes Deployment Configuration
+#### Kubernetes deployment configuration
 
 ```yaml
 # deployment.yaml - Using Xget accelerated images
@@ -1103,7 +1378,7 @@ spec:
         - containerPort: 6379
 ```
 
-#### Docker Compose Configuration
+#### Docker Compose configuration
 
 ```yaml
 # docker-compose.yml - Using Xget accelerated images
@@ -1133,7 +1408,7 @@ volumes:
   mssql_data:
 ```
 
-#### Dockerfile Optimization
+#### Dockerfile optimization
 
 ```dockerfile
 # Use Xget accelerated base images in Dockerfile
@@ -1150,14 +1425,14 @@ RUN npm run build
 FROM xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Use Microsoft Container Registry .NET images
+# Use Microsoft Container Registry .NET image
 FROM xget.xi-xu.me/cr/mcr/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=builder /app/publish .
 ENTRYPOINT ["dotnet", "MyApp.dll"]
 ```
 
-#### CI/CD Integration
+#### CI/CD integration
 
 ```yaml
 # GitHub Actions - Using Xget accelerated container builds
@@ -1184,7 +1459,7 @@ jobs:
             dotnet --version
 ```
 
-#### Podman Configuration
+#### Podman configuration
 
 ```bash
 # Configure Podman to use Xget image acceleration
@@ -1198,7 +1473,7 @@ podman pull xget.xi-xu.me/cr/ghcr/alpine/alpine:latest
 podman pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 ```
 
-#### containerd Configuration
+#### containerd configuration
 
 ```toml
 # Configure containerd to use Xget acceleration
@@ -1232,12 +1507,12 @@ jobs:
       
       - name: Download model files
         run: |
-          # Use Xget acceleration to download large model files
+          # Use Xget to accelerate large model file downloads
           wget https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
           
       - name: Clone dependency repo
         run: |
-          # Use Xget acceleration for Git cloning
+          # Use Xget to accelerate Git cloning
           git clone https://xget.xi-xu.me/gh/[owner]/[repository].git
           
       - name: Download release assets
@@ -1269,7 +1544,7 @@ download_dependencies:
       - dependency/
 ```
 
-#### Docker Build Optimization
+#### Docker build optimization
 
 ```dockerfile
 FROM ubuntu:22.04
@@ -1369,7 +1644,7 @@ export const CONFIG = {
 
 ### Performance Tuning Recommendations
 
-- **Cache Optimization**: Adjust `CACHE_DURATION` based on usage patterns, reduce for frequently updated repositories
+- **Cache Optimization**: Adjust `CACHE_DURATION` based on usage patterns; frequently updated repositories can reduce this appropriately
 - **Timeout Settings**: Increase `TIMEOUT_SECONDS` appropriately for poor network conditions
 - **Retry Strategy**: Increase `MAX_RETRIES` and `RETRY_DELAY_MS` for high-latency environments
 
@@ -1391,7 +1666,7 @@ export const PLATFORMS = {
 
 ## 🚧 Development
 
-1. **Repository Setup**
+1. **Repository setup**
 
    ```bash
    git clone https://github.com/xixu-me/Xget.git
@@ -1400,7 +1675,7 @@ export const PLATFORMS = {
    npx wrangler auth login  # First time use
    ```
 
-2. **Local Development**
+2. **Local development**
 
    ```bash
    npm run dev              # Start development server (http://localhost:8787)
@@ -1413,7 +1688,7 @@ export const PLATFORMS = {
 
 ## 🧪 Testing
 
-The repository includes a complete test suite to ensure code quality and functional correctness.
+The repository includes a comprehensive test suite to ensure code quality and functional correctness.
 
 ### Complete Testing
 
@@ -1443,7 +1718,7 @@ npm run test:watch
 ### Common Issues
 
 **Q: Download speed not significantly improved?**  
-A: Check if source files are already cached on CDN edge nodes. First access may be slower, subsequent access will be significantly improved.
+A: Check if source files are already cached on CDN edge nodes. First access may be slow, subsequent access will be significantly improved.
 
 **Q: Git operations failing?**  
 A: Confirm correct URL format is used and Git client version supports HTTPS proxy.
@@ -1472,7 +1747,7 @@ npx wrangler dev --log-level debug
 ## ⚠️ Disclaimer
 
 - **Legal Use**: This repository is only for accelerating legal public file downloads and Git operations. Please comply with relevant platform terms of service and local laws and regulations
-- **Service Availability**: Public instance `xget.xi-xu.me` is a free service with no guarantee of 100% availability. Recommend deploying your own instance for production environments
+- **Service Availability**: Public instance `xget.xi-xu.me` is a free service with no guarantee of 100% availability. Production environments are recommended to deploy their own instances
 - **Data Security**: Although Xget does not store or log user data, please handle sensitive information downloads carefully
 - **Liability Limitation**: Developers are not responsible for any direct or indirect losses caused by using this service
 - **Third-party Platforms**: Please respect the terms of service and rate limits of GitHub, GitLab, Gitea, Codeberg, SourceForge, Hugging Face and other platforms

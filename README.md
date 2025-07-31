@@ -283,16 +283,16 @@ https://xget.xi-xu.me/maven/maven2/org/apache/commons/commons-lang3/maven-metada
 
 ```url
 # Gradle 插件门户 JAR 文件原始链接
-https://plugins.gradle.org/m2/org/gradle/gradle-enterprise-gradle-plugin/3.13.4/gradle-enterprise-gradle-plugin-3.13.4.jar
+https://plugins.gradle.org/m2/org/gradle/gradle-hello-world-plugin/0.2/gradle-hello-world-plugin-0.2.jar
 
 # 转换后（添加 gradle 前缀）
-https://xget.xi-xu.me/gradle/m2/org/gradle/gradle-enterprise-gradle-plugin/3.13.4/gradle-enterprise-gradle-plugin-3.13.4.jar
+https://xget.xi-xu.me/gradle/m2/org/gradle/gradle-hello-world-plugin/0.2/gradle-hello-world-plugin-0.2.jar
 
 # Gradle 插件元数据原始链接
-https://plugins.gradle.org/api/gradle/7.6/plugin/use/org.springframework.boot
+https://plugins.gradle.org/m2/com/github/ben-manes/gradle-versions-plugin/0.51.0/gradle-versions-plugin-0.51.0.module
 
 # 转换后（添加 gradle 前缀）
-https://xget.xi-xu.me/gradle/api/gradle/7.6/plugin/use/org.springframework.boot
+https://xget.xi-xu.me/gradle/m2/com/github/ben-manes/gradle-versions-plugin/0.51.0/gradle-versions-plugin-0.51.0.module
 ```
 
 #### RubyGems

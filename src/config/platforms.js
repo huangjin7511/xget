@@ -26,6 +26,7 @@ export const PLATFORMS = {
   ubuntu: 'https://archive.ubuntu.com',
   fedora: 'https://dl.fedoraproject.org',
   rocky: 'https://download.rockylinux.org',
+  opensuse: 'https://download.opensuse.org',
   arch: 'https://geo.mirror.pkgbuild.com',
   arxiv: 'https://arxiv.org',
 

@@ -27,5 +27,6 @@
     "test:watch": "vitest --watch",
     "type-check": "tsc --noEmit"
   },
+  "type": "module",
   "version": "1.0.0"
 }

@@ -86,19 +86,12 @@ export function transformPath(path, platformKey) {
     }
   }
 
-  // Special handling for PyTorch paths
+  // Special handling for PyTorch wheel paths
   if (platformKey === 'pytorch') {
-    // PyTorch has a different structure for pip index vs direct downloads
-    if (transformedPath.startsWith('/')) {
-      // Handle different PyTorch endpoints:
-      // /whl/cu118/ -> /whl/cu118/ (pip index pages)
-      // /whl/cu118/torch-2.0.1+cu118-cp311-cp311-linux_x86_64.whl -> /whl/cu118/torch-2.0.1+cu118-cp311-cp311-linux_x86_64.whl (direct downloads)
-      // /models/resnet50-0676ba61.pth -> /models/resnet50-0676ba61.pth (model downloads)
-      
-      // For pip index pages (ending with / or containing specific packages), keep as-is
-      // For direct downloads, keep as-is
-      // PyTorch doesn't need path transformation, just prefix removal
-    }
+    // PyTorch wheel structure: /pytorch/whl/cu129 -> /whl/cu129
+    // PyTorch models: /pytorch/models/resnet50.pth -> /models/resnet50.pth
+    // Keep the path as-is after removing the /pytorch prefix
+    // The transformedPath is already correctly processed above
   }
 
   return transformedPath;

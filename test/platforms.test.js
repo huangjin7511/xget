@@ -13,7 +13,8 @@ describe('Platform Configuration', () => {
         'hf',
         'npm',
         'pypi',
-        'conda'
+        'conda',
+        'pytorch'
       ];
 
       requiredPlatforms.forEach(platform => {

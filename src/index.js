@@ -326,20 +326,14 @@ async function handleRequest(request, env, ctx) {
     // Check if this is a Git operation
     const isGit = isGitRequest(request, url);
 
-    // Check if this is a PyTorch pip index request (contains metadata with hashes)
-    const isPyTorchIndex = platform === 'pytorch' && (
-      url.pathname.includes('/whl/') && 
-      (url.pathname.endsWith('/') || !url.pathname.includes('.whl'))
-    );
-
-    // Check cache first (skip cache for Git, Docker operations, and PyTorch pip index pages)
+    // Check cache first (skip cache for Git and Docker operations)
     /** @type {Cache} */
     // @ts-ignore - Cloudflare Workers cache API
     const cache = caches.default;
     const cacheKey = new Request(targetUrl, request);
     let response;
 
-    if (!isGit && !isDocker && !isPyTorchIndex) {
+    if (!isGit && !isDocker) {
       response = await cache.match(cacheKey);
       if (response) {
         monitor.mark('cache_hit');
@@ -575,23 +569,6 @@ async function handleRequest(request, env, ctx) {
       });
     }
 
-    // Handle PyTorch pip index URL rewriting
-    if (platform === 'pytorch' && response.headers.get('content-type')?.includes('text/html')) {
-      const originalText = await response.text();
-      // Rewrite URLs in the response body to go through the Cloudflare Worker
-      // https://download.pytorch.org/whl/... URLs should be rewritten to go through our pytorch endpoint
-      const rewrittenText = originalText.replace(
-        /https:\/\/download\.pytorch\.org\/(whl\/[^"]+)/g,
-        `${url.origin}/pytorch/$1`
-      );
-      responseBody = new ReadableStream({
-        start(controller) {
-          controller.enqueue(new TextEncoder().encode(rewrittenText));
-          controller.close();
-        }
-      });
-    }
-
     // Handle npm registry URL rewriting
     if (platform === 'npm' && response.headers.get('content-type')?.includes('application/json')) {
       const originalText = await response.text();
@@ -609,6 +586,44 @@ async function handleRequest(request, env, ctx) {
       });
     }
 
+    // Handle PyTorch wheel index URL rewriting
+    if (platform === 'pytorch' && response.headers.get('content-type')?.includes('text/html')) {
+      const originalText = await response.text();
+      // Rewrite URLs in PyTorch wheel index pages to go through our pytorch endpoint
+      // https://download.pytorch.org/whl/torch/ -> https://xget.xi-xu.me/pytorch/whl/torch/
+      // Also handle relative paths like ../torch/ or torch/
+      let rewrittenText = originalText.replace(
+        /https:\/\/download\.pytorch\.org\/([^"'\s>]+)/g,
+        `${url.origin}/pytorch/$1`
+      );
+
+      // Handle relative links in wheel index pages
+      // These are typically in the format: <a href="torch/">torch/</a>
+      // or <a href="../torch/">torch/</a>
+      rewrittenText = rewrittenText.replace(
+        /href=["']\.\.\/([^"']+)["']/g,
+        `href="${url.origin}/pytorch/whl/$1"`
+      );
+
+      rewrittenText = rewrittenText.replace(
+        /href=["']([^"']*[^"'\/])\/["']/g,
+        (match, packageName) => {
+          // Skip absolute URLs and URLs that already contain our domain
+          if (packageName.startsWith('http') || packageName.includes(url.hostname)) {
+            return match;
+          }
+          return `href="${url.origin}/pytorch/whl/${packageName}/"`;
+        }
+      );
+
+      responseBody = new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode(rewrittenText));
+          controller.close();
+        }
+      });
+    }
+
     // Prepare response headers
     const headers = new Headers(response.headers);
 
@@ -617,11 +632,6 @@ async function handleRequest(request, env, ctx) {
       // These protocols are very sensitive to header changes
       // Don't add any additional headers that might interfere with protocol operation
       // The response headers from upstream should be passed through as-is
-    } else if (isPyTorchIndex) {
-      // For PyTorch pip index pages, use shorter cache duration to ensure fresh metadata
-      headers.set('Cache-Control', 'public, max-age=300'); // 5 minutes cache
-      headers.set('X-Content-Type-Options', 'nosniff');
-      addSecurityHeaders(headers);
     } else {
       // Regular file download headers
       headers.set('Cache-Control', `public, max-age=${config.CACHE_DURATION}`);
@@ -636,12 +646,11 @@ async function handleRequest(request, env, ctx) {
       headers: headers
     });
 
-    // Cache successful responses (skip caching for Git, Docker operations, and PyTorch pip index pages)
+    // Cache successful responses (skip caching for Git and Docker operations)
     // Only cache GET and HEAD requests to avoid "Cannot cache response to non-GET request" errors
     if (
       !isGit &&
       !isDocker &&
-      !isPyTorchIndex &&
       ['GET', 'HEAD'].includes(request.method) &&
       (response.ok || response.status === 206)
     ) {

@@ -476,30 +476,30 @@ Xget 支持多个容器注册表，使用 `cr/[容器注册表前缀]` 格式：
 | 容器注册表 | 容器注册表前缀 | 原始链接格式 | 加速链接格式 |
 |----------|------|--------------|--------------|
 | Quay.io | `quay` | `https://quay.io/...` | `https://xget.xi-xu.me/cr/quay/...` |
-| 谷歌 | `gcr` | `https://gcr.io/...` | `https://xget.xi-xu.me/cr/gcr/...` |
-| 微软 | `mcr` | `https://mcr.microsoft.com/...` | `https://xget.xi-xu.me/cr/mcr/...` |
-| Amazon ECR | `ecr` | `https://public.ecr.aws/...` | `https://xget.xi-xu.me/cr/ecr/...` |
-| GitHub | `ghcr` | `https://ghcr.io/...` | `https://xget.xi-xu.me/cr/ghcr/...` |
-| GitLab | `gitlab` | `https://registry.gitlab.com/...` | `https://xget.xi-xu.me/cr/gitlab/...` |
-| Red Hat | `redhat` | `https://registry.redhat.io/...` | `https://xget.xi-xu.me/cr/redhat/...` |
-| Oracle | `oracle` | `https://container-registry.oracle.com/...` | `https://xget.xi-xu.me/cr/oracle/...` |
+| 谷歌容器注册表 | `gcr` | `https://gcr.io/...` | `https://xget.xi-xu.me/cr/gcr/...` |
+| 微软容器注册表 | `mcr` | `https://mcr.microsoft.com/...` | `https://xget.xi-xu.me/cr/mcr/...` |
+| 亚马逊公共弹性容器注册表 | `ecr` | `https://public.ecr.aws/...` | `https://xget.xi-xu.me/cr/ecr/...` |
+| GitHub 容器注册表 | `ghcr` | `https://ghcr.io/...` | `https://xget.xi-xu.me/cr/ghcr/...` |
+| GitLab 容器注册表 | `gitlab` | `https://registry.gitlab.com/...` | `https://xget.xi-xu.me/cr/gitlab/...` |
+| 红帽注册表 | `redhat` | `https://registry.redhat.io/...` | `https://xget.xi-xu.me/cr/redhat/...` |
+| 甲骨文容器注册表 | `oracle` | `https://container-registry.oracle.com/...` | `https://xget.xi-xu.me/cr/oracle/...` |
 | Cloudsmith | `cloudsmith` | `https://docker.cloudsmith.io/...` | `https://xget.xi-xu.me/cr/cloudsmith/...` |
-| DigitalOcean | `digitalocean` | `https://registry.digitalocean.com/...` | `https://xget.xi-xu.me/cr/digitalocean/...` |
-| VMware | `vmware` | `https://projects.registry.vmware.com/...` | `https://xget.xi-xu.me/cr/vmware/...` |
-| Kubernetes | `k8s` | `https://registry.k8s.io/...` | `https://xget.xi-xu.me/cr/k8s/...` |
-| Heroku | `heroku` | `https://registry.heroku.com/...` | `https://xget.xi-xu.me/cr/heroku/...` |
-| SUSE | `suse` | `https://registry.suse.com/...` | `https://xget.xi-xu.me/cr/suse/...` |
-| openSUSE | `opensuse` | `https://registry.opensuse.org/...` | `https://xget.xi-xu.me/cr/opensuse/...` |
-| Gitpod | `gitpod` | `https://registry.gitpod.io/...` | `https://xget.xi-xu.me/cr/gitpod/...` |
+| DigitalOcean 注册表 | `digitalocean` | `https://registry.digitalocean.com/...` | `https://xget.xi-xu.me/cr/digitalocean/...` |
+| VMware 注册表 | `vmware` | `https://projects.registry.vmware.com/...` | `https://xget.xi-xu.me/cr/vmware/...` |
+| Kubernetes 注册表 | `k8s` | `https://registry.k8s.io/...` | `https://xget.xi-xu.me/cr/k8s/...` |
+| Heroku 注册表 | `heroku` | `https://registry.heroku.com/...` | `https://xget.xi-xu.me/cr/heroku/...` |
+| SUSE 注册表 | `suse` | `https://registry.suse.com/...` | `https://xget.xi-xu.me/cr/suse/...` |
+| openSUSE 注册表 | `opensuse` | `https://registry.opensuse.org/...` | `https://xget.xi-xu.me/cr/opensuse/...` |
+| Gitpod 注册表 | `gitpod` | `https://registry.gitpod.io/...` | `https://xget.xi-xu.me/cr/gitpod/...` |
 
 ```url
-# GitHub 容器容器注册表原始链接
+# GitHub 容器注册表原始链接
 https://ghcr.io/v2/nginxinc/nginx-unprivileged/manifests/latest
 
 # 转换后（添加 cr/ghcr 前缀）
 https://xget.xi-xu.me/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest
 
-# Google 容器容器注册表原始链接
+# 谷歌容器注册表原始链接
 https://gcr.io/v2/distroless/base/manifests/latest
 
 # 转换后（添加 cr/gcr 前缀）
@@ -1339,13 +1339,13 @@ docker info | grep -A 10 "Registry Mirrors"
 #### 直接拉取镜像
 
 ```bash
-# 拉取 GitHub Container Registry 镜像
+# 拉取 GitHub 容器注册表镜像
 docker pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 
-# 拉取 Google Container Registry 镜像
+# 拉取谷歌容器注册表镜像
 docker pull xget.xi-xu.me/cr/gcr/distroless/base:latest
 
-# 拉取 Microsoft Container Registry 镜像
+# 拉取微软容器注册表镜像
 docker pull xget.xi-xu.me/cr/mcr/dotnet/runtime:8.0
 ```
 
@@ -1425,7 +1425,7 @@ RUN npm run build
 FROM xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# 使用 Microsoft 容器容器注册表的 .NET 镜像
+# 使用微软容器注册表的 .NET 镜像
 FROM xget.xi-xu.me/cr/mcr/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=builder /app/publish .

@@ -22,7 +22,6 @@ export const PLATFORMS = {
   nuget: 'https://api.nuget.org',
   crates: 'https://crates.io',
   packagist: 'https://repo.packagist.org',
-  pytorch: 'https://download.pytorch.org',
   debian: 'https://deb.debian.org',
   ubuntu: 'https://archive.ubuntu.com',
   fedora: 'https://dl.fedoraproject.org',
@@ -84,14 +83,6 @@ export function transformPath(path, platformKey) {
         transformedPath = `/api/v1/crates${transformedPath}`;
       }
     }
-  }
-
-  // Special handling for PyTorch wheel paths
-  if (platformKey === 'pytorch') {
-    // PyTorch wheel structure: /pytorch/whl/cu129 -> /whl/cu129
-    // PyTorch models: /pytorch/models/resnet50.pth -> /models/resnet50.pth
-    // Keep the path as-is after removing the /pytorch prefix
-    // The transformedPath is already correctly processed above
   }
 
   return transformedPath;

@@ -22,7 +22,6 @@
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-包管理加速)
 [![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](#rust-包管理加速)
 [![Packagist](https://img.shields.io/badge/Packagist-F28D1A?logo=packagist&logoColor=white)](#php-包管理加速)
-[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](#pytorch-模型加速)
 [![Debian](https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=white)](#debianubuntu-apt-配置)
 [![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](#debianubuntu-apt-配置)
 [![Fedora](https://img.shields.io/badge/Fedora-294172?logo=fedora&logoColor=white)](#fedora-dnf-配置)
@@ -138,7 +137,6 @@
 | NuGet | `nuget` | `https://api.nuget.org/...` | `https://xget.xi-xu.me/nuget/...` |
 | Rust Crates | `crates` | `https://crates.io/...` | `https://xget.xi-xu.me/crates/...` |
 | Packagist | `packagist` | `https://repo.packagist.org/...` | `https://xget.xi-xu.me/packagist/...` |
-| PyTorch | `pytorch` | `https://download.pytorch.org/...` | `https://xget.xi-xu.me/pytorch/...` |
 | Debian | `debian` | `https://deb.debian.org/...` | `https://xget.xi-xu.me/debian/...` |
 | Ubuntu | `ubuntu` | `https://archive.ubuntu.com/...` | `https://xget.xi-xu.me/ubuntu/...` |
 | Fedora | `fedora` | `https://dl.fedoraproject.org/...` | `https://xget.xi-xu.me/fedora/...` |
@@ -397,22 +395,6 @@ https://repo.packagist.org/packages/list.json
 
 # 转换后（添加 packagist 前缀）
 https://xget.xi-xu.me/packagist/packages/list.json
-```
-
-#### PyTorch
-
-```url
-# PyTorch Wheel 包原始链接
-https://download.pytorch.org/whl/torch-2.0.1%2Bcu118-cp311-cp311-linux_x86_64.whl
-
-# 转换后（添加 pytorch 前缀）
-https://xget.xi-xu.me/pytorch/whl/torch-2.0.1%2Bcu118-cp311-cp311-linux_x86_64.whl
-
-# PyTorch 预训练模型原始链接
-https://download.pytorch.org/models/resnet50-0676ba61.pth
-
-# 转换后（添加 pytorch 前缀）
-https://xget.xi-xu.me/pytorch/models/resnet50-0676ba61.pth
 ```
 
 #### Linux 发行版
@@ -1125,48 +1107,6 @@ composer config -l
     "guzzlehttp/guzzle": "^7.0"
   }
 }
-```
-
-### PyTorch 模型加速
-
-#### 直接下载预训练模型
-
-```bash
-# 下载 PyTorch 预训练模型
-wget https://xget.xi-xu.me/pytorch/whl/torch-2.0.1%2Bcu118-cp311-cp311-linux_x86_64.whl
-
-# 下载 TorchVision 预训练模型
-curl -L -O https://xget.xi-xu.me/pytorch/models/resnet50-0676ba61.pth
-
-# 下载 TorchAudio 预训练模型
-aria2c https://xget.xi-xu.me/pytorch/models/tacotron2_statedict_v3.pt
-```
-
-#### 在项目中使用
-
-```python
-import torch
-
-# 使用 Xget 加速下载模型
-model_url = "https://xget.xi-xu.me/pytorch/models/resnet50-0676ba61.pth"
-model = torch.hub.load_state_dict_from_url(model_url)
-
-# 或者直接设置环境变量
-import os
-os.environ['TORCH_HUB_URL'] = 'https://xget.xi-xu.me/pytorch/'
-```
-
-#### pip 配置
-
-```bash
-# CUDA 版本
-pip install torch torchvision torchaudio --index-url https://xget.xi-xu.me/pytorch/whl/cu129
-
-# CPU 版本
-pip install torch torchvision torchaudio --index-url https://xget.xi-xu.me/pytorch/whl/cpu
-
-# 验证安装
-python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
 ```
 
 ### Linux 发行版加速

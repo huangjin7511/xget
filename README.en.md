@@ -22,7 +22,6 @@
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-package-acceleration)
 [![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](#rust-package-acceleration)
 [![Packagist](https://img.shields.io/badge/Packagist-F28D1A?logo=packagist&logoColor=white)](#php-package-acceleration)
-[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](#pytorch-model-acceleration)
 [![Debian](https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=white)](#debianubuntu-apt-configuration)
 [![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](#debianubuntu-apt-configuration)
 [![Fedora](https://img.shields.io/badge/Fedora-294172?logo=fedora&logoColor=white)](#fedora-dnf-configuration)
@@ -138,7 +137,6 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 | NuGet | `nuget` | `https://api.nuget.org/...` | `https://xget.xi-xu.me/nuget/...` |
 | Rust Crates | `crates` | `https://crates.io/...` | `https://xget.xi-xu.me/crates/...` |
 | Packagist | `packagist` | `https://repo.packagist.org/...` | `https://xget.xi-xu.me/packagist/...` |
-| PyTorch | `pytorch` | `https://download.pytorch.org/...` | `https://xget.xi-xu.me/pytorch/...` |
 | Debian | `debian` | `https://deb.debian.org/...` | `https://xget.xi-xu.me/debian/...` |
 | Ubuntu | `ubuntu` | `https://archive.ubuntu.com/...` | `https://xget.xi-xu.me/ubuntu/...` |
 | Fedora | `fedora` | `https://dl.fedoraproject.org/...` | `https://xget.xi-xu.me/fedora/...` |
@@ -397,22 +395,6 @@ https://repo.packagist.org/packages/list.json
 
 # Converted (add packagist prefix)
 https://xget.xi-xu.me/packagist/packages/list.json
-```
-
-#### PyTorch
-
-```url
-# PyTorch Wheel package original link
-https://download.pytorch.org/whl/torch-2.0.1%2Bcu118-cp311-cp311-linux_x86_64.whl
-
-# Converted (add pytorch prefix)
-https://xget.xi-xu.me/pytorch/whl/torch-2.0.1%2Bcu118-cp311-cp311-linux_x86_64.whl
-
-# PyTorch pre-trained model original link
-https://download.pytorch.org/models/resnet50-0676ba61.pth
-
-# Converted (add pytorch prefix)
-https://xget.xi-xu.me/pytorch/models/resnet50-0676ba61.pth
 ```
 
 #### Linux Distributions
@@ -1125,48 +1107,6 @@ composer config -l
     "guzzlehttp/guzzle": "^7.0"
   }
 }
-```
-
-### PyTorch Model Acceleration
-
-#### Direct Download of Pre-trained Models
-
-```bash
-# Download PyTorch pre-trained models
-wget https://xget.xi-xu.me/pytorch/models/resnet50-0676ba61.pth
-
-# Download TorchVision pre-trained models
-curl -L -O https://xget.xi-xu.me/pytorch/models/resnet50-0676ba61.pth
-
-# Download TorchAudio pre-trained models
-aria2c https://xget.xi-xu.me/pytorch/models/tacotron2_statedict_v3.pt
-```
-
-#### Use in projects
-
-```python
-import torch
-
-# Use Xget to accelerate model downloads
-model_url = "https://xget.xi-xu.me/pytorch/models/resnet50-0676ba61.pth"
-model = torch.hub.load_state_dict_from_url(model_url)
-
-# Or set environment variable directly
-import os
-os.environ['TORCH_HUB_URL'] = 'https://xget.xi-xu.me/pytorch/'
-```
-
-#### pip Configuration
-
-```bash
-# CUDA version
-pip install torch torchvision torchaudio --index-url https://xget.xi-xu.me/pytorch/whl/cu129
-
-# CPU version
-pip install torch torchvision torchaudio --index-url https://xget.xi-xu.me/pytorch/whl/cpu
-
-# Verify installation
-python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
 ```
 
 ### Linux Distribution Acceleration

@@ -13,8 +13,7 @@ describe('Platform Configuration', () => {
         'hf',
         'npm',
         'pypi',
-        'conda',
-        'pytorch'
+        'conda'
       ];
 
       requiredPlatforms.forEach(platform => {
@@ -112,16 +111,6 @@ describe('Platform Configuration', () => {
       ).toBe('/conda-forge/linux-64/repodata.json');
     });
 
-    it('should transform PyTorch paths correctly', () => {
-      expect(
-        transformPath('/pytorch/whl/torch-2.0.1%2Bcu118-cp311-cp311-linux_x86_64.whl', 'pytorch')
-      ).toBe('/whl/torch-2.0.1%2Bcu118-cp311-cp311-linux_x86_64.whl');
-
-      expect(transformPath('/pytorch/models/resnet50-0676ba61.pth', 'pytorch')).toBe(
-        '/models/resnet50-0676ba61.pth'
-      );
-    });
-
     it('should transform container registry paths correctly', () => {
       expect(
         transformPath('/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest', 'cr-ghcr')
@@ -173,10 +162,6 @@ describe('Platform Configuration', () => {
     it('should have correct conda base URLs', () => {
       expect(PLATFORMS.conda).toBe('https://repo.anaconda.com');
       expect(PLATFORMS['conda-community']).toBe('https://conda.anaconda.org');
-    });
-
-    it('should have correct PyTorch base URL', () => {
-      expect(PLATFORMS.pytorch).toBe('https://download.pytorch.org');
     });
 
     it('should have correct container registry base URLs', () => {

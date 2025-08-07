@@ -109,6 +109,11 @@ export const TEST_URLS = {
     main: 'https://example.com/conda/pkgs/main/linux-64/numpy-1.24.3.conda',
     community: 'https://example.com/conda/community/conda-forge/linux-64/repodata.json',
     repodata: 'https://example.com/conda/pkgs/main/linux-64/repodata.json'
+  },
+  pytorch: {
+    wheel: 'https://example.com/pytorch/whl/torch-2.0.1%2Bcu118-cp311-cp311-linux_x86_64.whl',
+    model: 'https://example.com/pytorch/models/resnet50-0676ba61.pth',
+    checkpoint: 'https://example.com/pytorch/models/tacotron2_statedict_v3.pt'
   }
 };
 

@@ -22,6 +22,7 @@ export const PLATFORMS = {
   nuget: 'https://api.nuget.org',
   crates: 'https://crates.io',
   packagist: 'https://repo.packagist.org',
+  pytorch: 'https://download.pytorch.org',
   debian: 'https://deb.debian.org',
   ubuntu: 'https://archive.ubuntu.com',
   fedora: 'https://dl.fedoraproject.org',

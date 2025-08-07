@@ -586,6 +586,23 @@ async function handleRequest(request, env, ctx) {
       });
     }
 
+    // Handle PyTorch wheel index URL rewriting
+    if (platform === 'pytorch' && response.headers.get('content-type')?.includes('text/html')) {
+      const originalText = await response.text();
+      // Rewrite URLs in PyTorch wheel index pages to go through our pytorch endpoint
+      // https://download.pytorch.org/whl/cu129/torch-2.8.0%2Bcu129-cp313-cp313-win_amd64.whl -> https://xget.xi-xu.me/pytorch/whl/cu129/torch-2.8.0%2Bcu129-cp313-cp313-win_amd64.whl
+      const rewrittenText = originalText.replace(
+        /https:\/\/download\.pytorch\.org\/([^"'\s]+)/g,
+        `${url.origin}/pytorch/$1`
+      );
+      responseBody = new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode(rewrittenText));
+          controller.close();
+        }
+      });
+    }
+
     // Prepare response headers
     const headers = new Headers(response.headers);
 

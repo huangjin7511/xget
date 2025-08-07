@@ -79,6 +79,23 @@ describe('Xget Core Functionality', () => {
       // Should attempt to proxy to conda
       expect(response.status).not.toBe(400);
     });
+
+    it('should handle PyTorch URLs correctly', async () => {
+      const testUrl =
+        'https://example.com/pytorch/whl/cu129/torch-2.8.0%2Bcu129-cp313-cp313-win_amd64.whl';
+      const response = await SELF.fetch(testUrl, { method: 'HEAD' });
+
+      // Should attempt to proxy to PyTorch
+      expect(response.status).not.toBe(400);
+    });
+
+    it('should handle PyTorch model URLs correctly', async () => {
+      const testUrl = 'https://example.com/pytorch/models/resnet50-0676ba61.pth';
+      const response = await SELF.fetch(testUrl, { method: 'HEAD' });
+
+      // Should attempt to proxy to PyTorch
+      expect(response.status).not.toBe(400);
+    });
   });
 
   describe('HTTP Method Validation', () => {

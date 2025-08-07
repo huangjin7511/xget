@@ -1159,8 +1159,14 @@ os.environ['TORCH_HUB_URL'] = 'https://xget.xi-xu.me/pytorch/'
 #### pip 配置
 
 ```bash
-# 使用 PyTorch 官方 wheel 包
-pip install torch torchvision torchaudio --index-url https://xget.xi-xu.me/pytorch/whl/cu118
+# CUDA 版本
+pip install torch torchvision torchaudio --index-url https://xget.xi-xu.me/pytorch/whl/cu129
+
+# CPU 版本
+pip install torch torchvision torchaudio --index-url https://xget.xi-xu.me/pytorch/whl/cpu
+
+# 验证安装
+python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
 ```
 
 ### Linux 发行版加速

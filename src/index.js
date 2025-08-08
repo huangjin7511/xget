@@ -429,7 +429,41 @@ async function handleRequest(request, env, ctx) {
             ? { ...fetchOptions, signal: controller.signal }
             : { ...fetchOptions, signal: controller.signal };
 
-        response = await fetch(targetUrl, finalFetchOptions);
+        // Special handling for HEAD requests to ensure Content-Length header
+        if (request.method === 'HEAD') {
+          // First, try the HEAD request
+          response = await fetch(targetUrl, finalFetchOptions);
+          
+          // If HEAD request succeeds but lacks Content-Length, do a GET request to get it
+          if (response.ok && !response.headers.get('Content-Length')) {
+            const getResponse = await fetch(targetUrl, {
+              ...finalFetchOptions,
+              method: 'GET'
+            });
+            
+            if (getResponse.ok) {
+              // Create a new response with HEAD method but include Content-Length from GET
+              const headHeaders = new Headers(response.headers);
+              const contentLength = getResponse.headers.get('Content-Length');
+              
+              if (contentLength) {
+                headHeaders.set('Content-Length', contentLength);
+              } else {
+                // If still no Content-Length, calculate it from the response body
+                const arrayBuffer = await getResponse.arrayBuffer();
+                headHeaders.set('Content-Length', arrayBuffer.byteLength.toString());
+              }
+              
+              response = new Response(null, {
+                status: getResponse.status,
+                statusText: getResponse.statusText,
+                headers: headHeaders
+              });
+            }
+          }
+        } else {
+          response = await fetch(targetUrl, finalFetchOptions);
+        }
 
         clearTimeout(timeoutId);
 

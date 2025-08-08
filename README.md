@@ -16,6 +16,7 @@
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)
 [![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-包管理加速)
+[![Apache](https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white)](#apache-软件下载加速)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-包管理加速)
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-包管理加速)
 [![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-包管理加速)
@@ -134,6 +135,7 @@
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
 | conda | `conda` | `https://repo.anaconda.com/...` 和 `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` 和 `https://xget.xi-xu.me/conda/community/...` |
 | Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
+| Apache | `apache` | `https://downloads.apache.org/...` | `https://xget.xi-xu.me/apache/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
@@ -299,6 +301,28 @@ https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/maven-metadata.x
 
 # 转换后（添加 maven 前缀）
 https://xget.xi-xu.me/maven/maven2/org/apache/commons/commons-lang3/maven-metadata.xml
+```
+
+#### Apache 软件下载
+
+```url
+# Apache 软件下载原始链接
+https://downloads.apache.org/kafka/3.6.1/kafka_2.13-3.6.1.tgz
+
+# 转换后（添加 apache 前缀）
+https://xget.xi-xu.me/apache/kafka/3.6.1/kafka_2.13-3.6.1.tgz
+
+# Apache Maven 下载原始链接
+https://downloads.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
+
+# 转换后（添加 apache 前缀）
+https://xget.xi-xu.me/apache/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
+
+# Apache Spark 下载原始链接
+https://downloads.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+
+# 转换后（添加 apache 前缀）
+https://xget.xi-xu.me/apache/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
 ```
 
 #### Gradle
@@ -890,6 +914,44 @@ mvn clean install -Dmaven.repo.remote=https://xget.xi-xu.me/maven/maven2
 # 下载特定依赖
 mvn dependency:get -Dartifact=org.springframework:spring-core:5.3.21 \
   -DremoteRepositories=https://xget.xi-xu.me/maven/maven2
+```
+
+### Apache 软件下载加速
+
+#### 使用 Xget 下载 Apache 软件
+
+```bash
+# 下载 Apache Kafka
+wget https://xget.xi-xu.me/apache/kafka/3.6.1/kafka_2.13-3.6.1.tgz
+
+# 下载 Apache Maven
+curl -L -O https://xget.xi-xu.me/apache/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
+
+# 下载 Apache Spark
+aria2c https://xget.xi-xu.me/apache/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+
+# 下载 Apache Hadoop
+wget https://xget.xi-xu.me/apache/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+
+# 下载 Apache Flink
+curl -L -O https://xget.xi-xu.me/apache/flink/flink-1.18.1/flink-1.18.1-bin-scala_2.12.tgz
+```
+
+#### 常用 Apache 软件下载
+
+```bash
+# 大数据相关
+wget https://xget.xi-xu.me/apache/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz
+wget https://xget.xi-xu.me/apache/hbase/2.5.7/hbase-2.5.7-bin.tar.gz
+wget https://xget.xi-xu.me/apache/zookeeper/zookeeper-3.8.4/apache-zookeeper-3.8.4-bin.tar.gz
+
+# Web 服务器
+wget https://xget.xi-xu.me/apache/httpd/httpd-2.4.59.tar.gz
+wget https://xget.xi-xu.me/apache/tomcat/tomcat-10/v10.1.19/bin/apache-tomcat-10.1.19.tar.gz
+
+# 开发工具
+wget https://xget.xi-xu.me/apache/ant/1.10.14/apache-ant-1.10.14-bin.tar.gz
+wget https://xget.xi-xu.me/apache/netbeans/netbeans/20/netbeans-20-bin.zip
 ```
 
 ### Gradle 包管理加速

@@ -16,6 +16,7 @@
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-package-acceleration)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-package-acceleration)
 [![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-package-acceleration)
+[![Apache](https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white)](#apache-software-download-acceleration)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-package-acceleration)
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-package-acceleration)
 [![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-package-acceleration)
@@ -134,6 +135,7 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
 | conda | `conda` | `https://repo.anaconda.com/...` and `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` and `https://xget.xi-xu.me/conda/community/...` |
 | Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
+| Apache | `apache` | `https://downloads.apache.org/...` | `https://xget.xi-xu.me/apache/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
@@ -299,6 +301,28 @@ https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/maven-metadata.x
 
 # Converted (add maven prefix)
 https://xget.xi-xu.me/maven/maven2/org/apache/commons/commons-lang3/maven-metadata.xml
+```
+
+#### Apache Software Downloads
+
+```url
+# Apache software download original link
+https://downloads.apache.org/kafka/3.6.1/kafka_2.13-3.6.1.tgz
+
+# Converted (add apache prefix)
+https://xget.xi-xu.me/apache/kafka/3.6.1/kafka_2.13-3.6.1.tgz
+
+# Apache Maven download original link
+https://downloads.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
+
+# Converted (add apache prefix)
+https://xget.xi-xu.me/apache/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
+
+# Apache Spark download original link
+https://downloads.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+
+# Converted (add apache prefix)
+https://xget.xi-xu.me/apache/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
 ```
 
 #### Gradle
@@ -890,6 +914,44 @@ mvn clean install -Dmaven.repo.remote=https://xget.xi-xu.me/maven/maven2
 # Download specific dependency
 mvn dependency:get -Dartifact=org.springframework:spring-core:5.3.21 \
   -DremoteRepositories=https://xget.xi-xu.me/maven/maven2
+```
+
+### Apache Software Download Acceleration
+
+#### Use Xget to download Apache software
+
+```bash
+# Download Apache Kafka
+wget https://xget.xi-xu.me/apache/kafka/3.6.1/kafka_2.13-3.6.1.tgz
+
+# Download Apache Maven
+curl -L -O https://xget.xi-xu.me/apache/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
+
+# Download Apache Spark
+aria2c https://xget.xi-xu.me/apache/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
+
+# Download Apache Hadoop
+wget https://xget.xi-xu.me/apache/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz
+
+# Download Apache Flink
+curl -L -O https://xget.xi-xu.me/apache/flink/flink-1.18.1/flink-1.18.1-bin-scala_2.12.tgz
+```
+
+#### Common Apache software downloads
+
+```bash
+# Big Data related
+wget https://xget.xi-xu.me/apache/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz
+wget https://xget.xi-xu.me/apache/hbase/2.5.7/hbase-2.5.7-bin.tar.gz
+wget https://xget.xi-xu.me/apache/zookeeper/zookeeper-3.8.4/apache-zookeeper-3.8.4-bin.tar.gz
+
+# Web servers
+wget https://xget.xi-xu.me/apache/httpd/httpd-2.4.59.tar.gz
+wget https://xget.xi-xu.me/apache/tomcat/tomcat-10/v10.1.19/bin/apache-tomcat-10.1.19.tar.gz
+
+# Development tools
+wget https://xget.xi-xu.me/apache/ant/1.10.14/apache-ant-1.10.14-bin.tar.gz
+wget https://xget.xi-xu.me/apache/netbeans/netbeans/20/netbeans-20-bin.zip
 ```
 
 ### Gradle Package Acceleration

@@ -16,6 +16,7 @@ export const PLATFORMS = {
   conda: 'https://repo.anaconda.com',
   'conda-community': 'https://conda.anaconda.org',
   maven: 'https://repo1.maven.org',
+  apache: 'https://downloads.apache.org',
   gradle: 'https://plugins.gradle.org',
   rubygems: 'https://rubygems.org',
   cran: 'https://cran.r-project.org',

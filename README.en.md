@@ -10,6 +10,7 @@
 [![Gitea](https://img.shields.io/badge/Gitea-609926?&logo=gitea&logoColor=white)](#gitea)
 [![Codeberg](https://img.shields.io/badge/Codeberg-2185D0?&logo=codeberg&logoColor=white)](#codeberg)
 [![SourceForge](https://img.shields.io/badge/SourceForge-FF6600?&logo=sourceforge&logoColor=white)](#sourceforge)
+[![AOSP](https://img.shields.io/badge/AOSP-3DDC84?&logo=android&logoColor=white)](#aosp-android-open-source-project)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#hugging-face-mirror)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-package-acceleration)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-package-acceleration)
@@ -18,6 +19,8 @@
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-package-acceleration)
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-package-acceleration)
 [![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-package-acceleration)
+[![CPAN](https://img.shields.io/badge/CPAN-39457E?logo=perl&logoColor=white)](#perl-package-acceleration)
+[![CTAN](https://img.shields.io/badge/CTAN-008080?logo=latex&logoColor=white)](#tex-latex-package-acceleration)
 [![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](#go-module-acceleration)
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-package-acceleration)
 [![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](#rust-package-acceleration)
@@ -125,6 +128,7 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 | Gitea | `gitea` | `https://gitea.com/...` | `https://xget.xi-xu.me/gitea/...` |
 | Codeberg | `codeberg` | `https://codeberg.org/...` | `https://xget.xi-xu.me/codeberg/...` |
 | SourceForge | `sf` | `https://sourceforge.net/...` | `https://xget.xi-xu.me/sf/...` |
+| AOSP | `aosp` | `https://android.googlesource.com/...` | `https://xget.xi-xu.me/aosp/...` |
 | Hugging Face | `hf` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
@@ -133,6 +137,8 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
+| CPAN | `cpan` | `https://www.cpan.org/...` | `https://xget.xi-xu.me/cpan/...` |
+| CTAN | `ctan` | `https://tug.ctan.org/...` | `https://xget.xi-xu.me/ctan/...` |
 | Go Modules | `golang` | `https://proxy.golang.org/...` | `https://xget.xi-xu.me/golang/...` |
 | NuGet | `nuget` | `https://api.nuget.org/...` | `https://xget.xi-xu.me/nuget/...` |
 | Rust Crates | `crates` | `https://crates.io/...` | `https://xget.xi-xu.me/crates/...` |
@@ -197,6 +203,22 @@ https://sourceforge.net/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/downl
 
 # Converted (add sf prefix)
 https://xget.xi-xu.me/sf/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download
+```
+
+#### AOSP (Android Open Source Project)
+
+```url
+# AOSP project original link
+https://android.googlesource.com/platform/frameworks/base
+
+# Converted (add aosp prefix)
+https://xget.xi-xu.me/aosp/platform/frameworks/base
+
+# AOSP device tree original link
+https://android.googlesource.com/device/google/pixel
+
+# Converted (add aosp prefix)
+https://xget.xi-xu.me/aosp/device/google/pixel
 ```
 
 #### Hugging Face
@@ -325,6 +347,38 @@ https://cran.r-project.org/web/packages/dplyr/DESCRIPTION
 
 # Converted (add cran prefix)
 https://xget.xi-xu.me/cran/web/packages/dplyr/DESCRIPTION
+```
+
+#### CPAN (Perl Package Management)
+
+```url
+# CPAN module original link
+https://www.cpan.org/modules/by-module/DBI/DBI-1.643.tar.gz
+
+# Converted (add cpan prefix)
+https://xget.xi-xu.me/cpan/modules/by-module/DBI/DBI-1.643.tar.gz
+
+# CPAN author package original link
+https://www.cpan.org/authors/id/T/TI/TIMB/DBI-1.643.tar.gz
+
+# Converted (add cpan prefix)
+https://xget.xi-xu.me/cpan/authors/id/T/TI/TIMB/DBI-1.643.tar.gz
+```
+
+#### CTAN (TeX/LaTeX Package Management)
+
+```url
+# CTAN package file original link
+https://tug.ctan.org/tex-archive/macros/latex/contrib/beamer.zip
+
+# Converted (add ctan prefix)
+https://xget.xi-xu.me/ctan/tex-archive/macros/latex/contrib/beamer.zip
+
+# CTAN font file original link
+https://tug.ctan.org/tex-archive/fonts/cm/pk/ljfour/public/cm/dpi600/cmr10.pk
+
+# Converted (add ctan prefix)
+https://xget.xi-xu.me/ctan/tex-archive/fonts/cm/pk/ljfour/public/cm/dpi600/cmr10.pk
 ```
 
 #### Go Modules
@@ -536,6 +590,9 @@ git clone https://xget.xi-xu.me/codeberg/forgejo/forgejo.git
 # Clone SourceForge repository
 git clone https://xget.xi-xu.me/sf/projects/mingw-w64/code.git
 
+# Clone AOSP repository
+git clone https://xget.xi-xu.me/aosp/platform/frameworks/base.git
+
 # Add remote repository
 git remote add upstream https://xget.xi-xu.me/gh/[owner]/[repository].git
 
@@ -555,6 +612,7 @@ git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.co
 git config --global url."https://xget.xi-xu.me/gitea/".insteadOf "https://gitea.com/"
 git config --global url."https://xget.xi-xu.me/codeberg/".insteadOf "https://codeberg.org/"
 git config --global url."https://xget.xi-xu.me/sf/".insteadOf "https://sourceforge.net/"
+git config --global url."https://xget.xi-xu.me/aosp/".insteadOf "https://android.googlesource.com/"
 
 # Verify configuration
 git config --global --get-regexp url
@@ -563,6 +621,7 @@ git config --global --get-regexp url
 git clone https://github.com/microsoft/vscode.git  # Automatically converted to Xget link
 git clone https://gitlab.com/gitlab-org/gitlab.git  # Automatically converted to Xget link
 git clone https://codeberg.org/forgejo/forgejo.git  # Automatically converted to Xget link
+git clone https://android.googlesource.com/platform/frameworks/base.git  # Automatically converted to Xget link
 ```
 
 ### Mainstream Download Tool Integration
@@ -1008,6 +1067,80 @@ go get -u ./...
 
 # Clean module cache
 go clean -modcache
+```
+
+### Perl Package Acceleration
+
+#### Configure CPAN to use Xget mirror
+
+```bash
+# Configure cpan to use Xget mirror
+cpan -o conf urllist push https://xget.xi-xu.me/cpan/
+
+# Or configure cpanm
+cpanm --mirror https://xget.xi-xu.me/cpan/ Module::Name
+
+# Configure in .cpan/CPAN/MyConfig.pm
+$CPAN::Config->{urllist} = [qw[https://xget.xi-xu.me/cpan/]];
+```
+
+#### Use in projects
+
+```bash
+# Install Perl modules using cpanm
+cpanm --mirror https://xget.xi-xu.me/cpan/ DBI
+cpanm --mirror https://xget.xi-xu.me/cpan/ Moose
+cpanm --mirror https://xget.xi-xu.me/cpan/ LWP::UserAgent
+
+# Install from cpanfile
+cpanm --mirror https://xget.xi-xu.me/cpan/ --installdeps .
+
+# Install specific version
+cpanm --mirror https://xget.xi-xu.me/cpan/ DBI@1.643
+```
+
+### TeX/LaTeX Package Acceleration
+
+#### Configure TeX Live to use Xget mirror
+
+```bash
+# Configure TeX Live package manager
+tlmgr option repository https://xget.xi-xu.me/ctan/systems/texlive/tlnet
+
+# Verify configuration
+tlmgr option repository
+
+# Update package database
+tlmgr update --self --all
+```
+
+#### Configure MiKTeX to use Xget mirror
+
+```bash
+# Configure MiKTeX to use Xget mirror
+mpm --set-repository https://xget.xi-xu.me/ctan/systems/win32/miktex/tm/packages/
+
+# Update package database
+mpm --update-db
+
+# Install packages
+mpm --install beamer
+mpm --install pgf
+```
+
+#### Use in projects
+
+```bash
+# Install LaTeX packages using tlmgr
+tlmgr install beamer
+tlmgr install pgf
+tlmgr install tikz
+
+# Install packages from requirements file
+tlmgr install --file package-list.txt
+
+# Update all packages
+tlmgr update --all
 ```
 
 ### NuGet Package Acceleration

@@ -10,6 +10,7 @@
 [![Gitea](https://img.shields.io/badge/Gitea-609926?&logo=gitea&logoColor=white)](#gitea)
 [![Codeberg](https://img.shields.io/badge/Codeberg-2185D0?&logo=codeberg&logoColor=white)](#codeberg)
 [![SourceForge](https://img.shields.io/badge/SourceForge-FF6600?&logo=sourceforge&logoColor=white)](#sourceforge)
+[![AOSP](https://img.shields.io/badge/AOSP-3DDC84?&logo=android&logoColor=white)](#aosp-android-%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#hugging-face-镜像)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-包管理加速)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
@@ -18,6 +19,8 @@
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-包管理加速)
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-包管理加速)
 [![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-包管理加速)
+[![CPAN](https://img.shields.io/badge/CPAN-39457E?logo=perl&logoColor=white)](#perl-包管理加速)
+[![CTAN](https://img.shields.io/badge/CTAN-008080?logo=latex&logoColor=white)](#tex-latex-包管理加速)
 [![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](#go-模块加速)
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-包管理加速)
 [![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](#rust-包管理加速)
@@ -125,6 +128,7 @@
 | Gitea | `gitea` | `https://gitea.com/...` | `https://xget.xi-xu.me/gitea/...` |
 | Codeberg | `codeberg` | `https://codeberg.org/...` | `https://xget.xi-xu.me/codeberg/...` |
 | SourceForge | `sf` | `https://sourceforge.net/...` | `https://xget.xi-xu.me/sf/...` |
+| AOSP | `aosp` | `https://android.googlesource.com/...` | `https://xget.xi-xu.me/aosp/...` |
 | Hugging Face | `hf` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
@@ -133,6 +137,8 @@
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
+| CPAN | `cpan` | `https://www.cpan.org/...` | `https://xget.xi-xu.me/cpan/...` |
+| CTAN | `ctan` | `https://tug.ctan.org/...` | `https://xget.xi-xu.me/ctan/...` |
 | Go 模块 | `golang` | `https://proxy.golang.org/...` | `https://xget.xi-xu.me/golang/...` |
 | NuGet | `nuget` | `https://api.nuget.org/...` | `https://xget.xi-xu.me/nuget/...` |
 | Rust Crates | `crates` | `https://crates.io/...` | `https://xget.xi-xu.me/crates/...` |
@@ -197,6 +203,22 @@ https://sourceforge.net/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/downl
 
 # 转换后（添加 sf 前缀）
 https://xget.xi-xu.me/sf/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download
+```
+
+#### AOSP (Android 开源项目)
+
+```url
+# AOSP 项目原始链接
+https://android.googlesource.com/platform/frameworks/base
+
+# 转换后（添加 aosp 前缀）
+https://xget.xi-xu.me/aosp/platform/frameworks/base
+
+# AOSP 设备树原始链接
+https://android.googlesource.com/device/google/pixel
+
+# 转换后（添加 aosp 前缀）
+https://xget.xi-xu.me/aosp/device/google/pixel
 ```
 
 #### Hugging Face
@@ -325,6 +347,38 @@ https://cran.r-project.org/web/packages/dplyr/DESCRIPTION
 
 # 转换后（添加 cran 前缀）
 https://xget.xi-xu.me/cran/web/packages/dplyr/DESCRIPTION
+```
+
+#### CPAN (Perl 包管理)
+
+```url
+# CPAN 模块原始链接
+https://www.cpan.org/modules/by-module/DBI/DBI-1.643.tar.gz
+
+# 转换后（添加 cpan 前缀）
+https://xget.xi-xu.me/cpan/modules/by-module/DBI/DBI-1.643.tar.gz
+
+# CPAN 作者包原始链接
+https://www.cpan.org/authors/id/T/TI/TIMB/DBI-1.643.tar.gz
+
+# 转换后（添加 cpan 前缀）
+https://xget.xi-xu.me/cpan/authors/id/T/TI/TIMB/DBI-1.643.tar.gz
+```
+
+#### CTAN (TeX/LaTeX 包管理)
+
+```url
+# CTAN 包文件原始链接
+https://tug.ctan.org/tex-archive/macros/latex/contrib/beamer.zip
+
+# 转换后（添加 ctan 前缀）
+https://xget.xi-xu.me/ctan/tex-archive/macros/latex/contrib/beamer.zip
+
+# CTAN 字体文件原始链接
+https://tug.ctan.org/tex-archive/fonts/cm/pk/ljfour/public/cm/dpi600/cmr10.pk
+
+# 转换后（添加 ctan 前缀）
+https://xget.xi-xu.me/ctan/tex-archive/fonts/cm/pk/ljfour/public/cm/dpi600/cmr10.pk
 ```
 
 #### Go 模块
@@ -536,6 +590,9 @@ git clone https://xget.xi-xu.me/codeberg/forgejo/forgejo.git
 # 克隆 SourceForge 存储库
 git clone https://xget.xi-xu.me/sf/projects/mingw-w64/code.git
 
+# 克隆 AOSP 存储库
+git clone https://xget.xi-xu.me/aosp/platform/frameworks/base.git
+
 # 添加远程存储库
 git remote add upstream https://xget.xi-xu.me/gh/[所有者]/[存储库].git
 
@@ -555,6 +612,7 @@ git config --global url."https://xget.xi-xu.me/gl/".insteadOf "https://gitlab.co
 git config --global url."https://xget.xi-xu.me/gitea/".insteadOf "https://gitea.com/"
 git config --global url."https://xget.xi-xu.me/codeberg/".insteadOf "https://codeberg.org/"
 git config --global url."https://xget.xi-xu.me/sf/".insteadOf "https://sourceforge.net/"
+git config --global url."https://xget.xi-xu.me/aosp/".insteadOf "https://android.googlesource.com/"
 
 # 验证配置
 git config --global --get-regexp url
@@ -563,6 +621,7 @@ git config --global --get-regexp url
 git clone https://github.com/microsoft/vscode.git  # 自动转换为 Xget 链接
 git clone https://gitlab.com/gitlab-org/gitlab.git  # 自动转换为 Xget 链接
 git clone https://codeberg.org/forgejo/forgejo.git  # 自动转换为 Xget 链接
+git clone https://android.googlesource.com/platform/frameworks/base.git  # 自动转换为 Xget 链接
 ```
 
 ### 主流下载工具集成
@@ -978,6 +1037,88 @@ options(repos = c(CRAN = 'https://xget.xi-xu.me/cran/'))
 packages <- c('dplyr', 'ggplot2', 'tidyr', 'readr')
 install.packages(packages)
 "
+```
+
+### Perl 包管理加速
+
+#### 配置 CPAN 使用 Xget 镜像
+
+```bash
+# 配置 CPAN 使用 Xget 镜像
+cpan o conf urllist push https://xget.xi-xu.me/cpan/
+cpan o conf commit
+
+# 或者直接编辑配置文件 ~/.cpan/CPAN/MyConfig.pm
+# 添加：
+# 'urllist' => [q[https://xget.xi-xu.me/cpan/]],
+```
+
+#### 使用 cpanm 安装模块
+
+```bash
+# 安装 cpanm（如果没有）
+curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+
+# 使用 Xget 镜像安装模块
+cpanm --mirror https://xget.xi-xu.me/cpan/ DBI
+cpanm --mirror https://xget.xi-xu.me/cpan/ Mojolicious
+
+# 从 Makefile.PL 安装依赖
+cpanm --mirror https://xget.xi-xu.me/cpan/ --installdeps .
+```
+
+#### 在项目中使用
+
+```perl
+# 在 cpanfile 中列出依赖
+requires 'DBI';
+requires 'Mojolicious';
+requires 'JSON';
+
+# 然后使用 Xget 镜像安装
+cpanm --mirror https://xget.xi-xu.me/cpan/ --installdeps .
+```
+
+### TeX/LaTeX 包管理加速
+
+#### 配置 TeX Live 使用 Xget CTAN 镜像
+
+```bash
+# 配置 tlmgr 使用 Xget CTAN 镜像
+tlmgr option repository https://xget.xi-xu.me/ctan/systems/texlive/tlnet
+
+# 更新包数据库
+tlmgr update --self --all
+
+# 安装包
+tlmgr install beamer
+tlmgr install tikz
+```
+
+#### 配置 MiKTeX 使用 Xget 镜像
+
+```bash
+# Windows MiKTeX 配置
+mpm --set-repository=https://xget.xi-xu.me/ctan/systems/win32/miktex
+
+# 更新包数据库
+mpm --update-db
+
+# 安装包
+mpm --install=beamer
+mpm --install=pgf
+```
+
+#### 在项目中使用
+
+```bash
+# LaTeX 文档编译时自动安装缺失包
+pdflatex --shell-escape document.tex
+
+# 或手动安装特定包
+tlmgr install caption
+tlmgr install subcaption
+tlmgr install algorithm2e
 ```
 
 ### Go 模块加速

@@ -21,7 +21,7 @@
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-package-acceleration)
 [![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-package-acceleration)
 [![CPAN](https://img.shields.io/badge/CPAN-39457E?logo=perl&logoColor=white)](#perl-package-acceleration)
-[![CTAN](https://img.shields.io/badge/CTAN-008080?logo=latex&logoColor=white)](#tex-latex-package-acceleration)
+[![CTAN](https://img.shields.io/badge/CTAN-008080?logo=latex&logoColor=white)](#texlatex-package-acceleration)
 [![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)](#go-module-acceleration)
 [![NuGet](https://img.shields.io/badge/NuGet-004880?logo=nuget&logoColor=white)](#nuget-package-acceleration)
 [![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](#rust-package-acceleration)

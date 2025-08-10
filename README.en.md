@@ -3,6 +3,7 @@
 **[汉语](README.md)**
 
 [![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?logo=googlechrome&logoColor=white)](#-ecosystem-integration)
+[![Firefox Extension](https://img.shields.io/badge/Firefox%20Extension-582ACB?logo=Firefox&logoColor=white)](#-ecosystem-integration)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-one-click-deployment)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
@@ -108,7 +109,7 @@ Ultra-high performance, secure all-in-one open source resource acceleration engi
 
 ### 📱 Ecosystem Integration
 
-- **Dedicated Browser Extension**: [Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium) provides seamless experience
+- **Dedicated Browser Extension**: [Xget Now](https://github.com/xixu-me/Xget-Now) provides seamless experience
   - Automatic link redirection without manual URL modification
   - Support for custom Xget instance domains
   - Multi-platform preference settings and blacklist/whitelist management

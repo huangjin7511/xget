@@ -3,6 +3,7 @@
 **[English](README.en.md)**
 
 [![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?logo=googlechrome&logoColor=white)](#-生态系统集成)
+[![Firefox Extension](https://img.shields.io/badge/Firefox%20Extension-582ACB?logo=Firefox&logoColor=white)](#-生态系统集成)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-一键部署)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
@@ -108,7 +109,7 @@
 
 ### 📱 生态系统集成
 
-- **专用浏览器扩展**：[Xget for Chromium](https://github.com/xixu-me/Xget-for-Chromium) 提供无缝体验
+- **专用浏览器扩展**：[Xget Now](https://github.com/xixu-me/Xget-Now) 提供无缝体验
   - 自动链接重定向，无需手动修改 URL
   - 支持自定义 Xget 实例域名
   - 多平台偏好设置和黑白名单管理

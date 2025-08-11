@@ -19,6 +19,7 @@
 [![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-package-acceleration)
 [![Apache](https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white)](#apache-software-download-acceleration)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-package-acceleration)
+[![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?logo=homebrew&logoColor=black)](#homebrew-package-acceleration)
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-package-acceleration)
 [![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-package-acceleration)
 [![CPAN](https://img.shields.io/badge/CPAN-39457E?logo=perl&logoColor=white)](#perl-package-acceleration)
@@ -138,6 +139,9 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 | Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
 | Apache | `apache` | `https://downloads.apache.org/...` | `https://xget.xi-xu.me/apache/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
+| Homebrew | `homebrew` | `https://github.com/Homebrew/...` | `https://xget.xi-xu.me/homebrew/...` |
+| Homebrew API | `homebrew/api` | `https://formulae.brew.sh/api/...` | `https://xget.xi-xu.me/homebrew/api/...` |
+| Homebrew Bottles | `homebrew/bottles` | `https://ghcr.io/v2/homebrew/...` | `https://xget.xi-xu.me/homebrew/bottles/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
 | CPAN | `cpan` | `https://www.cpan.org/...` | `https://xget.xi-xu.me/cpan/...` |
@@ -340,6 +344,28 @@ https://plugins.gradle.org/m2/com/github/ben-manes/gradle-versions-plugin/0.51.0
 
 # Converted (add gradle prefix)
 https://xget.xi-xu.me/gradle/m2/com/github/ben-manes/gradle-versions-plugin/0.51.0/gradle-versions-plugin-0.51.0.module
+```
+
+#### Homebrew
+
+```url
+# Homebrew formula repository original link
+https://github.com/Homebrew/homebrew-core/raw/HEAD/Formula/g/git.rb
+
+# Converted (add homebrew prefix)
+https://xget.xi-xu.me/homebrew/homebrew-core/raw/HEAD/Formula/g/git.rb
+
+# Homebrew API original link
+https://formulae.brew.sh/api/formula/git.json
+
+# Converted (add homebrew/api prefix)
+https://xget.xi-xu.me/homebrew/api/formula/git.json
+
+# Homebrew Bottles original link
+https://ghcr.io/v2/homebrew/core/git/manifests/2.39.0
+
+# Converted (add homebrew/bottles prefix)
+https://xget.xi-xu.me/homebrew/bottles/v2/homebrew/core/git/manifests/2.39.0
 ```
 
 #### RubyGems
@@ -1011,6 +1037,64 @@ gradle build -Dmaven.repo.remote=https://xget.xi-xu.me/maven/maven2
 
 # Refresh dependencies
 gradle build --refresh-dependencies
+```
+
+### Homebrew Package Acceleration
+
+#### Configure Homebrew to use Xget mirror
+
+```bash
+# Set Homebrew environment variables to use Xget mirror
+export HOMEBREW_BREW_GIT_REMOTE="https://xget.xi-xu.me/homebrew/brew.git"
+export HOMEBREW_CORE_GIT_REMOTE="https://xget.xi-xu.me/homebrew/homebrew-core.git"
+export HOMEBREW_API_DOMAIN="https://xget.xi-xu.me/homebrew/api"
+export HOMEBREW_BOTTLE_DOMAIN="https://xget.xi-xu.me/homebrew/bottles"
+
+# Update Homebrew
+brew update
+```
+
+#### Long-term configuration
+
+```bash
+# For bash users, add to ~/.bash_profile
+echo 'export HOMEBREW_BREW_GIT_REMOTE="https://xget.xi-xu.me/homebrew/brew.git"' >> ~/.bash_profile
+echo 'export HOMEBREW_CORE_GIT_REMOTE="https://xget.xi-xu.me/homebrew/homebrew-core.git"' >> ~/.bash_profile
+echo 'export HOMEBREW_API_DOMAIN="https://xget.xi-xu.me/homebrew/api"' >> ~/.bash_profile
+echo 'export HOMEBREW_BOTTLE_DOMAIN="https://xget.xi-xu.me/homebrew/bottles"' >> ~/.bash_profile
+
+# For zsh users, add to ~/.zprofile
+echo 'export HOMEBREW_BREW_GIT_REMOTE="https://xget.xi-xu.me/homebrew/brew.git"' >> ~/.zprofile
+echo 'export HOMEBREW_CORE_GIT_REMOTE="https://xget.xi-xu.me/homebrew/homebrew-core.git"' >> ~/.zprofile
+echo 'export HOMEBREW_API_DOMAIN="https://xget.xi-xu.me/homebrew/api"' >> ~/.zprofile
+echo 'export HOMEBREW_BOTTLE_DOMAIN="https://xget.xi-xu.me/homebrew/bottles"' >> ~/.zprofile
+```
+
+#### Use in projects
+
+```bash
+# Install packages
+brew install git
+
+# Search packages
+brew search python
+
+# Update packages
+brew upgrade
+
+# List installed packages
+brew list
+```
+
+#### Verify mirror configuration
+
+```bash
+# Check Homebrew configuration
+brew config
+
+# Check environment variables
+echo $HOMEBREW_API_DOMAIN
+echo $HOMEBREW_BOTTLE_DOMAIN
 ```
 
 ### Ruby Package Acceleration

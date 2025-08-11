@@ -1095,14 +1095,6 @@ echo $HOMEBREW_API_DOMAIN
 echo $HOMEBREW_BOTTLE_DOMAIN
 ```
 
-#### 性能对比
-
-使用 Xget 镜像后，Homebrew 的性能提升显著：
-
-- 软件包下载速度提升 5-10 倍
-- 仓库更新速度提升 3-5 倍
-- API 查询响应速度提升 2-3 倍
-
 ### Ruby 包管理加速
 
 #### 配置 RubyGems 使用 Xget 镜像

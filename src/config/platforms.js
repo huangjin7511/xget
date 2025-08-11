@@ -18,6 +18,9 @@ export const PLATFORMS = {
   maven: 'https://repo1.maven.org',
   apache: 'https://downloads.apache.org',
   gradle: 'https://plugins.gradle.org',
+  homebrew: 'https://github.com/Homebrew',
+  'homebrew-api': 'https://formulae.brew.sh/api',
+  'homebrew-bottles': 'https://ghcr.io',
   rubygems: 'https://rubygems.org',
   cran: 'https://cran.r-project.org',
   cpan: 'https://www.cpan.org',
@@ -86,6 +89,40 @@ export function transformPath(path, platformKey) {
         // Crate-specific endpoints
         transformedPath = `/api/v1/crates${transformedPath}`;
       }
+    }
+  }
+
+  // Special handling for Homebrew API paths
+  if (platformKey === 'homebrew-api') {
+    // Transform paths for Homebrew API endpoints
+    if (transformedPath.startsWith('/')) {
+      // Handle different API endpoints:
+      // /formula/git.json -> /formula/git.json
+      // /cask/docker.json -> /cask/docker.json
+      // Keep the API paths as-is since they're already correct
+      return transformedPath;
+    }
+  }
+
+  // Special handling for Homebrew bottles
+  if (platformKey === 'homebrew-bottles') {
+    // Transform paths for Homebrew bottles
+    if (transformedPath.startsWith('/')) {
+      // Transform bottle paths to ghcr.io container registry format
+      // /v2/homebrew/core/git/manifests/2.39.0 -> /v2/homebrew/core/git/manifests/2.39.0
+      return transformedPath;
+    }
+  }
+
+  // Special handling for Homebrew repositories
+  if (platformKey === 'homebrew') {
+    // Transform paths for Homebrew Git repositories
+    if (transformedPath.startsWith('/')) {
+      // Handle different repository endpoints:
+      // /brew -> /brew
+      // /homebrew-core -> /homebrew-core
+      // /homebrew-cask -> /homebrew-cask
+      return transformedPath;
     }
   }
 

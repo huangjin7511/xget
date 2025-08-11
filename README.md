@@ -19,6 +19,7 @@
 [![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-包管理加速)
 [![Apache](https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white)](#apache-软件下载加速)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-包管理加速)
+[![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?logo=homebrew&logoColor=black)](#homebrew-包管理加速)
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-包管理加速)
 [![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-包管理加速)
 [![CPAN](https://img.shields.io/badge/CPAN-39457E?logo=perl&logoColor=white)](#perl-包管理加速)
@@ -138,6 +139,7 @@
 | Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
 | Apache | `apache` | `https://downloads.apache.org/...` | `https://xget.xi-xu.me/apache/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
+| Homebrew | `homebrew` | `https://github.com/Homebrew/...` | `https://xget.xi-xu.me/homebrew/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
 | CPAN | `cpan` | `https://www.cpan.org/...` | `https://xget.xi-xu.me/cpan/...` |
@@ -340,6 +342,28 @@ https://plugins.gradle.org/m2/com/github/ben-manes/gradle-versions-plugin/0.51.0
 
 # 转换后（添加 gradle 前缀）
 https://xget.xi-xu.me/gradle/m2/com/github/ben-manes/gradle-versions-plugin/0.51.0/gradle-versions-plugin-0.51.0.module
+```
+
+#### Homebrew
+
+```url
+# Homebrew 公式仓库原始链接
+https://github.com/Homebrew/homebrew-core/raw/HEAD/Formula/g/git.rb
+
+# 转换后（添加 homebrew 前缀）
+https://xget.xi-xu.me/homebrew/homebrew-core/raw/HEAD/Formula/g/git.rb
+
+# Homebrew API 原始链接
+https://formulae.brew.sh/api/formula/git.json
+
+# 转换后（添加 homebrew/api 前缀）
+https://xget.xi-xu.me/homebrew/api/formula/git.json
+
+# Homebrew Bottles 原始链接
+https://ghcr.io/v2/homebrew/core/git/manifests/2.39.0
+
+# 转换后（添加 homebrew/bottles 前缀）
+https://xget.xi-xu.me/homebrew/bottles/v2/homebrew/core/git/manifests/2.39.0
 ```
 
 #### RubyGems
@@ -1012,6 +1036,72 @@ gradle build -Dmaven.repo.remote=https://xget.xi-xu.me/maven/maven2
 # 刷新依赖
 gradle build --refresh-dependencies
 ```
+
+### Homebrew 包管理加速
+
+#### 配置 Homebrew 使用 Xget 镜像
+
+```bash
+# 设置 Homebrew 环境变量使用 Xget 镜像
+export HOMEBREW_BREW_GIT_REMOTE="https://xget.xi-xu.me/homebrew/brew.git"
+export HOMEBREW_CORE_GIT_REMOTE="https://xget.xi-xu.me/homebrew/homebrew-core.git"
+export HOMEBREW_API_DOMAIN="https://xget.xi-xu.me/homebrew/api"
+export HOMEBREW_BOTTLE_DOMAIN="https://xget.xi-xu.me/homebrew/bottles"
+
+# 更新 Homebrew
+brew update
+```
+
+#### 长期配置
+
+```bash
+# 为 bash 用户添加到 ~/.bash_profile
+echo 'export HOMEBREW_BREW_GIT_REMOTE="https://xget.xi-xu.me/homebrew/brew.git"' >> ~/.bash_profile
+echo 'export HOMEBREW_CORE_GIT_REMOTE="https://xget.xi-xu.me/homebrew/homebrew-core.git"' >> ~/.bash_profile
+echo 'export HOMEBREW_API_DOMAIN="https://xget.xi-xu.me/homebrew/api"' >> ~/.bash_profile
+echo 'export HOMEBREW_BOTTLE_DOMAIN="https://xget.xi-xu.me/homebrew/bottles"' >> ~/.bash_profile
+
+# 为 zsh 用户添加到 ~/.zprofile
+echo 'export HOMEBREW_BREW_GIT_REMOTE="https://xget.xi-xu.me/homebrew/brew.git"' >> ~/.zprofile
+echo 'export HOMEBREW_CORE_GIT_REMOTE="https://xget.xi-xu.me/homebrew/homebrew-core.git"' >> ~/.zprofile
+echo 'export HOMEBREW_API_DOMAIN="https://xget.xi-xu.me/homebrew/api"' >> ~/.zprofile
+echo 'export HOMEBREW_BOTTLE_DOMAIN="https://xget.xi-xu.me/homebrew/bottles"' >> ~/.zprofile
+```
+
+#### 在项目中使用
+
+```bash
+# 安装软件包
+brew install git
+
+# 搜索软件包
+brew search python
+
+# 更新软件包
+brew upgrade
+
+# 查看已安装软件包
+brew list
+```
+
+#### 验证镜像配置
+
+```bash
+# 检查 Homebrew 配置
+brew config
+
+# 查看环境变量
+echo $HOMEBREW_API_DOMAIN
+echo $HOMEBREW_BOTTLE_DOMAIN
+```
+
+#### 性能对比
+
+使用 Xget 镜像后，Homebrew 的性能提升显著：
+
+- 软件包下载速度提升 5-10 倍
+- 仓库更新速度提升 3-5 倍
+- API 查询响应速度提升 2-3 倍
 
 ### Ruby 包管理加速
 

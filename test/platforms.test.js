@@ -13,7 +13,8 @@ describe('Platform Configuration', () => {
         'hf',
         'npm',
         'pypi',
-        'conda'
+        'conda',
+        'homebrew'
       ];
 
       requiredPlatforms.forEach(platform => {

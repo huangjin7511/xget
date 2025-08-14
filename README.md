@@ -113,20 +113,20 @@
 ### 📱 生态系统集成
 
 - **专用浏览器扩展**：[Xget Now](https://github.com/xixu-me/Xget-Now) 提供无缝体验
-  - 自动链接重定向，无需手动修改 URL
+  - 自动 URL 重定向，无需手动修改 URL
   - 支持自定义 Xget 实例域名
   - 多平台偏好设置和黑白名单管理
   - 本地处理，确保隐私安全
 - **下载工具兼容**：完美支持 wget、cURL、aria2、IDM 等主流下载工具
 - **CI/CD 集成**：可直接在 GitHub Actions、GitLab CI 等环境中使用
 
-## 📖 链接转换规则
+## 📖 URL 转换规则
 
 使用公共实例 [**`xget.xi-xu.me`**](https://xget.xi-xu.me) 或你自己部署的实例，只需简单替换域名并添加平台前缀：
 
 ### 转换格式
 
-| 平台 | 平台前缀 | 原始链接格式 | 加速链接格式 |
+| 平台 | 平台前缀 | 原始 URL 格式 | 加速 URL 格式 |
 |------|----------|--------------|--------------|
 | GitHub | `gh` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
 | GitLab | `gl` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
@@ -166,7 +166,7 @@
 #### GitHub
 
 ```url
-# 原始链接
+# 原始 URL
 https://github.com/microsoft/vscode/archive/refs/heads/main.zip
 
 # 转换后（添加 gh 前缀）
@@ -176,7 +176,7 @@ https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 #### GitLab
 
 ```url
-# 原始链接
+# 原始 URL
 https://gitlab.com/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 
 # 转换后（添加 gl 前缀）
@@ -186,7 +186,7 @@ https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 #### Gitea
 
 ```url
-# 原始链接
+# 原始 URL
 https://gitea.com/gitea/gitea/archive/master.zip
 
 # 转换后（添加 gitea 前缀）
@@ -196,7 +196,7 @@ https://xget.xi-xu.me/gitea/gitea/gitea/archive/master.zip
 #### Codeberg
 
 ```url
-# 原始链接
+# 原始 URL
 https://codeberg.org/forgejo/forgejo/archive/forgejo.zip
 
 # 转换后（添加 codeberg 前缀）
@@ -206,7 +206,7 @@ https://xget.xi-xu.me/codeberg/forgejo/forgejo/archive/forgejo.zip
 #### SourceForge
 
 ```url
-# 原始链接
+# 原始 URL
 https://sourceforge.net/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download
 
 # 转换后（添加 sf 前缀）
@@ -216,13 +216,13 @@ https://xget.xi-xu.me/sf/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/down
 #### AOSP (Android 开源项目)
 
 ```url
-# AOSP 项目原始链接
+# AOSP 项目原始 URL
 https://android.googlesource.com/platform/frameworks/base
 
 # 转换后（添加 aosp 前缀）
 https://xget.xi-xu.me/aosp/platform/frameworks/base
 
-# AOSP 设备树原始链接
+# AOSP 设备树原始 URL
 https://android.googlesource.com/device/google/pixel
 
 # 转换后（添加 aosp 前缀）
@@ -232,13 +232,13 @@ https://xget.xi-xu.me/aosp/device/google/pixel
 #### Hugging Face
 
 ```url
-# 模型文件原始链接
+# 模型文件原始 URL
 https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
 # 转换后（添加 hf 前缀）
 https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
-# 数据集文件原始链接
+# 数据集文件原始 URL
 https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 
 # 转换后（添加 hf 前缀）
@@ -248,13 +248,13 @@ https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-
 #### npm
 
 ```url
-# 包文件原始链接
+# 包文件原始 URL
 https://registry.npmjs.org/react/-/react-18.2.0.tgz
 
 # 转换后（添加 npm 前缀）
 https://xget.xi-xu.me/npm/react/-/react-18.2.0.tgz
 
-# 包元数据原始链接
+# 包元数据原始 URL
 https://registry.npmjs.org/lodash
 
 # 转换后（添加 npm 前缀）
@@ -264,13 +264,13 @@ https://xget.xi-xu.me/npm/lodash
 #### PyPI
 
 ```url
-# Python 包文件原始链接
+# Python 包文件原始 URL
 https://pypi.org/packages/source/r/requests/requests-2.31.0.tar.gz
 
 # 转换后（添加 pypi 前缀）
 https://xget.xi-xu.me/pypi/packages/source/r/requests/requests-2.31.0.tar.gz
 
-# Wheel 文件原始链接
+# Wheel 文件原始 URL
 https://pypi.org/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
 
 # 转换后（添加 pypi 前缀）
@@ -280,13 +280,13 @@ https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.
 #### conda
 
 ```url
-# 默认频道包文件原始链接
+# 默认频道包文件原始 URL
 https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
 # 转换后（添加 conda 前缀）
 https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
-# 社区频道元数据原始链接
+# 社区频道元数据原始 URL
 https://conda.anaconda.org/conda-forge/linux-64/repodata.json
 
 # 转换后（添加 conda/community 前缀）
@@ -296,13 +296,13 @@ https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
 #### Maven
 
 ```url
-# Maven 中央仓库 JAR 文件原始链接
+# Maven 中央仓库 JAR 文件原始 URL
 https://repo1.maven.org/maven2/org/springframework/spring-core/5.3.21/spring-core-5.3.21.jar
 
 # 转换后（添加 maven 前缀）
 https://xget.xi-xu.me/maven/maven2/org/springframework/spring-core/5.3.21/spring-core-5.3.21.jar
 
-# Maven 元数据原始链接
+# Maven 元数据原始 URL
 https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/maven-metadata.xml
 
 # 转换后（添加 maven 前缀）
@@ -312,19 +312,19 @@ https://xget.xi-xu.me/maven/maven2/org/apache/commons/commons-lang3/maven-metada
 #### Apache 软件下载
 
 ```url
-# Apache 软件下载原始链接
+# Apache 软件下载原始 URL
 https://downloads.apache.org/kafka/3.6.1/kafka_2.13-3.6.1.tgz
 
 # 转换后（添加 apache 前缀）
 https://xget.xi-xu.me/apache/kafka/3.6.1/kafka_2.13-3.6.1.tgz
 
-# Apache Maven 下载原始链接
+# Apache Maven 下载原始 URL
 https://downloads.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
 
 # 转换后（添加 apache 前缀）
 https://xget.xi-xu.me/apache/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
 
-# Apache Spark 下载原始链接
+# Apache Spark 下载原始 URL
 https://downloads.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
 
 # 转换后（添加 apache 前缀）
@@ -334,13 +334,13 @@ https://xget.xi-xu.me/apache/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
 #### Gradle
 
 ```url
-# Gradle 插件门户 JAR 文件原始链接
+# Gradle 插件门户 JAR 文件原始 URL
 https://plugins.gradle.org/m2/org/gradle/gradle-hello-world-plugin/0.2/gradle-hello-world-plugin-0.2.jar
 
 # 转换后（添加 gradle 前缀）
 https://xget.xi-xu.me/gradle/m2/org/gradle/gradle-hello-world-plugin/0.2/gradle-hello-world-plugin-0.2.jar
 
-# Gradle 插件元数据原始链接
+# Gradle 插件元数据原始 URL
 https://plugins.gradle.org/m2/com/github/ben-manes/gradle-versions-plugin/0.51.0/gradle-versions-plugin-0.51.0.module
 
 # 转换后（添加 gradle 前缀）
@@ -350,19 +350,19 @@ https://xget.xi-xu.me/gradle/m2/com/github/ben-manes/gradle-versions-plugin/0.51
 #### Homebrew
 
 ```url
-# Homebrew 公式仓库原始链接
+# Homebrew 公式仓库原始 URL
 https://github.com/Homebrew/homebrew-core/raw/HEAD/Formula/g/git.rb
 
 # 转换后（添加 homebrew 前缀）
 https://xget.xi-xu.me/homebrew/homebrew-core/raw/HEAD/Formula/g/git.rb
 
-# Homebrew API 原始链接
+# Homebrew API 原始 URL
 https://formulae.brew.sh/api/formula/git.json
 
 # 转换后（添加 homebrew/api 前缀）
 https://xget.xi-xu.me/homebrew/api/formula/git.json
 
-# Homebrew Bottles 原始链接
+# Homebrew Bottles 原始 URL
 https://ghcr.io/v2/homebrew/core/git/manifests/2.39.0
 
 # 转换后（添加 homebrew/bottles 前缀）
@@ -372,13 +372,13 @@ https://xget.xi-xu.me/homebrew/bottles/v2/homebrew/core/git/manifests/2.39.0
 #### RubyGems
 
 ```url
-# RubyGems 包文件原始链接
+# RubyGems 包文件原始 URL
 https://rubygems.org/gems/rails-7.0.4.gem
 
 # 转换后（添加 rubygems 前缀）
 https://xget.xi-xu.me/rubygems/gems/rails-7.0.4.gem
 
-# RubyGems API 原始链接
+# RubyGems API 原始 URL
 https://rubygems.org/api/v1/gems/nokogiri.json
 
 # 转换后（添加 rubygems 前缀）
@@ -388,13 +388,13 @@ https://xget.xi-xu.me/rubygems/api/v1/gems/nokogiri.json
 #### CRAN
 
 ```url
-# CRAN 包文件原始链接
+# CRAN 包文件原始 URL
 https://cran.r-project.org/src/contrib/ggplot2_3.5.2.tar.gz
 
 # 转换后（添加 cran 前缀）
 https://xget.xi-xu.me/cran/src/contrib/ggplot2_3.5.2.tar.gz
 
-# CRAN 包元数据原始链接
+# CRAN 包元数据原始 URL
 https://cran.r-project.org/web/packages/dplyr/DESCRIPTION
 
 # 转换后（添加 cran 前缀）
@@ -404,13 +404,13 @@ https://xget.xi-xu.me/cran/web/packages/dplyr/DESCRIPTION
 #### CPAN (Perl 包管理)
 
 ```url
-# CPAN 模块原始链接
+# CPAN 模块原始 URL
 https://www.cpan.org/modules/by-module/DBI/DBI-1.643.tar.gz
 
 # 转换后（添加 cpan 前缀）
 https://xget.xi-xu.me/cpan/modules/by-module/DBI/DBI-1.643.tar.gz
 
-# CPAN 作者包原始链接
+# CPAN 作者包原始 URL
 https://www.cpan.org/authors/id/T/TI/TIMB/DBI-1.643.tar.gz
 
 # 转换后（添加 cpan 前缀）
@@ -420,13 +420,13 @@ https://xget.xi-xu.me/cpan/authors/id/T/TI/TIMB/DBI-1.643.tar.gz
 #### CTAN (TeX/LaTeX 包管理)
 
 ```url
-# CTAN 包文件原始链接
+# CTAN 包文件原始 URL
 https://tug.ctan.org/tex-archive/macros/latex/contrib/beamer.zip
 
 # 转换后（添加 ctan 前缀）
 https://xget.xi-xu.me/ctan/tex-archive/macros/latex/contrib/beamer.zip
 
-# CTAN 字体文件原始链接
+# CTAN 字体文件原始 URL
 https://tug.ctan.org/tex-archive/fonts/cm/pk/ljfour/public/cm/dpi600/cmr10.pk
 
 # 转换后（添加 ctan 前缀）
@@ -436,13 +436,13 @@ https://xget.xi-xu.me/ctan/tex-archive/fonts/cm/pk/ljfour/public/cm/dpi600/cmr10
 #### Go 模块
 
 ```url
-# Go 模块代理原始链接
+# Go 模块代理原始 URL
 https://proxy.golang.org/github.com/gin-gonic/gin/@v/v1.9.1.zip
 
 # 转换后（添加 golang 前缀）
 https://xget.xi-xu.me/golang/github.com/gin-gonic/gin/@v/v1.9.1.zip
 
-# Go 模块信息原始链接
+# Go 模块信息原始 URL
 https://proxy.golang.org/github.com/gorilla/mux/@v/list
 
 # 转换后（添加 golang 前缀）
@@ -452,13 +452,13 @@ https://xget.xi-xu.me/golang/github.com/gorilla/mux/@v/list
 #### NuGet
 
 ```url
-# NuGet 包下载原始链接
+# NuGet 包下载原始 URL
 https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg
 
 # 转换后（添加 nuget 前缀）
 https://xget.xi-xu.me/nuget/v3-flatcontainer/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg
 
-# NuGet 包元数据原始链接
+# NuGet 包元数据原始 URL
 https://api.nuget.org/v3/registration5-semver1/microsoft.aspnetcore.app/index.json
 
 # 转换后（添加 nuget 前缀）
@@ -468,19 +468,19 @@ https://xget.xi-xu.me/nuget/v3/registration5-semver1/microsoft.aspnetcore.app/in
 #### Rust Crates
 
 ```url
-# Crate 下载原始链接
+# Crate 下载原始 URL
 https://crates.io/api/v1/crates/serde/1.0.0/download
 
 # 转换后（添加 crates 前缀）
 https://xget.xi-xu.me/crates/serde/1.0.0/download
 
-# Crate 元数据原始链接
+# Crate 元数据原始 URL
 https://crates.io/api/v1/crates/serde
 
 # 转换后（添加 crates 前缀）
 https://xget.xi-xu.me/crates/serde
 
-# Crate 搜索原始链接
+# Crate 搜索原始 URL
 https://crates.io/api/v1/crates?q=serde
 
 # 转换后（添加 crates 前缀）
@@ -490,13 +490,13 @@ https://xget.xi-xu.me/crates/?q=serde
 #### Packagist
 
 ```url
-# Packagist 包元数据原始链接
+# Packagist 包元数据原始 URL
 https://repo.packagist.org/p2/symfony/console.json
 
 # 转换后（添加 packagist 前缀）
 https://xget.xi-xu.me/packagist/p2/symfony/console.json
 
-# Packagist 包列表原始链接
+# Packagist 包列表原始 URL
 https://repo.packagist.org/packages/list.json
 
 # 转换后（添加 packagist 前缀）
@@ -506,37 +506,37 @@ https://xget.xi-xu.me/packagist/packages/list.json
 #### Linux 发行版
 
 ```url
-# Debian 包原始链接
+# Debian 包原始 URL
 https://deb.debian.org/debian/pool/main/c/curl/curl_7.88.1-10+deb12u4_amd64.deb
 
 # 转换后（添加 debian 前缀）
 https://xget.xi-xu.me/debian/debian/pool/main/c/curl/curl_7.88.1-10+deb12u4_amd64.deb
 
-# Ubuntu 包原始链接
+# Ubuntu 包原始 URL
 https://archive.ubuntu.com/ubuntu/pool/main/g/git/git_2.34.1-1ubuntu1.9_amd64.deb
 
 # 转换后（添加 ubuntu 前缀）
 https://xget.xi-xu.me/ubuntu/ubuntu/pool/main/g/git/git_2.34.1-1ubuntu1.9_amd64.deb
 
-# Fedora 包原始链接
+# Fedora 包原始 URL
 https://dl.fedoraproject.org/pub/fedora/linux/releases/39/Everything/x86_64/os/Packages/n/nginx-1.24.0-1.fc39.x86_64.rpm
 
 # 转换后（添加 fedora 前缀）
 https://xget.xi-xu.me/fedora/pub/fedora/linux/releases/39/Everything/x86_64/os/Packages/n/nginx-1.24.0-1.fc39.x86_64.rpm
 
-# Rocky Linux 包原始链接
+# Rocky Linux 包原始 URL
 https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1.8-6.el9.x86_64.rpm
 
 # 转换后（添加 rocky 前缀）
 https://xget.xi-xu.me/rocky/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1.8-6.el9.x86_64.rpm
 
-# openSUSE 包原始链接
+# openSUSE 包原始 URL
 https://download.opensuse.org/distribution/leap/15.5/repo/oss/x86_64/vim-9.0.1572-150500.20.8.1.x86_64.rpm
 
 # 转换后（添加 opensuse 前缀）
 https://xget.xi-xu.me/opensuse/distribution/leap/15.5/repo/oss/x86_64/vim-9.0.1572-150500.20.8.1.x86_64.rpm
 
-# Arch Linux 包原始链接
+# Arch Linux 包原始 URL
 https://geo.mirror.pkgbuild.com/core/os/x86_64/linux-6.6.10.arch1-1-x86_64.pkg.tar.zst
 
 # 转换后（添加 arch 前缀）
@@ -546,13 +546,13 @@ https://xget.xi-xu.me/arch/core/os/x86_64/linux-6.6.10.arch1-1-x86_64.pkg.tar.zs
 #### arXiv
 
 ```url
-# arXiv 论文 PDF 原始链接
+# arXiv 论文 PDF 原始 URL
 https://arxiv.org/pdf/2301.07041.pdf
 
 # 转换后（添加 arxiv 前缀）
 https://xget.xi-xu.me/arxiv/pdf/2301.07041.pdf
 
-# arXiv 论文源码原始链接
+# arXiv 论文源码原始 URL
 https://arxiv.org/e-print/2301.07041
 
 # 转换后（添加 arxiv 前缀）
@@ -562,13 +562,13 @@ https://xget.xi-xu.me/arxiv/e-print/2301.07041
 #### F-Droid
 
 ```url
-# F-Droid 应用 APK 原始链接
+# F-Droid 应用 APK 原始 URL
 https://f-droid.org/repo/org.fdroid.fdroid_1016050.apk
 
 # 转换后（添加 fdroid 前缀）
 https://xget.xi-xu.me/fdroid/repo/org.fdroid.fdroid_1016050.apk
 
-# F-Droid 应用元数据原始链接
+# F-Droid 应用元数据原始 URL
 https://f-droid.org/api/v1/packages/org.fdroid.fdroid
 
 # 转换后（添加 fdroid 前缀）
@@ -579,7 +579,7 @@ https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
 
 Xget 支持众多主流 AI 推理提供商的 API 加速，使用 `ip/[AI 推理提供商前缀]` 格式：
 
-| AI 推理提供商 | AI 推理提供商前缀 | 原始 API 地址 | 加速 API 地址 |
+| AI 推理提供商 | AI 推理提供商前缀 | 原始 URL 格式 | 加速 URL 格式 |
 |-------------|----------|-------------|-------------|
 | OpenAI | `openai` | `https://api.openai.com/...` | `https://xget.xi-xu.me/ip/openai/...` |
 | Anthropic | `anthropic` | `https://api.anthropic.com/...` | `https://xget.xi-xu.me/ip/anthropic/...` |
@@ -610,25 +610,25 @@ Xget 支持众多主流 AI 推理提供商的 API 加速，使用 `ip/[AI 推理
 | Hyperbolic | `hyperbolic` | `https://api.hyperbolic.xyz/...` | `https://xget.xi-xu.me/ip/hyperbolic/...` |
 
 ```url
-# OpenAI ChatGPT API 原始链接
+# OpenAI ChatGPT API 原始 URL
 https://api.openai.com/v1/chat/completions
 
 # 转换后（添加 ip/openai 前缀）
 https://xget.xi-xu.me/ip/openai/v1/chat/completions
 
-# Anthropic Claude API 原始链接
+# Anthropic Claude API 原始 URL
 https://api.anthropic.com/v1/messages
 
 # 转换后（添加 ip/anthropic 前缀）
 https://xget.xi-xu.me/ip/anthropic/v1/messages
 
-# Google Gemini API 原始链接
+# Google Gemini API 原始 URL
 https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent
 
 # 转换后（添加 ip/google 前缀）
 https://xget.xi-xu.me/ip/google/v1beta/models/gemini-pro:generateContent
 
-# Hugging Face Inference API 原始链接
+# Hugging Face Inference API 原始 URL
 https://router.huggingface.co/hf-inference/models/openai/whisper-large-v3
 
 # 转换后（添加 ip/huggingface 前缀）
@@ -639,7 +639,7 @@ https://xget.xi-xu.me/ip/huggingface/hf-inference/models/openai/whisper-large-v3
 
 Xget 支持多个容器注册表，使用 `cr/[容器注册表前缀]` 格式：
 
-| 容器注册表 | 容器注册表前缀 | 原始链接格式 | 加速链接格式 |
+| 容器注册表 | 容器注册表前缀 | 原始 URL 格式 | 加速 URL 格式 |
 |----------|------|--------------|--------------|
 | Quay.io | `quay` | `https://quay.io/...` | `https://xget.xi-xu.me/cr/quay/...` |
 | 谷歌容器注册表 | `gcr` | `https://gcr.io/...` | `https://xget.xi-xu.me/cr/gcr/...` |
@@ -659,13 +659,13 @@ Xget 支持多个容器注册表，使用 `cr/[容器注册表前缀]` 格式：
 | Gitpod 注册表 | `gitpod` | `https://registry.gitpod.io/...` | `https://xget.xi-xu.me/cr/gitpod/...` |
 
 ```url
-# GitHub 容器注册表原始链接
+# GitHub 容器注册表原始 URL
 https://ghcr.io/v2/nginxinc/nginx-unprivileged/manifests/latest
 
 # 转换后（添加 cr/ghcr 前缀）
 https://xget.xi-xu.me/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest
 
-# 谷歌容器注册表原始链接
+# 谷歌容器注册表原始 URL
 https://gcr.io/v2/distroless/base/manifests/latest
 
 # 转换后（添加 cr/gcr 前缀）
@@ -730,10 +730,10 @@ git config --global url."https://xget.xi-xu.me/aosp/".insteadOf "https://android
 git config --global --get-regexp url
 
 # 现在所有相关平台的 git clone 都会自动使用 Xget 加速
-git clone https://github.com/microsoft/vscode.git  # 自动转换为 Xget 链接
-git clone https://gitlab.com/gitlab-org/gitlab.git  # 自动转换为 Xget 链接
-git clone https://codeberg.org/forgejo/forgejo.git  # 自动转换为 Xget 链接
-git clone https://android.googlesource.com/platform/frameworks/base.git  # 自动转换为 Xget 链接
+git clone https://github.com/microsoft/vscode.git  # 自动转换为 Xget URL
+git clone https://gitlab.com/gitlab-org/gitlab.git  # 自动转换为 Xget URL
+git clone https://codeberg.org/forgejo/forgejo.git  # 自动转换为 Xget URL
+git clone https://android.googlesource.com/platform/frameworks/base.git  # 自动转换为 Xget URL
 ```
 
 ### 主流下载工具集成
@@ -748,7 +748,7 @@ wget https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 wget -c https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_model.bin
 
 # 批量下载
-wget -i urls.txt  # urls.txt 包含多个 Xget 链接
+wget -i urls.txt  # urls.txt 包含多个 Xget URL
 ```
 
 #### cURL 下载
@@ -774,7 +774,7 @@ aria2c -x 16 -s 16 https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/mai
 aria2c -c https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 
 # 批量下载配置文件
-aria2c -i download-list.txt  # 包含多个 Xget 链接的文件
+aria2c -i download-list.txt  # 包含多个 Xget URL 的文件
 ```
 
 ### Hugging Face 镜像
@@ -2328,7 +2328,7 @@ npx wrangler dev --log-level debug
 
 - **作者**: [Xi Xu](https://xi-xu.me)
 - **邮箱**: [联系邮箱](mailto:i@xi-xu.me)
-- **赞助**: [赞助链接](https://xi-xu.me/#sponsorships)
+- **赞助**: [赞助 URL](https://xi-xu.me/#sponsorships)
 
 ## 📝 许可证
 

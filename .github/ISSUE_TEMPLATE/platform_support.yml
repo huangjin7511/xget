@@ -156,7 +156,7 @@ body:
     id: documentation
     attributes:
       label: 相关文档
-      description: 提供该平台的 API 文档或开发者文档链接
+      description: 提供该平台的 API 文档或开发者文档 URL
       placeholder: |
         - API 文档：https://...
         - 开发者指南：https://...

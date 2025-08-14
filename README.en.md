@@ -38,7 +38,7 @@
 [![F-Droid](https://img.shields.io/badge/F--Droid-1976D2?logo=f-droid&logoColor=white)](#f-droid-repository-mirror)
 [![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-registry)
 
-Ultra-high performance, secure all-in-one open source resource acceleration engine. Its performance far exceeds traditional accelerators, providing you with unified and efficient download experience across multiple platforms, covering code repositories, package management, container images, models and datasets, etc.
+Ultra-high performance, secure all-in-one open source resource acceleration engine. Its performance far exceeds traditional accelerators, providing you with unified and efficient acceleration experience across multiple platforms, covering code repositories, package management, container images, models and datasets, etc.
 
 ## 🎯 Quick Start
 

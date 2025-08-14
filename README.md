@@ -36,9 +36,10 @@
 [![Arch Linux](https://img.shields.io/badge/Arch%20Linux-1793D1?logo=archlinux&logoColor=white)](#arch-linux-pacman-配置)
 [![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#arxiv-论文下载)
 [![F-Droid](https://img.shields.io/badge/F--Droid-1976D2?logo=f-droid&logoColor=white)](#f-droid-存储库镜像)
+[![AI 推理提供商](https://img.shields.io/badge/AI%20推理提供商-412991?logo=openai&logoColor=white)](#ai-推理提供商)
 [![容器注册表](https://img.shields.io/badge/容器注册表-%23007EC6.svg?logo=docker&logoColor=white)](#容器注册表)
 
-超高性能、安全的一站式开源资源获取加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的下载体验，涵盖代码储存库、包管理、容器镜像、模型及数据集等。
+超高性能、安全的一站式开源资源获取加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的下载体验，涵盖代码储存库、包管理、容器镜像、模型及数据集、AI 推理等。
 
 ## 🎯 快速使用
 
@@ -59,9 +60,10 @@
 
 ### 🌐 多平台深度集成
 
-- **一站式多平台支持**：统一支持代码存储库、包管理器、容器注册表、模型与数据集托管平台的高速下载
+- **一站式多平台支持**：统一支持代码存储库、包管理器、容器注册表、模型与数据集托管平台、AI 推理提供商
 - **智能识别与转换**：自动识别平台前缀并转换为目标平台的正确 URL 结构
 - **一致的加速体验**：无论文件类型或来源，均可享受统一且稳定的极速下载服务
+- **AI 推理加速**：支持 25+ 主流 AI 推理提供商，包括 OpenAI、Anthropic、Google AI、Cohere、Mistral 等，显著提升 API 响应速度
 
 ### 🔒 企业级安全保障
 
@@ -156,6 +158,7 @@
 | Arch Linux | `arch` | `https://geo.mirror.pkgbuild.com/...` | `https://xget.xi-xu.me/arch/...` |
 | arXiv | `arxiv` | `https://arxiv.org/...` | `https://xget.xi-xu.me/arxiv/...` |
 | F-Droid | `fdroid` | `https://f-droid.org/...` | `https://xget.xi-xu.me/fdroid/...` |
+| AI 推理提供商 | `ip` | 见[AI 推理提供商](#ai-推理提供商) | `https://xget.xi-xu.me/ip/{provider}/...` |
 | 容器注册表 | `cr` | 见[容器注册表](#容器注册表) | 见[容器注册表](#容器注册表) |
 
 ### 各平台转换示例
@@ -570,6 +573,66 @@ https://f-droid.org/api/v1/packages/org.fdroid.fdroid
 
 # 转换后（添加 fdroid 前缀）
 https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
+```
+
+#### AI 推理提供商
+
+Xget 支持众多主流 AI 推理提供商的 API 加速，使用 `ip/[AI 推理提供商前缀]` 格式：
+
+| AI 推理提供商 | AI 推理提供商前缀 | 原始 API 地址 | 加速 API 地址 |
+|-------------|----------|-------------|-------------|
+| OpenAI | `openai` | `https://api.openai.com/...` | `https://xget.xi-xu.me/ip/openai/...` |
+| Anthropic | `anthropic` | `https://api.anthropic.com/...` | `https://xget.xi-xu.me/ip/anthropic/...` |
+| Google AI | `google` | `https://generativelanguage.googleapis.com/...` | `https://xget.xi-xu.me/ip/google/...` |
+| Vertex AI | `vertexai` | `https://aiplatform.googleapis.com/...` | `https://xget.xi-xu.me/ip/vertexai/...` |
+| Cohere | `cohere` | `https://api.cohere.ai/...` | `https://xget.xi-xu.me/ip/cohere/...` |
+| Mistral AI | `mistral` | `https://api.mistral.ai/...` | `https://xget.xi-xu.me/ip/mistral/...` |
+| xAI | `xai` | `https://api.x.ai/...` | `https://xget.xi-xu.me/ip/xai/...` |
+| GitHub Models | `github` | `https://models.github.ai/...` | `https://xget.xi-xu.me/ip/github/...` |
+| NVIDIA | `nvidia` | `https://integrate.api.nvidia.com/...` | `https://xget.xi-xu.me/ip/nvidia/...` |
+| Perplexity | `perplexity` | `https://api.perplexity.ai/...` | `https://xget.xi-xu.me/ip/perplexity/...` |
+| Groq | `groq` | `https://api.groq.com/...` | `https://xget.xi-xu.me/ip/groq/...` |
+| Cerebras | `cerebras` | `https://api.cerebras.ai/...` | `https://xget.xi-xu.me/ip/cerebras/...` |
+| SambaNova | `sambanova` | `https://api.sambanova.ai/...` | `https://xget.xi-xu.me/ip/sambanova/...` |
+| Hugging Face | `huggingface` | `https://router.huggingface.co/...` | `https://xget.xi-xu.me/ip/huggingface/...` |
+| Together AI | `together` | `https://api.together.xyz/...` | `https://xget.xi-xu.me/ip/together/...` |
+| Replicate | `replicate` | `https://api.replicate.com/...` | `https://xget.xi-xu.me/ip/replicate/...` |
+| Fireworks | `fireworks` | `https://api.fireworks.ai/...` | `https://xget.xi-xu.me/ip/fireworks/...` |
+| Nebius | `nebius` | `https://api.studio.nebius.ai/...` | `https://xget.xi-xu.me/ip/nebius/...` |
+| Jina | `jina` | `https://api.jina.ai/...` | `https://xget.xi-xu.me/ip/jina/...` |
+| Voyage AI | `voyageai` | `https://api.voyageai.com/...` | `https://xget.xi-xu.me/ip/voyageai/...` |
+| FAL | `fal` | `https://fal.run/...` | `https://xget.xi-xu.me/ip/fal/...` |
+| Novita | `novita` | `https://api.novita.ai/...` | `https://xget.xi-xu.me/ip/novita/...` |
+| Burncloud | `burncloud` | `https://ai.burncloud.com/...` | `https://xget.xi-xu.me/ip/burncloud/...` |
+| OpenRouter | `openrouter` | `https://openrouter.ai/...` | `https://xget.xi-xu.me/ip/openrouter/...` |
+| Poe | `poe` | `https://api.poe.com/...` | `https://xget.xi-xu.me/ip/poe/...` |
+| Featherless | `featherless` | `https://api.featherless.ai/...` | `https://xget.xi-xu.me/ip/featherless/...` |
+| Hyperbolic | `hyperbolic` | `https://api.hyperbolic.xyz/...` | `https://xget.xi-xu.me/ip/hyperbolic/...` |
+
+```url
+# OpenAI ChatGPT API 原始链接
+https://api.openai.com/v1/chat/completions
+
+# 转换后（添加 ip/openai 前缀）
+https://xget.xi-xu.me/ip/openai/v1/chat/completions
+
+# Anthropic Claude API 原始链接
+https://api.anthropic.com/v1/messages
+
+# 转换后（添加 ip/anthropic 前缀）
+https://xget.xi-xu.me/ip/anthropic/v1/messages
+
+# Google Gemini API 原始链接
+https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent
+
+# 转换后（添加 ip/google 前缀）
+https://xget.xi-xu.me/ip/google/v1beta/models/gemini-pro:generateContent
+
+# Hugging Face Inference API 原始链接
+https://router.huggingface.co/hf-inference/models/openai/whisper-large-v3
+
+# 转换后（添加 ip/huggingface 前缀）
+https://xget.xi-xu.me/ip/huggingface/hf-inference/models/openai/whisper-large-v3
 ```
 
 #### 容器注册表
@@ -1597,6 +1660,210 @@ task checkFDroidAvailability {
         }
     }
 }
+```
+
+### AI 推理加速
+
+Xget 为众多 AI 推理提供商提供加速服务，通过智能路由优化，显著提升 API 响应速度和可靠性。
+
+#### OpenAI API 加速
+
+```python
+import openai
+
+# 使用 Xget 加速的 OpenAI API
+client = openai.OpenAI(
+    api_key="your-api-key",
+    base_url="https://xget.xi-xu.me/ip/openai"  # 使用 Xget 加速
+)
+
+# 聊天完成
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[
+        {"role": "user", "content": "Hello, how are you?"}
+    ]
+)
+
+print(response.choices[0].message.content)
+```
+
+#### Anthropic Claude API 加速
+
+```python
+import anthropic
+
+# 使用 Xget 加速的 Anthropic API
+client = anthropic.Anthropic(
+    api_key="your-api-key",
+    base_url="https://xget.xi-xu.me/ip/anthropic"  # 使用 Xget 加速
+)
+
+# 创建消息
+message = client.messages.create(
+    model="claude-3-sonnet-20240229",
+    max_tokens=1000,
+    messages=[
+        {"role": "user", "content": "Hello, Claude!"}
+    ]
+)
+
+print(message.content)
+```
+
+#### Google Gemini API 加速
+
+```python
+import google.generativeai as genai
+
+# 配置 API 密钥
+genai.configure(api_key="your-api-key")
+
+# 使用自定义传输配置 Xget 加速
+import requests
+
+class XgetTransport:
+    def __init__(self, base_url):
+        self.base_url = base_url
+        
+    def request(self, method, url, **kwargs):
+        # 将请求转发到 Xget 加速服务
+        accelerated_url = url.replace("https://generativelanguage.googleapis.com", 
+                                    "https://xget.xi-xu.me/ip/google")
+        return requests.request(method, accelerated_url, **kwargs)
+
+# 创建模型实例
+model = genai.GenerativeModel('gemini-pro')
+
+# 生成内容
+response = model.generate_content("写一个关于人工智能的简短介绍")
+print(response.text)
+```
+
+#### 多提供商统一接口
+
+```python
+import requests
+import json
+
+def call_ai_api(provider, endpoint, data, api_key):
+    """
+    统一的 AI API 调用函数，支持多个提供商
+    """
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    
+    # 使用 Xget 加速 URL
+    url = f"https://xget.xi-xu.me/ip/{provider}/{endpoint}"
+    
+    response = requests.post(url, headers=headers, json=data)
+    return response.json()
+
+# 使用示例
+providers = {
+    "openai": {
+        "endpoint": "v1/chat/completions",
+        "data": {
+            "model": "gpt-4",
+            "messages": [{"role": "user", "content": "Hello!"}]
+        }
+    },
+    "anthropic": {
+        "endpoint": "v1/messages",
+        "data": {
+            "model": "claude-3-sonnet-20240229",
+            "max_tokens": 1000,
+            "messages": [{"role": "user", "content": "Hello!"}]
+        }
+    },
+    "cohere": {
+        "endpoint": "v1/generate",
+        "data": {
+            "model": "command",
+            "prompt": "Hello!",
+            "max_tokens": 100
+        }
+    }
+}
+
+# 循环调用不同提供商
+for provider, config in providers.items():
+    try:
+        result = call_ai_api(
+            provider=provider,
+            endpoint=config["endpoint"],
+            data=config["data"],
+            api_key="your-api-key"
+        )
+        print(f"{provider.title()} response: {result}")
+    except Exception as e:
+        print(f"Error calling {provider}: {e}")
+```
+
+#### JavaScript/Node.js 中使用
+
+```javascript
+// OpenAI API 加速
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: 'your-api-key',
+  baseURL: 'https://xget.xi-xu.me/ip/openai',  // 使用 Xget 加速
+});
+
+async function chatWithGPT() {
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: 'user', content: 'Hello!' }],
+    model: 'gpt-4',
+  });
+  
+  console.log(completion.choices[0].message.content);
+}
+
+// Anthropic API 加速
+import Anthropic from '@anthropic-ai/sdk';
+
+const anthropic = new Anthropic({
+  apiKey: 'your-api-key',
+  baseURL: 'https://xget.xi-xu.me/ip/anthropic',  // 使用 Xget 加速
+});
+
+async function chatWithClaude() {
+  const message = await anthropic.messages.create({
+    model: 'claude-3-sonnet-20240229',
+    max_tokens: 1000,
+    messages: [{ role: 'user', content: 'Hello!' }],
+  });
+  
+  console.log(message.content);
+}
+```
+
+#### 环境变量配置
+
+```bash
+# 在 .env 文件中配置
+OPENAI_BASE_URL=https://xget.xi-xu.me/ip/openai
+ANTHROPIC_BASE_URL=https://xget.xi-xu.me/ip/anthropic
+GOOGLE_AI_BASE_URL=https://xget.xi-xu.me/ip/google
+COHERE_BASE_URL=https://xget.xi-xu.me/ip/cohere
+MISTRAL_BASE_URL=https://xget.xi-xu.me/ip/mistral
+GROQ_BASE_URL=https://xget.xi-xu.me/ip/groq
+```
+
+然后在代码中使用：
+
+```python
+import os
+from openai import OpenAI
+
+# 从环境变量读取配置
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    base_url=os.getenv("OPENAI_BASE_URL")  # 自动使用 Xget 加速
+)
 ```
 
 ### 容器镜像加速

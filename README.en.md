@@ -1433,7 +1433,7 @@ import openai
 # Use Xget-accelerated OpenAI API
 client = openai.OpenAI(
     api_key="your-api-key",
-    base_url="https://xget.xi-xu.me/ip/openai"  # Use Xget acceleration
+    base_url="https://xget.xi-xu.me/ip/openai/v1"  # Use Xget acceleration
 )
 
 # Chat completion

@@ -1677,7 +1677,7 @@ import openai
 # 使用 Xget 加速的 OpenAI API
 client = openai.OpenAI(
     api_key="your-api-key",
-    base_url="https://xget.xi-xu.me/ip/openai"  # 使用 Xget 加速
+    base_url="https://xget.xi-xu.me/ip/openai/v1"  # 使用 Xget 加速
 )
 
 # 聊天完成

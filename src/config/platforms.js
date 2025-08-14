@@ -38,7 +38,8 @@ export const PLATFORMS = {
   arxiv: 'https://arxiv.org',
   fdroid: 'https://f-droid.org',
 
-  // AI/ML Inference Providers
+  // AI Inference Providers
+  'ip-openrouter': 'https://openrouter.ai',
   'ip-openai': 'https://api.openai.com',
   'ip-anthropic': 'https://api.anthropic.com',
   'ip-google': 'https://generativelanguage.googleapis.com',

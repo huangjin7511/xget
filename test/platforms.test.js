@@ -285,6 +285,7 @@ describe('Platform Configuration', () => {
   describe('AI Inference Providers Support', () => {
     it('should have all major AI inference providers defined', () => {
       const aiProviders = [
+        'ip-openrouter',
         'ip-openai',
         'ip-anthropic',
         'ip-google',
@@ -367,6 +368,7 @@ describe('Platform Configuration', () => {
 
     it('should construct valid URLs for AI inference providers', () => {
       const aiProviders = [
+        'ip-openrouter',
         'ip-openai',
         'ip-anthropic',
         'ip-google',

@@ -287,13 +287,13 @@ describe('Platform Configuration', () => {
       const aiProviders = [
         'ip-openai',
         'ip-anthropic',
-        'ip-google',
+        'ip-gemini',
         'ip-vertexai',
         'ip-cohere',
-        'ip-mistral',
+        'ip-mistralai',
         'ip-xai',
-        'ip-github',
-        'ip-nvidia',
+        'ip-githubmodels',
+        'ip-nvidiaapi',
         'ip-perplexity',
         'ip-braintrust',
         'ip-groq',
@@ -306,12 +306,12 @@ describe('Platform Configuration', () => {
         'ip-nebius',
         'ip-jina',
         'ip-voyageai',
-        'ip-fal',
+        'ip-falai',
         'ip-novita',
         'ip-burncloud',
         'ip-openrouter',
         'ip-poe',
-        'ip-featherless',
+        'ip-featherlessai',
         'ip-hyperbolic'
       ];
 
@@ -336,8 +336,8 @@ describe('Platform Configuration', () => {
           expectedPath: '/v1/messages'
         },
         {
-          provider: 'ip-google',
-          inputPath: '/ip/google/v1beta/models/gemini-pro:generateContent',
+          provider: 'ip-gemini',
+          inputPath: '/ip/gemini/v1beta/models/gemini-pro:generateContent',
           expectedPath: '/v1beta/models/gemini-pro:generateContent'
         },
         {
@@ -378,14 +378,14 @@ describe('Platform Configuration', () => {
         'ip-openrouter',
         'ip-openai',
         'ip-anthropic',
-        'ip-google',
+        'ip-gemini',
         'ip-cohere',
         'ip-huggingface',
         'ip-together',
         'ip-replicate',
         'ip-groq',
         'ip-fireworks',
-        'ip-mistral',
+        'ip-mistralai',
         'ip-perplexity'
       ];
 

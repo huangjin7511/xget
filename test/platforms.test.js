@@ -281,4 +281,116 @@ describe('Platform Configuration', () => {
       });
     });
   });
+
+  describe('AI Inference Providers Support', () => {
+    it('should have all major AI inference providers defined', () => {
+      const aiProviders = [
+        'ip-openai',
+        'ip-anthropic',
+        'ip-google',
+        'ip-cohere',
+        'ip-huggingface',
+        'ip-together',
+        'ip-replicate',
+        'ip-groq',
+        'ip-fireworks',
+        'ip-mistral',
+        'ip-perplexity',
+        'ip-xai',
+        'ip-cerebras',
+        'ip-hyperbolic',
+        'ip-sambanova',
+        'ip-novita',
+        'ip-featherless',
+        'ip-fal',
+        'ip-nebius',
+        'ip-braintrust'
+      ];
+
+      aiProviders.forEach(provider => {
+        expect(PLATFORMS).toHaveProperty(provider);
+        expect(PLATFORMS[provider]).toBeDefined();
+        expect(typeof PLATFORMS[provider]).toBe('string');
+        expect(PLATFORMS[provider]).toMatch(/^https:\/\/.+/);
+      });
+    });
+
+    it('should transform AI inference provider paths correctly', () => {
+      const testCases = [
+        {
+          provider: 'ip-openai',
+          inputPath: '/ip/openai/v1/chat/completions',
+          expectedPath: '/v1/chat/completions'
+        },
+        {
+          provider: 'ip-anthropic',
+          inputPath: '/ip/anthropic/v1/messages',
+          expectedPath: '/v1/messages'
+        },
+        {
+          provider: 'ip-google',
+          inputPath: '/ip/google/v1beta/models/gemini-pro:generateContent',
+          expectedPath: '/v1beta/models/gemini-pro:generateContent'
+        },
+        {
+          provider: 'ip-cohere',
+          inputPath: '/ip/cohere/v1/generate',
+          expectedPath: '/v1/generate'
+        },
+        {
+          provider: 'ip-huggingface',
+          inputPath: '/ip/huggingface/models/meta-llama/Llama-2-7b-chat-hf',
+          expectedPath: '/models/meta-llama/Llama-2-7b-chat-hf'
+        },
+        {
+          provider: 'ip-together',
+          inputPath: '/ip/together/v1/chat/completions',
+          expectedPath: '/v1/chat/completions'
+        },
+        {
+          provider: 'ip-replicate',
+          inputPath: '/ip/replicate/v1/predictions',
+          expectedPath: '/v1/predictions'
+        },
+        {
+          provider: 'ip-groq',
+          inputPath: '/ip/groq/openai/v1/chat/completions',
+          expectedPath: '/openai/v1/chat/completions'
+        }
+      ];
+
+      testCases.forEach(({ provider, inputPath, expectedPath }) => {
+        const transformedPath = transformPath(inputPath, provider);
+        expect(transformedPath).toBe(expectedPath);
+      });
+    });
+
+    it('should construct valid URLs for AI inference providers', () => {
+      const aiProviders = [
+        'ip-openai',
+        'ip-anthropic',
+        'ip-google',
+        'ip-cohere',
+        'ip-huggingface',
+        'ip-together',
+        'ip-replicate',
+        'ip-groq',
+        'ip-fireworks',
+        'ip-mistral',
+        'ip-perplexity'
+      ];
+
+      aiProviders.forEach(provider => {
+        const testPath = `/ip/${provider.replace('ip-', '')}/v1/test`;
+        const transformedPath = transformPath(testPath, provider);
+        const baseUrl = PLATFORMS[provider];
+
+        // Skip dynamic URLs with placeholders
+        if (!baseUrl.includes('{')) {
+          const fullUrl = baseUrl + transformedPath;
+          expect(() => new URL(fullUrl)).not.toThrow();
+        }
+      });
+    });
+  });
 });

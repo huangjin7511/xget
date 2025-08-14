@@ -38,6 +38,28 @@ export const PLATFORMS = {
   arxiv: 'https://arxiv.org',
   fdroid: 'https://f-droid.org',
 
+  // AI/ML Inference Providers
+  'ip-openai': 'https://api.openai.com',
+  'ip-anthropic': 'https://api.anthropic.com',
+  'ip-google': 'https://generativelanguage.googleapis.com',
+  'ip-cohere': 'https://api.cohere.ai',
+  'ip-huggingface': 'https://api-inference.huggingface.co',
+  'ip-together': 'https://api.together.xyz',
+  'ip-replicate': 'https://api.replicate.com',
+  'ip-groq': 'https://api.groq.com',
+  'ip-fireworks': 'https://api.fireworks.ai',
+  'ip-mistral': 'https://api.mistral.ai',
+  'ip-perplexity': 'https://api.perplexity.ai',
+  'ip-xai': 'https://api.x.ai',
+  'ip-cerebras': 'https://api.cerebras.ai',
+  'ip-hyperbolic': 'https://api.hyperbolic.xyz',
+  'ip-sambanova': 'https://api.sambanova.ai',
+  'ip-novita': 'https://api.novita.ai',
+  'ip-featherless': 'https://api.featherless.ai',
+  'ip-fal': 'https://fal.run',
+  'ip-nebius': 'https://api.studio.nebius.ai',
+  'ip-braintrust': 'https://api.braintrust.dev',
+
   // Container Registries
   'cr-quay': 'https://quay.io',
   'cr-gcr': 'https://gcr.io',

@@ -337,8 +337,8 @@ describe('Platform Configuration', () => {
         },
         {
           provider: 'ip-gemini',
-          inputPath: '/ip/gemini/v1beta/models/gemini-pro:generateContent',
-          expectedPath: '/v1beta/models/gemini-pro:generateContent'
+          inputPath: '/ip/gemini/v1beta/models/gemini-2.5-flash:generateContent',
+          expectedPath: '/v1beta/models/gemini-2.5-flash:generateContent'
         },
         {
           provider: 'ip-cohere',

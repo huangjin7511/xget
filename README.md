@@ -39,7 +39,7 @@
 [![AI 推理提供商](https://img.shields.io/badge/AI%20推理提供商-412991?logo=openai&logoColor=white)](#ai-推理提供商)
 [![容器注册表](https://img.shields.io/badge/容器注册表-%23007EC6.svg?logo=docker&logoColor=white)](#容器注册表)
 
-超高性能、安全的一站式开源资源获取加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的加速体验，涵盖代码储存库、包管理、AI 推理、容器镜像、模型及数据集等。
+超高性能、安全的一站式开源资源获取加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的加速体验，涵盖代码储存库、包管理、AI 推理 API、容器镜像、模型及数据集等。
 
 ## 🎯 快速使用
 
@@ -60,7 +60,7 @@
 
 ### 🌐 多平台深度集成
 
-- **一站式多平台支持**：统一支持代码存储库、包管理器、容器注册表、模型与数据集托管平台、AI 推理提供商
+- **一站式多平台支持**：统一支持代码存储库、包管理器、AI 推理提供商、容器注册表、模型与数据集托管平台
 - **智能识别与转换**：自动识别平台前缀并转换为目标平台的正确 URL 结构
 - **一致的加速体验**：无论文件类型或来源，均可享受统一且稳定的极速下载服务
 
@@ -157,7 +157,7 @@
 | Arch Linux | `arch` | `https://geo.mirror.pkgbuild.com/...` | `https://xget.xi-xu.me/arch/...` |
 | arXiv | `arxiv` | `https://arxiv.org/...` | `https://xget.xi-xu.me/arxiv/...` |
 | F-Droid | `fdroid` | `https://f-droid.org/...` | `https://xget.xi-xu.me/fdroid/...` |
-| AI 推理提供商 | `ip` | 见[AI 推理提供商](#ai-推理提供商) | `https://xget.xi-xu.me/ip/{provider}/...` |
+| AI 推理提供商 | `ip` | 见 [AI 推理提供商](#ai-推理提供商) | 见 [AI 推理提供商](#ai-推理提供商) |
 | 容器注册表 | `cr` | 见[容器注册表](#容器注册表) | 见[容器注册表](#容器注册表) |
 
 ### 各平台转换示例
@@ -609,30 +609,32 @@ Xget 支持众多主流 AI 推理提供商的 API 加速，使用 `ip/[AI 推理
 | Hyperbolic | `hyperbolic` | `https://api.hyperbolic.xyz/...` | `https://xget.xi-xu.me/ip/hyperbolic/...` |
 
 ```url
-# OpenAI ChatGPT API 原始 URL
+# OpenAI API 原始 URL
 https://api.openai.com/v1/chat/completions
 
 # 转换后（添加 ip/openai 前缀）
 https://xget.xi-xu.me/ip/openai/v1/chat/completions
 
-# Anthropic Claude API 原始 URL
+# Anthropic API 原始 URL
 https://api.anthropic.com/v1/messages
 
 # 转换后（添加 ip/anthropic 前缀）
 https://xget.xi-xu.me/ip/anthropic/v1/messages
 
-# Google Gemini API 原始 URL
-https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent
+# Gemini API 原始 URL
+https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
 
 # 转换后（添加 ip/gemini 前缀）
-https://xget.xi-xu.me/ip/gemini/v1beta/models/gemini-pro:generateContent
+https://xget.xi-xu.me/ip/gemini/v1beta/models/gemini-2.5-flash:generateContent
 
-# Hugging Face Inference API 原始 URL
+# HF Inference API 原始 URL
 https://router.huggingface.co/hf-inference/models/openai/whisper-large-v3
 
 # 转换后（添加 ip/huggingface 前缀）
 https://xget.xi-xu.me/ip/huggingface/hf-inference/models/openai/whisper-large-v3
 ```
+
+应用场景见 [AI 推理 API 加速](#ai-推理-api-加速)。
 
 #### 容器注册表
 
@@ -670,6 +672,8 @@ https://gcr.io/v2/distroless/base/manifests/latest
 # 转换后（添加 cr/gcr 前缀）
 https://xget.xi-xu.me/cr/gcr/v2/distroless/base/manifests/latest
 ```
+
+应用场景见[容器镜像加速](#容器镜像加速)。
 
 ## 🎯 应用场景
 
@@ -1661,11 +1665,11 @@ task checkFDroidAvailability {
 }
 ```
 
-### AI 推理加速
+### AI 推理 API 加速
 
-Xget 为众多 AI 推理提供商提供加速服务，通过智能路由优化，显著提升 API 响应速度和可靠性。
+Xget 为众多 AI 推理 API 提供加速服务，通过智能路由优化，显著提升 API 响应速度和可靠性。
 
-#### OpenAI API 加速
+#### OpenAI API
 
 ```python
 import openai
@@ -1687,7 +1691,7 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-#### Anthropic Claude API 加速
+#### Anthropic API
 
 ```python
 import anthropic
@@ -1710,7 +1714,7 @@ message = client.messages.create(
 print(message.content)
 ```
 
-#### Google Gemini API 加速
+#### Gemini API
 
 ```python
 import google.generativeai as genai

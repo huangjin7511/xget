@@ -102,6 +102,50 @@ function isGitRequest(request, url) {
 }
 
 /**
+ * Check if the request is for an AI inference provider
+ * @param {Request} request - The incoming request object
+ * @param {URL} url - Parsed URL object
+ * @returns {boolean} True if this is an AI inference request
+ */
+function isAIInferenceRequest(request, url) {
+  // Check for AI inference provider paths (ip/{provider}/...)
+  if (url.pathname.startsWith('/ip/')) {
+    return true;
+  }
+
+  // Check for common AI inference API endpoints
+  const aiEndpoints = [
+    '/v1/chat/completions',
+    '/v1/completions',
+    '/v1/messages',
+    '/v1/predictions',
+    '/v1/generate',
+    '/v1/embeddings',
+    '/openai/v1/chat/completions'
+  ];
+
+  if (aiEndpoints.some(endpoint => url.pathname.includes(endpoint))) {
+    return true;
+  }
+
+  // Check for AI-specific content types
+  const contentType = request.headers.get('Content-Type') || '';
+  if (contentType.includes('application/json') && request.method === 'POST') {
+    // Additional check for common AI inference patterns in URL
+    if (
+      url.pathname.includes('/chat/') ||
+      url.pathname.includes('/completions') ||
+      url.pathname.includes('/generate') ||
+      url.pathname.includes('/predict')
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
  * Validates incoming requests against security rules
  * @param {Request} request - The incoming request object
  * @param {URL} url - Parsed URL object
@@ -109,12 +153,15 @@ function isGitRequest(request, url) {
  * @returns {{valid: boolean, error?: string, status?: number}} Validation result
  */
 function validateRequest(request, url, config = CONFIG) {
-  // Allow POST method for Git and Docker operations
+  // Allow POST method for Git, Docker, and AI inference operations
   const isGit = isGitRequest(request, url);
   const isDocker = isDockerRequest(request, url);
+  const isAI = isAIInferenceRequest(request, url);
 
   const allowedMethods =
-    isGit || isDocker ? ['GET', 'HEAD', 'POST', 'PUT', 'PATCH'] : config.SECURITY.ALLOWED_METHODS;
+    isGit || isDocker || isAI
+      ? ['GET', 'HEAD', 'POST', 'PUT', 'PATCH']
+      : config.SECURITY.ALLOWED_METHODS;
 
   if (!allowedMethods.includes(request.method)) {
     return { valid: false, error: 'Method not allowed', status: 405 };
@@ -326,14 +373,17 @@ async function handleRequest(request, env, ctx) {
     // Check if this is a Git operation
     const isGit = isGitRequest(request, url);
 
-    // Check cache first (skip cache for Git and Docker operations)
+    // Check if this is an AI inference request
+    const isAI = isAIInferenceRequest(request, url);
+
+    // Check cache first (skip cache for Git, Docker, and AI inference operations)
     /** @type {Cache} */
     // @ts-ignore - Cloudflare Workers cache API
     const cache = caches.default;
     const cacheKey = new Request(targetUrl, request);
     let response;
 
-    if (!isGit && !isDocker) {
+    if (!isGit && !isDocker && !isAI) {
       response = await cache.match(cacheKey);
       if (response) {
         monitor.mark('cache_hit');
@@ -348,17 +398,17 @@ async function handleRequest(request, env, ctx) {
       redirect: 'follow'
     };
 
-    // Add body for POST/PUT/PATCH requests (Git/Docker operations)
-    if (['POST', 'PUT', 'PATCH'].includes(request.method) && (isGit || isDocker)) {
+    // Add body for POST/PUT/PATCH requests (Git/Docker/AI inference operations)
+    if (['POST', 'PUT', 'PATCH'].includes(request.method) && (isGit || isDocker || isAI)) {
       fetchOptions.body = request.body;
     }
 
     // Cast headers to Headers for proper typing
     const requestHeaders = /** @type {Headers} */ (fetchOptions.headers);
 
-    // Set appropriate headers for Git/Docker vs regular requests
-    if (isGit || isDocker) {
-      // For Git/Docker operations, copy all headers from the original request
+    // Set appropriate headers for Git/Docker/AI vs regular requests
+    if (isGit || isDocker || isAI) {
+      // For Git/Docker/AI operations, copy all headers from the original request
       // This ensures protocol compliance
       for (const [key, value] of request.headers.entries()) {
         // Skip headers that might cause issues with proxying
@@ -383,6 +433,19 @@ async function handleRequest(request, env, ctx) {
       if (isGit && request.method === 'POST' && url.pathname.endsWith('/git-receive-pack')) {
         if (!requestHeaders.has('Content-Type')) {
           requestHeaders.set('Content-Type', 'application/x-git-receive-pack-request');
+        }
+      }
+
+      // For AI inference requests, ensure proper content type and headers
+      if (isAI) {
+        // Ensure JSON content type for AI API requests if not already set
+        if (request.method === 'POST' && !requestHeaders.has('Content-Type')) {
+          requestHeaders.set('Content-Type', 'application/json');
+        }
+
+        // Set appropriate User-Agent for AI requests if not present
+        if (!requestHeaders.has('User-Agent')) {
+          requestHeaders.set('User-Agent', 'Xget-AI-Proxy/1.0');
         }
       }
     } else {
@@ -642,11 +705,12 @@ async function handleRequest(request, env, ctx) {
       headers: headers
     });
 
-    // Cache successful responses (skip caching for Git and Docker operations)
+    // Cache successful responses (skip caching for Git, Docker, and AI inference operations)
     // Only cache GET and HEAD requests to avoid "Cannot cache response to non-GET request" errors
     if (
       !isGit &&
       !isDocker &&
+      !isAI &&
       ['GET', 'HEAD'].includes(request.method) &&
       (response.ok || response.status === 206)
     ) {
@@ -654,7 +718,9 @@ async function handleRequest(request, env, ctx) {
     }
 
     monitor.mark('complete');
-    return isGit || isDocker ? finalResponse : addPerformanceHeaders(finalResponse, monitor);
+    return isGit || isDocker || isAI
+      ? finalResponse
+      : addPerformanceHeaders(finalResponse, monitor);
   } catch (error) {
     console.error('Error handling request:', error);
     const message = error instanceof Error ? error.message : String(error);

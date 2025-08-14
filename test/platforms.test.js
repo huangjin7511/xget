@@ -285,27 +285,34 @@ describe('Platform Configuration', () => {
   describe('AI Inference Providers Support', () => {
     it('should have all major AI inference providers defined', () => {
       const aiProviders = [
-        'ip-openrouter',
         'ip-openai',
         'ip-anthropic',
         'ip-google',
+        'ip-vertexai',
         'ip-cohere',
+        'ip-mistral',
+        'ip-xai',
+        'ip-github',
+        'ip-nvidia',
+        'ip-perplexity',
+        'ip-braintrust',
+        'ip-groq',
+        'ip-cerebras',
+        'ip-sambanova',
         'ip-huggingface',
         'ip-together',
         'ip-replicate',
-        'ip-groq',
         'ip-fireworks',
-        'ip-mistral',
-        'ip-perplexity',
-        'ip-xai',
-        'ip-cerebras',
-        'ip-hyperbolic',
-        'ip-sambanova',
-        'ip-novita',
-        'ip-featherless',
-        'ip-fal',
         'ip-nebius',
-        'ip-braintrust'
+        'ip-jina',
+        'ip-voyageai',
+        'ip-fal',
+        'ip-novita',
+        'ip-burncloud',
+        'ip-openrouter',
+        'ip-poe',
+        'ip-featherless',
+        'ip-hyperbolic'
       ];
 
       aiProviders.forEach(provider => {

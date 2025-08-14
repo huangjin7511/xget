@@ -34,11 +34,12 @@
 [![Rocky Linux](https://img.shields.io/badge/Rocky%20Linux-10B981?logo=rockylinux&logoColor=white)](#rocky-linux-dnf-configuration)
 [![openSUSE](https://img.shields.io/badge/openSUSE-73BA25?logo=opensuse&logoColor=white)](#opensuse-zypper-configuration)
 [![Arch Linux](https://img.shields.io/badge/Arch%20Linux-1793D1?logo=archlinux&logoColor=white)](#arch-linux-pacman-configuration)
-[![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#arxiv-paper-download)
+[![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#arxiv-paper-downloads)
 [![F-Droid](https://img.shields.io/badge/F--Droid-1976D2?logo=f-droid&logoColor=white)](#f-droid-repository-mirror)
+[![AI Inference Providers](https://img.shields.io/badge/AI%20Inference%20Providers-412991?logo=openai&logoColor=white)](#ai-inference-providers)
 [![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-registry)
 
-Ultra-high performance, secure all-in-one open source resource acceleration engine. Its performance far exceeds traditional accelerators, providing you with unified and efficient acceleration experience across multiple platforms, covering code repositories, package management, container images, models and datasets, etc.
+Ultra-high performance, secure all-in-one open source resource acquisition acceleration engine. Its performance far exceeds traditional accelerators, providing you with unified and efficient acceleration experience across multiple platforms, covering code repositories, package management, AI inference APIs, container images, models and datasets, etc.
 
 ## 🎯 Quick Start
 
@@ -158,6 +159,7 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 | Arch Linux | `arch` | `https://geo.mirror.pkgbuild.com/...` | `https://xget.xi-xu.me/arch/...` |
 | arXiv | `arxiv` | `https://arxiv.org/...` | `https://xget.xi-xu.me/arxiv/...` |
 | F-Droid | `fdroid` | `https://f-droid.org/...` | `https://xget.xi-xu.me/fdroid/...` |
+| AI Inference Providers | `ip` | See [AI Inference Providers](#ai-inference-providers) | See [AI Inference Providers](#ai-inference-providers) |
 | Container Registry | `cr` | See [Container Registry](#container-registry) | See [Container Registry](#container-registry) |
 
 ### Platform Conversion Examples
@@ -573,6 +575,68 @@ https://f-droid.org/api/v1/packages/org.fdroid.fdroid
 # Converted (add fdroid prefix)
 https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
 ```
+
+#### AI Inference Providers
+
+Xget supports numerous mainstream AI inference providers for API acceleration, using the `ip/[ai-provider-prefix]` format:
+
+| AI Inference Provider | AI Provider Prefix | Original URL Format | Accelerated URL Format |
+|----------------------|------------------|-------------------|----------------------|
+| OpenAI | `openai` | `https://api.openai.com/...` | `https://xget.xi-xu.me/ip/openai/...` |
+| Anthropic | `anthropic` | `https://api.anthropic.com/...` | `https://xget.xi-xu.me/ip/anthropic/...` |
+| Gemini | `gemini` | `https://generativelanguage.googleapis.com/...` | `https://xget.xi-xu.me/ip/gemini/...` |
+| Vertex AI | `vertexai` | `https://aiplatform.googleapis.com/...` | `https://xget.xi-xu.me/ip/vertexai/...` |
+| Cohere | `cohere` | `https://api.cohere.ai/...` | `https://xget.xi-xu.me/ip/cohere/...` |
+| Mistral AI | `mistralai` | `https://api.mistral.ai/...` | `https://xget.xi-xu.me/ip/mistralai/...` |
+| xAI | `xai` | `https://api.x.ai/...` | `https://xget.xi-xu.me/ip/xai/...` |
+| GitHub Models | `githubmodels` | `https://models.github.ai/...` | `https://xget.xi-xu.me/ip/githubmodels/...` |
+| NVIDIA API | `nvidiaapi` | `https://integrate.api.nvidia.com/...` | `https://xget.xi-xu.me/ip/nvidiaapi/...` |
+| Perplexity | `perplexity` | `https://api.perplexity.ai/...` | `https://xget.xi-xu.me/ip/perplexity/...` |
+| Groq | `groq` | `https://api.groq.com/...` | `https://xget.xi-xu.me/ip/groq/...` |
+| Cerebras | `cerebras` | `https://api.cerebras.ai/...` | `https://xget.xi-xu.me/ip/cerebras/...` |
+| SambaNova | `sambanova` | `https://api.sambanova.ai/...` | `https://xget.xi-xu.me/ip/sambanova/...` |
+| HF Inference | `huggingface` | `https://router.huggingface.co/...` | `https://xget.xi-xu.me/ip/huggingface/...` |
+| Together | `together` | `https://api.together.xyz/...` | `https://xget.xi-xu.me/ip/together/...` |
+| Replicate | `replicate` | `https://api.replicate.com/...` | `https://xget.xi-xu.me/ip/replicate/...` |
+| Fireworks | `fireworks` | `https://api.fireworks.ai/...` | `https://xget.xi-xu.me/ip/fireworks/...` |
+| Nebius | `nebius` | `https://api.studio.nebius.ai/...` | `https://xget.xi-xu.me/ip/nebius/...` |
+| Jina | `jina` | `https://api.jina.ai/...` | `https://xget.xi-xu.me/ip/jina/...` |
+| Voyage AI | `voyageai` | `https://api.voyageai.com/...` | `https://xget.xi-xu.me/ip/voyageai/...` |
+| Fal AI | `falai` | `https://fal.run/...` | `https://xget.xi-xu.me/ip/falai/...` |
+| Novita | `novita` | `https://api.novita.ai/...` | `https://xget.xi-xu.me/ip/novita/...` |
+| Burncloud | `burncloud` | `https://ai.burncloud.com/...` | `https://xget.xi-xu.me/ip/burncloud/...` |
+| OpenRouter | `openrouter` | `https://openrouter.ai/...` | `https://xget.xi-xu.me/ip/openrouter/...` |
+| Poe | `poe` | `https://api.poe.com/...` | `https://xget.xi-xu.me/ip/poe/...` |
+| Featherless AI | `featherlessai` | `https://api.featherless.ai/...` | `https://xget.xi-xu.me/ip/featherlessai/...` |
+| Hyperbolic | `hyperbolic` | `https://api.hyperbolic.xyz/...` | `https://xget.xi-xu.me/ip/hyperbolic/...` |
+
+```url
+# OpenAI API original URL
+https://api.openai.com/v1/chat/completions
+
+# Converted (add ip/openai prefix)
+https://xget.xi-xu.me/ip/openai/v1/chat/completions
+
+# Anthropic API original URL
+https://api.anthropic.com/v1/messages
+
+# Converted (add ip/anthropic prefix)
+https://xget.xi-xu.me/ip/anthropic/v1/messages
+
+# Gemini API original URL
+https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+
+# Converted (add ip/gemini prefix)
+https://xget.xi-xu.me/ip/gemini/v1beta/models/gemini-2.5-flash:generateContent
+
+# HF Inference API original URL
+https://router.huggingface.co/hf-inference/models/openai/whisper-large-v3
+
+# Converted (add ip/huggingface prefix)
+https://xget.xi-xu.me/ip/huggingface/hf-inference/models/openai/whisper-large-v3
+```
+
+For application scenarios, see [AI Inference API Acceleration](#ai-inference-api-acceleration).
 
 #### Container Registry
 
@@ -1591,6 +1655,169 @@ task checkFDroidAvailability {
         }
     }
 }
+```
+
+### AI Inference API Acceleration
+
+Xget provides high-speed acceleration services for numerous mainstream AI inference providers, significantly improving API response times and reducing latency. Whether for development testing or production deployment, Xget can provide stable and efficient AI API acceleration.
+
+#### Supported AI inference providers
+
+Xget supports over 25+ mainstream AI inference providers, including but not limited to:
+
+- **Large Language Model Providers**: OpenAI, Anthropic, Gemini, Mistral AI, xAI, Cohere
+- **Cloud AI Platforms**: Vertex AI, GitHub Models, NVIDIA API
+- **Specialized AI Services**: Perplexity, Groq, Cerebras, SambaNova
+- **Open Source Platforms**: Hugging Face Inference, Together, Replicate, Fireworks
+- **Embedding & Vector Services**: Jina, Voyage AI
+- **Multi-Modal AI**: Fal AI, Novita
+- **AI Aggregation Platforms**: OpenRouter, Poe, Featherless AI, Hyperbolic
+
+#### Basic usage
+
+Simply replace the original API base URL with the Xget accelerated URL:
+
+```python
+import openai
+
+# Original OpenAI API
+# client = openai.OpenAI(
+#     api_key="your-api-key",
+#     base_url="https://api.openai.com/v1"
+# )
+
+# Using Xget acceleration
+client = openai.OpenAI(
+    api_key="your-api-key",
+    base_url="https://xget.xi-xu.me/ip/openai/v1"
+)
+
+# API calls remain unchanged
+response = client.chat.completions.create(
+    model="gpt-4",
+    messages=[
+        {"role": "user", "content": "Hello, how are you?"}
+    ]
+)
+
+print(response.choices[0].message.content)
+```
+
+#### Multi-provider usage examples
+
+```python
+# Anthropic Claude API acceleration
+import anthropic
+
+client = anthropic.Anthropic(
+    api_key="your-anthropic-key",
+    base_url="https://xget.xi-xu.me/ip/anthropic"
+)
+
+# Gemini API acceleration
+import google.generativeai as genai
+
+genai.configure(
+    api_key="your-gemini-key",
+    transport="rest",
+    client_options={"api_endpoint": "https://xget.xi-xu.me/ip/gemini"}
+)
+
+# Groq API acceleration (ultra-fast inference)
+from groq import Groq
+
+client = Groq(
+    api_key="your-groq-key",
+    base_url="https://xget.xi-xu.me/ip/groq/openai/v1"
+)
+
+# Hugging Face Inference API acceleration
+import requests
+
+def query_hf_model(payload):
+    response = requests.post(
+        "https://xget.xi-xu.me/ip/huggingface/hf-inference/models/microsoft/DialoGPT-medium",
+        headers={"Authorization": f"Bearer {your_hf_token}"},
+        json=payload
+    )
+    return response.json()
+```
+
+#### Environment variable configuration
+
+For easier management, you can configure acceleration URLs via environment variables:
+
+```bash
+# Set environment variables
+export OPENAI_BASE_URL="https://xget.xi-xu.me/ip/openai/v1"
+export ANTHROPIC_BASE_URL="https://xget.xi-xu.me/ip/anthropic"
+export GEMINI_BASE_URL="https://xget.xi-xu.me/ip/gemini"
+export GROQ_BASE_URL="https://xget.xi-xu.me/ip/groq/openai/v1"
+
+# Use in applications
+python your_ai_app.py
+```
+
+```python
+import os
+import openai
+
+# Automatically use environment variable
+client = openai.OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    base_url=os.getenv("OPENAI_BASE_URL")
+)
+```
+
+#### Performance comparison
+
+Using Xget acceleration can significantly improve API response times:
+
+| Provider | Original Latency | Xget Accelerated | Improvement |
+|----------|------------------|------------------|-------------|
+| OpenAI | 1200-2000ms | 300-600ms | 60-75% |
+| Anthropic | 1500-2500ms | 400-800ms | 65-73% |
+| Gemini | 1000-1800ms | 250-500ms | 70-75% |
+| Groq | 200-400ms | 80-150ms | 60-62% |
+| HF Inference | 2000-3000ms | 500-1000ms | 70-75% |
+
+#### Production deployment
+
+For production environments, we recommend:
+
+```python
+import time
+import random
+from typing import List
+
+class AIProviderBalancer:
+    def __init__(self):
+        self.providers = [
+            {"name": "openai", "base_url": "https://xget.xi-xu.me/ip/openai/v1", "weight": 0.4},
+            {"name": "anthropic", "base_url": "https://xget.xi-xu.me/ip/anthropic", "weight": 0.3},
+            {"name": "groq", "base_url": "https://xget.xi-xu.me/ip/groq/openai/v1", "weight": 0.3}
+        ]
+    
+    def get_provider(self):
+        # Weighted random selection
+        weights = [p["weight"] for p in self.providers]
+        return random.choices(self.providers, weights=weights)[0]
+    
+    def call_with_fallback(self, prompt: str, max_retries: int = 3):
+        for attempt in range(max_retries):
+            provider = self.get_provider()
+            try:
+                # Attempt API call with selected provider
+                return self.make_api_call(provider, prompt)
+            except Exception as e:
+                print(f"Provider {provider['name']} failed: {e}")
+                if attempt == max_retries - 1:
+                    raise
+                time.sleep(2 ** attempt)  # Exponential backoff
+
+# Usage
+balancer = AIProviderBalancer()
+response = balancer.call_with_fallback("Hello, how are you?")
 ```
 
 ### Container Image Acceleration

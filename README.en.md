@@ -1,10 +1,10 @@
 # Xget
 
-**[汉语](README.md)**
+**[中文](README.md)**
 
 [![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?logo=googlechrome&logoColor=white)](#-ecosystem-integration)
 [![Firefox Extension](https://img.shields.io/badge/Firefox%20Extension-582ACB?logo=Firefox&logoColor=white)](#-ecosystem-integration)
-[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-one-click-deployment)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#one-click-cloudflare-workers-deployment)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
@@ -17,7 +17,7 @@
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-package-acceleration)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-package-acceleration)
 [![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-package-acceleration)
-[![Apache](https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white)](#apache-software-download-acceleration)
+[![Apache](https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white)](#apache-software-downloads)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-package-acceleration)
 [![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?logo=homebrew&logoColor=black)](#homebrew-package-acceleration)
 [![RubyGems](https://img.shields.io/badge/RubyGems-CC342D?logo=rubygems&logoColor=white)](#ruby-package-acceleration)
@@ -37,96 +37,96 @@
 [![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#arxiv-paper-downloads)
 [![F-Droid](https://img.shields.io/badge/F--Droid-1976D2?logo=f-droid&logoColor=white)](#f-droid-repository-mirror)
 [![AI Inference Providers](https://img.shields.io/badge/AI%20Inference%20Providers-412991?logo=openai&logoColor=white)](#ai-inference-providers)
-[![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-registry)
+[![Container Registries](https://img.shields.io/badge/Container%20Registries-%23007EC6.svg?logo=docker&logoColor=white)](#container-registries)
 
-Ultra-high performance, secure all-in-one open source resource acquisition acceleration engine. Its performance far exceeds traditional accelerators, providing you with unified and efficient acceleration experience across multiple platforms, covering code repositories, package management, AI inference APIs, container images, models and datasets, etc.
+Ultra-high performance, secure, all-in-one open-source resource acceleration engine. Significantly outperforms traditional accelerators, providing unified and efficient acceleration across multiple platforms including code repositories, package managers, AI inference APIs, container images, models, and datasets.
 
 ## 🎯 Quick Start
 
 **Public Instance:** [**`xget.xi-xu.me`**](https://xget.xi-xu.me) - Ready to use, no deployment required!
 
-> **⚡ Experience Lightning-Fast Downloads Now**: No registration, no configuration required - just use it directly to experience blazing-fast download speeds!
+> **⚡ Experience lightning-fast downloads instantly**: No registration, no configuration needed - just start using it to feel the blazing download speeds!
 
 ## 🌟 Core Advantages - Why Choose Xget?
 
 ### ⚡ Extreme Performance - Breaking Traditional Accelerator Bottlenecks
 
-- **⚡ Millisecond Response**: Cloudflare's global 330+ edge nodes, average response time < 50ms
-- **🌐 HTTP/3 Ultra-Fast Protocol**: Latest HTTP/3 protocol enabled, 40% reduced connection latency, 30% improved transfer speed
-- **📦 Smart Multi-Layer Compression**: Triple compression algorithms (gzip, deflate, brotli), 60% improved transfer efficiency
-- **🔗 Zero-Latency Pre-connection**: Connection warm-up and keep-alive, eliminating handshake overhead for instant response
-- **⚡ Parallel Chunked Downloads**: Full HTTP Range request support, multi-threaded download speed multiplication
-- **🎯 Smart Route Optimization**: Automatic optimal path selection, avoiding network congestion nodes
+- **⚡ Millisecond Response**: Cloudflare's global 330+ edge nodes with average response time < 50ms
+- **🌐 HTTP/3 Ultra-Fast Protocol**: Latest HTTP/3 protocol reduces connection latency by 40% and boosts transfer speed by 30%
+- **📦 Smart Multi-Layer Compression**: Triple compression with gzip, deflate, and brotli algorithms improves transfer efficiency by 60%
+- **🔗 Zero-Latency Pre-connection**: Connection warming and keep-alive eliminates handshake overhead for instant response
+- **⚡ Parallel Chunked Downloads**: Full HTTP Range request support enables multi-threaded downloads with multiplied speeds
+- **🎯 Intelligent Route Optimization**: Automatically selects optimal transfer paths, avoiding network congestion nodes
 
 ### 🌐 Deep Multi-Platform Integration
 
-- **One-Stop Multi-Platform Support**: Unified support for high-speed downloads from code repositories, package managers, container registries, model and dataset hosting platforms
-- **Smart Recognition and Conversion**: Automatic platform prefix recognition and conversion to correct URL structure for target platforms
+- **Unified Multi-Platform Support**: Single solution for code repositories, package managers, AI inference providers, container registries, and model/dataset hosting platforms
+- **Smart Recognition & Transformation**: Automatically identifies platform prefixes and converts to correct target platform URL structures
 - **Consistent Acceleration Experience**: Enjoy unified and stable ultra-fast download service regardless of file type or source
 
-### 🔒 Enterprise-Grade Security Assurance
+### 🔒 Enterprise-Grade Security
 
 - **Multi-Layer Security Headers**:
-  - `Strict-Transport-Security`: Force HTTPS transmission, prevent man-in-the-middle attacks
-  - `X-Frame-Options: DENY`: Prevent clickjacking attacks
+  - `Strict-Transport-Security`: Enforces HTTPS transport, prevents man-in-the-middle attacks
+  - `X-Frame-Options: DENY`: Prevents clickjacking attacks
   - `X-XSS-Protection`: Built-in XSS protection mechanism
   - `Content-Security-Policy`: Strict content security policy
-  - `Referrer-Policy`: Control referrer information leakage
+  - `Referrer-Policy`: Controls referrer information leakage
 - **Request Validation Mechanism**:
   - HTTP method whitelist: Regular requests limited to GET/HEAD, Git operations dynamically allow POST
-  - Path length limit: Prevent overly long URL attacks (max 2048 characters)
-  - Input sanitization: Prevent path traversal and injection attacks
-- **Timeout Protection**: 30-second request timeout, prevent resource exhaustion and malicious requests
+  - Path length limits: Prevents oversized URL attacks (max 2048 characters)
+  - Input sanitization: Prevents path traversal and injection attacks
+- **Timeout Protection**: 30-second request timeout prevents resource exhaustion and malicious requests
 
-### 🚀 Modern Architecture and Reliability
+### 🚀 Modern Architecture & Reliability
 
 - **Smart Retry Mechanism**:
   - Maximum 3 retries with linear delay strategy (1000ms × retry count)
-  - Automatic error recovery, improved download success rate
+  - Automatic error recovery improves download success rate
   - Timeout detection and interruption handling
 - **Efficient Caching Strategy**:
-  - 1800 seconds (30 minutes) default cache duration, significantly reducing origin server pressure
-  - Git operations skip cache to ensure real-time updates
+  - 1800 seconds (30 minutes) default cache duration significantly reduces origin server pressure
+  - Git operations bypass cache ensuring real-time updates
   - Edge caching based on Cloudflare Cache API
 - **Performance Monitoring System**:
-  - Built-in `PerformanceMonitor` class, real-time tracking of request stage timing
+  - Built-in `PerformanceMonitor` class tracks request stage timing in real-time
   - Detailed performance data via `X-Performance-Metrics` response header
   - Cache hit rate statistics and optimization recommendations
 
 ### 🎯 Full Git Protocol Compatibility
 
 - **Smart Protocol Detection**:
-  - Automatic recognition of Git-specific endpoints (`/info/refs`, `/git-upload-pack`, `/git-receive-pack`)
-  - Detection of Git client User-Agent patterns
-  - Support for query parameters like `service=git-upload-pack`
+  - Automatically recognizes Git-specific endpoints (`/info/refs`, `/git-upload-pack`, `/git-receive-pack`)
+  - Detects Git client User-Agent patterns
+  - Supports query parameters like `service=git-upload-pack`
 - **Complete Operation Support**:
-  - `git clone`: Full repository cloning, supports shallow cloning and branch specification
+  - `git clone`: Full repository cloning with shallow clone and branch specification support
   - `git push`: Code pushing and branch management
   - `git pull/fetch`: Incremental updates and remote synchronization
   - `git submodule`: Recursive submodule cloning
 - **Protocol Optimization**:
-  - Preserve Git-specific request headers and authentication information
-  - Smart User-Agent handling (default `git/2.34.1`)
-  - Support for Git LFS large file transfer
+  - Preserves Git-specific request headers and authentication information
+  - Smart User-Agent handling (defaults to `git/2.34.1`)
+  - Supports Git LFS large file transfers
 
 ### 📱 Ecosystem Integration
 
-- **Dedicated Browser Extension**: [Xget Now](https://github.com/xixu-me/Xget-Now) provides seamless experience
-  - Automatic link redirection without manual URL modification
-  - Support for custom Xget instance domains
+- **Dedicated Browser Extensions**: [Xget Now](https://github.com/xixu-me/Xget-Now) provides seamless experience
+  - Automatic URL redirection without manual URL modification
+  - Custom Xget instance domain support
   - Multi-platform preference settings and blacklist/whitelist management
-  - Local processing ensures privacy security
-- **Download Tool Compatibility**: Perfect support for wget, cURL, aria2, IDM and other mainstream download tools
-- **CI/CD Integration**: Can be used directly in GitHub Actions, GitLab CI and other environments
+  - Local processing ensures privacy and security
+- **Download Tool Compatibility**: Perfect support for wget, cURL, aria2, IDM, and other mainstream download tools
+- **CI/CD Integration**: Direct usage in GitHub Actions, GitLab CI, and other environments
 
-## 📖 Link Conversion Rules
+## 📖 URL Transformation Rules
 
-Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your own deployed instance, simply replace the domain and add platform prefix:
+Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your own deployed instance, simply replace the domain and add platform prefixes:
 
-### Conversion Format
+### Transformation Format
 
-| Platform | Platform Prefix | Original Link Format | Accelerated Link Format |
-|----------|-----------------|---------------------|------------------------|
+| Platform | Platform Prefix | Original URL Format | Accelerated URL Format |
+|----------|----------------|-------------------|----------------------|
 | GitHub | `gh` | `https://github.com/...` | `https://xget.xi-xu.me/gh/...` |
 | GitLab | `gl` | `https://gitlab.com/...` | `https://xget.xi-xu.me/gl/...` |
 | Gitea | `gitea` | `https://gitea.com/...` | `https://xget.xi-xu.me/gitea/...` |
@@ -141,8 +141,6 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 | Apache | `apache` | `https://downloads.apache.org/...` | `https://xget.xi-xu.me/apache/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | Homebrew | `homebrew` | `https://github.com/Homebrew/...` | `https://xget.xi-xu.me/homebrew/...` |
-| Homebrew API | `homebrew/api` | `https://formulae.brew.sh/api/...` | `https://xget.xi-xu.me/homebrew/api/...` |
-| Homebrew Bottles | `homebrew/bottles` | `https://ghcr.io/v2/homebrew/...` | `https://xget.xi-xu.me/homebrew/bottles/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
 | CPAN | `cpan` | `https://www.cpan.org/...` | `https://xget.xi-xu.me/cpan/...` |
@@ -160,428 +158,184 @@ Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your o
 | arXiv | `arxiv` | `https://arxiv.org/...` | `https://xget.xi-xu.me/arxiv/...` |
 | F-Droid | `fdroid` | `https://f-droid.org/...` | `https://xget.xi-xu.me/fdroid/...` |
 | AI Inference Providers | `ip` | See [AI Inference Providers](#ai-inference-providers) | See [AI Inference Providers](#ai-inference-providers) |
-| Container Registry | `cr` | See [Container Registry](#container-registry) | See [Container Registry](#container-registry) |
+| Container Registries | `cr` | See [Container Registries](#container-registries) | See [Container Registries](#container-registries) |
 
-### Platform Conversion Examples
+### Platform Transformation Examples
 
 #### GitHub
 
 ```url
-# Original link
+# Original URL
 https://github.com/microsoft/vscode/archive/refs/heads/main.zip
 
-# Converted (add gh prefix)
+# Transformed (add gh prefix)
 https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 ```
 
 #### GitLab
 
 ```url
-# Original link
+# Original URL
 https://gitlab.com/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 
-# Converted (add gl prefix)
+# Transformed (add gl prefix)
 https://xget.xi-xu.me/gl/gitlab-org/gitlab/-/archive/master/gitlab-master.zip
 ```
 
 #### Gitea
 
 ```url
-# Original link
+# Original URL
 https://gitea.com/gitea/gitea/archive/master.zip
 
-# Converted (add gitea prefix)
+# Transformed (add gitea prefix)
 https://xget.xi-xu.me/gitea/gitea/gitea/archive/master.zip
 ```
 
 #### Codeberg
 
 ```url
-# Original link
+# Original URL
 https://codeberg.org/forgejo/forgejo/archive/forgejo.zip
 
-# Converted (add codeberg prefix)
+# Transformed (add codeberg prefix)
 https://xget.xi-xu.me/codeberg/forgejo/forgejo/archive/forgejo.zip
 ```
 
 #### SourceForge
 
 ```url
-# Original link
+# Original URL
 https://sourceforge.net/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download
 
-# Converted (add sf prefix)
+# Transformed (add sf prefix)
 https://xget.xi-xu.me/sf/projects/sevenzip/files/7-Zip/23.01/7z2301-x64.exe/download
 ```
 
 #### AOSP (Android Open Source Project)
 
 ```url
-# AOSP project original link
+# AOSP project original URL
 https://android.googlesource.com/platform/frameworks/base
 
-# Converted (add aosp prefix)
+# Transformed (add aosp prefix)
 https://xget.xi-xu.me/aosp/platform/frameworks/base
 
-# AOSP device tree original link
+# AOSP device tree original URL
 https://android.googlesource.com/device/google/pixel
 
-# Converted (add aosp prefix)
+# Transformed (add aosp prefix)
 https://xget.xi-xu.me/aosp/device/google/pixel
 ```
 
 #### Hugging Face
 
 ```url
-# Model file original link
+# Model file original URL
 https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
-# Converted (add hf prefix)
+# Transformed (add hf prefix)
 https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
 
-# Dataset file original link
+# Dataset file original URL
 https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 
-# Converted (add hf prefix)
+# Transformed (add hf prefix)
 https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
 ```
 
 #### npm
 
 ```url
-# Package file original link
+# Package file original URL
 https://registry.npmjs.org/react/-/react-18.2.0.tgz
 
-# Converted (add npm prefix)
+# Transformed (add npm prefix)
 https://xget.xi-xu.me/npm/react/-/react-18.2.0.tgz
 
-# Package metadata original link
+# Package metadata original URL
 https://registry.npmjs.org/lodash
 
-# Converted (add npm prefix)
+# Transformed (add npm prefix)
 https://xget.xi-xu.me/npm/lodash
 ```
 
 #### PyPI
 
 ```url
-# Python package file original link
+# Python package file original URL
 https://pypi.org/packages/source/r/requests/requests-2.31.0.tar.gz
 
-# Converted (add pypi prefix)
+# Transformed (add pypi prefix)
 https://xget.xi-xu.me/pypi/packages/source/r/requests/requests-2.31.0.tar.gz
 
-# Wheel file original link
+# Wheel file original URL
 https://pypi.org/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
 
-# Converted (add pypi prefix)
+# Transformed (add pypi prefix)
 https://xget.xi-xu.me/pypi/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl
 ```
 
 #### conda
 
 ```url
-# Default channel package file original link
+# Default channel package file original URL
 https://repo.anaconda.com/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
-# Converted (add conda prefix)
+# Transformed (add conda prefix)
 https://xget.xi-xu.me/conda/pkgs/main/linux-64/numpy-1.24.3-py311h08b1b3b_1.conda
 
-# Community channel metadata original link
+# Community channel metadata original URL
 https://conda.anaconda.org/conda-forge/linux-64/repodata.json
 
-# Converted (add conda/community prefix)
+# Transformed (add conda/community prefix)
 https://xget.xi-xu.me/conda/community/conda-forge/linux-64/repodata.json
 ```
 
 #### Maven
 
 ```url
-# Maven Central Repository JAR file original link
+# Maven Central repository JAR file original URL
 https://repo1.maven.org/maven2/org/springframework/spring-core/5.3.21/spring-core-5.3.21.jar
 
-# Converted (add maven prefix)
+# Transformed (add maven prefix)
 https://xget.xi-xu.me/maven/maven2/org/springframework/spring-core/5.3.21/spring-core-5.3.21.jar
 
-# Maven metadata original link
+# Maven metadata original URL
 https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/maven-metadata.xml
 
-# Converted (add maven prefix)
+# Transformed (add maven prefix)
 https://xget.xi-xu.me/maven/maven2/org/apache/commons/commons-lang3/maven-metadata.xml
 ```
 
 #### Apache Software Downloads
 
 ```url
-# Apache software download original link
+# Apache software download original URL
 https://downloads.apache.org/kafka/3.6.1/kafka_2.13-3.6.1.tgz
 
-# Converted (add apache prefix)
+# Transformed (add apache prefix)
 https://xget.xi-xu.me/apache/kafka/3.6.1/kafka_2.13-3.6.1.tgz
 
-# Apache Maven download original link
+# Apache Maven download original URL
 https://downloads.apache.org/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
 
-# Converted (add apache prefix)
+# Transformed (add apache prefix)
 https://xget.xi-xu.me/apache/maven/maven-3/3.9.5/binaries/apache-maven-3.9.5-bin.tar.gz
 
-# Apache Spark download original link
+# Apache Spark download original URL
 https://downloads.apache.org/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
 
-# Converted (add apache prefix)
+# Transformed (add apache prefix)
 https://xget.xi-xu.me/apache/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz
-```
-
-#### Gradle
-
-```url
-# Gradle Plugin Portal JAR file original link
-https://plugins.gradle.org/m2/org/gradle/gradle-hello-world-plugin/0.2/gradle-hello-world-plugin-0.2.jar
-
-# Converted (add gradle prefix)
-https://xget.xi-xu.me/gradle/m2/org/gradle/gradle-hello-world-plugin/0.2/gradle-hello-world-plugin-0.2.jar
-
-# Gradle plugin metadata original link
-https://plugins.gradle.org/m2/com/github/ben-manes/gradle-versions-plugin/0.51.0/gradle-versions-plugin-0.51.0.module
-
-# Converted (add gradle prefix)
-https://xget.xi-xu.me/gradle/m2/com/github/ben-manes/gradle-versions-plugin/0.51.0/gradle-versions-plugin-0.51.0.module
-```
-
-#### Homebrew
-
-```url
-# Homebrew formula repository original link
-https://github.com/Homebrew/homebrew-core/raw/HEAD/Formula/g/git.rb
-
-# Converted (add homebrew prefix)
-https://xget.xi-xu.me/homebrew/homebrew-core/raw/HEAD/Formula/g/git.rb
-
-# Homebrew API original link
-https://formulae.brew.sh/api/formula/git.json
-
-# Converted (add homebrew/api prefix)
-https://xget.xi-xu.me/homebrew/api/formula/git.json
-
-# Homebrew Bottles original link
-https://ghcr.io/v2/homebrew/core/git/manifests/2.39.0
-
-# Converted (add homebrew/bottles prefix)
-https://xget.xi-xu.me/homebrew/bottles/v2/homebrew/core/git/manifests/2.39.0
-```
-
-#### RubyGems
-
-```url
-# RubyGems package file original link
-https://rubygems.org/gems/rails-7.0.4.gem
-
-# Converted (add rubygems prefix)
-https://xget.xi-xu.me/rubygems/gems/rails-7.0.4.gem
-
-# RubyGems API original link
-https://rubygems.org/api/v1/gems/nokogiri.json
-
-# Converted (add rubygems prefix)
-https://xget.xi-xu.me/rubygems/api/v1/gems/nokogiri.json
-```
-
-#### CRAN
-
-```url
-# CRAN package file original link
-https://cran.r-project.org/src/contrib/ggplot2_3.5.2.tar.gz
-
-# Converted (add cran prefix)
-https://xget.xi-xu.me/cran/src/contrib/ggplot2_3.5.2.tar.gz
-
-# CRAN package metadata original link
-https://cran.r-project.org/web/packages/dplyr/DESCRIPTION
-
-# Converted (add cran prefix)
-https://xget.xi-xu.me/cran/web/packages/dplyr/DESCRIPTION
-```
-
-#### CPAN (Perl Package Management)
-
-```url
-# CPAN module original link
-https://www.cpan.org/modules/by-module/DBI/DBI-1.643.tar.gz
-
-# Converted (add cpan prefix)
-https://xget.xi-xu.me/cpan/modules/by-module/DBI/DBI-1.643.tar.gz
-
-# CPAN author package original link
-https://www.cpan.org/authors/id/T/TI/TIMB/DBI-1.643.tar.gz
-
-# Converted (add cpan prefix)
-https://xget.xi-xu.me/cpan/authors/id/T/TI/TIMB/DBI-1.643.tar.gz
-```
-
-#### CTAN (TeX/LaTeX Package Management)
-
-```url
-# CTAN package file original link
-https://tug.ctan.org/tex-archive/macros/latex/contrib/beamer.zip
-
-# Converted (add ctan prefix)
-https://xget.xi-xu.me/ctan/tex-archive/macros/latex/contrib/beamer.zip
-
-# CTAN font file original link
-https://tug.ctan.org/tex-archive/fonts/cm/pk/ljfour/public/cm/dpi600/cmr10.pk
-
-# Converted (add ctan prefix)
-https://xget.xi-xu.me/ctan/tex-archive/fonts/cm/pk/ljfour/public/cm/dpi600/cmr10.pk
-```
-
-#### Go Modules
-
-```url
-# Go module proxy original link
-https://proxy.golang.org/github.com/gin-gonic/gin/@v/v1.9.1.zip
-
-# Converted (add golang prefix)
-https://xget.xi-xu.me/golang/github.com/gin-gonic/gin/@v/v1.9.1.zip
-
-# Go module info original link
-https://proxy.golang.org/github.com/gorilla/mux/@v/list
-
-# Converted (add golang prefix)
-https://xget.xi-xu.me/golang/github.com/gorilla/mux/@v/list
-```
-
-#### NuGet
-
-```url
-# NuGet package download original link
-https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg
-
-# Converted (add nuget prefix)
-https://xget.xi-xu.me/nuget/v3-flatcontainer/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg
-
-# NuGet package metadata original link
-https://api.nuget.org/v3/registration5-semver1/microsoft.aspnetcore.app/index.json
-
-# Converted (add nuget prefix)
-https://xget.xi-xu.me/nuget/v3/registration5-semver1/microsoft.aspnetcore.app/index.json
-```
-
-#### Rust Crates
-
-```url
-# Crate download original link
-https://crates.io/api/v1/crates/serde/1.0.0/download
-
-# Converted (add crates prefix)
-https://xget.xi-xu.me/crates/serde/1.0.0/download
-
-# Crate metadata original link
-https://crates.io/api/v1/crates/serde
-
-# Converted (add crates prefix)
-https://xget.xi-xu.me/crates/serde
-
-# Crate search original link
-https://crates.io/api/v1/crates?q=serde
-
-# Converted (add crates prefix)
-https://xget.xi-xu.me/crates/?q=serde
-```
-
-#### Packagist
-
-```url
-# Packagist package metadata original link
-https://repo.packagist.org/p2/symfony/console.json
-
-# Converted (add packagist prefix)
-https://xget.xi-xu.me/packagist/p2/symfony/console.json
-
-# Packagist package list original link
-https://repo.packagist.org/packages/list.json
-
-# Converted (add packagist prefix)
-https://xget.xi-xu.me/packagist/packages/list.json
-```
-
-#### Linux Distributions
-
-```url
-# Debian package original link
-https://deb.debian.org/debian/pool/main/c/curl/curl_7.88.1-10+deb12u4_amd64.deb
-
-# Converted (add debian prefix)
-https://xget.xi-xu.me/debian/debian/pool/main/c/curl/curl_7.88.1-10+deb12u4_amd64.deb
-
-# Ubuntu package original link
-https://archive.ubuntu.com/ubuntu/pool/main/g/git/git_2.34.1-1ubuntu1.9_amd64.deb
-
-# Converted (add ubuntu prefix)
-https://xget.xi-xu.me/ubuntu/ubuntu/pool/main/g/git/git_2.34.1-1ubuntu1.9_amd64.deb
-
-# Fedora package original link
-https://dl.fedoraproject.org/pub/fedora/linux/releases/39/Everything/x86_64/os/Packages/n/nginx-1.24.0-1.fc39.x86_64.rpm
-
-# Converted (add fedora prefix)
-https://xget.xi-xu.me/fedora/pub/fedora/linux/releases/39/Everything/x86_64/os/Packages/n/nginx-1.24.0-1.fc39.x86_64.rpm
-
-# Rocky Linux package original link
-https://download.rockylinux.org/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1.8-6.el9.x86_64.rpm
-
-# Converted (add rocky prefix)
-https://xget.xi-xu.me/rocky/pub/rocky/9/BaseOS/x86_64/os/Packages/b/bash-5.1.8-6.el9.x86_64.rpm
-
-# openSUSE package original link
-https://download.opensuse.org/distribution/leap/15.5/repo/oss/x86_64/vim-9.0.1572-150500.20.8.1.x86_64.rpm
-
-# Converted (add opensuse prefix)
-https://xget.xi-xu.me/opensuse/distribution/leap/15.5/repo/oss/x86_64/vim-9.0.1572-150500.20.8.1.x86_64.rpm
-
-# Arch Linux package original link
-https://geo.mirror.pkgbuild.com/core/os/x86_64/linux-6.6.10.arch1-1-x86_64.pkg.tar.zst
-
-# Converted (add arch prefix)
-https://xget.xi-xu.me/arch/core/os/x86_64/linux-6.6.10.arch1-1-x86_64.pkg.tar.zst
-```
-
-#### arXiv
-
-```url
-# arXiv paper PDF original link
-https://arxiv.org/pdf/2301.07041.pdf
-
-# Converted (add arxiv prefix)
-https://xget.xi-xu.me/arxiv/pdf/2301.07041.pdf
-
-# arXiv paper source original link
-https://arxiv.org/e-print/2301.07041
-
-# Converted (add arxiv prefix)
-https://xget.xi-xu.me/arxiv/e-print/2301.07041
-```
-
-#### F-Droid
-
-```url
-# F-Droid app APK original link
-https://f-droid.org/repo/org.fdroid.fdroid_1016050.apk
-
-# Converted (add fdroid prefix)
-https://xget.xi-xu.me/fdroid/repo/org.fdroid.fdroid_1016050.apk
-
-# F-Droid app metadata original link
-https://f-droid.org/api/v1/packages/org.fdroid.fdroid
-
-# Converted (add fdroid prefix)
-https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
 ```
 
 #### AI Inference Providers
 
-Xget supports numerous mainstream AI inference providers for API acceleration, using the `ip/[ai-provider-prefix]` format:
+Xget supports numerous mainstream AI inference providers with API acceleration using the `ip/[AI Provider Prefix]` format:
 
 | AI Inference Provider | AI Provider Prefix | Original URL Format | Accelerated URL Format |
-|----------------------|------------------|-------------------|----------------------|
+|----------------------|-------------------|-------------------|----------------------|
 | OpenAI | `openai` | `https://api.openai.com/...` | `https://xget.xi-xu.me/ip/openai/...` |
 | Anthropic | `anthropic` | `https://api.anthropic.com/...` | `https://xget.xi-xu.me/ip/anthropic/...` |
 | Gemini | `gemini` | `https://generativelanguage.googleapis.com/...` | `https://xget.xi-xu.me/ip/gemini/...` |
@@ -614,40 +368,40 @@ Xget supports numerous mainstream AI inference providers for API acceleration, u
 # OpenAI API original URL
 https://api.openai.com/v1/chat/completions
 
-# Converted (add ip/openai prefix)
+# Transformed (add ip/openai prefix)
 https://xget.xi-xu.me/ip/openai/v1/chat/completions
 
 # Anthropic API original URL
 https://api.anthropic.com/v1/messages
 
-# Converted (add ip/anthropic prefix)
+# Transformed (add ip/anthropic prefix)
 https://xget.xi-xu.me/ip/anthropic/v1/messages
 
 # Gemini API original URL
 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
 
-# Converted (add ip/gemini prefix)
+# Transformed (add ip/gemini prefix)
 https://xget.xi-xu.me/ip/gemini/v1beta/models/gemini-2.5-flash:generateContent
 
 # HF Inference API original URL
 https://router.huggingface.co/hf-inference/models/openai/whisper-large-v3
 
-# Converted (add ip/huggingface prefix)
+# Transformed (add ip/huggingface prefix)
 https://xget.xi-xu.me/ip/huggingface/hf-inference/models/openai/whisper-large-v3
 ```
 
-For application scenarios, see [AI Inference API Acceleration](#ai-inference-api-acceleration).
+Use cases are detailed in [AI Inference API Acceleration](#ai-inference-api-acceleration).
 
-#### Container Registry
+#### Container Registries
 
-Xget supports multiple container registries using the `cr/[registry-prefix]` format:
+Xget supports multiple container registries using the `cr/[Container Registry Prefix]` format:
 
-| Container Registry | Registry Prefix | Original Link Format | Accelerated Link Format |
-|-------------------|-----------------|---------------------|------------------------|
+| Container Registry | Registry Prefix | Original URL Format | Accelerated URL Format |
+|-------------------|----------------|-------------------|----------------------|
 | Quay.io | `quay` | `https://quay.io/...` | `https://xget.xi-xu.me/cr/quay/...` |
 | Google Container Registry | `gcr` | `https://gcr.io/...` | `https://xget.xi-xu.me/cr/gcr/...` |
 | Microsoft Container Registry | `mcr` | `https://mcr.microsoft.com/...` | `https://xget.xi-xu.me/cr/mcr/...` |
-| Amazon ECR Public | `ecr` | `https://public.ecr.aws/...` | `https://xget.xi-xu.me/cr/ecr/...` |
+| Amazon Public ECR | `ecr` | `https://public.ecr.aws/...` | `https://xget.xi-xu.me/cr/ecr/...` |
 | GitHub Container Registry | `ghcr` | `https://ghcr.io/...` | `https://xget.xi-xu.me/cr/ghcr/...` |
 | GitLab Container Registry | `gitlab` | `https://registry.gitlab.com/...` | `https://xget.xi-xu.me/cr/gitlab/...` |
 | Red Hat Registry | `redhat` | `https://registry.redhat.io/...` | `https://xget.xi-xu.me/cr/redhat/...` |
@@ -662,24 +416,26 @@ Xget supports multiple container registries using the `cr/[registry-prefix]` for
 | Gitpod Registry | `gitpod` | `https://registry.gitpod.io/...` | `https://xget.xi-xu.me/cr/gitpod/...` |
 
 ```url
-# GitHub Container Registry original link
+# GitHub Container Registry original URL
 https://ghcr.io/v2/nginxinc/nginx-unprivileged/manifests/latest
 
-# Converted (add cr/ghcr prefix)
+# Transformed (add cr/ghcr prefix)
 https://xget.xi-xu.me/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest
 
-# Google Container Registry original link
+# Google Container Registry original URL
 https://gcr.io/v2/distroless/base/manifests/latest
 
-# Converted (add cr/gcr prefix)
+# Transformed (add cr/gcr prefix)
 https://xget.xi-xu.me/cr/gcr/v2/distroless/base/manifests/latest
 ```
 
+Use cases are detailed in [Container Image Acceleration](#container-image-acceleration).
+
 ## 🎯 Use Cases
 
-### Git Operations and Configuration
+### Git Operations & Configuration
 
-Xget is fully compatible with Git protocol, supports all standard Git operations, and provides global acceleration configuration:
+Xget is fully compatible with Git protocol, supporting all standard Git operations with global acceleration configuration:
 
 #### Git Operations
 
@@ -732,11 +488,11 @@ git config --global url."https://xget.xi-xu.me/aosp/".insteadOf "https://android
 # Verify configuration
 git config --global --get-regexp url
 
-# Now all git clone operations for related platforms will automatically use Xget acceleration
-git clone https://github.com/microsoft/vscode.git  # Automatically converted to Xget link
-git clone https://gitlab.com/gitlab-org/gitlab.git  # Automatically converted to Xget link
-git clone https://codeberg.org/forgejo/forgejo.git  # Automatically converted to Xget link
-git clone https://android.googlesource.com/platform/frameworks/base.git  # Automatically converted to Xget link
+# Now all git clone operations for relevant platforms will automatically use Xget acceleration
+git clone https://github.com/microsoft/vscode.git  # Automatically converted to Xget URL
+git clone https://gitlab.com/gitlab-org/gitlab.git  # Automatically converted to Xget URL
+git clone https://codeberg.org/forgejo/forgejo.git  # Automatically converted to Xget URL
+git clone https://android.googlesource.com/platform/frameworks/base.git  # Automatically converted to Xget URL
 ```
 
 ### Mainstream Download Tool Integration
@@ -751,7 +507,7 @@ wget https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 wget -c https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/main/pytorch_model.bin
 
 # Batch download
-wget -i urls.txt  # urls.txt contains multiple Xget links
+wget -i urls.txt  # urls.txt contains multiple Xget URLs
 ```
 
 #### cURL Downloads
@@ -777,7 +533,7 @@ aria2c -x 16 -s 16 https://xget.xi-xu.me/hf/microsoft/DialoGPT-large/resolve/mai
 aria2c -c https://xget.xi-xu.me/gh/microsoft/vscode/archive/refs/heads/main.zip
 
 # Batch download with config file
-aria2c -i download-list.txt  # File containing multiple Xget links
+aria2c -i download-list.txt  # File containing multiple Xget URLs
 ```
 
 ### Hugging Face Mirror
@@ -801,7 +557,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name)
 
 print("Model and tokenizer loaded successfully!")
 
-# You can now use tokenizer and model
+# You can now use the tokenizer and model
 # For example:
 # new_user_input_ids = tokenizer.encode("Hello, how are you?", return_tensors='pt')
 # chat_history_ids = model.generate(new_user_input_ids, max_length=1000, pad_token_id=tokenizer.eos_token_id)
@@ -823,7 +579,7 @@ npm config set registry https://xget.xi-xu.me/npm/
 npm config get registry
 ```
 
-#### Use in projects
+#### Project-level usage
 
 ```bash
 # Configure project-level mirror in .npmrc file
@@ -853,7 +609,7 @@ pip config set global.trusted-host xget.xi-xu.me
 pip config list
 ```
 
-#### Use in projects
+#### Project-level usage
 
 ```bash
 # Create pip.conf file (Linux/macOS)
@@ -864,7 +620,7 @@ index-url = https://xget.xi-xu.me/pypi/simple/
 trusted-host = xget.xi-xu.me
 EOF
 
-# Or create pip.conf in project root
+# Or create pip.conf in project root directory
 cat > pip.conf << EOF
 [global]
 index-url = https://xget.xi-xu.me/pypi/simple/
@@ -926,7 +682,7 @@ channel_priority: strict
 show_channel_urls: true
 ```
 
-#### Use environment files
+#### Using environment files
 
 Environment files can directly specify complete mirror URLs:
 
@@ -975,7 +731,7 @@ conda env update -f environment.yml
 </settings>
 ```
 
-#### Use in projects
+#### Project-level usage
 
 ```xml
 <!-- Configure project-level mirror in pom.xml -->
@@ -1007,9 +763,9 @@ mvn dependency:get -Dartifact=org.springframework:spring-core:5.3.21 \
   -DremoteRepositories=https://xget.xi-xu.me/maven/maven2
 ```
 
-### Apache Software Download Acceleration
+### Apache Software Downloads
 
-#### Use Xget to download Apache software
+#### Download Apache software using Xget
 
 ```bash
 # Download Apache Kafka
@@ -1031,7 +787,7 @@ curl -L -O https://xget.xi-xu.me/apache/flink/flink-1.18.1/flink-1.18.1-bin-scal
 #### Common Apache software downloads
 
 ```bash
-# Big Data related
+# Big data related
 wget https://xget.xi-xu.me/apache/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz
 wget https://xget.xi-xu.me/apache/hbase/2.5.7/hbase-2.5.7-bin.tar.gz
 wget https://xget.xi-xu.me/apache/zookeeper/zookeeper-3.8.4/apache-zookeeper-3.8.4-bin.tar.gz
@@ -1118,23 +874,23 @@ export HOMEBREW_BOTTLE_DOMAIN="https://xget.xi-xu.me/homebrew/bottles"
 brew update
 ```
 
-#### Long-term configuration
+#### Permanent configuration
 
 ```bash
-# For bash users, add to ~/.bash_profile
+# Add to ~/.bash_profile for bash users
 echo 'export HOMEBREW_BREW_GIT_REMOTE="https://xget.xi-xu.me/homebrew/brew.git"' >> ~/.bash_profile
 echo 'export HOMEBREW_CORE_GIT_REMOTE="https://xget.xi-xu.me/homebrew/homebrew-core.git"' >> ~/.bash_profile
 echo 'export HOMEBREW_API_DOMAIN="https://xget.xi-xu.me/homebrew/api"' >> ~/.bash_profile
 echo 'export HOMEBREW_BOTTLE_DOMAIN="https://xget.xi-xu.me/homebrew/bottles"' >> ~/.bash_profile
 
-# For zsh users, add to ~/.zprofile
+# Add to ~/.zprofile for zsh users
 echo 'export HOMEBREW_BREW_GIT_REMOTE="https://xget.xi-xu.me/homebrew/brew.git"' >> ~/.zprofile
 echo 'export HOMEBREW_CORE_GIT_REMOTE="https://xget.xi-xu.me/homebrew/homebrew-core.git"' >> ~/.zprofile
 echo 'export HOMEBREW_API_DOMAIN="https://xget.xi-xu.me/homebrew/api"' >> ~/.zprofile
 echo 'export HOMEBREW_BOTTLE_DOMAIN="https://xget.xi-xu.me/homebrew/bottles"' >> ~/.zprofile
 ```
 
-#### Use in projects
+#### Project usage
 
 ```bash
 # Install packages
@@ -1156,7 +912,7 @@ brew list
 # Check Homebrew configuration
 brew config
 
-# Check environment variables
+# View environment variables
 echo $HOMEBREW_API_DOMAIN
 echo $HOMEBREW_BOTTLE_DOMAIN
 ```
@@ -1177,7 +933,7 @@ gem sources --remove https://rubygems.org/
 gem sources -l
 ```
 
-#### Use in projects
+#### Project usage
 
 ```ruby
 # Configure project-level mirror in Gemfile
@@ -1212,7 +968,7 @@ getOption("repos")
 #### Configure in .Rprofile
 
 ```r
-# Configure global mirror in .Rprofile file in user home directory
+# Configure global mirror in user home directory .Rprofile file
 options(repos = c(
   CRAN = "https://xget.xi-xu.me/cran/",
   BioCsoft = "https://bioconductor.org/packages/release/bioc",
@@ -1224,7 +980,7 @@ options(repos = c(
 options(download.file.method = "libcurl")
 ```
 
-#### Use in projects
+#### Project usage
 
 ```r
 # Specify mirror in project's renv.lock or scripts
@@ -1250,6 +1006,88 @@ install.packages(packages)
 "
 ```
 
+### Perl Package Acceleration
+
+#### Configure CPAN to use Xget mirror
+
+```bash
+# Configure CPAN to use Xget mirror
+cpan o conf urllist push https://xget.xi-xu.me/cpan/
+cpan o conf commit
+
+# Or directly edit config file ~/.cpan/CPAN/MyConfig.pm
+# Add:
+# 'urllist' => [q[https://xget.xi-xu.me/cpan/]],
+```
+
+#### Use cpanm to install modules
+
+```bash
+# Install cpanm (if not available)
+curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+
+# Install modules using Xget mirror
+cpanm --mirror https://xget.xi-xu.me/cpan/ DBI
+cpanm --mirror https://xget.xi-xu.me/cpan/ Mojolicious
+
+# Install dependencies from Makefile.PL
+cpanm --mirror https://xget.xi-xu.me/cpan/ --installdeps .
+```
+
+#### Project usage
+
+```perl
+# List dependencies in cpanfile
+requires 'DBI';
+requires 'Mojolicious';
+requires 'JSON';
+
+# Then install using Xget mirror
+cpanm --mirror https://xget.xi-xu.me/cpan/ --installdeps .
+```
+
+### TeX/LaTeX Package Acceleration
+
+#### Configure TeX Live to use Xget CTAN mirror
+
+```bash
+# Configure tlmgr to use Xget CTAN mirror
+tlmgr option repository https://xget.xi-xu.me/ctan/systems/texlive/tlnet
+
+# Update package database
+tlmgr update --self --all
+
+# Install packages
+tlmgr install beamer
+tlmgr install tikz
+```
+
+#### Configure MiKTeX to use Xget mirror
+
+```bash
+# Windows MiKTeX configuration
+mpm --set-repository=https://xget.xi-xu.me/ctan/systems/win32/miktex
+
+# Update package database
+mpm --update-db
+
+# Install packages
+mpm --install=beamer
+mpm --install=pgf
+```
+
+#### Project usage
+
+```bash
+# LaTeX document compilation with automatic missing package installation
+pdflatex --shell-escape document.tex
+
+# Or manually install specific packages
+tlmgr install caption
+tlmgr install subcaption
+tlmgr install algorithm2e
+```
+
 ### Go Module Acceleration
 
 #### Configure Go to use Xget proxy
@@ -1267,7 +1105,7 @@ go env -w GOSUMDB=off
 go env GOPROXY
 ```
 
-#### Use in projects
+#### Project usage
 
 ```bash
 # Download dependencies
@@ -1278,80 +1116,6 @@ go get -u ./...
 
 # Clean module cache
 go clean -modcache
-```
-
-### Perl Package Acceleration
-
-#### Configure CPAN to use Xget mirror
-
-```bash
-# Configure cpan to use Xget mirror
-cpan -o conf urllist push https://xget.xi-xu.me/cpan/
-
-# Or configure cpanm
-cpanm --mirror https://xget.xi-xu.me/cpan/ Module::Name
-
-# Configure in .cpan/CPAN/MyConfig.pm
-$CPAN::Config->{urllist} = [qw[https://xget.xi-xu.me/cpan/]];
-```
-
-#### Use in projects
-
-```bash
-# Install Perl modules using cpanm
-cpanm --mirror https://xget.xi-xu.me/cpan/ DBI
-cpanm --mirror https://xget.xi-xu.me/cpan/ Moose
-cpanm --mirror https://xget.xi-xu.me/cpan/ LWP::UserAgent
-
-# Install from cpanfile
-cpanm --mirror https://xget.xi-xu.me/cpan/ --installdeps .
-
-# Install specific version
-cpanm --mirror https://xget.xi-xu.me/cpan/ DBI@1.643
-```
-
-### TeX/LaTeX Package Acceleration
-
-#### Configure TeX Live to use Xget mirror
-
-```bash
-# Configure TeX Live package manager
-tlmgr option repository https://xget.xi-xu.me/ctan/systems/texlive/tlnet
-
-# Verify configuration
-tlmgr option repository
-
-# Update package database
-tlmgr update --self --all
-```
-
-#### Configure MiKTeX to use Xget mirror
-
-```bash
-# Configure MiKTeX to use Xget mirror
-mpm --set-repository https://xget.xi-xu.me/ctan/systems/win32/miktex/tm/packages/
-
-# Update package database
-mpm --update-db
-
-# Install packages
-mpm --install beamer
-mpm --install pgf
-```
-
-#### Use in projects
-
-```bash
-# Install LaTeX packages using tlmgr
-tlmgr install beamer
-tlmgr install pgf
-tlmgr install tikz
-
-# Install packages from requirements file
-tlmgr install --file package-list.txt
-
-# Update all packages
-tlmgr update --all
 ```
 
 ### NuGet Package Acceleration
@@ -1400,10 +1164,10 @@ EOF
 cargo search serde
 ```
 
-#### Use in projects
+#### Project usage
 
 ```toml
-# Dependencies can be used normally in Cargo.toml
+# Normal dependency usage in Cargo.toml
 [dependencies]
 serde = "1.0"
 tokio = "1.0"
@@ -1411,13 +1175,13 @@ reqwest = "0.11"
 ```
 
 ```bash
-# Xget acceleration will be used automatically when building project
+# Build project will automatically use Xget acceleration
 cargo build
 
 # Update dependencies
 cargo update
 
-# Add new dependency
+# Add new dependencies
 cargo add clap
 ```
 
@@ -1469,7 +1233,7 @@ echo "deb https://xget.xi-xu.me/debian/debian-security bookworm-security main" |
 echo "deb https://xget.xi-xu.me/ubuntu/ubuntu jammy main restricted universe multiverse" | sudo tee /etc/apt/sources.list
 echo "deb https://xget.xi-xu.me/ubuntu/ubuntu jammy-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
 
-# Update package list
+# Update package lists
 sudo apt update
 ```
 
@@ -1534,7 +1298,7 @@ sudo pacman -Sy
 # Download arXiv paper PDF
 wget https://xget.xi-xu.me/arxiv/pdf/2301.07041.pdf
 
-# Download paper source
+# Download paper source code
 curl -L -O https://xget.xi-xu.me/arxiv/e-print/2301.07041
 
 # Batch download multiple papers
@@ -1543,10 +1307,10 @@ for id in 2301.07041 2302.13971 2303.08774; do
 done
 ```
 
-#### Use in academic tools
+#### Usage in academic tools
 
 ```python
-# Use arXiv acceleration download in Python
+# Use arXiv acceleration in Python
 import requests
 
 def download_arxiv_paper(arxiv_id, output_path):
@@ -1577,14 +1341,14 @@ F-Droid is the largest open-source app store on the Android platform. Xget provi
 #### Supported F-Droid services
 
 ```url
-# F-Droid app APK download
-https://xget.xi-xu.me/fdroid/repo/[package-name]_[version].apk
+# F-Droid app APK downloads
+https://xget.xi-xu.me/fdroid/repo/[package-name]_[version-code].apk
 
 # F-Droid repository index
 https://xget.xi-xu.me/fdroid/repo/index-v1.jar
 
 # F-Droid app icons
-https://xget.xi-xu.me/fdroid/repo/icons-640/[package-name].[version].png
+https://xget.xi-xu.me/fdroid/repo/icons-640/[package-name].[version-code].png
 
 # F-Droid API endpoints
 https://xget.xi-xu.me/fdroid/api/v1/packages/[package-name]
@@ -1610,7 +1374,7 @@ curl https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
 cat > download_fdroid_apps.sh << 'EOF'
 #!/bin/bash
 
-# Define list of apps to download
+# Define app list to download
 apps=(
     "org.fdroid.fdroid_1016050.apk"
     "org.mozilla.fennec_fdroid_1014000.apk"
@@ -1639,7 +1403,7 @@ chmod +x download_fdroid_apps.sh
 For Android developers, F-Droid mirror can be integrated into build scripts:
 
 ```gradle
-// Configure F-Droid dependency check in build.gradle
+// Configure F-Droid dependency checking in build.gradle
 task checkFDroidAvailability {
     doLast {
         def fdroidUrl = "https://xget.xi-xu.me/fdroid/api/v1/packages/${project.name}"
@@ -1659,40 +1423,20 @@ task checkFDroidAvailability {
 
 ### AI Inference API Acceleration
 
-Xget provides high-speed acceleration services for numerous mainstream AI inference providers, significantly improving API response times and reducing latency. Whether for development testing or production deployment, Xget can provide stable and efficient AI API acceleration.
+Xget provides acceleration services for numerous AI inference APIs, significantly improving API response speed and reliability through intelligent routing optimization.
 
-#### Supported AI inference providers
-
-Xget supports over 25+ mainstream AI inference providers, including but not limited to:
-
-- **Large Language Model Providers**: OpenAI, Anthropic, Gemini, Mistral AI, xAI, Cohere
-- **Cloud AI Platforms**: Vertex AI, GitHub Models, NVIDIA API
-- **Specialized AI Services**: Perplexity, Groq, Cerebras, SambaNova
-- **Open Source Platforms**: Hugging Face Inference, Together, Replicate, Fireworks
-- **Embedding & Vector Services**: Jina, Voyage AI
-- **Multi-Modal AI**: Fal AI, Novita
-- **AI Aggregation Platforms**: OpenRouter, Poe, Featherless AI, Hyperbolic
-
-#### Basic usage
-
-Simply replace the original API base URL with the Xget accelerated URL:
+#### OpenAI API
 
 ```python
 import openai
 
-# Original OpenAI API
-# client = openai.OpenAI(
-#     api_key="your-api-key",
-#     base_url="https://api.openai.com/v1"
-# )
-
-# Using Xget acceleration
+# Use Xget-accelerated OpenAI API
 client = openai.OpenAI(
     api_key="your-api-key",
-    base_url="https://xget.xi-xu.me/ip/openai/v1"
+    base_url="https://xget.xi-xu.me/ip/openai"  # Use Xget acceleration
 )
 
-# API calls remain unchanged
+# Chat completion
 response = client.chat.completions.create(
     model="gpt-4",
     messages=[
@@ -1703,126 +1447,187 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-#### Multi-provider usage examples
+#### Anthropic API
 
 ```python
-# Anthropic Claude API acceleration
 import anthropic
 
+# Use Xget-accelerated Anthropic API
 client = anthropic.Anthropic(
-    api_key="your-anthropic-key",
-    base_url="https://xget.xi-xu.me/ip/anthropic"
+    api_key="your-api-key",
+    base_url="https://xget.xi-xu.me/ip/anthropic"  # Use Xget acceleration
 )
 
-# Gemini API acceleration
+# Create message
+message = client.messages.create(
+    model="claude-3-sonnet-20240229",
+    max_tokens=1000,
+    messages=[
+        {"role": "user", "content": "Hello, Claude!"}
+    ]
+)
+
+print(message.content)
+```
+
+#### Gemini API
+
+```python
 import google.generativeai as genai
 
-genai.configure(
-    api_key="your-gemini-key",
-    transport="rest",
-    client_options={"api_endpoint": "https://xget.xi-xu.me/ip/gemini"}
-)
+# Configure API key
+genai.configure(api_key="your-api-key")
 
-# Groq API acceleration (ultra-fast inference)
-from groq import Groq
-
-client = Groq(
-    api_key="your-groq-key",
-    base_url="https://xget.xi-xu.me/ip/groq/openai/v1"
-)
-
-# Hugging Face Inference API acceleration
+# Use custom transport to configure Xget acceleration
 import requests
 
-def query_hf_model(payload):
-    response = requests.post(
-        "https://xget.xi-xu.me/ip/huggingface/hf-inference/models/microsoft/DialoGPT-medium",
-        headers={"Authorization": f"Bearer {your_hf_token}"},
-        json=payload
-    )
+class XgetTransport:
+    def __init__(self, base_url):
+        self.base_url = base_url
+        
+    def request(self, method, url, **kwargs):
+        # Forward requests to Xget acceleration service
+        accelerated_url = url.replace("https://generativelanguage.googleapis.com", 
+                                    "https://xget.xi-xu.me/ip/gemini")
+        return requests.request(method, accelerated_url, **kwargs)
+
+# Create model instance
+model = genai.GenerativeModel('gemini-pro')
+
+# Generate content
+response = model.generate_content("Write a brief introduction about artificial intelligence")
+print(response.text)
+```
+
+#### Multi-provider unified interface
+
+```python
+import requests
+import json
+
+def call_ai_api(provider, endpoint, data, api_key):
+    """
+    Unified AI API calling function supporting multiple providers
+    """
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    
+    # Use Xget acceleration URL
+    url = f"https://xget.xi-xu.me/ip/{provider}/{endpoint}"
+    
+    response = requests.post(url, headers=headers, json=data)
     return response.json()
+
+# Usage examples
+providers = {
+    "openai": {
+        "endpoint": "v1/chat/completions",
+        "data": {
+            "model": "gpt-4",
+            "messages": [{"role": "user", "content": "Hello!"}]
+        }
+    },
+    "anthropic": {
+        "endpoint": "v1/messages",
+        "data": {
+            "model": "claude-3-sonnet-20240229",
+            "max_tokens": 1000,
+            "messages": [{"role": "user", "content": "Hello!"}]
+        }
+    },
+    "cohere": {
+        "endpoint": "v1/generate",
+        "data": {
+            "model": "command",
+            "prompt": "Hello!",
+            "max_tokens": 100
+        }
+    }
+}
+
+# Loop through different providers
+for provider, config in providers.items():
+    try:
+        result = call_ai_api(
+            provider=provider,
+            endpoint=config["endpoint"],
+            data=config["data"],
+            api_key="your-api-key"
+        )
+        print(f"{provider.title()} response: {result}")
+    except Exception as e:
+        print(f"Error calling {provider}: {e}")
+```
+
+#### JavaScript/Node.js usage
+
+```javascript
+// OpenAI API acceleration
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: 'your-api-key',
+  baseURL: 'https://xget.xi-xu.me/ip/openai',  // Use Xget acceleration
+});
+
+async function chatWithGPT() {
+  const completion = await openai.chat.completions.create({
+    messages: [{ role: 'user', content: 'Hello!' }],
+    model: 'gpt-4',
+  });
+  
+  console.log(completion.choices[0].message.content);
+}
+
+// Anthropic API acceleration
+import Anthropic from '@anthropic-ai/sdk';
+
+const anthropic = new Anthropic({
+  apiKey: 'your-api-key',
+  baseURL: 'https://xget.xi-xu.me/ip/anthropic',  // Use Xget acceleration
+});
+
+async function chatWithClaude() {
+  const message = await anthropic.messages.create({
+    model: 'claude-3-sonnet-20240229',
+    max_tokens: 1000,
+    messages: [{ role: 'user', content: 'Hello!' }],
+  });
+  
+  console.log(message.content);
+}
 ```
 
 #### Environment variable configuration
 
-For easier management, you can configure acceleration URLs via environment variables:
-
 ```bash
-# Set environment variables
-export OPENAI_BASE_URL="https://xget.xi-xu.me/ip/openai/v1"
-export ANTHROPIC_BASE_URL="https://xget.xi-xu.me/ip/anthropic"
-export GEMINI_BASE_URL="https://xget.xi-xu.me/ip/gemini"
-export GROQ_BASE_URL="https://xget.xi-xu.me/ip/groq/openai/v1"
-
-# Use in applications
-python your_ai_app.py
+# Configure in .env file
+OPENAI_BASE_URL=https://xget.xi-xu.me/ip/openai
+ANTHROPIC_BASE_URL=https://xget.xi-xu.me/ip/anthropic
+GEMINI_BASE_URL=https://xget.xi-xu.me/ip/gemini
+COHERE_BASE_URL=https://xget.xi-xu.me/ip/cohere
+MISTRAL_AI_BASE_URL=https://xget.xi-xu.me/ip/mistralai
+GROQ_BASE_URL=https://xget.xi-xu.me/ip/groq
 ```
+
+Then use in code:
 
 ```python
 import os
-import openai
+from openai import OpenAI
 
-# Automatically use environment variable
-client = openai.OpenAI(
+# Read configuration from environment variables
+client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY"),
-    base_url=os.getenv("OPENAI_BASE_URL")
+    base_url=os.getenv("OPENAI_BASE_URL")  # Automatically use Xget acceleration
 )
-```
-
-#### Performance comparison
-
-Using Xget acceleration can significantly improve API response times:
-
-| Provider | Original Latency | Xget Accelerated | Improvement |
-|----------|------------------|------------------|-------------|
-| OpenAI | 1200-2000ms | 300-600ms | 60-75% |
-| Anthropic | 1500-2500ms | 400-800ms | 65-73% |
-| Gemini | 1000-1800ms | 250-500ms | 70-75% |
-| Groq | 200-400ms | 80-150ms | 60-62% |
-| HF Inference | 2000-3000ms | 500-1000ms | 70-75% |
-
-#### Production deployment
-
-For production environments, we recommend:
-
-```python
-import time
-import random
-from typing import List
-
-class AIProviderBalancer:
-    def __init__(self):
-        self.providers = [
-            {"name": "openai", "base_url": "https://xget.xi-xu.me/ip/openai/v1", "weight": 0.4},
-            {"name": "anthropic", "base_url": "https://xget.xi-xu.me/ip/anthropic", "weight": 0.3},
-            {"name": "groq", "base_url": "https://xget.xi-xu.me/ip/groq/openai/v1", "weight": 0.3}
-        ]
-    
-    def get_provider(self):
-        # Weighted random selection
-        weights = [p["weight"] for p in self.providers]
-        return random.choices(self.providers, weights=weights)[0]
-    
-    def call_with_fallback(self, prompt: str, max_retries: int = 3):
-        for attempt in range(max_retries):
-            provider = self.get_provider()
-            try:
-                # Attempt API call with selected provider
-                return self.make_api_call(provider, prompt)
-            except Exception as e:
-                print(f"Provider {provider['name']} failed: {e}")
-                if attempt == max_retries - 1:
-                    raise
-                time.sleep(2 ** attempt)  # Exponential backoff
-
-# Usage
-balancer = AIProviderBalancer()
-response = balancer.call_with_fallback("Hello, how are you?")
 ```
 
 ### Container Image Acceleration
 
-Xget provides comprehensive acceleration support for container image pulling, compatible with Docker, Podman, containerd and other container runtimes.
+Xget provides comprehensive acceleration support for container image pulling, compatible with Docker, Podman, containerd, and other container runtimes.
 
 #### Docker Configuration
 
@@ -1846,20 +1651,20 @@ docker info | grep -A 10 "Registry Mirrors"
 #### Direct image pulling
 
 ```bash
-# Pull GitHub Container Registry image
+# Pull GitHub Container Registry images
 docker pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 
-# Pull Google Container Registry image
+# Pull Google Container Registry images
 docker pull xget.xi-xu.me/cr/gcr/distroless/base:latest
 
-# Pull Microsoft Container Registry image
+# Pull Microsoft Container Registry images
 docker pull xget.xi-xu.me/cr/mcr/dotnet/runtime:8.0
 ```
 
 #### Kubernetes deployment configuration
 
 ```yaml
-# deployment.yaml - Using Xget accelerated images
+# deployment.yaml - Use Xget-accelerated images
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -1888,7 +1693,7 @@ spec:
 #### Docker Compose configuration
 
 ```yaml
-# docker-compose.yml - Using Xget accelerated images
+# docker-compose.yml - Use Xget-accelerated images
 version: '3.8'
 services:
   web:
@@ -1918,7 +1723,7 @@ volumes:
 #### Dockerfile optimization
 
 ```dockerfile
-# Use Xget accelerated base images in Dockerfile
+# Use Xget-accelerated base images in Dockerfile
 FROM xget.xi-xu.me/cr/ghcr/nodejs/node:18-alpine AS builder
 
 WORKDIR /app
@@ -1932,7 +1737,7 @@ RUN npm run build
 FROM xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Use Microsoft Container Registry .NET image
+# Use Microsoft Container Registry .NET images
 FROM xget.xi-xu.me/cr/mcr/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=builder /app/publish .
@@ -1942,7 +1747,7 @@ ENTRYPOINT ["dotnet", "MyApp.dll"]
 #### CI/CD integration
 
 ```yaml
-# GitHub Actions - Using Xget accelerated container builds
+# GitHub Actions - Use Xget acceleration for container builds
 name: Build and Deploy
 on: [push]
 
@@ -1954,7 +1759,7 @@ jobs:
       
       - name: Build with accelerated base images
         run: |
-          # Build using Xget accelerated base images
+          # Build using Xget-accelerated base images
           docker build -t myapp:latest \
             --build-arg BASE_IMAGE=xget.xi-xu.me/cr/ghcr/nodejs/node:18-alpine .
           
@@ -2014,12 +1819,12 @@ jobs:
       
       - name: Download model files
         run: |
-          # Use Xget to accelerate large model file downloads
+          # Use Xget acceleration to download large model files
           wget https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
           
       - name: Clone dependency repo
         run: |
-          # Use Xget to accelerate Git cloning
+          # Use Xget acceleration for Git cloning
           git clone https://xget.xi-xu.me/gh/[owner]/[repository].git
           
       - name: Download release assets
@@ -2082,7 +1887,7 @@ WORKDIR /app
 
 ## 🚀 Deployment Options
 
-### Cloudflare Workers One-Click Deployment
+### One-Click Cloudflare Workers Deployment
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
@@ -2094,7 +1899,7 @@ If you prefer manual deployment or need custom configuration:
 
 #### Prerequisites
 
-1. Register a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages)
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages)
 2. Install [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 #### Deployment Steps
@@ -2113,7 +1918,7 @@ If you prefer manual deployment or need custom configuration:
    npx wrangler auth login
    ```
 
-3. **Custom configuration (optional)**
+3. **Customize configuration (optional)**
 
    Edit the `wrangler.toml` file to set your repository name:
 
@@ -2151,8 +1956,8 @@ export const CONFIG = {
 
 ### Performance Tuning Recommendations
 
-- **Cache Optimization**: Adjust `CACHE_DURATION` based on usage patterns; frequently updated repositories can reduce this appropriately
-- **Timeout Settings**: Increase `TIMEOUT_SECONDS` appropriately for poor network conditions
+- **Cache Optimization**: Adjust `CACHE_DURATION` based on usage patterns; frequently updated repositories can use lower values
+- **Timeout Settings**: Increase `TIMEOUT_SECONDS` for poor network conditions
 - **Retry Strategy**: Increase `MAX_RETRIES` and `RETRY_DELAY_MS` for high-latency environments
 
 ### Adding New Platforms
@@ -2173,7 +1978,7 @@ export const PLATFORMS = {
 
 ## 🚧 Development
 
-1. **Repository setup**
+1. **Repository Setup**
 
    ```bash
    git clone https://github.com/xixu-me/Xget.git
@@ -2182,7 +1987,7 @@ export const PLATFORMS = {
    npx wrangler auth login  # First time use
    ```
 
-2. **Local development**
+2. **Local Development**
 
    ```bash
    npm run dev              # Start development server (http://localhost:8787)
@@ -2195,7 +2000,7 @@ export const PLATFORMS = {
 
 ## 🧪 Testing
 
-The repository includes a comprehensive test suite to ensure code quality and functional correctness.
+The repository includes a comprehensive test suite ensuring code quality and functionality.
 
 ### Complete Testing
 
@@ -2216,7 +2021,7 @@ npm run test:watch
 ### Test Coverage
 
 - **Unit Tests**: Core functionality, platform configuration, performance monitoring
-- **Integration Tests**: End-to-end processes, platform integration, Git protocol
+- **Integration Tests**: End-to-end workflows, platform integration, Git protocol
 - **Security Tests**: Input validation, security headers, permission control
 - **Performance Tests**: Response time, memory usage, concurrent processing
 
@@ -2225,22 +2030,22 @@ npm run test:watch
 ### Common Issues
 
 **Q: Download speed not significantly improved?**  
-A: Check if source files are already cached on CDN edge nodes. First access may be slow, subsequent access will be significantly improved.
+A: Check if source files are already cached on CDN edge nodes. First access may be slower, subsequent access will be significantly faster.
 
 **Q: Git operations failing?**  
-A: Confirm correct URL format is used and Git client version supports HTTPS proxy.
+A: Confirm correct URL format usage and that Git client version supports HTTPS proxy.
 
 **Q: Cannot access after deployment?**  
-A: Check if Cloudflare Workers domain is correctly bound, confirm `wrangler.toml` configuration is correct.
+A: Check if Cloudflare Workers domain is correctly bound and confirm `wrangler.toml` configuration is correct.
 
 **Q: Getting 400 errors?**  
-A: Check URL path format, confirm platform prefix is used correctly.
+A: Check URL path format and confirm platform prefix is used correctly.
 
 ### Performance Monitoring
 
 The service returns performance metrics in response headers:
 
-- `X-Performance-Metrics`: Contains timing statistics for various request stages
+- `X-Performance-Metrics`: Contains timing statistics for request stages
 - `X-Cache-Status`: Shows cache hit status
 
 ### Debug Logging
@@ -2253,11 +2058,11 @@ npx wrangler dev --log-level debug
 
 ## ⚠️ Disclaimer
 
-- **Legal Use**: This repository is only for accelerating legal public file downloads and Git operations. Please comply with relevant platform terms of service and local laws and regulations
-- **Service Availability**: Public instance `xget.xi-xu.me` is a free service with no guarantee of 100% availability. Production environments are recommended to deploy their own instances
-- **Data Security**: Although Xget does not store or log user data, please handle sensitive information downloads carefully
+- **Legal Use**: This repository is for accelerating legal public file downloads and Git operations only. Please comply with relevant platform terms of service and local laws
+- **Service Availability**: Public instance `xget.xi-xu.me` is a free service with no 100% availability guarantee. Production environments should deploy their own instances
+- **Data Security**: While Xget does not store or log user data, please handle sensitive information downloads carefully
 - **Liability Limitation**: Developers are not responsible for any direct or indirect losses caused by using this service
-- **Third-party Platforms**: Please respect the terms of service and rate limits of GitHub, GitLab, Gitea, Codeberg, SourceForge, Hugging Face and other platforms
+- **Third-party Platforms**: Please respect the terms of service and rate limits of GitHub, GitLab, Gitea, Codeberg, SourceForge, Hugging Face, and other platforms
 
 ## 🤝 Contributing
 
@@ -2265,8 +2070,8 @@ We welcome all forms of contributions! Please check the [Contributing Guide](CON
 
 1. **Report Issues**: Use [issue templates](https://github.com/xixu-me/Xget/issues/new/choose) to report bugs or request features
 2. **Submit Code**: Fork the repository, create feature branches, submit pull requests
-3. **Improve Documentation**: Fix errors, add examples, improve descriptions
-4. **Test Feedback**: Test in different environments and provide feedback
+3. **Improve Documentation**: Fix errors, add examples, improve explanations
+4. **Testing Feedback**: Test in different environments and provide feedback
 
 ## 🌟 Star History
 
@@ -2282,7 +2087,7 @@ We welcome all forms of contributions! Please check the [Contributing Guide](CON
 
 - **Author**: [Xi Xu](https://xi-xu.me)
 - **Email**: [Contact Email](mailto:i@xi-xu.me)
-- **Sponsor**: [Sponsor Link](https://xi-xu.me/#sponsorships)
+- **Sponsor**: [Sponsor URL](https://xi-xu.me/#sponsorships)
 
 ## 📝 License
 

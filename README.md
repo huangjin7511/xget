@@ -2159,7 +2159,7 @@ WORKDIR /app
 
    ```bash
    npm install
-   npx wrangler auth login
+   npx wrangler login
    ```
 
 3. **自定义配置（可选）**
@@ -2228,7 +2228,7 @@ export const PLATFORMS = {
    git clone https://github.com/xixu-me/Xget.git
    cd Xget
    npm install
-   npx wrangler auth login  # 首次使用
+   npx wrangler login  # 首次使用
    ```
 
 2. **本地开发**

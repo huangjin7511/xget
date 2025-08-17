@@ -1915,7 +1915,7 @@ If you prefer manual deployment or need custom configuration:
 
    ```bash
    npm install
-   npx wrangler auth login
+   npx wrangler login
    ```
 
 3. **Customize configuration (optional)**
@@ -1984,7 +1984,7 @@ export const PLATFORMS = {
    git clone https://github.com/xixu-me/Xget.git
    cd Xget
    npm install
-   npx wrangler auth login  # First time use
+   npx wrangler login  # First time use
    ```
 
 2. **Local Development**

@@ -1900,7 +1900,7 @@ After deployment, your Xget service will be available at `your-worker-name.your-
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
 
-After deployment, your Xget service will be available at `your-project-name.vercel.app`. For detailed setup instructions, see [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md).
+After deployment, your Xget service will be available at `your-project-name.vercel.app`.
 
 ### Manual Deployment
 

@@ -2144,7 +2144,7 @@ WORKDIR /app
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
 
-部署后，你的 Xget 服务将在 `your-project-name.vercel.app` 上可用。详细设置说明请参见 [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md)。
+部署后，你的 Xget 服务将在 `your-project-name.vercel.app` 上可用。
 
 ### 手动部署
 

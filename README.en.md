@@ -43,7 +43,9 @@ Ultra-high performance, secure, all-in-one open-source resource acceleration eng
 
 ## 🎯 Quick Start
 
-**Public Instance:** [**`xget.xi-xu.me`**](https://xget.xi-xu.me) - Ready to use, no deployment required!
+**Public Instance: `xget.xi-xu.me`** - Ready to use, no deployment required!
+
+**URL Converter: [`xuc.xi-xu.me`](https://xuc.xi-xu.me)** - One-click conversion of any supported platform URL to Xget acceleration format!
 
 > **⚡ Experience lightning-fast downloads instantly**: No registration, no configuration needed - just start using it to feel the blazing download speeds!
 
@@ -121,7 +123,7 @@ Ultra-high performance, secure, all-in-one open-source resource acceleration eng
 
 ## 📖 URL Transformation Rules
 
-Using the public instance [**`xget.xi-xu.me`**](https://xget.xi-xu.me) or your own deployed instance, simply replace the domain and add platform prefixes:
+Using the public instance **`xget.xi-xu.me`** or your own deployed instance, simply replace the domain and add platform prefixes:
 
 ### Transformation Format
 

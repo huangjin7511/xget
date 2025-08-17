@@ -5,6 +5,7 @@
 [![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?logo=googlechrome&logoColor=white)](#-ecosystem-integration)
 [![Firefox Extension](https://img.shields.io/badge/Firefox%20Extension-582ACB?logo=Firefox&logoColor=white)](#-ecosystem-integration)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#one-click-cloudflare-workers-deployment)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](#one-click-vercel-deployment)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
@@ -1894,6 +1895,12 @@ WORKDIR /app
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
 After deployment, your Xget service will be available at `your-worker-name.your-subdomain.workers.dev`.
+
+### One-Click Vercel Deployment
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
+
+After deployment, your Xget service will be available at `your-project-name.vercel.app`. For detailed setup instructions, see [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md).
 
 ### Manual Deployment
 

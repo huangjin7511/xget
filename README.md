@@ -5,6 +5,7 @@
 [![Chromium 扩展](https://img.shields.io/badge/Chromium%20扩展-4285F4?logo=googlechrome&logoColor=white)](#-生态系统集成)
 [![Firefox 扩展](https://img.shields.io/badge/Firefox%20扩展-582ACB?logo=Firefox&logoColor=white)](#-生态系统集成)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-一键部署)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](#vercel-一键部署)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
@@ -2138,6 +2139,12 @@ WORKDIR /app
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
 部署后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
+
+### Vercel 一键部署
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
+
+部署后，你的 Xget 服务将在 `your-project-name.vercel.app` 上可用。详细设置说明请参见 [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md)。
 
 ### 手动部署
 

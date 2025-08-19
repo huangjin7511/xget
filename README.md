@@ -2135,21 +2135,19 @@ WORKDIR /app
 
 ## 🚀 部署选择
 
-### Cloudflare Workers 一键部署
+### Cloudflare Workers
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
 部署后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
 
-### Vercel 一键部署
+### Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
 
 部署后，你的 Xget 服务将在 `your-project-name.vercel.app` 上可用。
 
-### Docker 部署
-
-[![Docker](https://img.shields.io/badge/Docker-2496ED?&logo=docker&logoColor=white)](https://github.com/xixu-me/Xget/pkgs/container/xget)
+### Docker
 
 #### 使用预构建镜像（推荐）
 
@@ -2286,47 +2284,6 @@ kubectl apply -f k8s-deployment.yaml
 ```
 
 部署完成后，你的 Xget 服务将在 `http://localhost:3000` 上可用。通过 `/api/health` 端点可以检查服务状态。
-
-### 手动部署
-
-如果你更喜欢手动部署或需要自定义配置：
-
-#### 前置要求
-
-1. 注册 [Cloudflare 账户](https://dash.cloudflare.com/sign-up/workers-and-pages)
-2. 安装 [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-
-#### 部署步骤
-
-1. **克隆存储库**
-
-   ```bash
-   git clone https://github.com/xixu-me/Xget.git
-   cd Xget
-   ```
-
-2. **安装依赖并认证**
-
-   ```bash
-   npm install
-   npx wrangler login
-   ```
-
-3. **自定义配置（可选）**
-
-   编辑 `wrangler.toml` 文件设置你的存储库名称：
-
-   ```toml
-   name = "你的-xget-项目名"
-   ```
-
-4. **部署**
-
-   ```bash
-   npm run deploy
-   ```
-
-部署完成后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
 
 ## 🔧 配置
 

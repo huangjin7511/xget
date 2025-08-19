@@ -1891,21 +1891,19 @@ WORKDIR /app
 
 ## 🚀 Deployment Options
 
-### One-Click Cloudflare Workers Deployment
+### Cloudflare Workers
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
 After deployment, your Xget service will be available at `your-worker-name.your-subdomain.workers.dev`.
 
-### One-Click Vercel Deployment
+### Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
 
 After deployment, your Xget service will be available at `your-project-name.vercel.app`.
 
-### Docker Deployment
-
-[![Docker](https://img.shields.io/badge/Docker-2496ED?&logo=docker&logoColor=white)](https://github.com/xixu-me/Xget/pkgs/container/xget)
+### Docker
 
 #### Using Pre-built Images (Recommended)
 
@@ -2042,47 +2040,6 @@ kubectl apply -f k8s-deployment.yaml
 ```
 
 After deployment, your Xget service will be available at `http://localhost:3000`. You can check the service status through the `/api/health` endpoint.
-
-### Manual Deployment
-
-If you prefer manual deployment or need custom configuration:
-
-#### Prerequisites
-
-1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages)
-2. Install [Node.js](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-
-#### Deployment Steps
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/xixu-me/Xget.git
-   cd Xget
-   ```
-
-2. **Install dependencies and authenticate**
-
-   ```bash
-   npm install
-   npx wrangler login
-   ```
-
-3. **Customize configuration (optional)**
-
-   Edit the `wrangler.toml` file to set your repository name:
-
-   ```toml
-   name = "your-xget-project-name"
-   ```
-
-4. **Deploy**
-
-   ```bash
-   npm run deploy
-   ```
-
-After deployment, your Xget service will be available at `your-worker-name.your-subdomain.workers.dev`.
 
 ## 🔧 Configuration
 

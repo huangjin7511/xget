@@ -93,10 +93,16 @@ jobs:
           echo "Registry: ${{ env.REGISTRY }}"
           echo "Image name: ${{ env.IMAGE_NAME }}"
 
+      - name: Set image for scanning
+        id: scan-image
+        run: |
+          FIRST_TAG=$(echo "${{ needs.build-and-push.outputs.image-tags }}" | head -n1)
+          echo "image-ref=${FIRST_TAG}" >> $GITHUB_OUTPUT
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+          image-ref: ${{ steps.scan-image.outputs.image-ref }}
           format: 'sarif'
           output: 'trivy-results.sarif'
 

@@ -4,11 +4,11 @@ FROM node:20-alpine
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json first to leverage Docker cache for dependencies
-COPY package.json ./
+# Copy package.json and package-lock.json first to leverage Docker cache for dependencies
+COPY package.json package-lock.json* ./
 
-# Install dependencies including express for standalone server
-RUN npm ci --only=production && npm install express
+# Install dependencies - use npm ci for reproducible builds if package-lock.json exists, otherwise npm install
+RUN if [ -f package-lock.json ]; then npm ci --only=production; else npm install --only=production; fi
 
 # Copy the rest of the application code
 COPY . .

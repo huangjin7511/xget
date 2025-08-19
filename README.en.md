@@ -6,6 +6,7 @@
 [![Firefox Extension](https://img.shields.io/badge/Firefox%20Extension-582ACB?logo=Firefox&logoColor=white)](#-ecosystem-integration)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#one-click-cloudflare-workers-deployment)
 [![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](#one-click-vercel-deployment)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?&logo=docker&logoColor=white)](#docker-deployment)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
@@ -746,7 +747,7 @@ conda env update -f environment.yml
       <url>https://xget.xi-xu.me/maven/maven2</url>
     </repository>
   </repositories>
-  
+
   <pluginRepositories>
     <pluginRepository>
       <id>xget-maven-central</id>
@@ -1319,7 +1320,7 @@ import requests
 def download_arxiv_paper(arxiv_id, output_path):
     url = f"https://xget.xi-xu.me/arxiv/pdf/{arxiv_id}.pdf"
     response = requests.get(url)
-    
+
     if response.status_code == 200:
         with open(output_path, 'wb') as f:
             f.write(response.content)
@@ -1487,10 +1488,10 @@ import requests
 class XgetTransport:
     def __init__(self, base_url):
         self.base_url = base_url
-        
+
     def request(self, method, url, **kwargs):
         # Forward requests to Xget acceleration service
-        accelerated_url = url.replace("https://generativelanguage.googleapis.com", 
+        accelerated_url = url.replace("https://generativelanguage.googleapis.com",
                                     "https://xget.xi-xu.me/ip/gemini")
         return requests.request(method, accelerated_url, **kwargs)
 
@@ -1516,10 +1517,10 @@ def call_ai_api(provider, endpoint, data, api_key):
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
-    
+
     # Use Xget acceleration URL
     url = f"https://xget.xi-xu.me/ip/{provider}/{endpoint}"
-    
+
     response = requests.post(url, headers=headers, json=data)
     return response.json()
 
@@ -1580,7 +1581,7 @@ async function chatWithGPT() {
     messages: [{ role: 'user', content: 'Hello!' }],
     model: 'gpt-4',
   });
-  
+
   console.log(completion.choices[0].message.content);
 }
 
@@ -1598,7 +1599,7 @@ async function chatWithClaude() {
     max_tokens: 1000,
     messages: [{ role: 'user', content: 'Hello!' }],
   });
-  
+
   console.log(message.content);
 }
 ```
@@ -1705,7 +1706,7 @@ services:
       - "80:80"
     volumes:
       - ./html:/usr/share/nginx/html
-  
+
   database:
     image: xget.xi-xu.me/cr/mcr/mssql/server:2022-latest
     environment:
@@ -1713,7 +1714,7 @@ services:
       SA_PASSWORD: "MyStrongPassword123!"
     volumes:
       - mssql_data:/var/opt/mssql
-  
+
   cache:
     image: xget.xi-xu.me/cr/ghcr/bitnami/redis:alpine
     ports:
@@ -1759,13 +1760,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Build with accelerated base images
         run: |
           # Build using Xget-accelerated base images
           docker build -t myapp:latest \
             --build-arg BASE_IMAGE=xget.xi-xu.me/cr/ghcr/nodejs/node:18-alpine .
-          
+
       - name: Test with accelerated images
         run: |
           # Test using accelerated images
@@ -1819,17 +1820,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Download model files
         run: |
           # Use Xget acceleration to download large model files
           wget https://xget.xi-xu.me/hf/microsoft/DialoGPT-medium/resolve/main/pytorch_model.bin
-          
+
       - name: Clone dependency repo
         run: |
           # Use Xget acceleration for Git cloning
           git clone https://xget.xi-xu.me/gh/[owner]/[repository].git
-          
+
       - name: Download release assets
         run: |
           # Batch download release files
@@ -1901,6 +1902,146 @@ After deployment, your Xget service will be available at `your-worker-name.your-
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
 
 After deployment, your Xget service will be available at `your-project-name.vercel.app`.
+
+### Docker Deployment
+
+[![Docker](https://img.shields.io/badge/Docker-2496ED?&logo=docker&logoColor=white)](https://github.com/xixu-me/Xget/pkgs/container/xget)
+
+#### Using Pre-built Images (Recommended)
+
+```bash
+# Pull the latest image
+docker pull ghcr.io/xixu-me/xget:latest
+
+# Run the container
+docker run -d \
+  --name xget \
+  -p 3000:3000 \
+  --restart unless-stopped \
+  ghcr.io/xixu-me/xget:latest
+```
+
+#### Building Locally
+
+```bash
+# Clone the repository
+git clone https://github.com/xixu-me/Xget.git
+cd Xget
+
+# Build the image
+docker build -t xget .
+
+# Run the container
+docker run -d \
+  --name xget \
+  -p 3000:3000 \
+  --restart unless-stopped \
+  xget
+```
+
+#### Docker Compose
+
+Create a `docker-compose.yml` file:
+
+```yaml
+version: '3.8'
+
+services:
+  xget:
+    image: ghcr.io/xixu-me/xget:latest
+    container_name: xget
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+```
+
+Then run:
+
+```bash
+docker-compose up -d
+```
+
+#### Kubernetes Deployment
+
+Create a `k8s-deployment.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xget
+  labels:
+    app: xget
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: xget
+  template:
+    metadata:
+      labels:
+        app: xget
+    spec:
+      containers:
+      - name: xget
+        image: ghcr.io/xixu-me/xget:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: xget-service
+spec:
+  selector:
+    app: xget
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
+```
+
+Deploy to Kubernetes:
+
+```bash
+kubectl apply -f k8s-deployment.yaml
+```
+
+After deployment, your Xget service will be available at `http://localhost:3000`. You can check the service status through the `/api/health` endpoint.
 
 ### Manual Deployment
 
@@ -1976,7 +2117,7 @@ To add support for new platforms, edit `src/config/platforms.js`:
 ```javascript
 export const PLATFORMS = {
   // Existing platforms...
-  
+
   // New platform example
   custom: {
     base: "https://example.com",
@@ -2038,16 +2179,16 @@ npm run test:watch
 
 ### Common Issues
 
-**Q: Download speed not significantly improved?**  
+**Q: Download speed not significantly improved?**
 A: Check if source files are already cached on CDN edge nodes. First access may be slower, subsequent access will be significantly faster.
 
-**Q: Git operations failing?**  
+**Q: Git operations failing?**
 A: Confirm correct URL format usage and that Git client version supports HTTPS proxy.
 
-**Q: Cannot access after deployment?**  
+**Q: Cannot access after deployment?**
 A: Check if Cloudflare Workers domain is correctly bound and confirm `wrangler.toml` configuration is correct.
 
-**Q: Getting 400 errors?**  
+**Q: Getting 400 errors?**
 A: Check URL path format and confirm platform prefix is used correctly.
 
 ### Performance Monitoring

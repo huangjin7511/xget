@@ -86,10 +86,17 @@ jobs:
       security-events: write
 
     steps:
+      - name: Debug outputs
+        run: |
+          echo "Image tags: ${{ needs.build-and-push.outputs.image-tags }}"
+          echo "Image digest: ${{ needs.build-and-push.outputs.image-digest }}"
+          echo "Registry: ${{ env.REGISTRY }}"
+          echo "Image name: ${{ env.IMAGE_NAME }}"
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ needs.build-and-push.outputs.image-digest }}
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
           format: 'sarif'
           output: 'trivy-results.sarif'
 

@@ -11,6 +11,7 @@ describe('Platform Configuration', () => {
         'gitea',
         'codeberg',
         'hf',
+        'civitai',
         'npm',
         'pypi',
         'conda',
@@ -76,6 +77,20 @@ describe('Platform Configuration', () => {
 
       expect(transformPath('/hf/datasets/squad/resolve/main/train.json', 'hf')).toBe(
         '/datasets/squad/resolve/main/train.json'
+      );
+    });
+
+    it('should transform Civitai paths correctly', () => {
+      expect(transformPath('/civitai/api/v1/models', 'civitai')).toBe(
+        '/api/v1/models'
+      );
+
+      expect(transformPath('/civitai/api/v1/model-versions/1318', 'civitai')).toBe(
+        '/api/v1/model-versions/1318'
+      );
+
+      expect(transformPath('/civitai/api/download/models/1105', 'civitai')).toBe(
+        '/api/download/models/1105'
       );
     });
 

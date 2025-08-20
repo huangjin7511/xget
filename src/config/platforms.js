@@ -10,6 +10,7 @@ export const PLATFORMS = {
   sf: 'https://sourceforge.net',
   aosp: 'https://android.googlesource.com',
   hf: 'https://huggingface.co',
+  civitai: 'https://civitai.com',
   npm: 'https://registry.npmjs.org',
   pypi: 'https://pypi.org',
   'pypi-files': 'https://files.pythonhosted.org',

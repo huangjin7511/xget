@@ -38,7 +38,6 @@ export const PLATFORMS = {
   arch: 'https://geo.mirror.pkgbuild.com',
   arxiv: 'https://arxiv.org',
   fdroid: 'https://f-droid.org',
-  kaggle: 'https://www.kaggle.com',
 
   // AI Inference Providers
   'ip-openai': 'https://api.openai.com',
@@ -155,25 +154,6 @@ export function transformPath(path, platformKey) {
       // /homebrew-core -> /homebrew-core
       // /homebrew-cask -> /homebrew-cask
       return transformedPath;
-    }
-  }
-
-  // Special handling for Kaggle API paths
-  if (platformKey === 'kaggle') {
-    // Transform paths to include the API prefix
-    if (transformedPath.startsWith('/')) {
-      // Handle different Kaggle API endpoints:
-      // /datasets/download/owner/dataset-slug -> /api/v1/datasets/download/owner/dataset-slug
-      // /competitions/data/download/competition-name -> /api/v1/competitions/data/download/competition-name
-      // /datasets/list -> /api/v1/datasets/list
-      // /competitions/list -> /api/v1/competitions/list
-      // /models/list -> /api/v1/models/list
-      // /kernels/list -> /api/v1/kernels/list
-      
-      // Add API prefix if not already present
-      if (!transformedPath.startsWith('/api/v1/')) {
-        transformedPath = `/api/v1${transformedPath}`;
-      }
     }
   }
 

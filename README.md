@@ -15,6 +15,7 @@
 [![SourceForge](https://img.shields.io/badge/SourceForge-FF6600?&logo=sourceforge&logoColor=white)](#sourceforge)
 [![AOSP](https://img.shields.io/badge/AOSP-3DDC84?&logo=android&logoColor=white)](#aosp-android-%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#hugging-face-镜像)
+[![Civitai](https://img.shields.io/badge/Civitai-0066CC?logo=&logoColor=white)](#civitai-ai-模型平台)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-包管理加速)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)
@@ -138,6 +139,7 @@
 | SourceForge | `sf` | `https://sourceforge.net/...` | `https://xget.xi-xu.me/sf/...` |
 | AOSP | `aosp` | `https://android.googlesource.com/...` | `https://xget.xi-xu.me/aosp/...` |
 | Hugging Face | `hf` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
+| Civitai | `civitai` | `https://civitai.com/...` | `https://xget.xi-xu.me/civitai/...` |
 | npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
 | conda | `conda` | `https://repo.anaconda.com/...` 和 `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` 和 `https://xget.xi-xu.me/conda/community/...` |
@@ -246,6 +248,28 @@ https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00
 
 # 转换后（添加 hf 前缀）
 https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
+```
+
+#### Civitai
+
+```url
+# AI 模型下载原始 URL
+https://civitai.com/api/download/models/128713
+
+# 转换后（添加 civitai 前缀）
+https://xget.xi-xu.me/civitai/api/download/models/128713
+
+# 模型 API 原始 URL
+https://civitai.com/api/v1/models/7240
+
+# 转换后（添加 civitai 前缀）
+https://xget.xi-xu.me/civitai/api/v1/models/7240
+
+# 模型版本 API 原始 URL
+https://civitai.com/api/v1/model-versions/128713
+
+# 转换后（添加 civitai 前缀）
+https://xget.xi-xu.me/civitai/api/v1/model-versions/128713
 ```
 
 #### npm
@@ -810,6 +834,48 @@ print("模型和分词器加载成功！")
 # new_user_input_ids = tokenizer.encode("Hello, how are you?", return_tensors='pt')
 # chat_history_ids = model.generate(new_user_input_ids, max_length=1000, pad_token_id=tokenizer.eos_token_id)
 # print(tokenizer.decode(chat_history_ids[:, new_user_input_ids.shape[-1]:][0], skip_special_tokens=True))
+```
+
+### Civitai AI 模型平台
+
+```python
+import requests
+
+# 设置 API 基础 URL 使用 Xget 加速
+base_url = "https://xget.xi-xu.me/civitai"
+
+# 获取模型信息
+def get_model_info(model_id):
+    """获取 Civitai 模型信息"""
+    url = f"{base_url}/api/v1/models/{model_id}"
+    response = requests.get(url)
+    return response.json()
+
+# 下载模型
+def download_model(model_version_id, output_path):
+    """下载 Civitai 模型文件"""
+    download_url = f"{base_url}/api/download/models/{model_version_id}"
+    
+    print(f"正在下载模型版本 {model_version_id}...")
+    
+    response = requests.get(download_url, stream=True)
+    response.raise_for_status()
+    
+    with open(output_path, 'wb') as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            f.write(chunk)
+    
+    print(f"模型已下载到: {output_path}")
+
+# 使用示例
+model_id = 7240  # 示例模型 ID
+model_info = get_model_info(model_id)
+print(f"模型名称: {model_info['name']}")
+
+# 下载第一个模型版本
+if model_info['modelVersions']:
+    version_id = model_info['modelVersions'][0]['id']
+    download_model(version_id, f"model_{version_id}.safetensors")
 ```
 
 ### npm 包管理加速

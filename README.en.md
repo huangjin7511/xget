@@ -15,6 +15,7 @@
 [![SourceForge](https://img.shields.io/badge/SourceForge-FF6600?&logo=sourceforge&logoColor=white)](#sourceforge)
 [![AOSP](https://img.shields.io/badge/AOSP-3DDC84?&logo=android&logoColor=white)](#aosp-android-open-source-project)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#hugging-face-mirror)
+[![Civitai](https://img.shields.io/badge/Civitai-0066CC?logo=&logoColor=white)](#civitai-ai-model-platform)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-package-acceleration)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-package-acceleration)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-package-acceleration)
@@ -138,6 +139,7 @@ Using the public instance **`xget.xi-xu.me`** or your own deployed instance, sim
 | SourceForge | `sf` | `https://sourceforge.net/...` | `https://xget.xi-xu.me/sf/...` |
 | AOSP | `aosp` | `https://android.googlesource.com/...` | `https://xget.xi-xu.me/aosp/...` |
 | Hugging Face | `hf` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
+| Civitai | `civitai` | `https://civitai.com/...` | `https://xget.xi-xu.me/civitai/...` |
 | npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
 | conda | `conda` | `https://repo.anaconda.com/...` and `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` and `https://xget.xi-xu.me/conda/community/...` |
@@ -246,6 +248,28 @@ https://huggingface.co/datasets/rajpurkar/squad/resolve/main/plain_text/train-00
 
 # Transformed (add hf prefix)
 https://xget.xi-xu.me/hf/datasets/rajpurkar/squad/resolve/main/plain_text/train-00000-of-00001.parquet
+```
+
+#### Civitai
+
+```url
+# AI model download original URL
+https://civitai.com/api/download/models/128713
+
+# Transformed (add civitai prefix)
+https://xget.xi-xu.me/civitai/api/download/models/128713
+
+# Model API original URL
+https://civitai.com/api/v1/models/7240
+
+# Transformed (add civitai prefix)
+https://xget.xi-xu.me/civitai/api/v1/models/7240
+
+# Model version API original URL
+https://civitai.com/api/v1/model-versions/128713
+
+# Transformed (add civitai prefix)
+https://xget.xi-xu.me/civitai/api/v1/model-versions/128713
 ```
 
 #### npm
@@ -566,6 +590,48 @@ print("Model and tokenizer loaded successfully!")
 # new_user_input_ids = tokenizer.encode("Hello, how are you?", return_tensors='pt')
 # chat_history_ids = model.generate(new_user_input_ids, max_length=1000, pad_token_id=tokenizer.eos_token_id)
 # print(tokenizer.decode(chat_history_ids[:, new_user_input_ids.shape[-1]:][0], skip_special_tokens=True))
+```
+
+### Civitai AI Model Platform
+
+```python
+import requests
+
+# Set API base URL to use Xget acceleration
+base_url = "https://xget.xi-xu.me/civitai"
+
+# Get model information
+def get_model_info(model_id):
+    """Retrieve Civitai model information"""
+    url = f"{base_url}/api/v1/models/{model_id}"
+    response = requests.get(url)
+    return response.json()
+
+# Download model
+def download_model(model_version_id, output_path):
+    """Download Civitai model file"""
+    download_url = f"{base_url}/api/download/models/{model_version_id}"
+
+    print(f"Downloading model version {model_version_id}...")
+
+    response = requests.get(download_url, stream=True)
+    response.raise_for_status()
+
+    with open(output_path, 'wb') as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            f.write(chunk)
+
+    print(f"Model downloaded to: {output_path}")
+
+# Usage example
+model_id = 7240  # Example model ID
+model_info = get_model_info(model_id)
+print(f"Model name: {model_info['name']}")
+
+# Download the first model version
+if model_info['modelVersions']:
+    version_id = model_info['modelVersions'][0]['id']
+    download_model(version_id, f"model_{version_id}.safetensors")
 ```
 
 ### npm Package Acceleration

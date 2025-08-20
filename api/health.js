@@ -45,7 +45,8 @@ export default async function handler(request) {
       'Container Registries',
       'AI Inference Providers',
       'arXiv',
-      'F-Droid'
+      'F-Droid',
+      'Kaggle'
     ]
   };
 

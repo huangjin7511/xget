@@ -15,7 +15,7 @@
 [![SourceForge](https://img.shields.io/badge/SourceForge-FF6600?&logo=sourceforge&logoColor=white)](#sourceforge)
 [![AOSP](https://img.shields.io/badge/AOSP-3DDC84?&logo=android&logoColor=white)](#aosp-android-%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE)
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#hugging-face-镜像)
-[![Civitai](https://img.shields.io/badge/Civitai-0066CC?logo=&logoColor=white)](#civitai-ai-模型平台)
+[![Civitai](https://img.shields.io/badge/Civitai-0066CC)](#civitai-ai-模型平台)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-包管理加速)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)
@@ -855,16 +855,16 @@ def get_model_info(model_id):
 def download_model(model_version_id, output_path):
     """下载 Civitai 模型文件"""
     download_url = f"{base_url}/api/download/models/{model_version_id}"
-    
+
     print(f"正在下载模型版本 {model_version_id}...")
-    
+
     response = requests.get(download_url, stream=True)
     response.raise_for_status()
-    
+
     with open(output_path, 'wb') as f:
         for chunk in response.iter_content(chunk_size=8192):
             f.write(chunk)
-    
+
     print(f"模型已下载到: {output_path}")
 
 # 使用示例

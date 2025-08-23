@@ -1,4 +1,4 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
   - name: 📚 存储库文档
     url: https://github.com/xixu-me/Xget/blob/main/README.md

@@ -36,7 +36,7 @@ export const PLATFORMS = {
   rocky: 'https://download.rockylinux.org',
   opensuse: 'https://download.opensuse.org',
   arch: 'https://geo.mirror.pkgbuild.com',
-  arxiv: 'https://arxiv.org',
+  // arxiv: 'https://arxiv.org',
   fdroid: 'https://f-droid.org',
 
   // AI Inference Providers

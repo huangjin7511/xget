@@ -2231,11 +2231,13 @@ npx wrangler dev --log-level debug
 
 ## ⚠️ Disclaimer
 
-- **Legal Use**: This repository is for accelerating legal public file downloads and Git operations only. Please comply with relevant platform terms of service and local laws
-- **Service Availability**: Public instance `xget.xi-xu.me` is a free service with no 100% availability guarantee. Production environments should deploy their own instances
-- **Data Security**: While Xget does not store or log user data, please handle sensitive information downloads carefully
-- **Liability Limitation**: Developers are not responsible for any direct or indirect losses caused by using this service
-- **Third-party Platforms**: Please respect the terms of service and rate limits of GitHub, GitLab, Gitea, Codeberg, SourceForge, Hugging Face, and other platforms
+- **Legal and Compliant Use**: This repository is solely for accelerating legal public resource access, including but not limited to file downloads, Git operations, AI inference API calls, container image pulls, package manager access, etc. Users must strictly comply with all relevant platform terms of service, usage agreements, and local laws and regulations. Any illegal, infringing, or malicious use is strictly prohibited
+- **Service Availability Statement**: The public instance `xget.xi-xu.me` is provided as a free open-source service without Service Level Agreement (SLA) guarantees. While we strive to maintain service stability, we do not promise 100% availability. Production environments or critical business operations should deploy dedicated instances
+- **Data Privacy Protection**: Xget employs a no-logging architecture and does not store, record, or analyze user request data. However, users should still handle sensitive information carefully and avoid transmitting confidential content over public networks
+- **Liability Limitation**: Repository maintainers and contributors assume no legal responsibility for any direct losses, indirect losses, data loss, business interruption, or other consequences that may arise from using this service
+- **Third-party Platform Respect**: Please strictly adhere to the terms of service, API usage limits, and rate controls of GitHub, GitLab, Gitea, Codeberg, SourceForge, Hugging Face, Docker Hub, various package management platforms, etc. Avoid causing excessive load on source platforms
+- **Intellectual Property Protection**: Users should ensure that downloaded content does not infringe on any third-party intellectual property rights. For copyrighted content obtained through this service, please comply with the corresponding license agreements and terms of use
+- **Security Risk Warning**: Although Xget implements multiple security measures, internet transmission carries inherent risks. Users are advised to perform security scans on downloaded files, especially executable files and scripts
 
 ## 🤝 Contributing
 

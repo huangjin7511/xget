@@ -4,7 +4,7 @@
 
 [![Chromium Extension](https://img.shields.io/badge/Chromium%20Extension-4285F4?logo=googlechrome&logoColor=white)](#-ecosystem-integration)
 [![Firefox Extension](https://img.shields.io/badge/Firefox%20Extension-582ACB?logo=Firefox&logoColor=white)](#-ecosystem-integration)
-[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](cloudflare-workers)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers-highly-recommended)
 [![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](#vercel)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?&logo=docker&logoColor=white)](#docker)
 
@@ -46,10 +46,10 @@ Ultra-high performance, secure, all-in-one open-source resource acceleration eng
 
 ## 💡 Repository Vision
 
-The vision of this repository is to accelerate access to open-source resources on platforms that comply with relevant laws and regulations within mainland China, providing developers with a stable and legal acceleration service.
+The vision of this repository is to accelerate access to open-source resources on platforms that comply with relevant laws and regulations within mainland China, providing developers with a stable and legal acceleration service. We are committed to:
 
 - **🌍 Eliminate Geographic Restrictions**: Help developers in mainland China quickly access overseas open-source resources
-- **⚖️ Legal Compliance**: Users should strictly comply with relevant laws and regulations, only accelerating legal public resources
+- **⚖️ Legal Compliance**: Strictly comply with relevant laws and regulations, only accelerating legal public resources
 - **🚀 Improve Efficiency**: Significantly enhance developers' work efficiency and development experience
 - **🆓 Benefit Open Source**: Contribute to the open-source community and promote technological exchange and development
 
@@ -2250,7 +2250,7 @@ npx wrangler dev --log-level debug
 
 ## ⚠️ Disclaimer
 
-- **Legal and Compliant Use**: This repository is solely for accelerating legal public resource access, including but not limited to file downloads, Git operations, AI inference API calls, container image pulls, package manager access, etc. Users must strictly comply with all relevant platform terms of service, usage agreements, and local laws and regulations. Any illegal, infringing, or malicious use is strictly prohibited
+- **Legal and Compliant Use**: This repository is solely for accelerating legal public resource access, including but not limited to file downloads, Git operations, AI inference API calls, container image pulls, package manager access, etc. Users must strictly comply with all relevant platform terms of service, usage agreements, and local laws and regulations. Any illegal, infringing, or malicious use is strictly prohibited. Any use beyond the scope of legal public resources shall be the user's own legal responsibility
 - **Service Availability Statement**: The public instance `xget.xi-xu.me` is provided as a free open-source service without Service Level Agreement (SLA) guarantees. While we strive to maintain service stability, we do not promise 100% availability. Production environments or critical business operations should deploy dedicated instances
 - **Data Privacy Protection**: Xget employs a no-logging architecture and does not store, record, or analyze user request data. However, users should still handle sensitive information carefully and avoid transmitting confidential content over public networks
 - **Liability Limitation**: Repository maintainers and contributors assume no legal responsibility for any direct losses, indirect losses, data loss, business interruption, or other consequences that may arise from using this service

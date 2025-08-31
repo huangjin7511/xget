@@ -4,7 +4,7 @@
 
 [![Chromium 扩展](https://img.shields.io/badge/Chromium%20扩展-4285F4?logo=googlechrome&logoColor=white)](#-生态系统集成)
 [![Firefox 扩展](https://img.shields.io/badge/Firefox%20扩展-582ACB?logo=Firefox&logoColor=white)](#-生态系统集成)
-[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers强烈推荐)
 [![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](#vercel)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?&logo=docker&logoColor=white)](#docker)
 
@@ -46,10 +46,10 @@
 
 ## 💡 存储库初衷
 
-本存储库的初衷是为了加速在中国大陆境内访问不违反相关法律法规的平台上的开源资源，从而为广大开发者提供一个稳定、合法的加速服务。
+本存储库的初衷是为了加速在中国大陆境内访问不违反相关法律法规的平台上的开源资源，从而为广大开发者提供一个稳定、合法的加速服务。我们致力于：
 
 - **🌍 消除地理限制**：帮助中国大陆开发者快速访问海外开源资源
-- **⚖️ 合规合法**：用户应严格遵守相关法律法规，仅加速合法的公开资源
+- **⚖️ 合规合法**：严格遵守相关法律法规，仅加速合法的公开资源
 - **🚀 提升效率**：显著提高开发者的工作效率和开发体验
 - **🆓 普惠开源**：为开源社区贡献力量，促进技术交流与发展
 
@@ -2494,7 +2494,7 @@ npx wrangler dev --log-level debug
 
 ## ⚠️ 免责声明
 
-- **合法合规使用**：本存储库仅供加速合法的公开资源访问，包括但不限于文件下载、Git 操作、AI 推理 API 调用、容器镜像拉取、包管理器访问等。用户必须严格遵守所有相关平台的服务条款、使用协议以及所在地区的法律法规。禁止用于任何违法、侵权或恶意目的
+- **合法合规使用**：本存储库仅供加速合法的公开资源访问，包括但不限于文件下载、Git 操作、AI 推理 API 调用、容器镜像拉取、包管理器访问等。用户必须严格遵守所有相关平台的服务条款、使用协议以及所在地区的法律法规。禁止用于任何违法、侵权或恶意目的。任何超出合法公开资源范围的使用行为，均由用户自行承担相应的法律责任
 - **服务可用性声明**：公共实例 `xget.xi-xu.me` 作为免费开源服务提供，不提供服务等级协议（SLA）保证。我们尽力维护服务稳定，但不承诺 100% 可用性。生产环境或关键业务建议部署专属实例
 - **数据隐私保护**：Xget 采用无日志架构，不存储、记录或分析用户请求数据。但用户仍需谨慎处理敏感信息，避免通过公共网络传输机密内容
 - **责任范围限制**：使用本服务可能产生的任何直接损失、间接损失、数据丢失、业务中断或其他后果，存储库维护者和贡献者均不承担任何法律责任

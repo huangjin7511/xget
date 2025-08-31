@@ -26,7 +26,7 @@ jobs:
           fetch-depth: 0
 
       - name: Translate README to English
-        uses: lyqht/deepl-translate-github-action@v2.1.1
+        uses: lyqht/deepl-translate-github-action@v2.2.0
         with:
           deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
           target_languages: en

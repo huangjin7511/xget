@@ -1957,7 +1957,7 @@ WORKDIR /app
 
 ## 🚀 Deployment Options
 
-### Cloudflare Workers
+### Cloudflare Workers (Highly recommended)
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
@@ -1971,7 +1971,7 @@ After deployment, your Xget service will be available at `your-project-name.verc
 
 ### Docker
 
-#### Using Pre-built Images (Recommended)
+#### Using Pre-built Images
 
 ```bash
 # Pull the latest image
@@ -2235,7 +2235,7 @@ npx wrangler dev --log-level debug
 - **Service Availability Statement**: The public instance `xget.xi-xu.me` is provided as a free open-source service without Service Level Agreement (SLA) guarantees. While we strive to maintain service stability, we do not promise 100% availability. Production environments or critical business operations should deploy dedicated instances
 - **Data Privacy Protection**: Xget employs a no-logging architecture and does not store, record, or analyze user request data. However, users should still handle sensitive information carefully and avoid transmitting confidential content over public networks
 - **Liability Limitation**: Repository maintainers and contributors assume no legal responsibility for any direct losses, indirect losses, data loss, business interruption, or other consequences that may arise from using this service
-- **Third-party Platform Respect**: Please strictly adhere to the terms of service, API usage limits, and rate controls of GitHub, GitLab, Gitea, Codeberg, SourceForge, Hugging Face, Docker Hub, various package management platforms, etc. Avoid causing excessive load on source platforms
+- **Third-party Platform Respect**: Please strictly adhere to the terms of service, API usage limits, and rate controls of GitHub, GitLab, Gitea, Codeberg, SourceForge, Hugging Face, various package management platforms and container registries, etc. Avoid causing excessive load on source platforms
 - **Intellectual Property Protection**: Users should ensure that downloaded content does not infringe on any third-party intellectual property rights. For copyrighted content obtained through this service, please comply with the corresponding license agreements and terms of use
 - **Security Risk Warning**: Although Xget implements multiple security measures, internet transmission carries inherent risks. Users are advised to perform security scans on downloaded files, especially executable files and scripts
 

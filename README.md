@@ -2201,7 +2201,7 @@ WORKDIR /app
 
 ## 🚀 部署选择
 
-### Cloudflare Workers
+### Cloudflare Workers（强烈推荐）
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
@@ -2215,7 +2215,7 @@ WORKDIR /app
 
 ### Docker
 
-#### 使用预构建镜像（推荐）
+#### 使用预构建镜像
 
 ```bash
 # 拉取最新镜像
@@ -2479,7 +2479,7 @@ npx wrangler dev --log-level debug
 - **服务可用性声明**：公共实例 `xget.xi-xu.me` 作为免费开源服务提供，不提供服务等级协议（SLA）保证。我们尽力维护服务稳定，但不承诺 100% 可用性。生产环境或关键业务建议部署专属实例
 - **数据隐私保护**：Xget 采用无日志架构，不存储、记录或分析用户请求数据。但用户仍需谨慎处理敏感信息，避免通过公共网络传输机密内容
 - **责任范围限制**：使用本服务可能产生的任何直接损失、间接损失、数据丢失、业务中断或其他后果，存储库维护者和贡献者均不承担任何法律责任
-- **第三方平台尊重**：请严格遵守 GitHub、GitLab、Gitea、Codeberg、SourceForge、Hugging Face、Docker Hub、各大包管理平台等的服务条款、API 使用限制和速率控制。避免对源平台造成过度负载
+- **第三方平台尊重**：请严格遵守 GitHub、GitLab、Gitea、Codeberg、SourceForge、Hugging Face、各大包管理平台和容器注册表等的服务条款、API 使用限制和速率控制。避免对源平台造成过度负载
 - **知识产权保护**：用户应确保下载的内容不侵犯任何第三方的知识产权。对于通过本服务获取的受版权保护的内容，请遵守相应的许可协议和使用条款
 - **安全风险提醒**：虽然 Xget 实施了多项安全措施，但互联网传输存在固有风险。建议用户对下载的文件进行安全扫描，特别是可执行文件和脚本
 

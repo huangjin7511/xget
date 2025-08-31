@@ -44,6 +44,15 @@
 
 Ultra-high performance, secure, all-in-one open-source resource acceleration engine. Significantly outperforms traditional accelerators, providing unified and efficient acceleration across multiple platforms including code repositories, package managers, AI inference APIs, container images, models, and datasets.
 
+## 💡 Repository Vision
+
+The vision of this repository is to accelerate access to open-source resources on platforms that comply with relevant laws and regulations within mainland China, providing developers with a stable and legal acceleration service.
+
+- **🌍 Eliminate Geographic Restrictions**: Help developers in mainland China quickly access overseas open-source resources
+- **⚖️ Legal Compliance**: Users should strictly comply with relevant laws and regulations, only accelerating legal public resources
+- **🚀 Improve Efficiency**: Significantly enhance developers' work efficiency and development experience
+- **🆓 Benefit Open Source**: Contribute to the open-source community and promote technological exchange and development
+
 ## 🎯 Quick Start
 
 **Public Instance: `xget.xi-xu.me`** - Ready to use, no deployment required!
@@ -1961,17 +1970,27 @@ WORKDIR /app
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
+**Strongly recommend using Cloudflare Workers for deployment**, which offers the following advantages:
+
+- **💰 Cost-effective**: Free in most cases, except for domain registration fees
+- **🚀 Best Performance**: Global edge nodes for fastest response times
+- **🔧 Simple Maintenance**: No server management required, automatic scaling and updates
+
 After deployment, your Xget service will be available at `your-worker-name.your-subdomain.workers.dev`.
 
-### Vercel
+### Other Deployment Options
+
+Other deployment methods are provided to meet diverse user needs:
+
+#### Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
 
 After deployment, your Xget service will be available at `your-project-name.vercel.app`.
 
-### Docker
+#### Docker
 
-#### Using Pre-built Images
+##### Using Pre-built Images
 
 ```bash
 # Pull the latest image
@@ -1985,7 +2004,7 @@ docker run -d \
   ghcr.io/xixu-me/xget:latest
 ```
 
-#### Building Locally
+##### Building Locally
 
 ```bash
 # Clone the repository
@@ -2003,7 +2022,7 @@ docker run -d \
   xget
 ```
 
-#### Docker Compose
+##### Docker Compose
 
 Create a `docker-compose.yml` file:
 
@@ -2034,7 +2053,7 @@ Then run:
 docker-compose up -d
 ```
 
-#### Kubernetes Deployment
+##### Kubernetes Deployment
 
 Create a `k8s-deployment.yaml`:
 

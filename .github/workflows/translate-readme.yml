@@ -25,13 +25,102 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Translate README to English
-        uses: lyqht/deepl-translate-github-action@v2.2.0
+      - name: Setup Node.js for chunked translation
+        uses: actions/setup-node@v4
         with:
-          deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
-          target_languages: en
-          input_file_path: README.md
-          output_file_name_pattern: README.{language}.md
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          npm install deepl-node
+
+      - name: Split and translate README in chunks
+        run: |
+          # 创建分块翻译脚本
+          cat > translate_chunks.js << 'EOF'
+          const fs = require('fs');
+          const { Translator } = require('deepl-node');
+
+          const translator = new Translator(process.env.DEEPL_API_KEY);
+
+          async function translateFile() {
+            try {
+              const content = fs.readFileSync('README.md', 'utf8');
+
+              // 智能分块：按段落和标题分割，避免破坏结构
+              const sections = content.split(/(?=^#{1,6}\s)/m);
+              const chunks = [];
+              let currentChunk = '';
+              const maxChunkSize = 3800; // 字符数限制，留有安全边际
+
+              for (const section of sections) {
+                if ((currentChunk + section).length > maxChunkSize && currentChunk) {
+                  chunks.push(currentChunk.trim());
+                  currentChunk = section;
+                } else {
+                  currentChunk += section;
+                }
+              }
+
+              if (currentChunk.trim()) {
+                chunks.push(currentChunk.trim());
+              }
+
+              console.log(`📄 文件大小: ${content.length} 字符`);
+              console.log(`📦 分为 ${chunks.length} 块进行翻译`);
+
+              const translatedChunks = [];
+
+              for (let i = 0; i < chunks.length; i++) {
+                const chunkSize = chunks[i].length;
+                console.log(`🔄 翻译第 ${i + 1}/${chunks.length} 块 (${chunkSize} 字符)...`);
+
+                try {
+                  const result = await translator.translateText(
+                    chunks[i],
+                    'zh',
+                    'en-US',
+                    {
+                      preserveFormatting: true,
+                      tagHandling: 'html'
+                    }
+                  );
+                  translatedChunks.push(result.text);
+                  console.log(`✅ 第 ${i + 1} 块翻译完成`);
+
+                  // 添加延迟避免API限制
+                  if (i < chunks.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                  }
+                } catch (error) {
+                  console.error(`❌ 翻译第 ${i + 1} 块时出错:`, error.message);
+                  // 如果翻译失败，保留原文并添加错误标记
+                  translatedChunks.push(`<!-- 翻译失败，保留原文 -->\n${chunks[i]}`);
+                }
+              }
+
+              const translatedContent = translatedChunks.join('\n\n');
+              fs.writeFileSync('README.en.md', translatedContent);
+              console.log('🎉 翻译完成！');
+
+              // 检查翻译质量
+              const originalLines = content.split('\n').length;
+              const translatedLines = translatedContent.split('\n').length;
+              console.log(`📊 原文行数: ${originalLines}, 译文行数: ${translatedLines}`);
+
+            } catch (error) {
+              console.error('❌ 翻译过程中发生错误:', error);
+              process.exit(1);
+            }
+          }
+
+          translateFile();
+          EOF
+
+          # 运行翻译脚本
+          node translate_chunks.js
+        env:
+          DEEPL_API_KEY: ${{ secrets.DEEPL_API_KEY }}
 
       - name: Update language link and add translation notice
         run: |
@@ -77,11 +166,19 @@ jobs:
             if git diff --staged --quiet; then
               echo "No changes to commit"
             else
-              git commit -m "🌐 Auto-translate README.md to English using DeepL
+              # 计算文件统计信息
+              original_lines=$(wc -l < README.md)
+              translated_lines=$(wc -l < README.en.md)
 
+              git commit -m "🌐 Auto-translate README.md to English using DeepL (Chunked)
+
+              📄 Processed large README.md in chunks for optimal translation quality
+              📊 Original: ${original_lines} lines → Translated: ${translated_lines} lines
+              ✨ Features:
               - Generated README.en.md from README.md
               - Updated language links
               - Added translation disclaimer
+              - Intelligent chunk processing to maintain structure
 
               Co-authored-by: DeepL <https://www.deepl.com/>"
               git push

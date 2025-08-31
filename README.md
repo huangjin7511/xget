@@ -1,7 +1,5 @@
 # Xget
 
-**[English](README.en.md)**
-
 [![Chromium 扩展](https://img.shields.io/badge/Chromium%20扩展-4285F4?logo=googlechrome&logoColor=white)](#-生态系统集成)
 [![Firefox 扩展](https://img.shields.io/badge/Firefox%20扩展-582ACB?logo=Firefox&logoColor=white)](#-生态系统集成)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers强烈推荐)

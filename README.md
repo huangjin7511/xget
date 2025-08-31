@@ -44,6 +44,15 @@
 
 超高性能、安全的一站式开源资源访问加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的加速体验，涵盖代码储存库、包管理、AI 推理 API、容器镜像、模型及数据集等。
 
+## 💡 项目初衷
+
+本项目的初衷是为了加速在中国大陆境内访问不违反相关法律法规的平台上的开源资源，从而为广大开发者提供一个稳定、合法的加速服务。
+
+- **🌍 消除地理限制**：帮助中国大陆开发者快速访问海外开源资源
+- **⚖️ 合规合法**：用户应严格遵守相关法律法规，仅加速合法的公开资源
+- **🚀 提升效率**：显著提高开发者的工作效率和开发体验
+- **🆓 普惠开源**：为开源社区贡献力量，促进技术交流与发展
+
 ## 🎯 快速使用
 
 **公共实例：`xget.xi-xu.me`** - 开箱即用，无需部署！
@@ -2205,17 +2214,27 @@ WORKDIR /app
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
+**强烈建议使用 Cloudflare Workers 的方式进行部署**，这种方式具有以下优势：
+
+- **💰 成本优势**：除了注册域名的费用外，在大多数情况下是免费的
+- **🚀 性能最高**：全球边缘节点，响应速度最快
+- **🔧 维护简单**：无需服务器管理，自动扩展和更新
+
 部署后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
 
-### Vercel
+### 其他部署方式
+
+提供的其他部署方式主要是为了满足部分用户的多样化需求：
+
+#### Vercel
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
 
 部署后，你的 Xget 服务将在 `your-project-name.vercel.app` 上可用。
 
-### Docker
+#### Docker
 
-#### 使用预构建镜像
+##### 使用预构建镜像
 
 ```bash
 # 拉取最新镜像
@@ -2229,7 +2248,7 @@ docker run -d \
   ghcr.io/xixu-me/xget:latest
 ```
 
-#### 本地构建镜像
+##### 本地构建镜像
 
 ```bash
 # 克隆存储库
@@ -2247,7 +2266,7 @@ docker run -d \
   xget
 ```
 
-#### Docker Compose
+##### Docker Compose
 
 创建 `docker-compose.yml` 文件：
 
@@ -2278,7 +2297,7 @@ services:
 docker-compose up -d
 ```
 
-#### Kubernetes 部署
+##### Kubernetes 部署
 
 创建 `k8s-deployment.yaml`：
 

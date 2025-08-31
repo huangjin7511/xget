@@ -48,5 +48,6 @@ export default async function handler(request) {
 
 // Vercel Edge Function configuration
 export const config = {
+  runtime: 'edge',
   regions: ['iad1', 'hnd1', 'fra1', 'sfo1'] // Multiple regions for better performance
 };

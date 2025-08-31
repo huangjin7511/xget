@@ -3,7 +3,6 @@
 [![Chromium 扩展](https://img.shields.io/badge/Chromium%20扩展-4285F4?logo=googlechrome&logoColor=white)](#-生态系统集成)
 [![Firefox 扩展](https://img.shields.io/badge/Firefox%20扩展-582ACB?logo=Firefox&logoColor=white)](#-生态系统集成)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers强烈推荐)
-[![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](#vercel)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?&logo=docker&logoColor=white)](#docker)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
@@ -2132,12 +2131,6 @@ sudo systemctl restart containerd
 ### 其他部署方式
 
 提供的其他部署方式主要是为了满足部分用户的多样化需求：
-
-#### Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xixu-me/Xget)
-
-部署后，你的 Xget 服务将在 `your-project-name.vercel.app` 上可用。
 
 #### Docker
 

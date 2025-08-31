@@ -55,10 +55,6 @@ temp
 *.md
 !README.md
 
-# Vercel
-.vercel
-vercel.json
-
 # Cloudflare Workers
 wrangler.toml
 

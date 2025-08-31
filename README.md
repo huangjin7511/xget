@@ -15,6 +15,10 @@
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-FFD21E?&logo=huggingface&logoColor=white)](#hugging-face-镜像)
 [![Civitai](https://img.shields.io/badge/Civitai-0066CC)](#civitai-ai-模型平台)
 [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=white)](#npm-包管理加速)
+[![Google Hosted Libraries](https://img.shields.io/badge/Google%20Hosted%20Libraries-4285F4?logo=google&logoColor=white)](#google-hosted-libraries-cdn-加速)
+[![unpkg](https://img.shields.io/badge/unpkg-FF6B6B?logo=npm&logoColor=white)](#unpkg-cdn-加速)
+[![Skypack](https://img.shields.io/badge/Skypack-00D8FF?logo=javascript&logoColor=white)](#skypack-cdn-加速)
+[![esm.sh](https://img.shields.io/badge/esm.sh-00ADD8?logo=javascript&logoColor=white)](#esmsh-cdn-加速)
 [![PyPI](https://img.shields.io/badge/PyPI-3775A9?logo=pypi&logoColor=white)](#python-包管理加速)
 [![conda](https://img.shields.io/badge/conda-44A833?logo=anaconda&logoColor=white)](#conda-包管理加速)
 [![Maven](https://img.shields.io/badge/Maven-C71A36?logo=apachemaven&logoColor=white)](#maven-包管理加速)
@@ -148,6 +152,10 @@
 | Hugging Face | `hf` | `https://huggingface.co/...` | `https://xget.xi-xu.me/hf/...` |
 | Civitai | `civitai` | `https://civitai.com/...` | `https://xget.xi-xu.me/civitai/...` |
 | npm | `npm` | `https://registry.npmjs.org/...` | `https://xget.xi-xu.me/npm/...` |
+| Google Hosted Libraries | `ghl` | `https://ajax.googleapis.com/...` | `https://xget.xi-xu.me/ghl/...` |
+| unpkg | `unpkg` | `https://unpkg.com/...` | `https://xget.xi-xu.me/unpkg/...` |
+| Skypack | `skypack` | `https://cdn.skypack.dev/...` | `https://xget.xi-xu.me/skypack/...` |
+| esm.sh | `esmsh` | `https://esm.sh/...` | `https://xget.xi-xu.me/esmsh/...` |
 | PyPI | `pypi` | `https://pypi.org/...` | `https://xget.xi-xu.me/pypi/...` |
 | conda | `conda` | `https://repo.anaconda.com/...` 和 `https://conda.anaconda.org/...` | `https://xget.xi-xu.me/conda/...` 和 `https://xget.xi-xu.me/conda/community/...` |
 | Maven | `maven` | `https://repo1.maven.org/...` | `https://xget.xi-xu.me/maven/...` |
@@ -293,6 +301,70 @@ https://registry.npmjs.org/lodash
 
 # 转换后（添加 npm 前缀）
 https://xget.xi-xu.me/npm/lodash
+```
+
+#### Google Hosted Libraries
+
+```url
+# jQuery 库原始 URL
+https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js
+
+# 转换后（添加 ghl 前缀）
+https://xget.xi-xu.me/ghl/ajax/libs/jquery/3.6.0/jquery.min.js
+
+# Bootstrap 库原始 URL
+https://ajax.googleapis.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css
+
+# 转换后（添加 ghl 前缀）
+https://xget.xi-xu.me/ghl/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css
+```
+
+#### unpkg
+
+```url
+# React 包原始 URL
+https://unpkg.com/react@18.2.0/index.js
+
+# 转换后（添加 unpkg 前缀）
+https://xget.xi-xu.me/unpkg/react@18.2.0/index.js
+
+# Lodash 模块原始 URL
+https://unpkg.com/lodash@4.17.21/lodash.min.js
+
+# 转换后（添加 unpkg 前缀）
+https://xget.xi-xu.me/unpkg/lodash@4.17.21/lodash.min.js
+```
+
+#### Skypack
+
+```url
+# React 模块原始 URL
+https://cdn.skypack.dev/react@18.2.0
+
+# 转换后（添加 skypack 前缀）
+https://xget.xi-xu.me/skypack/react@18.2.0
+
+# Lodash 模块原始 URL
+https://cdn.skypack.dev/lodash@4.17.21
+
+# 转换后（添加 skypack 前缀）
+https://xget.xi-xu.me/skypack/lodash@4.17.21
+```
+
+#### esm.sh
+
+```url
+# React 模块原始 URL
+https://esm.sh/react@18.2.0
+
+# 转换后（添加 esmsh 前缀）
+https://xget.xi-xu.me/esmsh/react@18.2.0
+
+# TypeScript 类型原始 URL
+https://esm.sh/react@18.2.0?dts
+
+# 转换后（添加 esmsh 前缀）
+https://xget.xi-xu.me/esmsh/react@18.2.0?dts
 ```
 
 #### PyPI
@@ -910,6 +982,135 @@ npm install
 # 或者使用 yarn
 yarn config set registry https://xget.xi-xu.me/npm/
 yarn install
+```
+
+### Google Hosted Libraries CDN 加速
+
+#### 在网页中使用 Xget 镜像
+
+```html
+<!-- 原始 Google Hosted Libraries 引用 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- 使用 Xget 加速（添加 ghl 前缀） -->
+<script src="https://xget.xi-xu.me/ghl/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://xget.xi-xu.me/ghl/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+
+<!-- Angular.js -->
+<script src="https://xget.xi-xu.me/ghl/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+```
+
+#### 在项目中使用
+
+```javascript
+// 直接在 HTML 中替换 URL
+const scripts = [
+  'https://xget.xi-xu.me/ghl/ajax/libs/jquery/3.6.0/jquery.min.js',
+  'https://xget.xi-xu.me/ghl/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js'
+];
+
+scripts.forEach(src => {
+  const script = document.createElement('script');
+  script.src = src;
+  document.head.appendChild(script);
+});
+```
+
+### unpkg CDN 加速
+
+#### 在网页中使用 Xget 镜像
+
+```html
+<!-- 原始 unpkg 引用 -->
+<script type="module">
+  import React from 'https://unpkg.com/react@18.2.0/index.js';
+</script>
+
+<!-- 使用 Xget 加速（添加 unpkg 前缀） -->
+<script type="module">
+  import React from 'https://xget.xi-xu.me/unpkg/react@18.2.0/index.js';
+</script>
+
+<!-- CSS 文件 -->
+<link rel="stylesheet" href="https://xget.xi-xu.me/unpkg/normalize.css@8.0.1/normalize.css">
+```
+
+#### 在项目中使用
+
+```javascript
+// ES 模块导入
+import lodash from 'https://xget.xi-xu.me/unpkg/lodash@4.17.21/lodash.js';
+import dayjs from 'https://xget.xi-xu.me/unpkg/dayjs@1.11.7/dayjs.min.js';
+
+// 动态导入
+const module = await import('https://xget.xi-xu.me/unpkg/vue@3.3.4/dist/vue.esm-browser.js');
+```
+
+### Skypack CDN 加速
+
+#### 在网页中使用 Xget 镜像
+
+```html
+<!-- 原始 Skypack 引用 -->
+<script type="module">
+  import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+  confetti();
+</script>
+
+<!-- 使用 Xget 加速（添加 skypack 前缀） -->
+<script type="module">
+  import confetti from 'https://xget.xi-xu.me/skypack/canvas-confetti';
+  confetti();
+</script>
+```
+
+#### 在项目中使用
+
+```javascript
+// ES 模块导入（优化过的 ESM）
+import React from 'https://xget.xi-xu.me/skypack/react@18.2.0';
+import { render } from 'https://xget.xi-xu.me/skypack/react-dom@18.2.0';
+
+// 带版本锁定的导入
+import lodash from 'https://xget.xi-xu.me/skypack/lodash@4.17.21';
+
+// TypeScript 支持
+import type { ReactElement } from 'https://xget.xi-xu.me/skypack/react@18.2.0?dts';
+```
+
+### esm.sh CDN 加速
+
+#### 在网页中使用 Xget 镜像
+
+```html
+<!-- 原始 esm.sh 引用 -->
+<script type="module">
+  import React from 'https://esm.sh/react@18.2.0';
+</script>
+
+<!-- 使用 Xget 加速（添加 esmsh 前缀） -->
+<script type="module">
+  import React from 'https://xget.xi-xu.me/esmsh/react@18.2.0';
+</script>
+```
+
+#### 在项目中使用
+
+```javascript
+// ES 模块导入
+import React from 'https://xget.xi-xu.me/esmsh/react@18.2.0';
+import { useState } from 'https://xget.xi-xu.me/esmsh/react@18.2.0';
+
+// TypeScript 类型定义
+import type { FC } from 'https://xget.xi-xu.me/esmsh/react@18.2.0?dts';
+
+// 带依赖锁定的导入
+import lodash from 'https://xget.xi-xu.me/esmsh/lodash@4.17.21?deps=none';
+
+// Deno 支持
+import { serve } from 'https://xget.xi-xu.me/esmsh/std@0.177.0/http/server.ts';
 ```
 
 ### Python 包管理加速

@@ -1,0 +1,89 @@
+name: Translate README
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "README.md"
+  pull_request:
+    branches: [main]
+    paths:
+      - "README.md"
+  workflow_dispatch:
+
+jobs:
+  translate-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Translate README to English
+        uses: lyqht/deepl-translate-github-action@v2.1.1
+        with:
+          deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
+          target_languages: en
+          input_file_path: README.md
+          output_file_name_pattern: README.{language}.md
+
+      - name: Update language link and add translation notice
+        run: |
+          if [ -f "README.en.md" ]; then
+            # 创建临时文件
+            temp_file=$(mktemp)
+
+            # 读取翻译后的文件内容
+            content=$(cat README.en.md)
+
+            # 替换语言链接：将 [English](README.en.md) 改为 [汉语](README.md)
+            content=$(echo "$content" | sed 's/\*\*\[English\](README\.en\.md)\*\*/\*\*\[汉语\](README\.md)\*\*/g')
+
+            # 在第三行（语言链接后）插入翻译说明
+            echo "$content" | awk '
+            NR==1 {print $0}
+            NR==2 {print $0; print ""}
+            NR==3 {
+              print $0
+              print ""
+              print "> **📝 翻译说明**"
+              print ">"
+              print "> 本文档由 [DeepL](https://www.deepl.com/) 自动翻译生成，如有疏漏或错误，请以 [中文原文](README.md) 为准。"
+              print ">"
+              print "> This document is automatically translated by [DeepL](https://www.deepl.com/). For any omissions or errors, please refer to the [original Chinese text](README.md)."
+              print ""
+              next
+            }
+            NR>3 {print $0}
+            ' > "$temp_file"
+
+            # 替换原文件
+            mv "$temp_file" README.en.md
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          if [ -f "README.en.md" ]; then
+            git add README.en.md
+            if git diff --staged --quiet; then
+              echo "No changes to commit"
+            else
+              git commit -m "🌐 Auto-translate README.md to English using DeepL
+
+              - Generated README.en.md from README.md
+              - Updated language links
+              - Added translation disclaimer
+
+              Co-authored-by: DeepL <https://www.deepl.com/>"
+              git push
+            fi
+          fi

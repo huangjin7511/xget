@@ -36,6 +36,7 @@
 [![Arch Linux](https://img.shields.io/badge/Arch%20Linux-1793D1?logo=archlinux&logoColor=white)](#arch-linux-pacman-配置)
 [![arXiv](https://img.shields.io/badge/arXiv-B31B1B?logo=arxiv&logoColor=white)](#arxiv-论文下载)
 [![F-Droid](https://img.shields.io/badge/F--Droid-1976D2?logo=f-droid&logoColor=white)](#f-droid-存储库镜像)
+[![Jenkins](https://img.shields.io/badge/Jenkins-D33833?logo=jenkins&logoColor=white)](#jenkins-插件下载)
 [![AI 推理提供商](https://img.shields.io/badge/AI%20推理提供商-412991?logo=openai&logoColor=white)](#ai-推理提供商)
 [![容器注册表](https://img.shields.io/badge/容器注册表-%23007EC6.svg?logo=docker&logoColor=white)](#容器注册表)
 
@@ -169,6 +170,7 @@
 | Arch Linux | `arch` | `https://geo.mirror.pkgbuild.com/...` | `https://xget.xi-xu.me/arch/...` |
 | arXiv | `arxiv` | `https://arxiv.org/...` | `https://xget.xi-xu.me/arxiv/...` |
 | F-Droid | `fdroid` | `https://f-droid.org/...` | `https://xget.xi-xu.me/fdroid/...` |
+| Jenkins 插件 | `jenkins` | `https://updates.jenkins.io/...` | `https://xget.xi-xu.me/jenkins/...` |
 | AI 推理提供商 | `ip` | 见 [AI 推理提供商](#ai-推理提供商) | 见 [AI 推理提供商](#ai-推理提供商) |
 | 容器注册表 | `cr` | 见[容器注册表](#容器注册表) | 见[容器注册表](#容器注册表) |
 
@@ -606,6 +608,22 @@ https://f-droid.org/api/v1/packages/org.fdroid.fdroid
 
 # 转换后（添加 fdroid 前缀）
 https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
+```
+
+#### Jenkins 插件
+
+```url
+# Jenkins 更新中心原始 URL
+https://updates.jenkins.io/update-center.json
+
+# 转换后（添加 jenkins 前缀）
+https://xget.xi-xu.me/jenkins/update-center.json
+
+# Jenkins 插件下载原始 URL
+https://updates.jenkins.io/download/plugins/maven-plugin/3.27/maven-plugin.hpi
+
+# 转换后（添加 jenkins 前缀）
+https://xget.xi-xu.me/jenkins/download/plugins/maven-plugin/3.27/maven-plugin.hpi
 ```
 
 #### AI 推理提供商
@@ -1732,6 +1750,201 @@ task checkFDroidAvailability {
             }
         } catch (Exception e) {
             println "检查 F-Droid 可用性时出错: ${e.message}"
+        }
+    }
+}
+```
+
+### Jenkins 插件下载
+
+#### 使用 Xget 加速 Jenkins 插件下载和更新
+
+支持 Jenkins 更新中心和插件下载，兼容清华镜像等国内镜像源的配置方式。
+
+#### Jenkins 更新中心配置
+
+##### 方法一：在 Jenkins Web 界面配置
+
+1. 登录 Jenkins 管理界面
+2. 进入 **Manage Jenkins** → **Plugins** → **Advanced**
+3. 在 **Update Site** 部分，将 URL 更改为：
+
+   ```
+   https://xget.xi-xu.me/jenkins/update-center.json
+   ```
+
+4. 点击 **Submit** 保存配置
+
+##### 方法二：修改配置文件
+
+```bash
+# 在 Jenkins 服务器上修改更新中心配置文件
+# 默认位置：$JENKINS_HOME/hudson.model.UpdateCenter.xml
+sudo nano /var/lib/jenkins/hudson.model.UpdateCenter.xml
+
+# 将 URL 改为：
+# <url>https://xget.xi-xu.me/jenkins/update-center.json</url>
+
+# 重启 Jenkins 服务
+sudo systemctl restart jenkins
+```
+
+#### 支持的 Jenkins 服务
+
+```url
+# Jenkins 更新中心 JSON
+https://xget.xi-xu.me/jenkins/update-center.json
+
+# Jenkins 更新中心（实际 JSON 格式）
+https://xget.xi-xu.me/jenkins/update-center.actual.json
+
+# Jenkins 插件下载
+https://xget.xi-xu.me/jenkins/download/plugins/[插件名]/[版本]/[插件名].hpi
+
+# 实验性插件更新中心
+https://xget.xi-xu.me/jenkins/experimental/update-center.json
+```
+
+#### 使用示例
+
+```bash
+# 下载 Maven 插件
+wget https://xget.xi-xu.me/jenkins/download/plugins/maven-plugin/3.27/maven-plugin.hpi
+
+# 下载 Git 插件
+curl -L -O https://xget.xi-xu.me/jenkins/download/plugins/git/5.2.1/git.hpi
+
+# 获取更新中心信息
+curl https://xget.xi-xu.me/jenkins/update-center.json
+
+# 批量下载常用插件
+cat > download_jenkins_plugins.sh << 'EOF'
+#!/bin/bash
+
+# 定义要下载的插件列表
+plugins=(
+    "git:5.2.1"
+    "maven-plugin:3.27"
+    "workflow-aggregator:596.v8c21c963d92d"
+    "blueocean:1.27.8"
+    "docker-workflow:563.vd5d2e5c4007f"
+)
+
+# 创建插件下载目录
+mkdir -p jenkins_plugins
+
+# 批量下载插件
+for plugin in "${plugins[@]}"; do
+    name=$(echo $plugin | cut -d: -f1)
+    version=$(echo $plugin | cut -d: -f2)
+    echo "正在下载插件: $name v$version"
+    wget -P jenkins_plugins "https://xget.xi-xu.me/jenkins/download/plugins/$name/$version/$name.hpi"
+done
+
+echo "所有插件下载完成！"
+EOF
+
+chmod +x download_jenkins_plugins.sh
+./download_jenkins_plugins.sh
+```
+
+#### 离线 Jenkins 部署
+
+对于无网络环境的 Jenkins 部署：
+
+```bash
+# 1. 下载 Jenkins 核心文件
+wget https://xget.xi-xu.me/jenkins/war/jenkins.war
+
+# 2. 创建插件打包脚本
+cat > prepare_jenkins_offline.sh << 'EOF'
+#!/bin/bash
+
+# 创建离线部署目录结构
+mkdir -p jenkins_offline/{plugins,update_center}
+
+# 下载更新中心配置
+curl -o jenkins_offline/update_center/update-center.json \
+    https://xget.xi-xu.me/jenkins/update-center.json
+
+# 必备插件列表
+essential_plugins=(
+    "ant:475.vf34069fef73c"
+    "build-timeout:1.31"
+    "credentials:1319.v7eb_51b_3a_c97b_"
+    "git:5.2.1"
+    "github:1.38.0"
+    "gradle:2.8.2"
+    "ldap:682.v7b_544c9d1512"
+    "mailer:463.vedf8358e006b_"
+    "matrix-auth:3.2.2"
+    "maven-plugin:3.27"
+    "pam-auth:1.10"
+    "pipeline-stage-view:2.34"
+    "ssh-slaves:2.973.v0fa_8c0dea_f9f"
+    "timestamper:1.26"
+    "workflow-aggregator:596.v8c21c963d92d"
+    "ws-cleanup:0.45"
+)
+
+# 下载所有必备插件
+for plugin in "${essential_plugins[@]}"; do
+    name=$(echo $plugin | cut -d: -f1)
+    version=$(echo $plugin | cut -d: -f2)
+    echo "下载 $name:$version"
+    wget -P jenkins_offline/plugins \
+        "https://xget.xi-xu.me/jenkins/download/plugins/$name/$version/$name.hpi"
+done
+
+# 创建部署说明
+cat > jenkins_offline/deploy_instructions.md << 'DEPLOY'
+# Jenkins 离线部署说明
+
+1. 将 jenkins.war 复制到目标服务器
+2. 启动 Jenkins：java -jar jenkins.war
+3. 将 plugins/ 目录中的 .hpi 文件复制到 $JENKINS_HOME/plugins/
+4. 重启 Jenkins
+DEPLOY
+
+echo "离线部署包准备完成！"
+EOF
+
+chmod +x prepare_jenkins_offline.sh
+./prepare_jenkins_offline.sh
+```
+
+#### 在项目中使用
+
+##### Jenkinsfile 中的插件检查
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Check Plugin Availability') {
+            steps {
+                script {
+                    // 检查 Maven 插件可用性
+                    def pluginUrl = "https://xget.xi-xu.me/jenkins/download/plugins/maven-plugin/3.27/maven-plugin.hpi"
+
+                    try {
+                        def response = httpRequest url: pluginUrl, httpMode: 'HEAD'
+                        if (response.status == 200) {
+                            echo "Maven 插件可用: ${pluginUrl}"
+                        }
+                    } catch (Exception e) {
+                        error "Maven 插件不可用: ${e.message}"
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // 你的构建步骤
+                echo "使用加速后的插件进行构建..."
+            }
         }
     }
 }

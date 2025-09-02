@@ -81,9 +81,7 @@ describe('Platform Configuration', () => {
     });
 
     it('should transform Civitai paths correctly', () => {
-      expect(transformPath('/civitai/api/v1/models', 'civitai')).toBe(
-        '/api/v1/models'
-      );
+      expect(transformPath('/civitai/api/v1/models', 'civitai')).toBe('/api/v1/models');
 
       expect(transformPath('/civitai/api/v1/model-versions/1318', 'civitai')).toBe(
         '/api/v1/model-versions/1318'
@@ -237,6 +235,57 @@ describe('Platform Configuration', () => {
 
       expect(() => new URL(fullUrl)).not.toThrow();
       expect(fullUrl).toBe('https://ghcr.io/v2/nginxinc/nginx-unprivileged/manifests/latest');
+    });
+  });
+
+  describe('Jenkins Plugin Support', () => {
+    it('should have Jenkins platform defined', () => {
+      expect(PLATFORMS).toHaveProperty('jenkins');
+      expect(PLATFORMS.jenkins).toBe('https://updates.jenkins.io');
+    });
+
+    it('should transform Jenkins paths correctly', () => {
+      // Update center JSON - should be redirected to current
+      expect(transformPath('/jenkins/update-center.json', 'jenkins')).toBe(
+        '/current/update-center.json'
+      );
+
+      expect(transformPath('/jenkins/update-center.actual.json', 'jenkins')).toBe(
+        '/current/update-center.actual.json'
+      );
+
+      // Plugin downloads - should preserve download paths
+      expect(
+        transformPath('/jenkins/download/plugins/maven-plugin/3.27/maven-plugin.hpi', 'jenkins')
+      ).toBe('/download/plugins/maven-plugin/3.27/maven-plugin.hpi');
+
+      // Experimental update center - should preserve experimental paths
+      expect(transformPath('/jenkins/experimental/update-center.json', 'jenkins')).toBe(
+        '/experimental/update-center.json'
+      );
+
+      // Current paths - should preserve current paths
+      expect(transformPath('/jenkins/current/update-center.json', 'jenkins')).toBe(
+        '/current/update-center.json'
+      );
+
+      // Other paths - should be prefixed with current
+      expect(transformPath('/jenkins/test-path', 'jenkins')).toBe('/current/test-path');
+    });
+
+    it('should construct valid URLs for Jenkins services', () => {
+      const jenkinsUrls = [
+        '/jenkins/update-center.json',
+        '/jenkins/download/plugins/git/5.2.1/git.hpi',
+        '/jenkins/experimental/update-center.json',
+        '/jenkins/current/update-center.actual.json'
+      ];
+
+      jenkinsUrls.forEach(path => {
+        const transformedPath = transformPath(path, 'jenkins');
+        const fullUrl = PLATFORMS.jenkins + transformedPath;
+        expect(() => new URL(fullUrl)).not.toThrow();
+      });
     });
   });
 

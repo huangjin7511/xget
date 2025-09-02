@@ -38,6 +38,7 @@ export const PLATFORMS = {
   arch: 'https://geo.mirror.pkgbuild.com',
   arxiv: 'https://arxiv.org',
   fdroid: 'https://f-droid.org',
+  jenkins: 'https://updates.jenkins.io',
 
   // AI Inference Providers
   'ip-openai': 'https://api.openai.com',
@@ -142,6 +143,34 @@ export function transformPath(path, platformKey) {
       // Transform bottle paths to ghcr.io container registry format
       // /v2/homebrew/core/git/manifests/2.39.0 -> /v2/homebrew/core/git/manifests/2.39.0
       return transformedPath;
+    }
+  }
+
+  // Special handling for Jenkins plugins
+  if (platformKey === 'jenkins') {
+    // Transform paths for Jenkins update center and plugin downloads
+    if (transformedPath.startsWith('/')) {
+      // Handle different Jenkins endpoints:
+      // /update-center.json -> /current/update-center.json
+      // /update-center.actual.json -> /current/update-center.actual.json
+      // /experimental/update-center.json -> /experimental/update-center.json
+      // /download/plugins/... -> /download/plugins/...
+
+      if (transformedPath === '/update-center.json') {
+        return '/current/update-center.json';
+      } else if (transformedPath === '/update-center.actual.json') {
+        return '/current/update-center.actual.json';
+      } else if (
+        transformedPath.startsWith('/experimental/') ||
+        transformedPath.startsWith('/download/') ||
+        transformedPath.startsWith('/current/')
+      ) {
+        // Keep experimental, download, and current paths as-is
+        return transformedPath;
+      } else {
+        // For other paths, assume they are relative to current
+        return `/current${transformedPath}`;
+      }
     }
   }
 

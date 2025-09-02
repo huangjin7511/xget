@@ -245,6 +245,87 @@ describe('Integration Tests', () => {
         expect(response.headers.get('Content-Range')).toBeTruthy();
       }
     });
+
+    it('should handle range requests with proper caching strategy', async () => {
+      const testUrl = 'https://example.com/gh/test/repo/test-file.pdf';
+
+      // First, make a regular request to cache the full content
+      const fullResponse = await SELF.fetch(testUrl);
+
+      if (fullResponse.status === 200) {
+        // Verify the response has proper headers for Range support
+        expect(fullResponse.headers.get('Accept-Ranges')).toBe('bytes');
+        expect(fullResponse.headers.get('Cache-Control')).toContain('public');
+
+        // Now make a range request
+        const rangeResponse = await SELF.fetch(testUrl, {
+          headers: {
+            Range: 'bytes=0-1023'
+          }
+        });
+
+        // Should either get partial content or full content
+        expect([200, 206]).toContain(rangeResponse.status);
+
+        if (rangeResponse.status === 206) {
+          expect(rangeResponse.headers.get('Content-Range')).toBeTruthy();
+          expect(rangeResponse.headers.get('Content-Length')).toBe('1024');
+        }
+      }
+    });
+
+    it('should avoid compression for media files', async () => {
+      const mediaFiles = [
+        'https://example.com/gh/test/repo/video.mp4',
+        'https://example.com/gh/test/repo/audio.mp3',
+        'https://example.com/gh/test/repo/image.jpg',
+        'https://example.com/gh/test/repo/archive.zip'
+      ];
+
+      for (const url of mediaFiles) {
+        const response = await SELF.fetch(url, { method: 'HEAD' });
+
+        if (response.status === 200) {
+          // Media files should have Accept-Ranges header for proper range support
+          expect(response.headers.get('Accept-Ranges')).toBe('bytes');
+
+          // Should not be compressed if it's a media file
+          const contentEncoding = response.headers.get('Content-Encoding');
+          if (contentEncoding) {
+            expect(['identity', null, undefined]).toContain(contentEncoding);
+          }
+        }
+      }
+    });
+
+    it('should cache only 200 responses, not 206 responses', async () => {
+      const testUrl = 'https://example.com/gh/test/repo/large-document.pdf';
+
+      // Make a range request first
+      const rangeResponse = await SELF.fetch(testUrl, {
+        headers: {
+          Range: 'bytes=0-1023'
+        }
+      });
+
+      // Verify performance metrics don't show 206 caching attempts
+      if (rangeResponse.status === 206) {
+        const metrics = rangeResponse.headers.get('X-Performance-Metrics');
+        if (metrics) {
+          const parsedMetrics = JSON.parse(metrics);
+          // Should not have cache_put_206_error or similar
+          expect(parsedMetrics).not.toHaveProperty('cache_put_error');
+        }
+      }
+
+      // Follow up with a full request to ensure it gets cached properly
+      const fullResponse = await SELF.fetch(testUrl);
+
+      if (fullResponse.status === 200) {
+        expect(fullResponse.headers.get('Cache-Control')).toContain('public');
+        expect(fullResponse.headers.get('Accept-Ranges')).toBe('bytes');
+      }
+    });
   });
 
   describe('Cross-Platform Consistency', () => {

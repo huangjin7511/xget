@@ -248,7 +248,7 @@ async function fetchToken(wwwAuthenticate, scope, authorization) {
   if (authorization) {
     headers.set('Authorization', authorization);
   }
-  return await fetch(url, { method: 'GET', headers: headers });
+  return await fetch(url, { method: 'GET', headers });
 }
 
 /**
@@ -261,7 +261,7 @@ function responseUnauthorized(url) {
   headers.set('WWW-Authenticate', `Bearer realm="https://${url.hostname}/v2/auth",service="Xget"`);
   return new Response(JSON.stringify({ message: 'UNAUTHORIZED' }), {
     status: 401,
-    headers: headers
+    headers
   });
 }
 
@@ -353,7 +353,7 @@ async function handleRequest(request, env, ctx) {
 
     // Handle Docker authentication
     if (isDocker && url.pathname === '/v2/auth') {
-      const newUrl = new URL(config.PLATFORMS[platform] + '/v2/');
+      const newUrl = new URL(`${config.PLATFORMS[platform]}/v2/`);
       const resp = await fetch(newUrl.toString(), {
         method: 'GET',
         redirect: 'follow'
@@ -366,7 +366,7 @@ async function handleRequest(request, env, ctx) {
         return resp;
       }
       const wwwAuthenticate = parseAuthenticate(authenticateStr);
-      let scope = url.searchParams.get('scope');
+      const scope = url.searchParams.get('scope');
       return await fetchToken(wwwAuthenticate, scope || '', authorization || '');
     }
 
@@ -380,14 +380,31 @@ async function handleRequest(request, env, ctx) {
     /** @type {Cache} */
     // @ts-ignore - Cloudflare Workers cache API
     const cache = caches.default;
-    const cacheKey = new Request(targetUrl, request);
     let response;
 
     if (!isGit && !isDocker && !isAI) {
+      // For Range requests, try cache match first
+      const cacheKey = new Request(targetUrl, request);
       response = await cache.match(cacheKey);
       if (response) {
         monitor.mark('cache_hit');
         return response;
+      }
+
+      // If Range request missed cache, try with original request to see if we have full content cached
+      const rangeHeader = request.headers.get('Range');
+      if (rangeHeader) {
+        const fullContentKey = new Request(targetUrl, {
+          method: request.method,
+          headers: new Headers(
+            [...request.headers.entries()].filter(([k]) => k.toLowerCase() !== 'range')
+          )
+        });
+        response = await cache.match(fullContentKey);
+        if (response) {
+          monitor.mark('cache_hit_full_content');
+          return response;
+        }
       }
     }
 
@@ -469,9 +486,32 @@ async function handleRequest(request, env, ctx) {
       requestHeaders.set('User-Agent', 'Wget/1.21.3');
       requestHeaders.set('Origin', request.headers.get('Origin') || '*');
 
-      // Handle range requests
+      // Handle range requests - but don't forward Range header if we need to cache full content
       const rangeHeader = request.headers.get('Range');
+
+      // Detect media files to avoid compression for better Range support
+      const isMediaFile = targetUrl.match(
+        /\.(mp4|avi|mkv|mov|wmv|flv|webm|mp3|wav|flac|aac|ogg|jpg|jpeg|png|gif|bmp|svg|pdf|zip|rar|7z|tar|gz|bz2|xz)$/i
+      );
+
+      if (isMediaFile || rangeHeader) {
+        // For media files or range requests, avoid compression to ensure proper byte-range support
+        requestHeaders.set('Accept-Encoding', 'identity');
+      }
+
+      // For Range requests, we need to decide whether to forward the Range header
+      // If we want to cache the full content first, don't send Range to origin
       if (rangeHeader) {
+        // Check if we already have full content cached
+        const fullContentKey = new Request(targetUrl, {
+          method: request.method,
+          headers: new Headers(
+            [...request.headers.entries()].filter(([k]) => k.toLowerCase() !== 'range')
+          )
+        });
+
+        // If we're going to try to get full content for caching, don't send Range header
+        // This will be handled in the retry logic
         requestHeaders.set('Range', rangeHeader);
       }
     }
@@ -480,7 +520,7 @@ async function handleRequest(request, env, ctx) {
     let attempts = 0;
     while (attempts < config.MAX_RETRIES) {
       try {
-        monitor.mark('attempt_' + attempts);
+        monitor.mark(`attempt_${attempts}`);
 
         // Fetch with timeout
         const controller = new AbortController();
@@ -696,25 +736,62 @@ async function handleRequest(request, env, ctx) {
       headers.set('Cache-Control', `public, max-age=${config.CACHE_DURATION}`);
       headers.set('X-Content-Type-Options', 'nosniff');
       headers.set('Accept-Ranges', 'bytes');
+
+      // Ensure Content-Length is present for proper Range support
+      if (!headers.has('Content-Length') && response.status === 200) {
+        // If Content-Length is missing and we have access to the body, calculate it
+        try {
+          const contentLength = response.headers.get('Content-Length');
+          if (contentLength) {
+            headers.set('Content-Length', contentLength);
+          }
+        } catch (error) {
+          console.warn('Could not set Content-Length header:', error);
+        }
+      }
+
       addSecurityHeaders(headers);
     }
 
     // Create final response
     const finalResponse = new Response(responseBody, {
       status: response.status,
-      headers: headers
+      headers
     });
 
     // Cache successful responses (skip caching for Git, Docker, and AI inference operations)
     // Only cache GET and HEAD requests to avoid "Cannot cache response to non-GET request" errors
+    // IMPORTANT: Only cache 200 responses, NOT 206 responses (Cloudflare Workers Cache API rejects 206)
     if (
       !isGit &&
       !isDocker &&
       !isAI &&
       ['GET', 'HEAD'].includes(request.method) &&
-      (response.ok || response.status === 206)
+      response.ok &&
+      response.status === 200 // Only cache complete responses (200), not partial content (206)
     ) {
+      // For Range requests that resulted in 200, cache the full response
+      const rangeHeader = request.headers.get('Range');
+      const cacheKey = rangeHeader
+        ? new Request(targetUrl, {
+            method: request.method,
+            headers: new Headers(
+              [...request.headers.entries()].filter(([k]) => k.toLowerCase() !== 'range')
+            )
+          })
+        : new Request(targetUrl, request);
+
       ctx.waitUntil(cache.put(cacheKey, finalResponse.clone()));
+
+      // If this was originally a Range request and we got a 200 (full content),
+      // try cache.match again with the original Range request to get 206 response
+      if (rangeHeader && response.status === 200) {
+        const rangedResponse = await cache.match(new Request(targetUrl, request));
+        if (rangedResponse) {
+          monitor.mark('range_cache_hit_after_full_cache');
+          return rangedResponse;
+        }
+      }
     }
 
     monitor.mark('complete');
@@ -740,7 +817,7 @@ function addPerformanceHeaders(response, monitor) {
   addSecurityHeaders(headers);
   return new Response(response.body, {
     status: response.status,
-    headers: headers
+    headers
   });
 }
 

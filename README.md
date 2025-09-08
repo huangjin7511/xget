@@ -2,8 +2,7 @@
 
 [![Chromium 扩展](https://img.shields.io/badge/Chromium%20扩展-4285F4?logo=googlechrome&logoColor=white)](#-生态系统集成)
 [![Firefox 扩展](https://img.shields.io/badge/Firefox%20扩展-582ACB?logo=Firefox&logoColor=white)](#-生态系统集成)
-[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#cloudflare-workers强烈推荐)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?&logo=docker&logoColor=white)](#docker)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare%20Workers-F38020?&logo=cloudflare&logoColor=white)](#-部署)
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
@@ -2327,161 +2326,70 @@ podman pull xget.xi-xu.me/cr/ghcr/nginxinc/nginx-unprivileged:latest
 sudo systemctl restart containerd
 ```
 
-## 🚀 部署选择
+## 🚀 部署
 
-### Cloudflare Workers（强烈推荐）
+### Cloudflare Workers
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/xixu-me/Xget)
 
-**强烈建议使用 Cloudflare Workers 的方式进行部署**，这种方式具有以下优势：
+**Xget 专为 Cloudflare Workers 设计并优化**，提供最佳的性能和体验：
 
 - **💰 成本优势**：除了注册域名的费用外，在大多数情况下是免费的
 - **🚀 性能最高**：全球边缘节点，响应速度最快
 - **🔧 维护简单**：无需服务器管理，自动扩展和更新
+- **🛡️ 安全可靠**：内置 DDoS 防护和安全特性
 
-部署后，你的 Xget 服务将在 `your-worker-name.your-subdomain.workers.dev` 上可用。
+#### 部署步骤
 
-### 其他部署方式
+1. **注册 Cloudflare 账户**：访问 [Cloudflare Workers](https://workers.cloudflare.com/) 并注册账户
 
-提供的其他部署方式主要是为了满足部分用户的多样化需求：
+2. **安装 Wrangler CLI**：
 
-#### Docker
+   ```bash
+   npm install -g wrangler
+   wrangler login
+   ```
 
-##### 使用预构建镜像
+3. **克隆项目**：
 
-```bash
-# 拉取最新镜像
-docker pull ghcr.io/xixu-me/xget:latest
+   ```bash
+   git clone https://github.com/xixu-me/Xget.git
+   cd Xget
+   npm install
+   ```
 
-# 运行容器
-docker run -d \
-  --name xget \
-  -p 3000:3000 \
-  --restart unless-stopped \
-  ghcr.io/xixu-me/xget:latest
-```
+4. **配置项目**：
+   编辑 `wrangler.toml` 文件，修改 `name` 字段为你的 Worker 名称：
 
-##### 本地构建镜像
+   ```toml
+   name = "your-xget-worker"
+   ```
 
-```bash
-# 克隆存储库
-git clone https://github.com/xixu-me/Xget.git
-cd Xget
+5. **部署到 Cloudflare Workers**：
 
-# 构建镜像
-docker build -t xget .
+   ```bash
+   npm run deploy
+   ```
 
-# 运行容器
-docker run -d \
-  --name xget \
-  -p 3000:3000 \
-  --restart unless-stopped \
-  xget
-```
+6. **绑定自定义域名**（可选）：
+   在 Cloudflare Workers 控制台中绑定你的自定义域名
 
-##### Docker Compose
+部署完成后，你的 Xget 服务将在以下地址可用：
 
-创建 `docker-compose.yml` 文件：
+- Worker 域名：`your-worker-name.your-subdomain.workers.dev`
+- 自定义域名：`your-domain.com`（如果已绑定）
 
-```yaml
-version: '3.8'
+#### 环境变量配置
 
-services:
-  xget:
-    image: ghcr.io/xixu-me/xget:latest
-    container_name: xget
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
-    environment:
-      - NODE_ENV=production
-      - PORT=3000
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-```
+你可以在 Cloudflare Workers 控制台中设置以下环境变量来自定义配置：
 
-然后运行：
-
-```bash
-docker-compose up -d
-```
-
-##### Kubernetes 部署
-
-创建 `k8s-deployment.yaml`：
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: xget
-  labels:
-    app: xget
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: xget
-  template:
-    metadata:
-      labels:
-        app: xget
-    spec:
-      containers:
-      - name: xget
-        image: ghcr.io/xixu-me/xget:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: PORT
-          value: "3000"
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          initialDelaySeconds: 5
-          periodSeconds: 5
-        resources:
-          requests:
-            memory: "128Mi"
-            cpu: "100m"
-          limits:
-            memory: "256Mi"
-            cpu: "500m"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: xget-service
-spec:
-  selector:
-    app: xget
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 3000
-  type: LoadBalancer
-```
-
-部署到 Kubernetes：
-
-```bash
-kubectl apply -f k8s-deployment.yaml
-```
-
-部署完成后，你的 Xget 服务将在 `http://localhost:3000` 上可用。通过 `/api/health` 端点可以检查服务状态。
+- `TIMEOUT_SECONDS`：请求超时时间（默认：30）
+- `MAX_RETRIES`：最大重试次数（默认：3）
+- `RETRY_DELAY_MS`：重试延迟时间（默认：1000）
+- `CACHE_DURATION`：缓存持续时间（默认：1800）
+- `ALLOWED_METHODS`：允许的 HTTP 方法（默认：GET,HEAD）
+- `ALLOWED_ORIGINS`：允许的 CORS 源（默认：*）
+- `MAX_PATH_LENGTH`：最大路径长度（默认：2048）
 
 ## 🔧 配置
 

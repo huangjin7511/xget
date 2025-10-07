@@ -46,7 +46,7 @@
 
 An ultra-high-performance, secure, all-in-one acceleration engine for developer resources whose performance far surpasses traditional accelerators, delivering a unified, efficient acceleration experience across multiple platforms, including code repositories, package management, AI inference APIs, container images, models and datasets, and more.
 
-The technical in-depth analysis article has been posted: [A Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/2025/10/07/deep-dive-into-xget-technology-en.html).
+The technical in-depth analysis article has been posted: ***[A Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/2025/10/07/deep-dive-into-xget-technology-en.html)***.
 
 ## 💡 Project Mission
 

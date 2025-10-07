@@ -48,15 +48,6 @@ An ultra-high-performance, secure, all-in-one acceleration engine for developer 
 
 The technical in-depth analysis article has been posted: ***[A Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/2025/10/07/deep-dive-into-xget-technology-en.html)***.
 
-## 💡 Project Mission
-
-This project accelerates access to open-source resources that comply with mainland China's laws and regulations, providing developers with a stable, lawful acceleration experience. We are committed to:
-
-- **🌍 Eliminate geographical restrictions**: Help mainland Chinese developers quickly access overseas open source resources
-- **⚖️ Compliance and legality**: Strictly abide by relevant laws and regulations, and only accelerate legal disclosure resources
-- **🚀 Improve efficiency**: Significantly improve developers' work efficiency and development experience
-- **🆓 Inclusive Open Source**: Contribute to the open source community and promote technological exchanges and development
-
 ## 🎯 Quick Start
 
 **Pre-deployed instances (no reliability guaranteed): `xget.xi-xu.me`** - Out of the box, no deployment required!
@@ -2352,7 +2343,7 @@ sudo systemctl restart containerd
    wrangler login
    ```
 
-3. **Clone Project**:
+3. **Clone Repository**:
 
    ```bash
    git clone https://github.com/xixu-me/Xget.git

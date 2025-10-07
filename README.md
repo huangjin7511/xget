@@ -2353,7 +2353,7 @@ sudo systemctl restart containerd
    wrangler login
    ```
 
-3. **克隆项目**：
+3. **克隆存储库**：
 
    ```bash
    git clone https://github.com/xixu-me/Xget.git

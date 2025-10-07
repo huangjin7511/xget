@@ -44,7 +44,9 @@
 [![AI Inference APIs](https://img.shields.io/badge/AI%20Inference%20APIs-412991?logo=openai&logoColor=white)](#ai-inference-api-acceleration)
 [![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-image-acceleration)
 
-Ultra-high-performance, secure acceleration engine for developer resources. It far outperforms traditional accelerators and delivers a unified high-speed experience across code repositories, package registries, AI inference APIs, container images, models, and datasets.
+Ultra-high performance and secure one-stop acceleration engine for developer resources. Its performance far exceeds that of traditional accelerators, delivering a unified and efficient acceleration experience across multiple platforms, including code repositories, package management, AI inference APIs, container images, models and datasets, and more.
+
+The technical in-depth analysis article has been posted: [A Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/2025/10/07/deep-dive-into-xget-technology-en.html).
 
 ## 💡 Project Mission
 
@@ -1771,12 +1773,7 @@ Supports Jenkins update center and plug-in downloads, and is compatible with the
 
 1. Log in to the Jenkins Management Interface
 2. Enter **Manage Jenkins** → **Plugins** → **Advanced**
-3. In the **Update Site** section, change the URL to:
-
-   ```
-   https://xget.xi-xu.me/jenkins/update-center.json
-   ```
-
+3. In the **Update Site** section, change the URL to `https://xget.xi-xu.me/jenkins/update-center.json`
 4. Click **Submit** to save the configuration
 
 ##### Method 2: Modify the Configuration File

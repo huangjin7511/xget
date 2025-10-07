@@ -1773,11 +1773,7 @@ task checkFDroidAvailability {
 
 1. 登录 Jenkins 管理界面
 2. 进入 **Manage Jenkins** → **Plugins** → **Advanced**
-3. 在 **Update Site** 部分，将 URL 更改为：
-
-   ```
-   https://xget.xi-xu.me/jenkins/update-center.json
-   ```
+3. 在 **Update Site** 部分，将 URL 更改为 `https://xget.xi-xu.me/jenkins/update-center.json`
 
 4. 点击 **Submit** 保存配置
 

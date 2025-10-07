@@ -44,7 +44,7 @@
 [![AI Inference APIs](https://img.shields.io/badge/AI%20Inference%20APIs-412991?logo=openai&logoColor=white)](#ai-inference-api-acceleration)
 [![Container Registry](https://img.shields.io/badge/Container%20Registry-%23007EC6.svg?logo=docker&logoColor=white)](#container-image-acceleration)
 
-Ultra-high performance and secure one-stop acceleration engine for developer resources. Its performance far exceeds that of traditional accelerators, delivering a unified and efficient acceleration experience across multiple platforms, including code repositories, package management, AI inference APIs, container images, models and datasets, and more.
+An ultra-high-performance, secure, all-in-one acceleration engine for developer resources whose performance far surpasses traditional accelerators, delivering a unified, efficient acceleration experience across multiple platforms, including code repositories, package management, AI inference APIs, container images, models and datasets, and more.
 
 The technical in-depth analysis article has been posted: [A Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/2025/10/07/deep-dive-into-xget-technology-en.html).
 

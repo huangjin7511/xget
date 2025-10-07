@@ -44,7 +44,7 @@
 [![AI 推理提供商](https://img.shields.io/badge/AI%20推理提供商-412991?logo=openai&logoColor=white)](#ai-推理提供商)
 [![容器注册表](https://img.shields.io/badge/容器注册表-%23007EC6.svg?logo=docker&logoColor=white)](#容器注册表)
 
-超高性能、安全的一站式开发者资源加速引擎。其性能远超传统加速器，为您提供跨多个平台的统一高效的加速体验，涵盖代码储存库、包管理、AI 推理 API、容器镜像、模型及数据集等。
+超高性能、安全的一站式开发者资源加速引擎，其性能远超传统加速器，提供跨多个平台的统一高效的加速体验，涵盖代码储存库、包管理、AI 推理 API、容器镜像、模型及数据集等。
 
 技术深度解析文章已发布：[《深入剖析 Xget：一个高性能、多协议、高安全性的开发者资源加速引擎》](https://blog.xi-xu.me/2025/10/07/deep-dive-into-xget-technology.html)。
 

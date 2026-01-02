@@ -25,7 +25,7 @@ body:
     attributes:
       label: 平台名称
       description: 请提供平台的官方名称
-      placeholder: 例如: GitLab, Bitbucket, Quay.io
+      placeholder: "例如: GitLab, Bitbucket, Quay.io"
     validations:
       required: true
 
@@ -34,7 +34,7 @@ body:
     attributes:
       label: 平台 URL
       description: 平台的主要域名或网址
-      placeholder: 例如: https://registry.example.com
+      placeholder: "例如: https://registry.example.com"
     validations:
       required: true
 

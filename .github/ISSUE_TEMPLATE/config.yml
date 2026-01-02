@@ -3,7 +3,7 @@ contact_links:
   - name: 📚 文档
     url: https://github.com/xixu-me/Xget/blob/main/README.zh-Hans.md
     about: 查看存储库的 README 文档
-  - name: 🌐 URL 转换器
+  - name: 🔁 URL 转换器
     url: https://xuc.xi-xu.me
     about: 访问配套 web 应用程序
   - name: 🔐 安全漏洞报告

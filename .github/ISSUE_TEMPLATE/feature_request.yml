@@ -27,7 +27,6 @@ body:
       label: 功能类型
       description: 这个请求属于什么类型？
       options:
-        - 新平台支持
         - 新协议支持
         - 性能优化
         - 缓存改进

@@ -4,7 +4,7 @@
     "xget": "file:"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "^0.12.1",
+    "@cloudflare/vitest-pool-workers": "^0.12.5",
     "@cloudflare/workers-types": "^4.20260118.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
@@ -12,7 +12,7 @@
     "prettier": "^3.8.0",
     "typescript": "^5.9.3",
     "vitest": "^3.1.4",
-    "wrangler": "^4.54.0"
+    "wrangler": "^4.59.3"
   },
   "name": "xget",
   "private": false,

@@ -26,7 +26,6 @@
  * Identifies Hugging Face API requests by checking for:
  * - Hugging Face platform prefix (/hf/)
  * - API path segment (/api/)
- *
  * @param {Request} request - The incoming request object
  * @param {URL} url - Parsed URL object
  * @returns {boolean} True if this is a Hugging Face API operation
@@ -47,7 +46,6 @@ export function isHuggingFaceAPIRequest(request, url) {
 
 /**
  * Configures headers for Hugging Face API requests.
- *
  * @param {Headers} headers - The headers object to modify
  * @param {Request} request - The original request
  */

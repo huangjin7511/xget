@@ -27,7 +27,7 @@ import { isDockerRequest, validateRequest } from './utils/validation.js';
 /**
  * Main request handler with comprehensive caching, retry logic, and security measures.
  * @param {Request} request - The incoming HTTP request
- * @param {object} env - Cloudflare Workers environment variables for runtime config overrides
+ * @param {Record<string, unknown>} env - Cloudflare Workers environment variables for runtime config overrides
  * @param {ExecutionContext} ctx - Cloudflare Workers execution context for background tasks
  * @returns {Promise<Response>} The HTTP response with appropriate headers and body
  */
@@ -646,7 +646,7 @@ export default {
   /**
    * Main Worker entry point.
    * @param {Request} request
-   * @param {object} env
+   * @param {Record<string, unknown>} env
    * @param {ExecutionContext} ctx
    */
   fetch(request, env, ctx) {

@@ -52,9 +52,9 @@ export function isHuggingFaceAPIRequest(request, url) {
  * @param {Request} request - The original request
  */
 export function configureHuggingFaceHeaders(headers, request) {
-  // Pass through Authorization header if present
-  if (request.headers.has('Authorization')) {
-    headers.set('Authorization', request.headers.get('Authorization'));
+  const authHeader = request.headers.get('Authorization');
+  if (authHeader) {
+    headers.set('Authorization', authHeader);
   }
 
   if (request.method === 'POST' && !headers.has('Content-Type')) {

@@ -96,8 +96,13 @@ describe('Security Features', () => {
           method: 'HEAD',
           redirect: 'manual' // Don't follow redirects
         });
-        // Should either reject with 400, redirect (302/301), or safely handle the path
-        expect([400, 404, 500, 302, 301]).toContain(response.status);
+        // Some runtimes normalize plain `..` segments before the Worker sees them.
+        // Encoded traversal should still be rejected.
+        if (/%[0-9a-fA-F]{2}/.test(path)) {
+          expect(response.status).toBe(400);
+        } else {
+          expect(response.status).not.toBe(500);
+        }
       }
     }, 30000);
 

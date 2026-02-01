@@ -117,6 +117,11 @@ async function handleRequest(request, env, ctx) {
 
                 const targetUrl = `${config.PLATFORMS[platform]}${finalTargetPath}${url.search}`;
                 const authorization = request.headers.get('Authorization');
+                const hasSensitiveHeaders = Boolean(
+                  authorization ||
+                  request.headers.get('Cookie') ||
+                  request.headers.get('Proxy-Authorization')
+                );
 
                 // Check if this is a Git operation
                 const isGit = isGitRequest(request, url);
@@ -138,7 +143,15 @@ async function handleRequest(request, env, ctx) {
                     ? /** @type {any} */ (caches).default // eslint-disable-line jsdoc/reject-any-type
                     : null;
 
-                if (cache && !isGit && !isGitLFS && !isDocker && !isAI && !isHF) {
+                if (
+                  cache &&
+                  !isGit &&
+                  !isGitLFS &&
+                  !isDocker &&
+                  !isAI &&
+                  !isHF &&
+                  !hasSensitiveHeaders
+                ) {
                   try {
                     // For Range requests, try cache match first
                     const cacheKey = new Request(targetUrl, {
@@ -304,24 +317,6 @@ async function handleRequest(request, env, ctx) {
                             }
                           } else if (rangeResponse.ok) {
                             contentLength = rangeResponse.headers.get('Content-Length');
-                            if (!contentLength) {
-                              const sizeLimit = 50 * 1024 * 1024;
-                              const contentLengthHint = rangeResponse.headers.get('Content-Length');
-                              if (
-                                !contentLengthHint ||
-                                parseInt(contentLengthHint, 10) < sizeLimit
-                              ) {
-                                try {
-                                  const arrayBuffer = await rangeResponse.arrayBuffer();
-                                  contentLength = arrayBuffer.byteLength.toString();
-                                } catch (error) {
-                                  console.warn(
-                                    'Could not buffer response to get Content-Length:',
-                                    error
-                                  );
-                                }
-                              }
-                            }
                           }
 
                           if (contentLength) {
@@ -543,8 +538,20 @@ async function handleRequest(request, env, ctx) {
 
                     const headers = new Headers(response.headers);
 
-                    if (!isGit && !isDocker) {
-                      headers.set('Cache-Control', `public, max-age=${config.CACHE_DURATION}`);
+                    if (!isGit && !isGitLFS && !isDocker && !isAI && !isHF) {
+                      if (hasSensitiveHeaders) {
+                        headers.set('Cache-Control', 'private, no-store');
+                        const existingVary = headers.get('Vary');
+                        headers.set(
+                          'Vary',
+                          existingVary
+                            ? `${existingVary}, Authorization, Cookie`
+                            : 'Authorization, Cookie'
+                        );
+                      } else {
+                        headers.set('Cache-Control', `public, max-age=${config.CACHE_DURATION}`);
+                      }
+
                       headers.set('X-Content-Type-Options', 'nosniff');
                       headers.set('Accept-Ranges', 'bytes');
 
@@ -574,6 +581,8 @@ async function handleRequest(request, env, ctx) {
                       !isGitLFS &&
                       !isDocker &&
                       !isAI &&
+                      !isHF &&
+                      !hasSensitiveHeaders &&
                       request.method === 'GET' &&
                       response.ok &&
                       response.status === 200

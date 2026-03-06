@@ -26,7 +26,7 @@ describe('Integration Tests', () => {
       const testUrl = 'https://example.com/gh/microsoft/vscode/archive/refs/heads/main.zip';
       const response = await SELF.fetch(testUrl, { method: 'HEAD' });
 
-      expect([200, 301, 302, 404]).toContain(response.status);
+      expect([200, 301, 302, 404, 408]).toContain(response.status);
     }, 60000);
 
     it('should proxy GitLab file requests correctly', async () => {

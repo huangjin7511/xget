@@ -14,7 +14,8 @@
 
 - fork 存储库到您的 GitHub 账户
 - 创建功能分支 (`git checkout -b feature/amazing-feature`)
-- 提交更改 (`git commit -m 'Add some amazing feature'`)
+- 安装依赖以启用本地 Git hooks (`npm install`)
+- 使用 Conventional Commits 提交更改 (`git commit -m 'feat(platforms): add amazing feature'`)
 - 推送到分支 (`git push origin feature/amazing-feature`)
 - 创建 Pull Request
 
@@ -43,6 +44,8 @@ cd Xget
 
 # 安装依赖
 npm install
+
+# 安装后会自动启用 commit-msg hook
 
 # 启动开发服务器
 npm run dev
@@ -148,6 +151,11 @@ fix(cache): resolve cache invalidation issue
 docs(readme): update installation instructions
 perf(proxy): optimize request handling performance
 ```
+
+### 自动校验
+
+- `npm install` 会自动安装 `commit-msg` hook，在本地阻止不符合规范的提交
+- GitHub Actions 会在 `push` 和 `pull_request` 中再次校验提交消息，防止绕过本地 hook
 
 ## 🔍 Pull Request 流程
 

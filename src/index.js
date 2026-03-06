@@ -83,7 +83,10 @@ async function handleRequest(request, env, ctx) {
 
         if (!response) {
           // Handle Docker authentication explicitly
-          if (isDocker && (url.pathname === '/v2/auth' || /^\/cr\/[^/]+\/v2\/auth\/?$/.test(url.pathname))) {
+          if (
+            isDocker &&
+            (url.pathname === '/v2/auth' || /^\/cr\/[^/]+\/v2\/auth\/?$/.test(url.pathname))
+          ) {
             response = await handleDockerAuth(request, url, config);
           } else {
             // Platform detection using transform patterns

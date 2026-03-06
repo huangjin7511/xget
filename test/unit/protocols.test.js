@@ -46,7 +46,8 @@ describe('Docker Authentication', () => {
         return new Response('', {
           status: 401,
           headers: {
-            'WWW-Authenticate': 'Bearer realm="https://auth.docker.io/token",service="registry.docker.io"'
+            'WWW-Authenticate':
+              'Bearer realm="https://auth.docker.io/token",service="registry.docker.io"'
           }
         });
       }

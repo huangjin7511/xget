@@ -16,6 +16,7 @@ import {
   fetchToken,
   getScopeFromUrl,
   handleDockerAuth,
+  normalizeRegistryApiPath,
   parseAuthenticate,
   responseUnauthorized
 } from './protocols/docker.js';
@@ -110,13 +111,9 @@ async function handleRequest(request, env, ctx) {
                 // Transform URL based on platform using unified logic
                 const targetPath = transformPath(effectivePath, platform);
 
-                // For container registries, ensure we add the /v2 prefix for the Docker API
-                let finalTargetPath;
-                if (platform.startsWith('cr-')) {
-                  finalTargetPath = `/v2${targetPath}`;
-                } else {
-                  finalTargetPath = targetPath;
-                }
+                const finalTargetPath = platform.startsWith('cr-')
+                  ? normalizeRegistryApiPath(platform, targetPath)
+                  : targetPath;
 
                 const targetUrl = `${config.PLATFORMS[platform]}${finalTargetPath}${url.search}`;
                 const authorization = request.headers.get('Authorization');
@@ -438,7 +435,7 @@ async function handleRequest(request, env, ctx) {
                           }
                         }
 
-                        response = responseUnauthorized(url);
+                        response = responseUnauthorized(url, platform);
                         break;
                       }
 
@@ -482,18 +479,20 @@ async function handleRequest(request, env, ctx) {
                     );
                   } else if (!response.ok && response.status !== 206) {
                     if (isDocker && response.status === 401) {
-                      // Handle Docker 401 responses that might not have been caught by the retry loop
-                      const isCustomError =
-                        response.headers.get('content-type') === 'application/json' &&
-                        (await response.clone().text()).includes('UNAUTHORIZED');
+                      if (!response.headers.has('WWW-Authenticate')) {
+                        // Handle Docker 401 responses that might not have been caught by the retry loop
+                        const isCustomError =
+                          response.headers.get('content-type') === 'application/json' &&
+                          (await response.clone().text()).includes('UNAUTHORIZED');
 
-                      if (!isCustomError) {
-                        const errorText = await response.text().catch(() => '');
-                        response = createErrorResponse(
-                          `Authentication required for this container registry resource. This may be a private repository. Original error: ${errorText}`,
-                          401,
-                          true
-                        );
+                        if (!isCustomError) {
+                          const errorText = await response.text().catch(() => '');
+                          response = createErrorResponse(
+                            `Authentication required for this container registry resource. This may be a private repository. Original error: ${errorText}`,
+                            401,
+                            true
+                          );
+                        }
                       }
                     } else {
                       const errorText = await response.text().catch(() => 'Unknown error');
@@ -505,7 +504,9 @@ async function handleRequest(request, env, ctx) {
                     }
                   } else {
                     // Success case processing (rewriting URLs etc)
+                    /** @type {string | ReadableStream<Uint8Array> | null} */
                     let responseBody = response.body;
+                    let rewrittenContentLength = null;
 
                     if (
                       platform === 'pypi' &&
@@ -516,12 +517,8 @@ async function handleRequest(request, env, ctx) {
                         /https:\/\/files\.pythonhosted\.org/g,
                         `${url.origin}/pypi/files`
                       );
-                      responseBody = new ReadableStream({
-                        start(controller) {
-                          controller.enqueue(new TextEncoder().encode(rewrittenText));
-                          controller.close();
-                        }
-                      });
+                      responseBody = rewrittenText;
+                      rewrittenContentLength = new TextEncoder().encode(rewrittenText).byteLength;
                     }
 
                     if (
@@ -533,15 +530,15 @@ async function handleRequest(request, env, ctx) {
                         /https:\/\/registry.npmjs.org\/([^/]+)/g,
                         `${url.origin}/npm/$1`
                       );
-                      responseBody = new ReadableStream({
-                        start(controller) {
-                          controller.enqueue(new TextEncoder().encode(rewrittenText));
-                          controller.close();
-                        }
-                      });
+                      responseBody = rewrittenText;
+                      rewrittenContentLength = new TextEncoder().encode(rewrittenText).byteLength;
                     }
 
                     const headers = new Headers(response.headers);
+
+                    if (rewrittenContentLength !== null) {
+                      headers.set('Content-Length', String(rewrittenContentLength));
+                    }
 
                     if (!isGit && !isGitLFS && !isDocker && !isAI && !isHF) {
                       if (hasSensitiveHeaders) {

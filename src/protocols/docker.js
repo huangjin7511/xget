@@ -262,7 +262,10 @@ export async function handleDockerAuth(request, url, config) {
   try {
     target = resolveDockerAuthTarget(url, config.PLATFORMS);
   } catch (error) {
-    return createErrorResponse(error instanceof Error ? error.message : String(error), 400);
+    // Log internal error details server-side without exposing them to the client
+    console.error('Failed to resolve Docker auth target:', error);
+    // Return a generic error response to avoid leaking implementation details
+    return createErrorResponse('Invalid Docker authentication request', 400);
   }
 
   const upstreamUrl = config.PLATFORMS[target.platformKey];

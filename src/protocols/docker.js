@@ -130,7 +130,9 @@ function normalizeRepoPath(platformKey, repoPath) {
  * @returns {string} Repository path without the `/v2/` prefix or operation suffix.
  */
 function extractRepositoryPath(apiPath) {
-  const normalizedPath = apiPath.startsWith('/v2/') ? apiPath.slice(4) : apiPath.replace(/^\/+/, '');
+  const normalizedPath = apiPath.startsWith('/v2/')
+    ? apiPath.slice(4)
+    : apiPath.replace(/^\/+/, '');
   const pathParts = normalizedPath.split('/').filter(Boolean);
 
   if (pathParts.length === 0 || pathParts[0].startsWith('_')) {
@@ -228,10 +230,7 @@ export function responseUnauthorized(url, platform) {
   const realmPath = platform ? `/cr/${platform.slice(3)}/v2/auth` : '/v2/auth';
   const headers = new Headers();
   headers.set('Content-Type', 'application/json');
-  headers.set(
-    'WWW-Authenticate',
-    `Bearer realm="${url.origin}${realmPath}",service="Xget"`
-  );
+  headers.set('WWW-Authenticate', `Bearer realm="${url.origin}${realmPath}",service="Xget"`);
   return new Response(
     JSON.stringify({
       errors: [

@@ -198,9 +198,7 @@ describe('Docker Authentication', () => {
     const response = await worker.fetch(request, {}, executionContext);
 
     expect(response.status).toBe(200);
-    expect(String(fetchSpy.mock.calls[1][0])).toContain(
-      'scope=repository%3Aprivate%2Frepo%3Apull'
-    );
+    expect(String(fetchSpy.mock.calls[1][0])).toContain('scope=repository%3Aprivate%2Frepo%3Apull');
   });
 });
 

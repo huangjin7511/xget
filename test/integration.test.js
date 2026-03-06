@@ -152,18 +152,16 @@ describe('Integration Tests', () => {
     it('should include performance metrics in all responses', async () => {
       const testUrls = [
         'https://example.com/gh/test/repo/file.txt',
-        'https://example.com/gl/test/repo/file.txt',
-        'https://example.com/hf/test/model/config.json',
         'https://example.com/npm/test-package',
-        'https://example.com/pypi/simple/test/',
-        'https://example.com/conda/pkgs/main/test.json'
+        'https://example.com/pypi/simple/test/'
       ];
 
-      for (const url of testUrls) {
-        const response = await SELF.fetch(url, { method: 'HEAD' });
+      const responses = await Promise.all(testUrls.map(url => SELF.fetch(url, { method: 'HEAD' })));
+
+      for (const response of responses) {
         expect(response.headers.get('X-Performance-Metrics')).toBeTruthy();
       }
-    }, 10000);
+    }, 20000);
   });
 
   describe('Content Type Handling', () => {

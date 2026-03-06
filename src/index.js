@@ -83,7 +83,7 @@ async function handleRequest(request, env, ctx) {
 
         if (!response) {
           // Handle Docker authentication explicitly
-          if (isDocker && url.pathname === '/v2/auth') {
+          if (isDocker && (url.pathname === '/v2/auth' || /^\/cr\/[^/]+\/v2\/auth\/?$/.test(url.pathname))) {
             response = await handleDockerAuth(request, url, config);
           } else {
             // Platform detection using transform patterns
@@ -221,7 +221,9 @@ async function handleRequest(request, env, ctx) {
                     }
 
                     // Configure protocol-specific headers using modular helpers
-                    configureGitHeaders(requestHeaders, request, url, isGitLFS);
+                    if (isGit || isGitLFS) {
+                      configureGitHeaders(requestHeaders, request, url, isGitLFS);
+                    }
 
                     if (isAI) {
                       configureAIHeaders(requestHeaders, request);

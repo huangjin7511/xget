@@ -36,6 +36,7 @@
 [![Apache](https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white)](#apache-software-download-acceleration)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-package-acceleration)
 [![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?logo=homebrew&logoColor=black)](#homebrew-package-acceleration)
+[![Scoop](https://img.shields.io/badge/Scoop-D7D4DB)](#scoop-package-acceleration)
 [![RubyGems](https://img.shields.io/badge/RubyGems-E9573F?logo=rubygems&logoColor=white)](#ruby-package-acceleration)
 [![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-package-acceleration)
 [![CPAN](https://img.shields.io/badge/CPAN-0073A1?logo=perl&logoColor=white)](#perl-package-acceleration)
@@ -239,6 +240,7 @@ Using the pre-deployed instance **`xget.xi-xu.me`** or your own deployed instanc
 | Apache | `apache` | `https://downloads.apache.org/...` | `https://xget.xi-xu.me/apache/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | Homebrew | `homebrew` | `https://github.com/Homebrew/...` | `https://xget.xi-xu.me/homebrew/...` |
+| Scoop | `scoop` | `https://github.com/ScoopInstaller/...` | `https://xget.xi-xu.me/scoop/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
 | CPAN | `cpan` | `https://www.cpan.org/...` | `https://xget.xi-xu.me/cpan/...` |
@@ -497,6 +499,22 @@ https://ghcr.io/v2/homebrew/core/git/manifests/2.39.0
 
 # Converted (add homebrew/bottles prefix)
 https://xget.xi-xu.me/homebrew/bottles/v2/homebrew/core/git/manifests/2.39.0
+```
+
+#### Scoop
+
+```url
+# Scoop default bucket original URL
+https://github.com/ScoopInstaller/Main
+
+# Converted (add scoop prefix)
+https://xget.xi-xu.me/scoop/Main
+
+# Scoop core repository original URL
+https://github.com/ScoopInstaller/Scoop.git
+
+# Converted (add scoop prefix)
+https://xget.xi-xu.me/scoop/Scoop.git
 ```
 
 #### RubyGems
@@ -1360,6 +1378,21 @@ brew config
 # View environment variables
 echo $HOMEBREW_API_DOMAIN
 echo $HOMEBREW_BOTTLE_DOMAIN
+```
+
+### Scoop Package Acceleration
+
+#### Access Official Scoop Repositories Through Xget
+
+```bash
+# Clone the Scoop core repository through Xget
+git clone https://xget.xi-xu.me/scoop/Scoop.git
+
+# Add the default main bucket through Xget
+scoop bucket add main https://xget.xi-xu.me/scoop/Main
+
+# Add another official bucket through Xget
+scoop bucket add extras https://xget.xi-xu.me/scoop/Extras
 ```
 
 ### Ruby Package Acceleration

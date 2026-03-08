@@ -36,6 +36,7 @@
 [![Apache](https://img.shields.io/badge/Apache-D22128?logo=apache&logoColor=white)](#apache-軟體下載加速)
 [![Gradle](https://img.shields.io/badge/Gradle-02303A?logo=gradle&logoColor=white)](#gradle-軟體包管理加速)
 [![Homebrew](https://img.shields.io/badge/Homebrew-FBB040?logo=homebrew&logoColor=black)](#homebrew-軟體包管理加速)
+[![Scoop](https://img.shields.io/badge/Scoop-D7D4DB)](#scoop-軟體包管理加速)
 [![RubyGems](https://img.shields.io/badge/RubyGems-E9573F?logo=rubygems&logoColor=white)](#ruby-軟體包管理加速)
 [![CRAN](https://img.shields.io/badge/CRAN-276DC3?logo=r&logoColor=white)](#r-軟體包管理加速)
 [![CPAN](https://img.shields.io/badge/CPAN-0073A1?logo=perl&logoColor=white)](#perl-軟體包管理加速)
@@ -239,6 +240,7 @@ classDiagram
 | Apache | `apache` | `https://downloads.apache.org/...` | `https://xget.xi-xu.me/apache/...` |
 | Gradle | `gradle` | `https://plugins.gradle.org/...` | `https://xget.xi-xu.me/gradle/...` |
 | Homebrew | `homebrew` | `https://github.com/Homebrew/...` | `https://xget.xi-xu.me/homebrew/...` |
+| Scoop | `scoop` | `https://github.com/ScoopInstaller/...` | `https://xget.xi-xu.me/scoop/...` |
 | RubyGems | `rubygems` | `https://rubygems.org/...` | `https://xget.xi-xu.me/rubygems/...` |
 | CRAN | `cran` | `https://cran.r-project.org/...` | `https://xget.xi-xu.me/cran/...` |
 | CPAN | `cpan` | `https://www.cpan.org/...` | `https://xget.xi-xu.me/cpan/...` |
@@ -497,6 +499,22 @@ https://ghcr.io/v2/homebrew/core/git/manifests/2.39.0
 
 # 轉換後（新增 homebrew/bottles 前綴）
 https://xget.xi-xu.me/homebrew/bottles/v2/homebrew/core/git/manifests/2.39.0
+```
+
+#### Scoop
+
+```url
+# Scoop 預設 bucket 原始 URL
+https://github.com/ScoopInstaller/Main
+
+# 轉換後（新增 scoop 前綴）
+https://xget.xi-xu.me/scoop/Main
+
+# Scoop 核心儲存庫原始 URL
+https://github.com/ScoopInstaller/Scoop.git
+
+# 轉換後（新增 scoop 前綴）
+https://xget.xi-xu.me/scoop/Scoop.git
 ```
 
 #### RubyGems
@@ -1360,6 +1378,21 @@ brew config
 # 檢視環境變數
 echo $HOMEBREW_API_DOMAIN
 echo $HOMEBREW_BOTTLE_DOMAIN
+```
+
+### Scoop 軟體包管理加速
+
+#### 透過 Xget 存取官方 Scoop 儲存庫
+
+```bash
+# 透過 Xget 複製 Scoop 核心儲存庫
+git clone https://xget.xi-xu.me/scoop/Scoop.git
+
+# 透過 Xget 新增預設 main bucket
+scoop bucket add main https://xget.xi-xu.me/scoop/Main
+
+# 透過 Xget 新增其他官方 bucket
+scoop bucket add extras https://xget.xi-xu.me/scoop/Extras
 ```
 
 ### Ruby 軟體包管理加速

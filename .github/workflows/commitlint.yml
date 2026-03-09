@@ -19,6 +19,7 @@ jobs:
   commitlint:
     name: Validate Commit Messages
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     timeout-minutes: 10
     steps:
       - name: Checkout

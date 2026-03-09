@@ -106,6 +106,14 @@ async function handleRequest(request, env, ctx) {
           } else {
             // Remove /v2 from the path for container registry API consistency if present
             effectivePath = url.pathname.replace(/^\/v2/, '');
+
+            // Docker clients address Xget as a registry host, so image names like
+            // `xget.example/cr/ghcr/owner/image:tag` arrive as `/v2/cr/ghcr/...`.
+            // Normalize that shape into the canonical `/cr/<registry>/v2/...` form
+            // used by our registry platform routing.
+            if (url.pathname.startsWith('/v2/cr/')) {
+              effectivePath = effectivePath.replace(/^\/cr\/([^/]+)\//, '/cr/$1/v2/');
+            }
           }
         }
 
@@ -367,7 +375,9 @@ async function handleRequest(request, env, ctx) {
                         isDocker &&
                         (response.status === 301 ||
                           response.status === 302 ||
-                          response.status === 307)
+                          response.status === 303 ||
+                          response.status === 307 ||
+                          response.status === 308)
                       ) {
                         const location = response.headers.get('Location');
                         if (location) {
@@ -377,7 +387,7 @@ async function handleRequest(request, env, ctx) {
                           const redirectHeaders = new Headers(finalFetchOptions.headers);
                           redirectHeaders.delete('Authorization');
 
-                          response = await fetch(location, {
+                          response = await fetch(new URL(location, targetUrl), {
                             ...finalFetchOptions,
                             headers: redirectHeaders,
                             redirect: 'follow' // Follow subsequent redirects normally
@@ -433,14 +443,16 @@ async function handleRequest(request, env, ctx) {
                                   isDocker &&
                                   (retryResponse.status === 301 ||
                                     retryResponse.status === 302 ||
-                                    retryResponse.status === 307)
+                                    retryResponse.status === 303 ||
+                                    retryResponse.status === 307 ||
+                                    retryResponse.status === 308)
                                 ) {
                                   const location = retryResponse.headers.get('Location');
                                   if (location) {
                                     const redirectHeaders = new Headers(retryOptions.headers);
                                     redirectHeaders.delete('Authorization');
 
-                                    retryResponse = await fetch(location, {
+                                    retryResponse = await fetch(new URL(location, targetUrl), {
                                       ...retryOptions,
                                       headers: redirectHeaders,
                                       redirect: 'follow'

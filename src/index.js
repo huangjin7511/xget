@@ -21,8 +21,8 @@ import {
 } from './protocols/docker.js';
 import { configureGitHeaders, isGitLFSRequest, isGitRequest } from './protocols/git.js';
 import { PerformanceMonitor, addPerformanceHeaders } from './utils/performance.js';
-import { addCorsHeaders, addSecurityHeaders, createErrorResponse } from './utils/security.js';
-import { getAllowedMethods, isDockerRequest, validateRequest } from './utils/validation.js';
+import { addSecurityHeaders, createErrorResponse } from './utils/security.js';
+import { isDockerRequest, validateRequest } from './utils/validation.js';
 
 /**
  * Main request handler with comprehensive caching, retry logic, and security measures.
@@ -40,36 +40,9 @@ async function handleRequest(request, env, ctx) {
     const config = env ? createConfig(env) : CONFIG;
     const url = new URL(request.url);
     const isDocker = isDockerRequest(request, url);
-    const isCorsPreflight =
-      request.method === 'OPTIONS' &&
-      request.headers.has('Origin') &&
-      request.headers.has('Access-Control-Request-Method');
-
-    if (isCorsPreflight) {
-      const requestedMethod = request.headers.get('Access-Control-Request-Method') || '';
-      const allowedMethods = getAllowedMethods(
-        new Request(request.url, { method: requestedMethod || 'GET' }),
-        url,
-        config
-      );
-
-      if (!allowedMethods.includes(requestedMethod)) {
-        response = createErrorResponse('Method not allowed', 405);
-      } else {
-        const headers = addCorsHeaders(new Headers(), request, config);
-        if (!headers.has('Access-Control-Allow-Origin')) {
-          response = createErrorResponse('Origin not allowed', 403);
-        } else {
-          headers.set('Access-Control-Allow-Methods', allowedMethods.join(', '));
-          headers.set('Access-Control-Max-Age', '86400');
-          addSecurityHeaders(headers);
-          response = new Response(null, { status: 204, headers });
-        }
-      }
-    }
 
     // Handle Docker API version check
-    else if (isDocker && (url.pathname === '/v2/' || url.pathname === '/v2')) {
+    if (isDocker && (url.pathname === '/v2/' || url.pathname === '/v2')) {
       const headers = new Headers({
         'Docker-Distribution-Api-Version': 'registry/2.0',
         'Content-Type': 'application/json'
@@ -110,10 +83,7 @@ async function handleRequest(request, env, ctx) {
 
         if (!response) {
           // Handle Docker authentication explicitly
-          if (
-            isDocker &&
-            (url.pathname === '/v2/auth' || /^\/cr\/[^/]+\/v2\/auth\/?$/.test(url.pathname))
-          ) {
+          if (isDocker && url.pathname === '/v2/auth') {
             response = await handleDockerAuth(request, url, config);
           } else {
             // Platform detection using transform patterns
@@ -251,9 +221,7 @@ async function handleRequest(request, env, ctx) {
                     }
 
                     // Configure protocol-specific headers using modular helpers
-                    if (isGit || isGitLFS) {
-                      configureGitHeaders(requestHeaders, request, url, isGitLFS);
-                    }
+                    configureGitHeaders(requestHeaders, request, url, isGitLFS);
 
                     if (isAI) {
                       configureAIHeaders(requestHeaders, request);
@@ -269,6 +237,11 @@ async function handleRequest(request, env, ctx) {
                         http3: true,
                         cacheTtl: config.CACHE_DURATION,
                         cacheEverything: true,
+                        minify: {
+                          javascript: true,
+                          css: true,
+                          html: true
+                        },
                         preconnect: true
                       }
                     });
@@ -276,10 +249,7 @@ async function handleRequest(request, env, ctx) {
                     requestHeaders.set('Accept-Encoding', 'gzip, deflate, br');
                     requestHeaders.set('Connection', 'keep-alive');
                     requestHeaders.set('User-Agent', 'Wget/1.21.3');
-                    const origin = request.headers.get('Origin');
-                    if (origin) {
-                      requestHeaders.set('Origin', origin);
-                    }
+                    requestHeaders.set('Origin', request.headers.get('Origin') || '*');
 
                     if (authorization) {
                       requestHeaders.set('Authorization', authorization);
@@ -676,22 +646,9 @@ async function handleRequest(request, env, ctx) {
   const isGitLFS = isGitLFSRequest(request, new URL(request.url));
   const isHF = isHuggingFaceAPIRequest(request, new URL(request.url));
 
-  const responseWithCors = (() => {
-    const headers = addCorsHeaders(
-      new Headers(response.headers),
-      request,
-      env ? createConfig(env) : CONFIG
-    );
-    return new Response(response.body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers
-    });
-  })();
-
   return isGit || isGitLFS || isDocker || isAI || isHF
-    ? responseWithCors
-    : addPerformanceHeaders(responseWithCors, monitor);
+    ? response
+    : addPerformanceHeaders(response, monitor);
 }
 
 export default {

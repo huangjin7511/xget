@@ -92,39 +92,34 @@ function hasAsciiControlChars(value) {
  * @returns {boolean} True if this is a container registry operation
  */
 export function isDockerRequest(request, url) {
-  const { pathname } = url;
-
   // Check for container registry API endpoints
-  if (pathname === '/v2' || pathname === '/v2/' || pathname.startsWith('/v2/')) {
+  if (url.pathname.includes('/v2/') || url.pathname === '/v2') {
     return true;
   }
 
-  if (pathname.startsWith('/cr/')) {
-    if (/^\/cr\/[^/]+\/v2(?:\/|$)/.test(pathname)) {
-      return true;
-    }
+  // Check for Docker-specific User-Agent
+  const userAgent = request.headers.get('User-Agent') || '';
+  if (userAgent.toLowerCase().includes('docker/')) {
+    return true;
+  }
 
-    const userAgent = request.headers.get('User-Agent') || '';
-    if (userAgent.toLowerCase().includes('docker/')) {
-      return true;
-    }
+  // Check for Docker-specific Accept headers
+  const accept = request.headers.get('Accept') || '';
+  if (
+    accept.includes('application/vnd.docker.distribution.manifest') ||
+    accept.includes('application/vnd.oci.image.manifest') ||
+    accept.includes('application/vnd.docker.image.rootfs.diff.tar.gzip')
+  ) {
+    return true;
+  }
 
-    const accept = request.headers.get('Accept') || '';
-    if (
-      accept.includes('application/vnd.docker.distribution.manifest') ||
-      accept.includes('application/vnd.oci.image.manifest') ||
-      accept.includes('application/vnd.docker.image.rootfs.diff.tar.gzip')
-    ) {
-      return true;
-    }
-
-    const contentType = request.headers.get('Content-Type') || '';
-    if (
-      contentType.includes('application/vnd.docker.distribution.manifest') ||
-      contentType.includes('application/vnd.oci.image.manifest')
-    ) {
-      return true;
-    }
+  // Check for Docker-specific Content-Type headers (for PUT/POST)
+  const contentType = request.headers.get('Content-Type') || '';
+  if (
+    contentType.includes('application/vnd.docker.distribution.manifest') ||
+    contentType.includes('application/vnd.oci.image.manifest')
+  ) {
+    return true;
   }
 
   return false;
@@ -132,25 +127,6 @@ export function isDockerRequest(request, url) {
 
 // Re-export for standard usage
 export { isAIInferenceRequest, isGitLFSRequest, isGitRequest, isHuggingFaceAPIRequest };
-
-/**
- * Computes the allowed methods for a request based on protocol detection.
- * @param {Request} request
- * @param {URL} url
- * @param {import('../config/index.js').ApplicationConfig} config
- * @returns {string[]} Allowed HTTP methods for this request shape.
- */
-export function getAllowedMethods(request, url, config = CONFIG) {
-  const isGit = isGitRequest(request, url);
-  const isGitLFS = isGitLFSRequest(request, url);
-  const isDocker = isDockerRequest(request, url);
-  const isAI = isAIInferenceRequest(request, url);
-  const isHF = isHuggingFaceAPIRequest(request, url);
-
-  return isGit || isGitLFS || isDocker || isAI || isHF
-    ? ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']
-    : config.SECURITY.ALLOWED_METHODS;
-}
 
 /**
  * Validates incoming requests against security rules.
@@ -168,7 +144,17 @@ export function getAllowedMethods(request, url, config = CONFIG) {
  * @returns {{valid: boolean, error?: string, status?: number}} Validation result object
  */
 export function validateRequest(request, url, config = CONFIG) {
-  const allowedMethods = getAllowedMethods(request, url, config);
+  // Allow POST method for Git, Git LFS, Docker, AI inference, and HF API operations
+  const isGit = isGitRequest(request, url);
+  const isGitLFS = isGitLFSRequest(request, url);
+  const isDocker = isDockerRequest(request, url);
+  const isAI = isAIInferenceRequest(request, url);
+  const isHF = isHuggingFaceAPIRequest(request, url);
+
+  const allowedMethods =
+    isGit || isGitLFS || isDocker || isAI || isHF
+      ? ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']
+      : config.SECURITY.ALLOWED_METHODS;
 
   if (!allowedMethods.includes(request.method)) {
     return { valid: false, error: 'Method not allowed', status: 405 };

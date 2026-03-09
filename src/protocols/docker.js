@@ -125,66 +125,6 @@ export function getScopeFromUrl(url, effectivePath, platform) {
 }
 
 /**
- * Normalizes Docker Hub official images to the canonical library namespace.
- * @param {string} platformKey
- * @param {string} repoPath
- * @returns {string} Normalized upstream repository path.
- */
-function normalizeRepoPath(platformKey, repoPath) {
-  if (platformKey === 'cr-docker' && repoPath && !repoPath.includes('/')) {
-    return `library/${repoPath}`;
-  }
-
-  return repoPath;
-}
-
-/**
- * Resolves the target registry and scope for Docker auth proxy requests.
- * @param {URL} url
- * @param {{ [key: string]: string }} platforms
- * @returns {{ platformKey: string, upstreamScope: string }} Resolved auth target info.
- */
-function resolveDockerAuthTarget(url, platforms) {
-  const scope = url.searchParams.get('scope') || '';
-  const pathMatch = url.pathname.match(/^\/cr\/([^/]+)\/v2\/auth\/?$/);
-
-  let platformKey = pathMatch ? `cr-${pathMatch[1]}` : '';
-  let repoPath = '';
-  let upstreamScope = scope;
-
-  if (scope) {
-    const parts = scope.split(':');
-    if (parts.length >= 3 && parts[0] === 'repository') {
-      const [, fullRepoPath] = parts;
-
-      if (fullRepoPath.startsWith('cr/')) {
-        for (const key of SORTED_PLATFORMS) {
-          if (!key.startsWith('cr-')) continue;
-
-          const prefix = key.replace(/-/g, '/');
-          if (fullRepoPath.startsWith(`${prefix}/`)) {
-            platformKey = key;
-            repoPath = fullRepoPath.slice(prefix.length + 1);
-            break;
-          }
-        }
-      } else {
-        repoPath = fullRepoPath;
-      }
-
-      repoPath = normalizeRepoPath(platformKey, repoPath);
-      upstreamScope = repoPath ? `repository:${repoPath}:${parts.slice(2).join(':')}` : scope;
-    }
-  }
-
-  if (!platformKey || !platforms[platformKey]) {
-    throw new Error('Unsupported registry platform in scope');
-  }
-
-  return { platformKey, upstreamScope };
-}
-
-/**
  * Creates an unauthorized (401) response for container registry authentication.
  *
  * Generates a Docker/OCI registry-compliant 401 response with a WWW-Authenticate
@@ -222,17 +162,46 @@ export function responseUnauthorized(url) {
  * @returns {Promise<Response>} The response (token or error)
  */
 export async function handleDockerAuth(request, url, config) {
-  let target;
-  try {
-    target = resolveDockerAuthTarget(url, config.PLATFORMS);
-  } catch (error) {
-    // Log internal error details server-side without exposing them to the client
-    console.error('Failed to resolve Docker auth target:', error);
-    // Return a generic error response to avoid leaking implementation details
-    return createErrorResponse('Invalid Docker authentication request', 400);
+  const scope = url.searchParams.get('scope');
+  if (!scope) {
+    return createErrorResponse('Missing scope parameter', 400);
   }
 
-  const upstreamUrl = config.PLATFORMS[target.platformKey];
+  // Parse scope to find the target platform and repository
+  // Format: repository:cr/docker/library/ubuntu:pull
+  // We need to extract 'cr/docker' as the platform
+  const parts = scope.split(':');
+  if (parts.length < 3 || parts[0] !== 'repository') {
+    // If not a repository scope, or invalid format, we can't easily proxy it
+    return createErrorResponse('Invalid scope format', 400);
+  }
+
+  const [, fullRepoPath] = parts; // e.g., cr/docker/library/ubuntu
+  let platformKey = '';
+  let repoPath = '';
+
+  // Find the platform from the start of the repo path
+  // Try to match 'cr/docker', 'cr/ghcr', etc.
+  // We need to find which platform prefix matches the start of fullRepoPath
+  // Uses global SORTED_PLATFORMS which is imported
+
+  for (const key of SORTED_PLATFORMS) {
+    if (!key.startsWith('cr-')) continue;
+
+    // Convert key cr-docker to cr/docker for matching
+    const prefix = key.replace(/-/g, '/');
+    if (fullRepoPath.startsWith(`${prefix}/`)) {
+      platformKey = key;
+      repoPath = fullRepoPath.slice(prefix.length + 1); // +1 for the slash
+      break;
+    }
+  }
+
+  if (!platformKey || !config.PLATFORMS[platformKey]) {
+    return createErrorResponse('Unsupported registry platform in scope', 400);
+  }
+
+  const upstreamUrl = config.PLATFORMS[platformKey];
   const authorization = request.headers.get('Authorization');
 
   // 1. Fetch the upstream root (v2) to get the proper realm and service
@@ -256,6 +225,14 @@ export async function handleDockerAuth(request, url, config) {
 
   const wwwAuthenticate = parseAuthenticate(authenticateStr);
 
+  // 2. Construct the new scope for the upstream registry
+  // We replace our prefixed path with the actual repo path
+  // e.g. repository:cr/docker/library/ubuntu:pull -> repository:library/ubuntu:pull
+
+  // However, we also need to respect the service name if possible,
+  // but usually we just need to fix the repository part of the scope.
+  const newScope = `repository:${repoPath}:${parts.slice(2).join(':')}`;
+
   // 3. Fetch the token from the upstream realm
-  return await fetchToken(wwwAuthenticate, target.upstreamScope, authorization || '');
+  return await fetchToken(wwwAuthenticate, newScope, authorization || '');
 }

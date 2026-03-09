@@ -32,41 +32,8 @@
  * @returns {boolean} True if this is an AI inference request
  */
 export function isAIInferenceRequest(request, url) {
-  // Check for AI inference provider paths (ip/{provider}/...)
-  if (url.pathname.startsWith('/ip/')) {
-    return true;
-  }
-
-  // Check for common AI inference API endpoints
-  const aiEndpoints = [
-    '/v1/chat/completions',
-    '/v1/completions',
-    '/v1/messages',
-    '/v1/predictions',
-    '/v1/generate',
-    '/v1/embeddings',
-    '/openai/v1/chat/completions'
-  ];
-
-  if (aiEndpoints.some(endpoint => url.pathname.includes(endpoint))) {
-    return true;
-  }
-
-  // Check for AI-specific content types
-  const contentType = request.headers.get('Content-Type') || '';
-  if (contentType.includes('application/json') && request.method === 'POST') {
-    // Additional check for common AI inference patterns in URL
-    if (
-      url.pathname.includes('/chat/') ||
-      url.pathname.includes('/completions') ||
-      url.pathname.includes('/generate') ||
-      url.pathname.includes('/predict')
-    ) {
-      return true;
-    }
-  }
-
-  return false;
+  void request;
+  return url.pathname.startsWith('/ip/');
 }
 
 /**

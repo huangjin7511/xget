@@ -132,16 +132,27 @@ import { PLATFORMS } from './platforms.js';
  * // ['https://example.com', 'https://app.example.com']
  */
 export function createConfig(env = {}) {
+  const allowedMethods =
+    typeof env.ALLOWED_METHODS === 'string'
+      ? env.ALLOWED_METHODS.split(',')
+          .map(method => method.trim())
+          .filter(Boolean)
+      : ['GET', 'HEAD'];
+  const allowedOrigins =
+    typeof env.ALLOWED_ORIGINS === 'string'
+      ? env.ALLOWED_ORIGINS.split(',')
+          .map(origin => origin.trim())
+          .filter(Boolean)
+      : ['*'];
+
   return {
     TIMEOUT_SECONDS: parseInt(String(env.TIMEOUT_SECONDS), 10) || 30,
     MAX_RETRIES: parseInt(String(env.MAX_RETRIES), 10) || 3,
     RETRY_DELAY_MS: parseInt(String(env.RETRY_DELAY_MS), 10) || 1000,
     CACHE_DURATION: parseInt(String(env.CACHE_DURATION), 10) || 1800, // 30 minutes
     SECURITY: {
-      ALLOWED_METHODS:
-        typeof env.ALLOWED_METHODS === 'string' ? env.ALLOWED_METHODS.split(',') : ['GET', 'HEAD'],
-      ALLOWED_ORIGINS:
-        typeof env.ALLOWED_ORIGINS === 'string' ? env.ALLOWED_ORIGINS.split(',') : ['*'],
+      ALLOWED_METHODS: allowedMethods.length ? allowedMethods : ['GET', 'HEAD'],
+      ALLOWED_ORIGINS: allowedOrigins.length ? allowedOrigins : ['*'],
       MAX_PATH_LENGTH: parseInt(String(env.MAX_PATH_LENGTH), 10) || 2048
     },
     PLATFORMS

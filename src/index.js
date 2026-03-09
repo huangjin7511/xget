@@ -16,13 +16,14 @@ import {
   fetchToken,
   getScopeFromUrl,
   handleDockerAuth,
+  normalizeRegistryApiPath,
   parseAuthenticate,
   responseUnauthorized
 } from './protocols/docker.js';
 import { configureGitHeaders, isGitLFSRequest, isGitRequest } from './protocols/git.js';
 import { PerformanceMonitor, addPerformanceHeaders } from './utils/performance.js';
-import { addSecurityHeaders, createErrorResponse } from './utils/security.js';
-import { isDockerRequest, validateRequest } from './utils/validation.js';
+import { addCorsHeaders, addSecurityHeaders, createErrorResponse } from './utils/security.js';
+import { getAllowedMethods, isDockerRequest, validateRequest } from './utils/validation.js';
 
 /**
  * Main request handler with comprehensive caching, retry logic, and security measures.
@@ -40,9 +41,36 @@ async function handleRequest(request, env, ctx) {
     const config = env ? createConfig(env) : CONFIG;
     const url = new URL(request.url);
     const isDocker = isDockerRequest(request, url);
+    const isCorsPreflight =
+      request.method === 'OPTIONS' &&
+      request.headers.has('Origin') &&
+      request.headers.has('Access-Control-Request-Method');
+
+    if (isCorsPreflight) {
+      const requestedMethod = request.headers.get('Access-Control-Request-Method') || '';
+      const allowedMethods = getAllowedMethods(
+        new Request(request.url, { method: requestedMethod || 'GET' }),
+        url,
+        config
+      );
+
+      if (!allowedMethods.includes(requestedMethod)) {
+        response = createErrorResponse('Method not allowed', 405);
+      } else {
+        const headers = addCorsHeaders(new Headers(), request, config);
+        if (!headers.has('Access-Control-Allow-Origin')) {
+          response = createErrorResponse('Origin not allowed', 403);
+        } else {
+          headers.set('Access-Control-Allow-Methods', allowedMethods.join(', '));
+          headers.set('Access-Control-Max-Age', '86400');
+          addSecurityHeaders(headers);
+          response = new Response(null, { status: 204, headers });
+        }
+      }
+    }
 
     // Handle Docker API version check
-    if (isDocker && (url.pathname === '/v2/' || url.pathname === '/v2')) {
+    else if (isDocker && (url.pathname === '/v2/' || url.pathname === '/v2')) {
       const headers = new Headers({
         'Docker-Distribution-Api-Version': 'registry/2.0',
         'Content-Type': 'application/json'
@@ -83,7 +111,10 @@ async function handleRequest(request, env, ctx) {
 
         if (!response) {
           // Handle Docker authentication explicitly
-          if (isDocker && url.pathname === '/v2/auth') {
+          if (
+            isDocker &&
+            (url.pathname === '/v2/auth' || /^\/cr\/[^/]+\/v2\/auth\/?$/.test(url.pathname))
+          ) {
             response = await handleDockerAuth(request, url, config);
           } else {
             // Platform detection using transform patterns
@@ -107,13 +138,9 @@ async function handleRequest(request, env, ctx) {
                 // Transform URL based on platform using unified logic
                 const targetPath = transformPath(effectivePath, platform);
 
-                // For container registries, ensure we add the /v2 prefix for the Docker API
-                let finalTargetPath;
-                if (platform.startsWith('cr-')) {
-                  finalTargetPath = `/v2${targetPath}`;
-                } else {
-                  finalTargetPath = targetPath;
-                }
+                const finalTargetPath = platform.startsWith('cr-')
+                  ? normalizeRegistryApiPath(platform, targetPath)
+                  : targetPath;
 
                 const targetUrl = `${config.PLATFORMS[platform]}${finalTargetPath}${url.search}`;
                 const authorization = request.headers.get('Authorization');
@@ -221,7 +248,9 @@ async function handleRequest(request, env, ctx) {
                     }
 
                     // Configure protocol-specific headers using modular helpers
-                    configureGitHeaders(requestHeaders, request, url, isGitLFS);
+                    if (isGit || isGitLFS) {
+                      configureGitHeaders(requestHeaders, request, url, isGitLFS);
+                    }
 
                     if (isAI) {
                       configureAIHeaders(requestHeaders, request);
@@ -237,11 +266,6 @@ async function handleRequest(request, env, ctx) {
                         http3: true,
                         cacheTtl: config.CACHE_DURATION,
                         cacheEverything: true,
-                        minify: {
-                          javascript: true,
-                          css: true,
-                          html: true
-                        },
                         preconnect: true
                       }
                     });
@@ -249,7 +273,10 @@ async function handleRequest(request, env, ctx) {
                     requestHeaders.set('Accept-Encoding', 'gzip, deflate, br');
                     requestHeaders.set('Connection', 'keep-alive');
                     requestHeaders.set('User-Agent', 'Wget/1.21.3');
-                    requestHeaders.set('Origin', request.headers.get('Origin') || '*');
+                    const origin = request.headers.get('Origin');
+                    if (origin) {
+                      requestHeaders.set('Origin', origin);
+                    }
 
                     if (authorization) {
                       requestHeaders.set('Authorization', authorization);
@@ -433,7 +460,7 @@ async function handleRequest(request, env, ctx) {
                           }
                         }
 
-                        response = responseUnauthorized(url);
+                        response = responseUnauthorized(url, platform);
                         break;
                       }
 
@@ -477,18 +504,20 @@ async function handleRequest(request, env, ctx) {
                     );
                   } else if (!response.ok && response.status !== 206) {
                     if (isDocker && response.status === 401) {
-                      // Handle Docker 401 responses that might not have been caught by the retry loop
-                      const isCustomError =
-                        response.headers.get('content-type') === 'application/json' &&
-                        (await response.clone().text()).includes('UNAUTHORIZED');
+                      if (!response.headers.has('WWW-Authenticate')) {
+                        // Handle Docker 401 responses that might not have been caught by the retry loop
+                        const isCustomError =
+                          response.headers.get('content-type') === 'application/json' &&
+                          (await response.clone().text()).includes('UNAUTHORIZED');
 
-                      if (!isCustomError) {
-                        const errorText = await response.text().catch(() => '');
-                        response = createErrorResponse(
-                          `Authentication required for this container registry resource. This may be a private repository. Original error: ${errorText}`,
-                          401,
-                          true
-                        );
+                        if (!isCustomError) {
+                          const errorText = await response.text().catch(() => '');
+                          response = createErrorResponse(
+                            `Authentication required for this container registry resource. This may be a private repository. Original error: ${errorText}`,
+                            401,
+                            true
+                          );
+                        }
                       }
                     } else {
                       const errorText = await response.text().catch(() => 'Unknown error');
@@ -500,7 +529,9 @@ async function handleRequest(request, env, ctx) {
                     }
                   } else {
                     // Success case processing (rewriting URLs etc)
+                    /** @type {string | ReadableStream<Uint8Array> | null} */
                     let responseBody = response.body;
+                    let rewrittenContentLength = null;
 
                     if (
                       platform === 'pypi' &&
@@ -511,12 +542,8 @@ async function handleRequest(request, env, ctx) {
                         /https:\/\/files\.pythonhosted\.org/g,
                         `${url.origin}/pypi/files`
                       );
-                      responseBody = new ReadableStream({
-                        start(controller) {
-                          controller.enqueue(new TextEncoder().encode(rewrittenText));
-                          controller.close();
-                        }
-                      });
+                      responseBody = rewrittenText;
+                      rewrittenContentLength = new TextEncoder().encode(rewrittenText).byteLength;
                     }
 
                     if (
@@ -528,15 +555,15 @@ async function handleRequest(request, env, ctx) {
                         /https:\/\/registry.npmjs.org\/([^/]+)/g,
                         `${url.origin}/npm/$1`
                       );
-                      responseBody = new ReadableStream({
-                        start(controller) {
-                          controller.enqueue(new TextEncoder().encode(rewrittenText));
-                          controller.close();
-                        }
-                      });
+                      responseBody = rewrittenText;
+                      rewrittenContentLength = new TextEncoder().encode(rewrittenText).byteLength;
                     }
 
                     const headers = new Headers(response.headers);
+
+                    if (rewrittenContentLength !== null) {
+                      headers.set('Content-Length', String(rewrittenContentLength));
+                    }
 
                     if (!isGit && !isGitLFS && !isDocker && !isAI && !isHF) {
                       if (hasSensitiveHeaders) {
@@ -646,9 +673,22 @@ async function handleRequest(request, env, ctx) {
   const isGitLFS = isGitLFSRequest(request, new URL(request.url));
   const isHF = isHuggingFaceAPIRequest(request, new URL(request.url));
 
+  const responseWithCors = (() => {
+    const headers = addCorsHeaders(
+      new Headers(response.headers),
+      request,
+      env ? createConfig(env) : CONFIG
+    );
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers
+    });
+  })();
+
   return isGit || isGitLFS || isDocker || isAI || isHF
-    ? response
-    : addPerformanceHeaders(response, monitor);
+    ? responseWithCors
+    : addPerformanceHeaders(responseWithCors, monitor);
 }
 
 export default {

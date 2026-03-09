@@ -330,6 +330,10 @@ describe('Platform Configuration', () => {
       });
     });
 
+    it('should use the correct Amazon ECR Public base URL', () => {
+      expect(PLATFORMS['cr-ecr']).toBe('https://public.ecr.aws');
+    });
+
     it('should transform all container registry paths correctly', () => {
       const containerRegistries = [
         'cr-quay',

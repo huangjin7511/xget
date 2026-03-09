@@ -21,6 +21,59 @@
  */
 
 /**
+ * Resolves the allowed CORS origin for the current request.
+ * @param {Request} request
+ * @param {import('../config/index.js').ApplicationConfig} config
+ * @returns {string | null} Allowed origin value for the response, or null if not allowed.
+ */
+export function resolveAllowedOrigin(request, config) {
+  const origin = request.headers.get('Origin');
+  if (!origin) {
+    return null;
+  }
+
+  const allowedOrigins = config.SECURITY.ALLOWED_ORIGINS;
+  if (allowedOrigins.includes('*')) {
+    return '*';
+  }
+
+  return allowedOrigins.includes(origin) ? origin : null;
+}
+
+/**
+ * Applies CORS headers to a response when the request origin is allowed.
+ * @param {Headers} headers
+ * @param {Request} request
+ * @param {import('../config/index.js').ApplicationConfig} config
+ * @returns {Headers} The same headers object with CORS headers applied when permitted.
+ */
+export function addCorsHeaders(headers, request, config) {
+  const allowedOrigin = resolveAllowedOrigin(request, config);
+  if (!allowedOrigin) {
+    return headers;
+  }
+
+  headers.set('Access-Control-Allow-Origin', allowedOrigin);
+  headers.set('Access-Control-Allow-Methods', config.SECURITY.ALLOWED_METHODS.join(', '));
+
+  const requestedHeaders = request.headers.get('Access-Control-Request-Headers');
+  if (requestedHeaders) {
+    headers.set('Access-Control-Allow-Headers', requestedHeaders);
+  }
+
+  const vary = new Set(
+    (headers.get('Vary') || '')
+      .split(',')
+      .map(value => value.trim())
+      .filter(Boolean)
+  );
+  vary.add('Origin');
+  headers.set('Vary', Array.from(vary).join(', '));
+
+  return headers;
+}
+
+/**
  * Adds comprehensive security headers to response headers.
  *
  * applies industry-standard security headers including:

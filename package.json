@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "express": "^5.2.1",
-    "xget": "file:"
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",

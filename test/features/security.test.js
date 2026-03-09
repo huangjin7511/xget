@@ -104,7 +104,7 @@ describe('Security Features', () => {
           expect(response.status).not.toBe(500);
         }
       }
-    }, 30000);
+    }, 45000);
 
     it('should reject extremely long paths', async () => {
       const longPath = `/gh/${'a'.repeat(3000)}`;

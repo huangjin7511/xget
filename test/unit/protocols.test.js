@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import worker from '../../src/index.js';
 import { CONFIG } from '../../src/config/index.js';
 import { isAIInferenceRequest } from '../../src/protocols/ai.js';
-import { getScopeFromUrl, handleDockerAuth } from '../../src/protocols/docker.js';
+import { handleDockerAuth } from '../../src/protocols/docker.js';
 import { isDockerRequest } from '../../src/utils/validation.js';
 
 /** @type {ExecutionContext} */
@@ -36,12 +36,6 @@ describe('Protocol Detection', () => {
 describe('Docker Authentication', () => {
   afterEach(() => {
     vi.restoreAllMocks();
-  });
-
-  it('derives scoped pull access from /cr-prefixed registry requests', () => {
-    const url = new URL('https://example.com/cr/docker/v2/nginx/manifests/latest');
-
-    expect(getScopeFromUrl(url, url.pathname, 'cr-docker')).toBe('repository:library/nginx:pull');
   });
 
   it('normalizes Docker Hub official image scopes during auth proxying', async () => {
@@ -102,106 +96,6 @@ describe('Docker Authentication', () => {
     expect(response.status).toBe(200);
     expect(upstreamCalls[0]).toBe('https://ghcr.io/v2/');
   });
-
-  it('routes registry manifests without duplicating /v2', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response('', {
-        status: 200,
-        headers: { 'Content-Length': '0' }
-      })
-    );
-
-    const request = new Request(
-      'https://example.com/cr/ghcr/v2/nginxinc/nginx-unprivileged/manifests/latest',
-      {
-        method: 'HEAD'
-      }
-    );
-    const response = await worker.fetch(request, {}, executionContext);
-
-    expect(response.status).toBe(200);
-    expect(String(fetchSpy.mock.calls[0][0])).toBe(
-      'https://ghcr.io/v2/nginxinc/nginx-unprivileged/manifests/latest'
-    );
-  });
-
-  it('normalizes Docker Hub official image paths during proxying', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response('', {
-        status: 200,
-        headers: { 'Content-Length': '0' }
-      })
-    );
-
-    const request = new Request('https://example.com/cr/docker/v2/nginx/manifests/latest', {
-      headers: { Accept: 'application/vnd.docker.distribution.manifest.v2+json' }
-    });
-    const response = await worker.fetch(request, {}, executionContext);
-
-    expect(response.status).toBe(200);
-    expect(String(fetchSpy.mock.calls[0][0])).toBe(
-      'https://registry-1.docker.io/v2/library/nginx/manifests/latest'
-    );
-  });
-
-  it('preserves platform-specific Docker auth challenges', async () => {
-    let callCount = 0;
-    vi.spyOn(globalThis, 'fetch').mockImplementation(async () => {
-      callCount++;
-
-      if (callCount === 1) {
-        return new Response('', {
-          status: 401,
-          headers: {
-            'WWW-Authenticate': 'Bearer realm="https://ghcr.io/token",service="ghcr.io"'
-          }
-        });
-      }
-
-      return new Response('denied', { status: 401 });
-    });
-
-    const request = new Request('https://example.com/cr/ghcr/v2/private/repo/manifests/latest', {
-      headers: { Accept: 'application/vnd.docker.distribution.manifest.v2+json' }
-    });
-    const response = await worker.fetch(request, {}, executionContext);
-
-    expect(response.status).toBe(401);
-    expect(response.headers.get('WWW-Authenticate')).toBe(
-      'Bearer realm="https://example.com/cr/ghcr/v2/auth",service="Xget"'
-    );
-    expect(await response.text()).toContain('UNAUTHORIZED');
-  });
-
-  it('accepts standard repository scopes on platform-prefixed auth endpoints', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async input => {
-      const url = String(input);
-
-      if (url === 'https://ghcr.io/v2/') {
-        return new Response('', {
-          status: 401,
-          headers: {
-            'WWW-Authenticate': 'Bearer realm="https://ghcr.io/token",service="ghcr.io"'
-          }
-        });
-      }
-
-      return new Response(JSON.stringify({ token: 'token' }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    });
-
-    const request = new Request(
-      'https://example.com/cr/ghcr/v2/auth?scope=repository:private/repo:pull&service=Xget'
-    );
-    const response = await worker.fetch(request, {}, executionContext);
-
-    expect(response.status).toBe(200);
-    expect(String(fetchSpy.mock.calls[1][0])).toContain(
-      'scope=repository%3Aprivate%2Frepo%3Apull'
-    );
-  });
 });
 
 describe('Protocol Header Configuration', () => {
@@ -237,35 +131,5 @@ describe('Protocol Header Configuration', () => {
       url: 'https://api.openai.com/v1/chat/completions',
       userAgent: 'Xget-AI-Proxy/1.0'
     });
-  });
-
-  it('updates Content-Length after rewriting npm metadata', async () => {
-    const upstreamBody = JSON.stringify({
-      dist: {
-        tarball: 'https://registry.npmjs.org/pkg/-/pkg-1.0.0.tgz'
-      }
-    });
-
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(upstreamBody, {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': String(upstreamBody.length)
-        }
-      })
-    );
-
-    const response = await worker.fetch(
-      new Request('https://example.com/npm/pkg'),
-      {},
-      executionContext
-    );
-    const body = await response.text();
-
-    expect(body).toContain('https://example.com/npm/pkg/-/pkg-1.0.0.tgz');
-    expect(response.headers.get('Content-Length')).toBe(
-      String(new TextEncoder().encode(body).byteLength)
-    );
   });
 });

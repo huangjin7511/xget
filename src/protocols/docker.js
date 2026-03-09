@@ -87,27 +87,41 @@ export async function fetchToken(wwwAuthenticate, scope, authorization) {
  *   - "" (empty string) if scope cannot be determined
  */
 export function getScopeFromUrl(url, effectivePath, platform) {
-  void url;
-  const platformPrefix = `/${platform.replace(/-/g, '/')}/`;
+  // Infer scope from the request path for container registry requests
+  let scope = '';
+  const pathParts = url.pathname.split('/');
 
   // Check for catalog endpoint
-  if (effectivePath.includes('/_catalog')) {
+  if (pathParts.includes('_catalog')) {
     return 'registry:catalog:*';
   }
 
-  const apiPath = normalizeRegistryApiPath(
-    platform,
-    effectivePath.startsWith(platformPrefix)
-      ? `/${effectivePath.slice(platformPrefix.length)}`
-      : effectivePath
-  );
-  const repoName = extractRepositoryPath(apiPath);
+  if (pathParts.length >= 4 && pathParts[1] === 'v2') {
+    const platformPrefix = `/${platform.replace(/-/g, '/')}/`;
+    if (effectivePath.startsWith(platformPrefix)) {
+      const repoPathFull = effectivePath.slice(platformPrefix.length);
+      const repoParts = repoPathFull.split('/');
+      if (repoParts.length >= 1) {
+        // Remove /manifests/tag or /blobs/sha suffix to get repo name
+        // Common suffixes in v2 API: /manifests/, /blobs/, /tags/
+        const suffixIndex = repoParts.findIndex(p =>
+          ['manifests', 'blobs', 'tags', 'referrers'].includes(p)
+        );
 
-  if (repoName) {
-    return `repository:${repoName}:pull`;
+        let repoName =
+          suffixIndex !== -1 ? repoParts.slice(0, suffixIndex).join('/') : repoParts.join('/');
+
+        if (platform === 'cr-docker' && repoName && !repoName.includes('/')) {
+          repoName = `library/${repoName}`;
+        }
+
+        if (repoName) {
+          scope = `repository:${repoName}:pull`;
+        }
+      }
+    }
   }
-
-  return '';
+  return scope;
 }
 
 /**
@@ -122,51 +136,6 @@ function normalizeRepoPath(platformKey, repoPath) {
   }
 
   return repoPath;
-}
-
-/**
- * Extracts the repository path from a Docker registry API path.
- * @param {string} apiPath
- * @returns {string} Repository path without the `/v2/` prefix or operation suffix.
- */
-function extractRepositoryPath(apiPath) {
-  const normalizedPath = apiPath.startsWith('/v2/') ? apiPath.slice(4) : apiPath.replace(/^\/+/, '');
-  const pathParts = normalizedPath.split('/').filter(Boolean);
-
-  if (pathParts.length === 0 || pathParts[0].startsWith('_')) {
-    return '';
-  }
-
-  const suffixIndex = pathParts.findIndex(part =>
-    ['manifests', 'blobs', 'tags', 'referrers'].includes(part)
-  );
-
-  if (suffixIndex <= 0) {
-    return '';
-  }
-
-  return pathParts.slice(0, suffixIndex).join('/');
-}
-
-/**
- * Normalizes a Docker registry API path for upstream compatibility.
- * @param {string} platformKey
- * @param {string} apiPath
- * @returns {string} Upstream API path with any registry-specific normalization applied.
- */
-export function normalizeRegistryApiPath(platformKey, apiPath) {
-  if (platformKey !== 'cr-docker' || !apiPath.startsWith('/v2/')) {
-    return apiPath;
-  }
-
-  const repoPath = extractRepositoryPath(apiPath);
-  const normalizedRepoPath = normalizeRepoPath(platformKey, repoPath);
-
-  if (!repoPath || normalizedRepoPath === repoPath) {
-    return apiPath;
-  }
-
-  return apiPath.replace(`/v2/${repoPath}`, `/v2/${normalizedRepoPath}`);
 }
 
 /**
@@ -221,17 +190,11 @@ function resolveDockerAuthTarget(url, platforms) {
  * Generates a Docker/OCI registry-compliant 401 response with a WWW-Authenticate
  * header that directs clients to the token authentication endpoint.
  * @param {URL} url - Request URL used to construct authentication realm
- * @param {string} platform - Registry platform key (e.g. cr-ghcr)
  * @returns {Response} Unauthorized response with WWW-Authenticate header
  */
-export function responseUnauthorized(url, platform) {
-  const realmPath = platform ? `/cr/${platform.slice(3)}/v2/auth` : '/v2/auth';
+export function responseUnauthorized(url) {
   const headers = new Headers();
-  headers.set('Content-Type', 'application/json');
-  headers.set(
-    'WWW-Authenticate',
-    `Bearer realm="${url.origin}${realmPath}",service="Xget"`
-  );
+  headers.set('WWW-Authenticate', `Bearer realm="https://${url.hostname}/v2/auth",service="Xget"`);
   return new Response(
     JSON.stringify({
       errors: [

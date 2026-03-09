@@ -44,7 +44,6 @@
  * - `homebrew` - Homebrew repositories (github.com/Homebrew)
  * - `homebrew-api` - Homebrew API (formulae.brew.sh/api)
  * - `homebrew-bottles` - Homebrew bottles (ghcr.io)
- * - `scoop` - Scoop repositories (github.com/ScoopInstaller)
  * - `rubygems` - RubyGems (rubygems.org)
  * - `cran` - R CRAN (cran.r-project.org)
  * - `cpan` - Perl CPAN (cpan.org)
@@ -153,7 +152,6 @@ export const PLATFORMS = {
   homebrew: 'https://github.com/Homebrew',
   'homebrew-api': 'https://formulae.brew.sh/api',
   'homebrew-bottles': 'https://ghcr.io',
-  scoop: 'https://github.com/ScoopInstaller',
   rubygems: 'https://rubygems.org',
   cran: 'https://cran.r-project.org',
   cpan: 'https://www.cpan.org',
@@ -269,10 +267,6 @@ export const SORTED_PLATFORMS = Object.keys(PLATFORMS).sort((a, b) => {
  * // Homebrew API paths (pass-through)
  * transformPath('/homebrew/api/formula/git.json', 'homebrew-api')
  * // Returns: '/formula/git.json'
- * @example
- * // Scoop repository paths (pass-through)
- * transformPath('/scoop/Main/blob/master/bucket/git.json', 'scoop')
- * // Returns: '/Main/blob/master/bucket/git.json'
  * @example
  * // Unknown platform (no transformation)
  * transformPath('/unknown/path', 'nonexistent')
@@ -390,20 +384,6 @@ export function transformPath(path, platformKey) {
    * Example: `/brew`, `/homebrew-core`, `/homebrew-cask`
    */
   if (platformKey === 'homebrew') {
-    if (transformedPath.startsWith('/')) {
-      return transformedPath;
-    }
-  }
-
-  /**
-   * Special handling for Scoop repositories
-   *
-   * Scoop's official buckets and core repository are hosted under the
-   * ScoopInstaller organization on GitHub. Paths are passed through as-is.
-   *
-   * Example: `/Main`, `/Main.git/info/refs`, `/Extras/blob/master/bucket/7zip.json`
-   */
-  if (platformKey === 'scoop') {
     if (transformedPath.startsWith('/')) {
       return transformedPath;
     }

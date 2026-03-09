@@ -16,8 +16,7 @@ describe('Platform Configuration', () => {
         'npm',
         'pypi',
         'conda',
-        'homebrew',
-        'scoop'
+        'homebrew'
       ];
 
       requiredPlatforms.forEach(platform => {
@@ -144,14 +143,6 @@ describe('Platform Configuration', () => {
         '/v2/distroless/base/manifests/latest'
       );
     });
-
-    it('should transform Scoop paths correctly', () => {
-      expect(transformPath('/scoop/Main.git/info/refs', 'scoop')).toBe('/Main.git/info/refs');
-
-      expect(transformPath('/scoop/Main/blob/master/bucket/git.json', 'scoop')).toBe(
-        '/Main/blob/master/bucket/git.json'
-      );
-    });
   });
 
   describe('Platform Base URLs', () => {
@@ -198,10 +189,6 @@ describe('Platform Configuration', () => {
     it('should have correct conda base URLs', () => {
       expect(PLATFORMS.conda).toBe('https://repo.anaconda.com');
       expect(PLATFORMS['conda-community']).toBe('https://conda.anaconda.org');
-    });
-
-    it('should have correct Scoop base URL', () => {
-      expect(PLATFORMS.scoop).toBe('https://github.com/ScoopInstaller');
     });
 
     it('should have correct container registry base URLs', () => {

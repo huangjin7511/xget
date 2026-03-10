@@ -60,7 +60,7 @@ Ultra-high-performance, secure, all-in-one acceleration engine for developer res
 
 In-depth technical analysis article published: ***[Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/2025/10/07/deep-dive-into-xget-technology-en.html)***.
 
-Xget was invited to join the [GitCode platform](https://gitcode.com/xixu-me/xget) and recognized as a G-Star graduation project. It has also received spontaneous recommendations from several well-known tech creators, including [Ruan Yifeng](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget), [GitHubDaily](https://x.com/i/status/1956204203937829256), [FishC](https://www.bilibili.com/video/BV1EeeBzVEop/), and [Xuanli 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=7). Sincere thanks to GitCode and every creator, reader, and user who helped more people discover Xget.
+Xget was invited to join the [GitCode platform](https://gitcode.com/xixu-me/xget) and recognized as a G-Star graduation project. It has also received spontaneous recommendations from several well-known tech creators, including [Ruan Yifeng](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget), [GitHubDaily](https://x.com/i/status/1956204203937829256), [FishC](https://www.bilibili.com/video/BV1EeeBzVEop/), and [Xuanli 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8). Sincere thanks to GitCode and every creator, reader, and user who helped more people discover Xget.
 
 ## 🎯 Quick Start
 

@@ -22,6 +22,11 @@ import {
 } from './protocols/docker.js';
 import { configureGitHeaders, isGitLFSRequest, isGitRequest } from './protocols/git.js';
 import { PerformanceMonitor, addPerformanceHeaders } from './utils/performance.js';
+import {
+  isFlatpakReferenceFilePath,
+  rewriteTextResponse,
+  shouldRewriteTextResponse
+} from './utils/rewrite.js';
 import { addCorsHeaders, addSecurityHeaders, createErrorResponse } from './utils/security.js';
 import { getAllowedMethods, isDockerRequest, validateRequest } from './utils/validation.js';
 
@@ -546,26 +551,21 @@ async function handleRequest(request, env, ctx) {
                     let rewrittenContentLength = null;
 
                     if (
-                      platform === 'pypi' &&
-                      response.headers.get('content-type')?.includes('text/html')
+                      shouldRewriteTextResponse(
+                        platform,
+                        effectivePath,
+                        response.headers.get('content-type') || ''
+                      )
                     ) {
-                      const originalText = await response.text();
-                      const rewrittenText = originalText.replace(
-                        /https:\/\/files\.pythonhosted\.org/g,
-                        `${url.origin}/pypi/files`
-                      );
-                      responseBody = rewrittenText;
-                      rewrittenContentLength = new TextEncoder().encode(rewrittenText).byteLength;
-                    }
-
-                    if (
-                      platform === 'npm' &&
-                      response.headers.get('content-type')?.includes('application/json')
-                    ) {
-                      const originalText = await response.text();
-                      const rewrittenText = originalText.replace(
-                        /https:\/\/registry.npmjs.org\/([^/]+)/g,
-                        `${url.origin}/npm/$1`
+                      const originalText =
+                        platform === 'flathub' && isFlatpakReferenceFilePath(effectivePath)
+                          ? new TextDecoder().decode(await response.arrayBuffer())
+                          : await response.text();
+                      const rewrittenText = rewriteTextResponse(
+                        platform,
+                        effectivePath,
+                        originalText,
+                        url.origin
                       );
                       responseBody = rewrittenText;
                       rewrittenContentLength = new TextEncoder().encode(rewrittenText).byteLength;

@@ -93,6 +93,14 @@ describe('Xget Core Functionality', () => {
       expect(response.status).not.toBe(400);
     });
 
+    it('should handle Flathub URLs correctly', async () => {
+      const testUrl = 'https://example.com/flathub/repo/summary';
+      const response = await SELF.fetch(testUrl, { method: 'HEAD' });
+
+      // Should attempt to proxy to Flathub
+      expect(response.status).not.toBe(400);
+    });
+
     it('should not treat nested /v2/ path segments as container registry requests', async () => {
       const testUrl = 'https://example.com/gh/microsoft/vscode/releases/download/v2/file.tar.gz';
       const response = await SELF.fetch(testUrl, { method: 'HEAD' });

@@ -63,6 +63,7 @@
  *
  * **Other Resources:**
  * - `arxiv` - arXiv papers (arxiv.org)
+ * - `flathub` - Flathub Flatpak repository (dl.flathub.org)
  * - `fdroid` - F-Droid Android apps (f-droid.org)
  * - `jenkins` - Jenkins plugins (updates.jenkins.io)
  *
@@ -171,6 +172,7 @@ export const PLATFORMS = {
 
   // Other Resources
   arxiv: 'https://arxiv.org',
+  flathub: 'https://dl.flathub.org',
   fdroid: 'https://f-droid.org',
   jenkins: 'https://updates.jenkins.io',
 

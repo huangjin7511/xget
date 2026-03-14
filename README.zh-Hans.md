@@ -256,6 +256,7 @@ classDiagram
 | openSUSE | `opensuse` | `https://download.opensuse.org/...` | `https://xget.xi-xu.me/opensuse/...` |
 | Arch Linux | `arch` | `https://geo.mirror.pkgbuild.com/...` | `https://xget.xi-xu.me/arch/...` |
 | arXiv | `arxiv` | `https://arxiv.org/...` | `https://xget.xi-xu.me/arxiv/...` |
+| Flathub | `flathub` | `https://dl.flathub.org/...` | `https://xget.xi-xu.me/flathub/...` |
 | F-Droid | `fdroid` | `https://f-droid.org/...` | `https://xget.xi-xu.me/fdroid/...` |
 | Jenkins 插件 | `jenkins` | `https://updates.jenkins.io/...` | `https://xget.xi-xu.me/jenkins/...` |
 | 容器注册表 | `cr` | 见[容器注册表](#容器注册表) | 见[容器注册表](#容器注册表) |
@@ -705,6 +706,22 @@ https://f-droid.org/api/v1/packages/org.fdroid.fdroid
 
 # 转换后（添加 fdroid 前缀）
 https://xget.xi-xu.me/fdroid/api/v1/packages/org.fdroid.fdroid
+```
+
+#### Flathub
+
+```url
+# Flathub 存储库原始 URL
+https://dl.flathub.org/repo/summary
+
+# 转换后（添加 flathub 前缀）
+https://xget.xi-xu.me/flathub/repo/summary
+
+# Flathub 应用引用原始 URL
+https://dl.flathub.org/repo/appstream/org.gnome.gedit.flatpakref
+
+# 转换后（添加 flathub 前缀）
+https://xget.xi-xu.me/flathub/repo/appstream/org.gnome.gedit.flatpakref
 ```
 
 #### Jenkins 插件
@@ -1864,6 +1881,55 @@ task checkFDroidAvailability {
         }
     }
 }
+```
+
+### Flathub 存储库镜像
+
+#### 配置 Flatpak / Flathub 使用 Xget 镜像
+
+```bash
+# 通过重写后的 .flatpakrepo 描述文件添加 Flathub 远程仓库
+flatpak remote-add --if-not-exists flathub \
+  https://xget.xi-xu.me/flathub/repo/flathub.flatpakrepo
+
+# 或者直接添加 OSTree 存储库地址
+flatpak remote-add --if-not-exists flathub \
+  https://xget.xi-xu.me/flathub/repo/
+```
+
+#### 支持的 Flathub 服务
+
+```url
+# OSTree 存储库元数据
+https://xget.xi-xu.me/flathub/repo/summary
+https://xget.xi-xu.me/flathub/repo/summary.sig
+
+# Flatpak 远程仓库描述文件
+https://xget.xi-xu.me/flathub/repo/flathub.flatpakrepo
+
+# 应用引用描述文件
+https://xget.xi-xu.me/flathub/repo/appstream/[应用 ID].flatpakref
+
+# 存储库对象与静态增量
+https://xget.xi-xu.me/flathub/repo/objects/...
+https://xget.xi-xu.me/flathub/repo/deltas/...
+```
+
+#### 使用示例
+
+```bash
+# 查看远程仓库内容
+flatpak remote-ls flathub
+
+# 从 Xget 加速的 Flathub 镜像安装应用
+flatpak install flathub org.gnome.gedit
+
+# 直接通过重写后的 .flatpakref 安装
+flatpak install --from \
+  https://xget.xi-xu.me/flathub/repo/appstream/org.gnome.gedit.flatpakref
+
+# 更新已安装的应用和运行时
+flatpak update
 ```
 
 ### Jenkins 插件下载

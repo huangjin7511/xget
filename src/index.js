@@ -515,7 +515,10 @@ async function handleRequest(request, env, ctx) {
                   }
 
                   if (!response) {
-                    response = createErrorResponse('No response received after all retry attempts', 500);
+                    response = createErrorResponse(
+                      'No response received after all retry attempts',
+                      500
+                    );
                     responseGeneratedLocally = true;
                   } else if (!responseGeneratedLocally && !response.ok && response.status !== 206) {
                     if (isDocker && response.status === 401) {

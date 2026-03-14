@@ -6,7 +6,7 @@ Use these defaults in order:
 
 1. User-provided Xget base URL
 2. `XGET_BASE_URL` from the environment
-3. `https://xget.example.com` for templates and docs
+3. `https://xget.example.com` only for templates and docs
 4. `https://xget.xi-xu.me` only as a clearly labeled public-demo fallback
 
 The Xget README explicitly labels `xget.xi-xu.me` as a pre-deployed instance with no reliability guarantee, while the self-hosting docs and DigitalOcean guide show recommended self-hosted domains such as `xget.example.com`.
@@ -66,6 +66,9 @@ Generate the latest snippets with:
 ```bash
 node scripts/xget.mjs snippet --base-url https://xget.example.com --preset npm
 ```
+
+If `XGET_BASE_URL` is already configured, the skill can omit `--base-url` and
+read from the environment instead.
 
 Representative presets:
 

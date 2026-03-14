@@ -28,8 +28,12 @@ self-hosted option exists.
 1. Resolve the base URL in this order:
    - the user explicitly gives a domain
    - `XGET_BASE_URL` from the environment
-   - `https://xget.example.com` as a placeholder for docs or templates
-   - `https://xget.xi-xu.me` only as an explicitly labeled fallback
+   - if neither exists and the task is not just writing docs, ask the user for
+     their self-hosted Xget domain and configure `XGET_BASE_URL`
+   - `https://xget.example.com` only for docs or templates when a real domain
+     is not available yet
+   - `https://xget.xi-xu.me` only as an explicitly labeled fallback after the
+     user declines or cannot provide a self-hosted domain
 2. Keep platform data fresh. Do not hardcode the full prefix list from memory.
    Run:
 
@@ -53,7 +57,7 @@ node scripts/xget.mjs convert --base-url https://xget.example.com --url https://
    - propose or document a self-hosted deployment
 2. Refresh the live platform map with `scripts/xget.mjs` if the answer depends
    on current prefixes.
-3. Use the user's self-hosted domain in every generated example when possible.
+3. Use the resolved base URL in every generated example when possible.
 4. If the user needs deployment or configuration details, read
    [the reference guide](references/REFERENCE.md).
 5. Before finishing, sanity-check that every example uses the right Xget path

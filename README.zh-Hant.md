@@ -67,7 +67,9 @@ Xget 已受邀入駐 [GitCode 平台](https://gitcode.com/xixu-me/xget)，並被
 
 **預部署實例（不保證可靠性）：`xget.xi-xu.me`**
 
-**URL 轉換器：**[**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - 一鍵轉換任意支援平台的 URL 為 Xget 的加速格式！
+**URL 轉換器：**[**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - 一鍵轉換任意支援平台的 URL 為 Xget 的加速格式
+
+**Agent Skills：** 位於 [`skill/xget/`](skill/xget/) - 可作為獨立的 `/xget` 目錄直接安裝到 skills 目錄中
 
 ## 🌟 核心優勢 - 為什麼選擇 Xget？
 

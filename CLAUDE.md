@@ -41,6 +41,13 @@ npm run commitlint       # Validate the latest commit message
 - Common types: `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `chore`
 - The repository installs a `commit-msg` hook via `npm install`; do not bypass it unless explicitly required
 
+## Pre-Commit Requirements
+
+- Before every commit, run the local CI-equivalent checks from `.github/workflows/ci.yml`
+- Required commands: `npm run lint`, `npm run format:check`, `npm run test:run`, and `npm run type-check`
+- If any required check fails, do not commit until the failure is resolved
+- Apply this rule to every commit, including documentation-only changes, unless the user explicitly asks for a different workflow
+
 ### Testing Workflow
 
 - Tests use Vitest with `@cloudflare/vitest-pool-workers` for Workers-specific testing

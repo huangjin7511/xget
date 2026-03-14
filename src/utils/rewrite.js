@@ -51,10 +51,7 @@ export function rewriteTextResponse(platform, requestPath, originalText, origin)
   }
 
   if (platform === 'npm') {
-    return originalText.replace(
-      /https:\/\/registry\.npmjs\.org\/([^/]+)/g,
-      `${origin}/npm/$1`
-    );
+    return originalText.replace(/https:\/\/registry\.npmjs\.org\/([^/]+)/g, `${origin}/npm/$1`);
   }
 
   if (platform === 'flathub' && isFlatpakReferenceFilePath(requestPath)) {

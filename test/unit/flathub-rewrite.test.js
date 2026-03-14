@@ -60,7 +60,9 @@ describe('Flathub Response Rewriting', () => {
     expect(body).toContain('Url=https://example.com/flathub/repo/');
     expect(body).toContain('Icon=https://example.com/flathub/repo/logo.svg');
     expect(body).toContain('Homepage=https://flathub.org/');
-    expect(response.headers.get('Content-Length')).toBe(String(new TextEncoder().encode(body).length));
+    expect(response.headers.get('Content-Length')).toBe(
+      String(new TextEncoder().encode(body).length)
+    );
   });
 
   it('rewrites .flatpakref URLs to stay on the Xget mirror', async () => {
@@ -89,9 +91,7 @@ describe('Flathub Response Rewriting', () => {
 
     const body = await readUtf8Text(response);
     expect(body).toContain('Url=https://example.com/flathub/repo/');
-    expect(body).toContain(
-      'RuntimeRepo=https://example.com/flathub/repo/flathub.flatpakrepo'
-    );
+    expect(body).toContain('RuntimeRepo=https://example.com/flathub/repo/flathub.flatpakrepo');
   });
 
   it('does not rewrite binary repository metadata like summary files', async () => {

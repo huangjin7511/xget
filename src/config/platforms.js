@@ -52,6 +52,7 @@
  * - `nuget` - NuGet (api.nuget.org)
  * - `crates` - Rust crates.io (crates.io)
  * - `packagist` - PHP Packagist (repo.packagist.org)
+ * - `flathub` - Flathub Flatpak repository (dl.flathub.org)
  *
  * **Linux Distributions:**
  * - `debian` - Debian packages (deb.debian.org)
@@ -63,7 +64,6 @@
  *
  * **Other Resources:**
  * - `arxiv` - arXiv papers (arxiv.org)
- * - `flathub` - Flathub Flatpak repository (dl.flathub.org)
  * - `fdroid` - F-Droid Android apps (f-droid.org)
  * - `jenkins` - Jenkins plugins (updates.jenkins.io)
  *
@@ -161,6 +161,7 @@ export const PLATFORMS = {
   nuget: 'https://api.nuget.org',
   crates: 'https://crates.io',
   packagist: 'https://repo.packagist.org',
+  flathub: 'https://dl.flathub.org',
 
   // Linux Distributions
   debian: 'https://deb.debian.org',
@@ -172,7 +173,6 @@ export const PLATFORMS = {
 
   // Other Resources
   arxiv: 'https://arxiv.org',
-  flathub: 'https://dl.flathub.org',
   fdroid: 'https://f-droid.org',
   jenkins: 'https://updates.jenkins.io',
 

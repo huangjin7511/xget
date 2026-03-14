@@ -39,6 +39,7 @@ import { getAllowedMethods, isDockerRequest, validateRequest } from './utils/val
  */
 async function handleRequest(request, env, ctx) {
   let response;
+  let responseGeneratedLocally = false;
   const monitor = new PerformanceMonitor();
 
   try {
@@ -174,6 +175,9 @@ async function handleRequest(request, env, ctx) {
 
                 // Check if this is a Hugging Face API request
                 const isHF = isHuggingFaceAPIRequest(request, url);
+                const canUseCache = request.method === 'GET' || request.method === 'HEAD';
+                const shouldPassthroughRequest =
+                  isGit || isGitLFS || isDocker || isAI || isHF || !canUseCache;
 
                 // Check cache first (skip cache for Git, Git LFS, Docker, AI inference, and HF API operations)
                 /** @type {Cache | null} */
@@ -185,6 +189,7 @@ async function handleRequest(request, env, ctx) {
 
                 if (
                   cache &&
+                  canUseCache &&
                   !isGit &&
                   !isGitLFS &&
                   !isDocker &&
@@ -234,21 +239,16 @@ async function handleRequest(request, env, ctx) {
                     redirect: 'follow'
                   };
 
-                  // Add body for POST/PUT/PATCH/DELETE requests (Git/Docker/AI/HF operations)
-                  if (
-                    ['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method) &&
-                    (isGit || isGitLFS || isDocker || isAI || isHF)
-                  ) {
+                  if (request.body !== null && !canUseCache) {
                     fetchOptions.body = request.body;
                   }
 
                   // Cast headers to Headers for proper typing
                   const requestHeaders = /** @type {Headers} */ (fetchOptions.headers);
 
-                  // Set appropriate headers for Git/Docker/AI/HF vs regular requests
-                  if (isGit || isGitLFS || isDocker || isAI || isHF) {
-                    // For Git/Docker/AI/HF operations, copy all headers from the original request
-                    // This ensures protocol compliance
+                  // Preserve caller-supplied headers for protocol requests and for
+                  // explicitly enabled non-GET/HEAD methods on regular platforms.
+                  if (shouldPassthroughRequest) {
                     for (const [key, value] of request.headers.entries()) {
                       // Skip headers that might cause issues with proxying
                       if (
@@ -273,7 +273,7 @@ async function handleRequest(request, env, ctx) {
                       configureHuggingFaceHeaders(requestHeaders, request);
                     }
                   } else {
-                    // Regular file download headers
+                    // Regular GET/HEAD file download headers
                     Object.assign(fetchOptions, {
                       cf: {
                         http3: true,
@@ -312,11 +312,13 @@ async function handleRequest(request, env, ctx) {
                   // Implement retry mechanism
                   let attempts = 0;
                   while (attempts < config.MAX_RETRIES) {
+                    /** @type {ReturnType<typeof setTimeout> | undefined} */
+                    let timeoutId;
                     try {
                       monitor.mark(`attempt_${attempts}`);
 
                       const controller = new AbortController();
-                      const timeoutId = setTimeout(
+                      timeoutId = setTimeout(
                         () => controller.abort(),
                         config.TIMEOUT_SECONDS * 1000
                       );
@@ -372,8 +374,6 @@ async function handleRequest(request, env, ctx) {
                       } else {
                         response = await fetch(targetUrl, finalFetchOptions);
                       }
-
-                      clearTimeout(timeoutId);
 
                       // Handle manual redirect for Docker
                       if (
@@ -496,30 +496,28 @@ async function handleRequest(request, env, ctx) {
                       attempts++;
                       if (error instanceof Error && error.name === 'AbortError') {
                         response = createErrorResponse('Request timeout', 408);
+                        responseGeneratedLocally = true;
                         break;
                       }
                       if (attempts >= config.MAX_RETRIES) {
-                        const message = error instanceof Error ? error.message : String(error);
-                        response = createErrorResponse(
-                          `Failed after ${config.MAX_RETRIES} attempts: ${message}`,
-                          500,
-                          true
-                        );
+                        response = createErrorResponse('Upstream request failed', 502);
+                        responseGeneratedLocally = true;
                         break;
                       }
                       await new Promise(resolve =>
                         setTimeout(resolve, config.RETRY_DELAY_MS * attempts)
                       );
+                    } finally {
+                      if (timeoutId !== undefined) {
+                        clearTimeout(timeoutId);
+                      }
                     }
                   }
 
                   if (!response) {
-                    response = createErrorResponse(
-                      'No response received after all retry attempts',
-                      500,
-                      true
-                    );
-                  } else if (!response.ok && response.status !== 206) {
+                    response = createErrorResponse('No response received after all retry attempts', 500);
+                    responseGeneratedLocally = true;
+                  } else if (!responseGeneratedLocally && !response.ok && response.status !== 206) {
                     if (isDocker && response.status === 401) {
                       if (!response.headers.has('WWW-Authenticate')) {
                         // Handle Docker 401 responses that might not have been caught by the retry loop
@@ -578,7 +576,9 @@ async function handleRequest(request, env, ctx) {
                     }
 
                     if (!isGit && !isGitLFS && !isDocker && !isAI && !isHF) {
-                      if (hasSensitiveHeaders) {
+                      if (!canUseCache) {
+                        headers.set('Cache-Control', 'no-store');
+                      } else if (hasSensitiveHeaders) {
                         headers.set('Cache-Control', 'private, no-store');
                         const existingVary = headers.get('Vary');
                         headers.set(
@@ -673,8 +673,7 @@ async function handleRequest(request, env, ctx) {
     }
   } catch (error) {
     console.error('Error handling request:', error);
-    const message = error instanceof Error ? error.message : String(error);
-    response = createErrorResponse(`Internal Server Error: ${message}`, 500, true);
+    response = createErrorResponse('Internal Server Error', 500);
   }
 
   // Ensure performance headers are added to the final response

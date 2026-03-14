@@ -69,7 +69,7 @@ Xget was invited to join the [GitCode platform](https://gitcode.com/xixu-me/xget
 
 **URL Converter:** [**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - Convert any supported platform URL to Xget's acceleration format with one click
 
-**Agent Skills:** in [`skill/xget/`](skill/xget/) - Designed to work as a standalone `/xget` directory in a skills installation
+**Agent Skills:** [**`skill/xget/`**](skill/xget/) - Designed to work as a standalone `/xget` directory in a skills installation
 
 ## 🌟 Core Advantages - Why Choose Xget?
 

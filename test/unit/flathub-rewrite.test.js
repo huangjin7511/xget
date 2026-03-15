@@ -94,6 +94,42 @@ describe('Flathub Response Rewriting', () => {
     expect(body).toContain('RuntimeRepo=https://example.com/flathub/repo/flathub.flatpakrepo');
   });
 
+  it('uses host-scoped cache keys for rewritten Flathub descriptors', async () => {
+    const cacheEntries = new Map();
+
+    vi.stubGlobal('caches', {
+      default: {
+        match: vi.fn(async request => cacheEntries.get(request.url) || null),
+        put: vi.fn(async (request, response) => {
+          cacheEntries.set(request.url, response.clone());
+        })
+      }
+    });
+
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(
+      async () =>
+        new Response(`[Flatpak Repo]\nUrl=https://dl.flathub.org/repo/`, {
+          status: 200,
+          headers: { 'Content-Type': 'application/octet-stream' }
+        })
+    );
+
+    const responseA = await worker.fetch(
+      new Request('https://mirror-a.example/flathub/repo/flathub.flatpakrepo'),
+      {},
+      executionContext
+    );
+    const responseB = await worker.fetch(
+      new Request('https://mirror-b.example/flathub/repo/flathub.flatpakrepo'),
+      {},
+      executionContext
+    );
+
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+    expect(await readUtf8Text(responseA)).toContain('Url=https://mirror-a.example/flathub/repo/');
+    expect(await readUtf8Text(responseB)).toContain('Url=https://mirror-b.example/flathub/repo/');
+  });
+
   it('does not rewrite binary repository metadata like summary files', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response('summary-binary-payload', {

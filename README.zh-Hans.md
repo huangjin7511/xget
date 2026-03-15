@@ -59,7 +59,7 @@
 
 面向开发者资源的超高性能、安全、一体化加速引擎，其性能显著优于传统解决方案，为代码存储库、模型和数据集中心、软件包注册表、容器注册表、AI 推理提供商等提供统一、高效的加速。
 
-技术深度解析文章已发布：**[《深入剖析 Xget：一个高性能、多协议、高安全性的开发者资源加速引擎》](https://blog.xi-xu.me/2025/10/07/deep-dive-into-xget-technology.html)**。
+技术深度解析文章已发布：**[《深入剖析 Xget：一个高性能、多协议、高安全性的开发者资源加速引擎》](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)**。
 
 Xget 已受邀入驻
 [GitCode 平台](https://gitcode.com/xixu-me/xget)，并被认证为 G-Star 毕业项目；同时也获得多位技术博主自发推荐，包括[阮一峰](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget)、[GitHubDaily](https://x.com/i/status/1956204203937829256)、[鱼 C](https://www.bilibili.com/video/BV1EeeBzVEop/)、[玄离 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8)

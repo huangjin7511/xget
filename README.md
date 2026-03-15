@@ -65,7 +65,7 @@ hubs, package registries, container registries, AI inference providers, and
 more.
 
 In-depth technical analysis article published:
-**_[Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/2025/10/07/deep-dive-into-xget-technology.html)_**.
+**_[Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)_**.
 
 Xget was invited to join the
 [GitCode platform](https://gitcode.com/xixu-me/xget) and recognized as a G-Star

@@ -8,6 +8,7 @@ import vm from 'node:vm';
 const DEFAULT_SOURCE_URL = 'https://raw.gitcode.com/xixu-me/xget/raw/main/src/config/platforms.js';
 
 const DEFAULT_BASE_PLACEHOLDER = 'https://xget.example.com';
+const MISSING_BASE_URL_HINT = `Missing --base-url and XGET_BASE_URL. For docs, use ${DEFAULT_BASE_PLACEHOLDER}.`;
 
 const CRATES_API_PREFIX = '/api/v1/crates';
 
@@ -243,6 +244,16 @@ function normalizeBaseUrl(value) {
   } catch {
     fail(`Invalid --base-url value "${value}". Expected an absolute URL.`);
   }
+}
+
+/**
+ * Resolve an explicit or environment-provided base URL without inventing a fallback instance.
+ * @param {string | undefined} optionValue
+ * @param {string | undefined} envValue
+ * @returns {string | null}
+ */
+export function resolveBaseUrl(optionValue, envValue) {
+  return normalizeBaseUrl(optionValue ?? envValue);
 }
 
 /**
@@ -590,8 +601,8 @@ async function main() {
 
   if (command === 'convert') {
     const baseUrl =
-      normalizeBaseUrl(getStringOption(options, 'base-url') ?? process.env.XGET_BASE_URL) ??
-      fail(`Missing --base-url and XGET_BASE_URL. For docs, use ${DEFAULT_BASE_PLACEHOLDER}.`, 2);
+      resolveBaseUrl(getStringOption(options, 'base-url'), process.env.XGET_BASE_URL) ??
+      fail(MISSING_BASE_URL_HINT, 2);
 
     const rawUrl = getStringOption(options, 'url');
     if (!rawUrl) {
@@ -630,8 +641,8 @@ async function main() {
 
   if (command === 'snippet') {
     const baseUrl =
-      normalizeBaseUrl(getStringOption(options, 'base-url') ?? process.env.XGET_BASE_URL) ??
-      fail(`Missing --base-url and XGET_BASE_URL. For docs, use ${DEFAULT_BASE_PLACEHOLDER}.`, 2);
+      resolveBaseUrl(getStringOption(options, 'base-url'), process.env.XGET_BASE_URL) ??
+      fail(MISSING_BASE_URL_HINT, 2);
 
     const preset = getStringOption(options, 'preset');
     if (!preset) {

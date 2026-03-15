@@ -6,8 +6,6 @@ description:
   self-hosted Xget instance. Use this skill when a task involves Xget URL
   rewriting, registry acceleration, proxy base URLs, self-hosting, or choosing
   the correct Xget prefix for Git, packages, OCI images, or inference APIs.
-  Prefer the user's own Xget domain; treat the public demo as a last-resort
-  fallback.
 license: GPL-3.0-or-later
 compatibility:
   Requires network access to refresh the live platform map. Optional Node.js 18+
@@ -17,10 +15,7 @@ allowed-tools: Bash(node:*) Bash(curl:*) Read
 
 # Xget
 
-Use this skill for Xget-specific tasks only. Default to the user's self-hosted
-Xget domain or an explicit internal instance. Do not default to
-`https://xget.xi-xu.me` unless the user explicitly wants the public demo or no
-self-hosted option exists.
+Use this skill for Xget-specific tasks only.
 
 ## Defaults
 
@@ -29,10 +24,8 @@ self-hosted option exists.
    - `XGET_BASE_URL` from the environment
    - if neither exists and the task is not just writing docs, ask the user for
      their self-hosted Xget domain and configure `XGET_BASE_URL`
-   - `https://xget.example.com` only for docs or templates when a real domain is
-     not available yet
-   - `https://xget.xi-xu.me` only as an explicitly labeled fallback after the
-     user declines or cannot provide a self-hosted domain
+   - `https://xget.example.com` only as a placeholder in docs or templates when
+     a real domain is not available yet
 2. Keep platform data fresh. Do not hardcode the full prefix list from memory.
    Run:
 
@@ -97,5 +90,6 @@ node scripts/xget.mjs platforms --format table
   Report that no current Xget mapping was found.
 - The default pip snippet should omit `trusted-host`; add it only when the
   deployment really needs it and keep it aligned with the actual host.
-- When generating docs or templates without a real domain, prefer
-  `https://xget.example.com` over the public demo.
+- When generating docs or templates without a real domain, use
+  `https://xget.example.com` as a clearly labeled placeholder rather than a
+  default instance.

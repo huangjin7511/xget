@@ -11,8 +11,7 @@ description:
 license: GPL-3.0-or-later
 compatibility:
   Requires network access to refresh the live platform map. Optional Node.js 18+
-  lets the bundled script run. Designed to work as a standalone skill directory
-  installed at /xget.
+  lets the bundled script run.
 allowed-tools: Bash(node:*) Bash(curl:*) Read
 ---
 

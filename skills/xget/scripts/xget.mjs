@@ -1,14 +1,21 @@
 #!/usr/bin/env node
 
 import { get } from 'node:https';
+import { relative } from 'node:path';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 import vm from 'node:vm';
 
 const DEFAULT_SOURCE_URL = 'https://raw.gitcode.com/xixu-me/xget/raw/main/src/config/platforms.js';
+const DEFAULT_README_URL = 'https://raw.githubusercontent.com/xixu-me/xget/main/README.md';
 
 const DEFAULT_BASE_PLACEHOLDER = 'https://xget.example.com';
-const MISSING_BASE_URL_HINT = `Missing --base-url and XGET_BASE_URL. For docs, use ${DEFAULT_BASE_PLACEHOLDER}.`;
+const DEFAULT_PUBLIC_BASE_URL = 'https://xget.xi-xu.me';
+const DEFAULT_PUBLIC_HOST = 'xget.xi-xu.me';
+const README_USE_CASES_HEADING = '## 🎯 Use Cases';
+const MISSING_BASE_URL_HINT =
+  `Missing --base-url and XGET_BASE_URL. Ask for the user's Xget base URL and whether ` +
+  `to set it temporarily or persistently. For docs-only placeholders, use ${DEFAULT_BASE_PLACEHOLDER}.`;
 
 const CRATES_API_PREFIX = '/api/v1/crates';
 
@@ -24,10 +31,12 @@ const CRATES_API_PREFIX = '/api/v1/crates';
  * @typedef {{
  *   help?: boolean,
  *   format?: string,
+ *   heading?: string,
+ *   match?: string,
  *   url?: string,
- *   preset?: string,
  *   'source-url'?: string,
  *   'base-url'?: string,
+ *   'readme-url'?: string,
  *   [key: string]: string | boolean | undefined
  * }} CliOptions
  */
@@ -38,23 +47,46 @@ const CRATES_API_PREFIX = '/api/v1/crates';
 
 /**
  * @typedef {{
- *   preset: string,
- *   summary: string,
- *   commands?: string[],
- *   env?: Record<string, string>,
- *   files?: Record<string, string>,
- *   notes?: string[],
- *   supported?: boolean
- * }} Snippet
+ *   index: number,
+ *   level: number,
+ *   text: string,
+ *   raw: string,
+ *   parent: string | null
+ * }} MarkdownHeading
  */
 
+/**
+ * @typedef {{
+ *   section: string,
+ *   heading: string,
+ *   baseUrl: string,
+ *   content: string
+ * }} UseCasesSnippet
+ */
+
+function getInvocationCommand() {
+  const scriptPath = process.argv[1];
+  if (!scriptPath) {
+    return 'node scripts/xget.mjs';
+  }
+
+  const relativePath = relative(process.cwd(), scriptPath).replace(/\\/g, '/');
+  const displayPath =
+    relativePath && !relativePath.startsWith('..') ? relativePath : scriptPath.replace(/\\/g, '/');
+
+  return `node ${displayPath}`;
+}
+
 function printHelp() {
-  console.log(`Usage: node scripts/xget.mjs <command> [options]
+  const invocation = getInvocationCommand();
+
+  console.log(`Usage: ${invocation} <command> [options]
 
 Commands:
   platforms                 Fetch the live Xget platform map.
   convert                   Convert an upstream URL to an Xget URL.
-  snippet                   Emit a config snippet preset.
+  topics                    List headings from the README Use Cases section.
+  snippet                   Fetch the README Use Cases section or a subsection.
   help                      Show this message.
 
 Global options:
@@ -70,16 +102,24 @@ convert options:
   --url URL                 Upstream URL to convert.
   --format json|text
 
+topics options:
+  --readme-url URL          Override the remote README markdown URL.
+  --match TEXT              Filter headings by case-insensitive text match.
+  --format json|text
+
 snippet options:
-  --base-url URL            Xget base URL. Defaults to XGET_BASE_URL.
-  --preset NAME             One of: npm, pip, go, nuget, docker-ghcr,
-                            openai, anthropic, gemini.
+  --base-url URL            Xget base URL. Defaults to XGET_BASE_URL and
+                            rewrites README examples to match it.
+  --readme-url URL          Override the remote README markdown URL.
+  --heading TEXT            Exact heading inside the Use Cases section.
+  --match TEXT              Case-insensitive heading filter inside Use Cases.
   --format json|text
 
 Examples:
-  node scripts/xget.mjs platforms --format table
-  node scripts/xget.mjs convert --base-url https://xget.example.com --url https://github.com/microsoft/vscode
-  node scripts/xget.mjs snippet --base-url https://xget.example.com --preset npm
+  ${invocation} platforms --format table
+  ${invocation} convert --base-url https://xget.example.com --url https://github.com/microsoft/vscode
+  ${invocation} topics --match docker --format text
+  ${invocation} snippet --base-url https://xget.example.com --heading "Docker Compose Configuration" --format text
 `);
 }
 
@@ -423,78 +463,284 @@ export function buildConvertedUrl(baseUrl, platform, originUrl) {
 }
 
 /**
- * @param {string} baseUrl
- * @param {string} preset
- * @returns {Snippet}
+ * @param {string} line
+ * @returns {Omit<MarkdownHeading, 'index' | 'parent'> | null}
  */
-export function createSnippet(baseUrl, preset) {
-  const host = new URL(baseUrl).host;
+function parseMarkdownHeading(line) {
+  const match = line.trim().match(/^(#{1,6})\s+(.+?)\s*$/);
 
-  /** @type {Record<string, Snippet>} */
-  const snippets = {
-    npm: {
-      preset,
-      summary: 'Configure npm to use the Xget npm registry.',
-      commands: [`npm config set registry ${baseUrl}/npm/`, 'npm config get registry']
-    },
-    pip: {
-      preset,
-      summary: 'Configure pip to use the Xget PyPI simple index.',
-      commands: [`pip config set global.index-url ${baseUrl}/pypi/simple/`, 'pip config list'],
-      notes: [
-        `Only add "pip config set global.trusted-host ${host}" when the deployment really needs it.`
-      ]
-    },
-    go: {
-      preset,
-      summary: 'Configure Go modules to use Xget as GOPROXY.',
-      commands: [`go env -w GOPROXY=${baseUrl}/golang,direct`]
-    },
-    nuget: {
-      preset,
-      summary: 'Add Xget as a NuGet v3 source.',
-      commands: [
-        `dotnet nuget add source ${baseUrl}/nuget/v3/index.json -n xget`,
-        'dotnet nuget list source'
-      ]
-    },
-    'docker-ghcr': {
-      preset,
-      summary: 'Pull GHCR images through Xget.',
-      commands: [`docker pull ${new URL(baseUrl).host}/cr/ghcr/nginxinc/nginx-unprivileged:latest`]
-    },
-    openai: {
-      preset,
-      summary: 'Point OpenAI SDKs at Xget.',
-      env: {
-        OPENAI_BASE_URL: `${baseUrl}/ip/openai`
-      }
-    },
-    anthropic: {
-      preset,
-      summary: 'Point Anthropic SDKs at Xget.',
-      env: {
-        ANTHROPIC_BASE_URL: `${baseUrl}/ip/anthropic`
-      }
-    },
-    gemini: {
-      preset,
-      summary: 'Point Gemini SDKs at Xget.',
-      env: {
-        GEMINI_BASE_URL: `${baseUrl}/ip/gemini`
+  if (!match) {
+    return null;
+  }
+
+  const text = match[2].trim();
+
+  return {
+    level: match[1].length,
+    text,
+    raw: `${match[1]} ${text}`
+  };
+}
+
+/**
+ * @param {string} heading
+ * @returns {string}
+ */
+function normalizeHeadingQuery(heading) {
+  return heading
+    .replace(/^#{1,6}\s+/, '')
+    .replace(/^[^\p{L}\p{N}]+/u, '')
+    .trim()
+    .toLowerCase();
+}
+
+/**
+ * @param {string} line
+ * @returns {boolean}
+ */
+function isCodeFenceDelimiter(line) {
+  return /^(```|~~~)/.test(line.trim());
+}
+
+/**
+ * @param {string[]} lines
+ * @returns {MarkdownHeading[]}
+ */
+function collectMarkdownHeadings(lines) {
+  const stack = [];
+  let inCodeFence = false;
+
+  return lines.flatMap((line, index) => {
+    if (isCodeFenceDelimiter(line)) {
+      inCodeFence = !inCodeFence;
+      return [];
+    }
+
+    if (inCodeFence) {
+      return [];
+    }
+
+    const heading = parseMarkdownHeading(line);
+    if (!heading) {
+      return [];
+    }
+
+    let parent = null;
+    for (let level = heading.level - 1; level >= 1; level -= 1) {
+      if (stack[level]) {
+        parent = stack[level];
+        break;
       }
     }
-  };
 
-  const result = snippets[preset];
-  if (!result) {
+    stack[heading.level] = heading.text;
+    stack.length = heading.level + 1;
+
+    return [
+      {
+        index,
+        ...heading,
+        parent
+      }
+    ];
+  });
+}
+
+/**
+ * @param {MarkdownHeading} heading
+ * @returns {string}
+ */
+function formatHeadingLabel(heading) {
+  return heading.parent ? `${heading.raw} (under ${heading.parent})` : heading.raw;
+}
+
+/**
+ * @param {string[]} lines
+ * @param {MarkdownHeading} heading
+ * @returns {string}
+ */
+function sliceMarkdownSection(lines, heading) {
+  let endIndex = lines.length;
+  let inCodeFence = false;
+
+  for (let index = heading.index + 1; index < lines.length; index += 1) {
+    if (isCodeFenceDelimiter(lines[index])) {
+      inCodeFence = !inCodeFence;
+      continue;
+    }
+
+    if (inCodeFence) {
+      continue;
+    }
+
+    const candidate = parseMarkdownHeading(lines[index]);
+    if (candidate && candidate.level <= heading.level) {
+      endIndex = index;
+      break;
+    }
+  }
+
+  return lines.slice(heading.index, endIndex).join('\n').trimEnd();
+}
+
+/**
+ * @param {string[]} lines
+ * @param {string} heading
+ * @returns {MarkdownHeading}
+ */
+function findUniqueHeading(lines, heading) {
+  const headings = collectMarkdownHeadings(lines);
+  const query = normalizeHeadingQuery(heading);
+  const matches = headings.filter(candidate => normalizeHeadingQuery(candidate.text) === query);
+
+  if (matches.length === 0) {
+    fail(`Could not find README heading "${heading}".`);
+  }
+
+  if (matches.length > 1) {
     fail(
-      `Unknown --preset "${preset}". Supported presets: ${Object.keys(snippets).join(', ')}.`,
+      `Heading "${heading}" matched multiple sections: ${matches.map(formatHeadingLabel).join('; ')}`
+    );
+  }
+
+  return matches[0];
+}
+
+/**
+ * @param {MarkdownHeading[]} headings
+ * @param {string | undefined} match
+ * @returns {MarkdownHeading[]}
+ */
+function filterHeadingsByMatch(headings, match) {
+  if (!match) {
+    return headings;
+  }
+
+  const query = match.trim().toLowerCase();
+
+  return headings.filter(heading => {
+    const haystacks = [heading.text, heading.raw, heading.parent ?? ''];
+    return haystacks.some(value => value.toLowerCase().includes(query));
+  });
+}
+
+/**
+ * @param {string} markdown
+ * @param {number} [minLevel]
+ * @param {number} [maxLevel]
+ * @returns {MarkdownHeading[]}
+ */
+export function listMarkdownHeadings(markdown, minLevel = 2, maxLevel = 6) {
+  const lines = markdown.split(/\r?\n/);
+
+  return collectMarkdownHeadings(lines)
+    .map(heading => ({
+      ...heading,
+      parent: heading.level <= minLevel ? null : heading.parent
+    }))
+    .filter(heading => heading.level >= minLevel && heading.level <= maxLevel);
+}
+
+/**
+ * @param {string} markdown
+ * @param {string} heading
+ * @returns {MarkdownHeading}
+ */
+export function resolveMarkdownHeading(markdown, heading) {
+  return findUniqueHeading(markdown.split(/\r?\n/), heading);
+}
+
+/**
+ * @param {string} markdown
+ * @param {string} heading
+ * @returns {string}
+ */
+export function extractMarkdownSection(markdown, heading) {
+  const lines = markdown.split(/\r?\n/);
+  const resolvedHeading = findUniqueHeading(lines, heading);
+  return sliceMarkdownSection(lines, resolvedHeading);
+}
+
+/**
+ * @param {string} baseUrl
+ * @param {string} markdownSection
+ * @returns {string}
+ */
+export function rewriteUseCasesBaseUrl(baseUrl, markdownSection) {
+  const host = new URL(baseUrl).host;
+
+  return markdownSection
+    .replaceAll(DEFAULT_PUBLIC_BASE_URL, baseUrl)
+    .replaceAll(DEFAULT_PUBLIC_HOST, host);
+}
+
+/**
+ * @param {string} useCasesMarkdown
+ * @param {string | undefined} heading
+ * @param {string | undefined} match
+ * @returns {{ heading: string, content: string }}
+ */
+export function selectUseCaseSection(useCasesMarkdown, heading, match) {
+  if (heading && match) {
+    fail('Use either --heading or --match for snippet, not both.', 2);
+  }
+
+  if (!heading && !match) {
+    return {
+      heading: README_USE_CASES_HEADING,
+      content: useCasesMarkdown
+    };
+  }
+
+  const lines = useCasesMarkdown.split(/\r?\n/);
+
+  if (heading) {
+    const resolvedHeading = findUniqueHeading(lines, heading);
+
+    return {
+      heading: resolvedHeading.raw,
+      content: sliceMarkdownSection(lines, resolvedHeading)
+    };
+  }
+
+  const matchedHeadings = filterHeadingsByMatch(
+    listMarkdownHeadings(useCasesMarkdown, 3, 4),
+    match
+  );
+
+  if (matchedHeadings.length === 0) {
+    fail(`Could not find a README Use Cases heading matching "${match}".`, 2);
+  }
+
+  if (matchedHeadings.length > 1) {
+    fail(
+      `Match "${match}" was ambiguous. Candidates: ${matchedHeadings.map(formatHeadingLabel).join('; ')}`,
       2
     );
   }
 
-  return result;
+  return {
+    heading: matchedHeadings[0].raw,
+    content: sliceMarkdownSection(lines, matchedHeadings[0])
+  };
+}
+
+/**
+ * @param {string} baseUrl
+ * @param {string} readmeMarkdown
+ * @param {{ heading?: string, match?: string }} [options]
+ * @returns {UseCasesSnippet}
+ */
+export function createUseCasesSnippet(baseUrl, readmeMarkdown, options = {}) {
+  const useCasesSection = extractMarkdownSection(readmeMarkdown, README_USE_CASES_HEADING);
+  const selectedSection = selectUseCaseSection(useCasesSection, options.heading, options.match);
+
+  return {
+    section: 'use-cases',
+    heading: selectedSection.heading,
+    baseUrl,
+    content: rewriteUseCasesBaseUrl(baseUrl, selectedSection.content)
+  };
 }
 
 /**
@@ -529,34 +775,26 @@ function renderTable(rows) {
 }
 
 /**
- * @param {Snippet} snippet
+ * @param {UseCasesSnippet['content']} content
  * @returns {void}
  */
-function renderTextSnippet(snippet) {
-  console.log(snippet.summary);
+function renderTextContent(content) {
+  console.log(content);
+}
 
-  if (snippet.commands) {
-    console.log('\nCommands:');
-    snippet.commands.forEach(command => console.log(command));
-  }
+/**
+ * @param {MarkdownHeading[]} headings
+ * @returns {void}
+ */
+function renderTextHeadings(headings) {
+  headings.forEach(heading => {
+    if (heading.parent) {
+      console.log(`${heading.text} (under ${heading.parent})`);
+      return;
+    }
 
-  if (snippet.env) {
-    console.log('\nEnvironment:');
-    Object.entries(snippet.env).forEach(([key, value]) => console.log(`${key}=${value}`));
-  }
-
-  if (snippet.files) {
-    console.log('\nFiles:');
-    Object.entries(snippet.files).forEach(([file, content]) => {
-      console.log(`[${file}]`);
-      console.log(content);
-    });
-  }
-
-  if (snippet.notes) {
-    console.log('\nNotes:');
-    snippet.notes.forEach(note => console.log(note));
-  }
+    console.log(heading.text);
+  });
 }
 
 /**
@@ -639,24 +877,65 @@ async function main() {
     fail('Unsupported --format for convert. Use json or text.', 2);
   }
 
+  if (command === 'topics') {
+    const readmeUrl = getStringOption(options, 'readme-url') ?? DEFAULT_README_URL;
+    const readmeMarkdown = await httpGet(readmeUrl);
+    const useCasesSection = extractMarkdownSection(readmeMarkdown, README_USE_CASES_HEADING);
+    const topics = filterHeadingsByMatch(
+      listMarkdownHeadings(useCasesSection, 3, 4),
+      getStringOption(options, 'match')
+    );
+    const payload = {
+      sourceUrl: readmeUrl,
+      section: 'use-cases',
+      heading: README_USE_CASES_HEADING,
+      match: getStringOption(options, 'match') ?? null,
+      count: topics.length,
+      topics: topics.map(({ index, ...topic }) => topic)
+    };
+
+    if (format === 'json') {
+      renderJson(payload);
+      return;
+    }
+
+    if (format === 'text') {
+      renderTextHeadings(topics);
+      return;
+    }
+
+    fail('Unsupported --format for topics. Use json or text.', 2);
+  }
+
   if (command === 'snippet') {
     const baseUrl =
       resolveBaseUrl(getStringOption(options, 'base-url'), process.env.XGET_BASE_URL) ??
       fail(MISSING_BASE_URL_HINT, 2);
 
-    const preset = getStringOption(options, 'preset');
-    if (!preset) {
-      fail('Missing --preset for snippet.', 2);
+    if (getStringOption(options, 'preset')) {
+      fail(
+        '`--preset` is no longer supported. `snippet` now fetches the README Use Cases section.',
+        2
+      );
     }
 
-    const snippet = createSnippet(baseUrl, preset);
+    const readmeUrl = getStringOption(options, 'readme-url') ?? DEFAULT_README_URL;
+    const readmeMarkdown = await httpGet(readmeUrl);
+    const snippet = {
+      sourceUrl: readmeUrl,
+      ...createUseCasesSnippet(baseUrl, readmeMarkdown, {
+        heading: getStringOption(options, 'heading'),
+        match: getStringOption(options, 'match')
+      })
+    };
+
     if (format === 'json') {
       renderJson(snippet);
       return;
     }
 
     if (format === 'text') {
-      renderTextSnippet(snippet);
+      renderTextContent(snippet.content);
       return;
     }
 

@@ -1,15 +1,63 @@
 # Xget Reference
 
-## Self-hosted first
+Use this file only when the user needs shell setup, deployment, or
+troubleshooting details. Reuse the base URL already resolved from `SKILL.md`,
+and keep `https://xget.example.com` as a placeholder only for docs or templates.
 
-Use these defaults in order:
+## Configuring `XGET_BASE_URL`
 
-1. User-provided Xget base URL
-2. `XGET_BASE_URL` from the environment
-3. `https://xget.example.com` only as a placeholder in templates and docs
+Ask which shell the user is using before giving commands when it is unclear.
+Offer one of these two setup modes:
 
-This skill should not surface or assume a public demo domain. Prefer
-self-hosted guidance and custom-domain examples such as `xget.example.com`.
+### Temporary (current shell or session)
+
+- PowerShell:
+
+```powershell
+$env:XGET_BASE_URL = "https://xget.example.com"
+```
+
+- bash / zsh:
+
+```bash
+export XGET_BASE_URL="https://xget.example.com"
+```
+
+- fish:
+
+```fish
+set -x XGET_BASE_URL https://xget.example.com
+```
+
+### Persistent (future shells)
+
+- PowerShell profile:
+
+```powershell
+if (!(Test-Path $PROFILE)) { New-Item -ItemType File -Path $PROFILE -Force | Out-Null }
+Add-Content $PROFILE '$env:XGET_BASE_URL = "https://xget.example.com"'
+```
+
+- bash:
+
+```bash
+echo 'export XGET_BASE_URL="https://xget.example.com"' >> ~/.bashrc
+```
+
+- zsh:
+
+```bash
+echo 'export XGET_BASE_URL="https://xget.example.com"' >> ~/.zshrc
+```
+
+- fish:
+
+```fish
+set -Ux XGET_BASE_URL https://xget.example.com
+```
+
+After a persistent change, remind the user to open a new shell or reload their
+profile before retrying commands.
 
 ## Live platform source
 
@@ -17,94 +65,60 @@ The authoritative platform list for this skill comes from:
 
 `https://raw.gitcode.com/xixu-me/xget/raw/main/src/config/platforms.js`
 
-Fetch it with:
+Fetch it from the repository root with:
 
 ```bash
 node scripts/xget.mjs platforms --format json
 ```
 
-The script derives these path shapes from platform keys:
+## README `Use Cases` section
 
-- plain keys like `gh` become `/gh/...`
-- `ip-openai` becomes `/ip/openai/...`
-- `cr-ghcr` becomes `/cr/ghcr/...`
-
-## Common Xget patterns
-
-### Source code and file downloads
-
-- GitHub: `https://{base}/gh/...`
-- GitHub Gist: `https://{base}/gist/...`
-- GitLab: `https://{base}/gl/...`
-- Hugging Face: `https://{base}/hf/...`
-
-### Package managers
-
-- npm registry: `https://{base}/npm/`
-- pip simple index: `https://{base}/pypi/simple/`
-- Go proxy: `https://{base}/golang`
-- NuGet v3 index: `https://{base}/nuget/v3/index.json`
-- Direct crates.io HTTP URLs: `https://{base}/crates/...`
-
-### Container registries
-
-- Docker Hub: `https://{base}/cr/docker/...`
-- GHCR: `https://{base}/cr/ghcr/...`
-- GCR: `https://{base}/cr/gcr/...`
-- MCR: `https://{base}/cr/mcr/...`
-
-### Inference APIs
-
-- OpenAI: `https://{base}/ip/openai`
-- Anthropic: `https://{base}/ip/anthropic`
-- Gemini: `https://{base}/ip/gemini`
-
-## Common snippets
-
-Generate the latest snippets with:
+List the latest README `Use Cases` headings first:
 
 ```bash
-node scripts/xget.mjs snippet --base-url https://xget.example.com --preset npm
+node scripts/xget.mjs topics --format text
+```
+
+Narrow the list when the user's task is obvious:
+
+```bash
+node scripts/xget.mjs topics --match docker --format text
+```
+
+Fetch only the smallest relevant live subsection and rewrite the public demo
+domain to your resolved base URL:
+
+```bash
+node scripts/xget.mjs snippet --base-url https://xget.example.com --heading "Docker Compose Configuration" --format text
 ```
 
 If `XGET_BASE_URL` is already configured, the skill can omit `--base-url` and
 read from the environment instead.
 
-Representative presets:
+If a heading is repeated, such as `Use in Project`, fetch its parent section
+instead of relying on the ambiguous child title alone.
 
-- `npm`
-- `pip`
-- `go`
-- `nuget`
-- `docker-ghcr`
-- `openai`
-- `anthropic`
-- `gemini`
+When the right section is not obvious, prefer `topics --match <tool-or-task>`
+over maintaining a second static map in the skill docs. Typical matches are
+package managers (`npm`, `pip`, `cargo`), runtime tools (`docker`, `kubernetes`,
+`github actions`), AI providers (`openai`, `anthropic`, `gemini`), or hosting
+targets (`cloudflare`, `vercel`, `netlify`, `docker compose`).
 
-## Deployment defaults
+## Prefer implementation over paraphrase
 
-For self-hosting guidance, prefer one of these paths:
+When the user wants a change in a real project, adapt the live README snippet to
+the target file instead of pasting generic commands back:
 
-1. Docker / Docker Compose with `ghcr.io/xixu-me/xget:latest`
-2. Cloudflare Workers with a bound custom domain
-3. Managed hosting with a custom domain in front
+- `.npmrc`, `pip.conf`, `NuGet.Config`, `.cargo/config.toml`, `.condarc`
+- `Dockerfile`, `docker-compose.yml`, Kubernetes manifests, GitHub Actions
+  workflows
+- `.env`, SDK initialization code, shell profile files
 
-Representative Docker Compose service:
+## Deployment
 
-```yaml
-services:
-  xget:
-    image: ghcr.io/xixu-me/xget:latest
-    container_name: xget
-    ports:
-      - '127.0.0.1:8080:8080'
-    restart: unless-stopped
-```
+For deployment guidance, use the README section on deployment in the:
 
-Representative reverse-proxy outcome:
-
-- Public HTTPS domain such as `https://xget.example.com`
-- Xget container bound privately to `127.0.0.1:8080`
+[Xget deployment guide](https://github.com/xixu-me/xget?tab=readme-ov-file#-deployment)
 
 ## Troubleshooting heuristics
 

@@ -1,95 +1,70 @@
 ---
 name: xget
 description:
-  Convert upstream resource URLs and package manager, container registry, or AI
-  SDK settings to Xget, explain Xget platform prefixes, and help deploy or use a
-  self-hosted Xget instance. Use this skill when a task involves Xget URL
-  rewriting, registry acceleration, proxy base URLs, self-hosting, or choosing
-  the correct Xget prefix for Git, packages, OCI images, or inference APIs.
-license: GPL-3.0-or-later
-compatibility:
-  Requires network access to refresh the live platform map. Optional Node.js 18+
-  lets the bundled script run.
-allowed-tools: Bash(node:*) Bash(curl:*) Read
+  Guide to use Xget in real developer workflows. Use this skill when a task
+  involves Xget URL rewriting, registry/package/container/API acceleration,
+  integrating Xget into Git, download tools, package managers, container builds,
+  AI SDKs, CI/CD, deployment, or self-hosting, or adapting commands and config
+  from the live README `Use Cases` section to the user's files, environment, or
+  base URL.
 ---
 
 # Xget
 
-Use this skill for Xget-specific tasks only.
+Resolve the base URL first:
 
-## Defaults
+1. use a domain the user explicitly gave
+2. otherwise use `XGET_BASE_URL` from the environment
+3. if neither exists, ask for the user's Xget base URL and whether it should be
+   set temporarily for the current shell/session or persistently for future
+   shells
+4. use `https://xget.example.com` only as a clearly labeled placeholder for docs
+   or templates that do not have a real deployment yet
 
-1. Resolve the base URL in this order:
-   - the user explicitly gives a domain
-   - `XGET_BASE_URL` from the environment
-   - if neither exists and the task is not just writing docs, ask the user for
-     their self-hosted Xget domain and configure `XGET_BASE_URL`
-   - `https://xget.example.com` only as a placeholder in docs or templates when
-     a real domain is not available yet
-2. Keep platform data fresh. Do not hardcode the full prefix list from memory.
-   Run:
-
-```bash
-node scripts/xget.mjs platforms --format json
-```
-
-3. For URL conversion or prefix detection, prefer the script over manual
-   guessing:
-
-```bash
-node scripts/xget.mjs convert --base-url https://xget.example.com --url https://github.com/microsoft/vscode
-```
+Prefer `scripts/xget.mjs` over manual guessing for live platform data, URL
+conversion, and README `Use Cases` lookup. From the repository root, run
+`node scripts/xget.mjs ...`; from the skill directory itself, run
+`node scripts/xget.mjs ...`. Open [the reference guide](references/REFERENCE.md)
+only when the user needs shell setup, deployment, or troubleshooting details.
 
 ## Workflow
 
-1. Identify the user's goal:
-   - convert one or more upstream URLs
-   - generate config snippets for npm, pip, Go, NuGet, Docker, or AI SDKs
-   - explain which Xget prefix to use
-   - propose or document a self-hosted deployment
-2. Refresh the live platform map with `scripts/xget.mjs` if the answer depends
-   on current prefixes.
-3. Use the resolved base URL in every generated example when possible.
-4. If the user needs deployment or configuration details, read
-   [the reference guide](references/REFERENCE.md).
-5. Before finishing, sanity-check that every example uses the right Xget path
+1. Classify the task before reaching for examples:
+   - one-off URL conversion or prefix lookup
+   - Git or download-tool acceleration
+   - package-manager or language-ecosystem configuration
+   - container image, Dockerfile, Kubernetes, or CI/CD acceleration
+   - AI SDK / inference API base-URL configuration
+   - deploying or self-hosting Xget itself
+2. Complete the base-URL preflight above. If the user wants help setting
+   `XGET_BASE_URL`, open [the reference guide](references/REFERENCE.md) and give
+   shell-appropriate temporary or persistent commands before continuing.
+3. Pull live README guidance in two steps instead of loading the whole section
+   by default:
+   - list candidate headings with `node scripts/xget.mjs topics --format json`
+   - narrow with `--match` or fetch a specific section with
+     `node scripts/xget.mjs snippet --base-url https://xget.example.com --heading "Docker Compose Configuration" --format text`
+4. Prefer the smallest relevant live subsection. If a repeated child heading
+   like `Use in Project` is ambiguous, fetch its parent section instead.
+5. Adapt the live guidance to the user's real task:
+   - edit the actual config or source files when the user wants implementation,
+     not just explanation
+   - keep shell commands aligned with the user's OS and shell
+   - preserve existing project conventions unless the user asked for a broader
+     rewrite
+6. Refresh the live platform map with
+   `node scripts/xget.mjs platforms --format json` when the answer depends on
+   current prefixes, and use `convert` for exact URL rewrites.
+7. Combine multiple live sections when the workflow spans multiple layers. For
+   example, pair a package-manager section with container, deployment, or `.env`
+   guidance when the user's project needs more than one integration point.
+8. Before finishing, sanity-check that every example uses the right Xget path
    shape:
    - repo/content: `/{prefix}/...`
    - crates.io HTTP URLs: `/crates/...` rather than `/crates/api/v1/crates/...`
    - inference APIs: `/ip/{provider}/...`
    - OCI registries: `/cr/{registry}/...`
-
-## Common tasks
-
-### Convert URLs
-
-```bash
-node scripts/xget.mjs convert --base-url https://xget.example.com --url https://github.com/microsoft/vscode --format json
-```
-
-### Emit config snippets
-
-```bash
-node scripts/xget.mjs snippet --base-url https://xget.example.com --preset npm
-node scripts/xget.mjs snippet --base-url https://xget.example.com --preset pip
-node scripts/xget.mjs snippet --base-url https://xget.example.com --preset openai
-```
-
-### List current platforms
-
-```bash
-node scripts/xget.mjs platforms --format table
-```
-
-## Edge cases
-
-- If the live platform fetch fails, say that the platform map could not be
-  refreshed and fall back to the common patterns in
-  [references/REFERENCE.md](references/REFERENCE.md).
-- If an upstream URL does not match any known platform, do not invent a prefix.
-  Report that no current Xget mapping was found.
-- The default pip snippet should omit `trusted-host`; add it only when the
-  deployment really needs it and keep it aligned with the actual host.
-- When generating docs or templates without a real domain, use
-  `https://xget.example.com` as a clearly labeled placeholder rather than a
-  default instance.
+9. If the live platform fetch fails or an upstream URL does not match any known
+   platform, say so explicitly and fall back to the stable guidance in
+   [references/REFERENCE.md](references/REFERENCE.md) instead of inventing a
+   prefix.

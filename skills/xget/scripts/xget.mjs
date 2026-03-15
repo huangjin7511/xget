@@ -71,10 +71,8 @@ convert options:
 
 snippet options:
   --base-url URL            Xget base URL. Defaults to XGET_BASE_URL.
-  --preset NAME             One of: npm, pip, go, nuget, cargo, docker-ghcr,
-                            openai, anthropic, gemini. The cargo preset
-                            explains the current limitation instead of
-                            emitting source replacement config.
+  --preset NAME             One of: npm, pip, go, nuget, docker-ghcr,
+                            openai, anthropic, gemini.
   --format json|text
 
 Examples:
@@ -447,15 +445,6 @@ export function createSnippet(baseUrl, preset) {
       commands: [
         `dotnet nuget add source ${baseUrl}/nuget/v3/index.json -n xget`,
         'dotnet nuget list source'
-      ]
-    },
-    cargo: {
-      preset,
-      supported: false,
-      summary: 'Cargo registry source replacement is not currently supported by Xget.',
-      notes: [
-        'Xget can convert direct crates.io HTTP URLs under /crates/..., but it does not expose a Cargo registry index.',
-        'Do not generate ~/.cargo/config.toml source replacement entries until Xget provides a registry index endpoint.'
       ]
     },
     'docker-ghcr': {

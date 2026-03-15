@@ -48,10 +48,6 @@ The script derives these path shapes from platform keys:
 - NuGet v3 index: `https://{base}/nuget/v3/index.json`
 - Direct crates.io HTTP URLs: `https://{base}/crates/...`
 
-Cargo registry source replacement is not currently emitted by this skill. Xget's
-`/crates/...` route rewrites direct crates.io HTTP API and download URLs, but it
-does not expose a Cargo registry index endpoint.
-
 ### Container registries
 
 - Docker Hub: `https://{base}/cr/docker/...`
@@ -82,7 +78,6 @@ Representative presets:
 - `pip`
 - `go`
 - `nuget`
-- `cargo` (returns the current limitation instead of source replacement config)
 - `docker-ghcr`
 - `openai`
 - `anthropic`

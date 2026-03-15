@@ -52,7 +52,6 @@ node scripts/xget.mjs convert --base-url https://xget.example.com --url https://
 1. Identify the user's goal:
    - convert one or more upstream URLs
    - generate config snippets for npm, pip, Go, NuGet, Docker, or AI SDKs
-   - explain the current Cargo limitation for registry source replacement
    - explain which Xget prefix to use
    - propose or document a self-hosted deployment
 2. Refresh the live platform map with `scripts/xget.mjs` if the answer depends
@@ -98,8 +97,5 @@ node scripts/xget.mjs platforms --format table
   Report that no current Xget mapping was found.
 - The default pip snippet should omit `trusted-host`; add it only when the
   deployment really needs it and keep it aligned with the actual host.
-- The `cargo` preset is informational for now. Xget can rewrite direct
-  `crates.io` HTTP URLs under `/crates/...`, but this skill should not emit
-  Cargo source replacement config until Xget exposes a registry index endpoint.
 - When generating docs or templates without a real domain, prefer
   `https://xget.example.com` over the public demo.

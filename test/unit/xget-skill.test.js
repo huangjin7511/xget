@@ -73,15 +73,5 @@ describe('xget skill helpers', () => {
         'Only add "pip config set global.trusted-host xget.example.com" when the deployment really needs it.'
       );
     });
-
-    it('returns an explicit unsupported notice for cargo instead of a broken config file', () => {
-      const snippet = createSnippet(BASE_URL, 'cargo');
-
-      expect(snippet.supported).toBe(false);
-      expect(snippet.files).toBeUndefined();
-      expect(snippet.notes).toContain(
-        'Do not generate ~/.cargo/config.toml source replacement entries until Xget provides a registry index endpoint.'
-      );
-    });
   });
 });

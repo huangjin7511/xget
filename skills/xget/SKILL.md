@@ -29,8 +29,8 @@ self-hosted option exists.
    - `XGET_BASE_URL` from the environment
    - if neither exists and the task is not just writing docs, ask the user for
      their self-hosted Xget domain and configure `XGET_BASE_URL`
-   - `https://xget.example.com` only for docs or templates when a real domain
-     is not available yet
+   - `https://xget.example.com` only for docs or templates when a real domain is
+     not available yet
    - `https://xget.xi-xu.me` only as an explicitly labeled fallback after the
      user declines or cannot provide a self-hosted domain
 2. Keep platform data fresh. Do not hardcode the full prefix list from memory.
@@ -51,7 +51,8 @@ node scripts/xget.mjs convert --base-url https://xget.example.com --url https://
 
 1. Identify the user's goal:
    - convert one or more upstream URLs
-   - generate config snippets for npm, pip, Go, NuGet, Cargo, Docker, or AI SDKs
+   - generate config snippets for npm, pip, Go, NuGet, Docker, or AI SDKs
+   - explain the current Cargo limitation for registry source replacement
    - explain which Xget prefix to use
    - propose or document a self-hosted deployment
 2. Refresh the live platform map with `scripts/xget.mjs` if the answer depends
@@ -62,6 +63,7 @@ node scripts/xget.mjs convert --base-url https://xget.example.com --url https://
 5. Before finishing, sanity-check that every example uses the right Xget path
    shape:
    - repo/content: `/{prefix}/...`
+   - crates.io HTTP URLs: `/crates/...` rather than `/crates/api/v1/crates/...`
    - inference APIs: `/ip/{provider}/...`
    - OCI registries: `/cr/{registry}/...`
 
@@ -94,7 +96,10 @@ node scripts/xget.mjs platforms --format table
   [references/REFERENCE.md](references/REFERENCE.md).
 - If an upstream URL does not match any known platform, do not invent a prefix.
   Report that no current Xget mapping was found.
-- When writing pip config for HTTPS domains, keep `trusted-host` aligned with
-  the actual host only if the user really needs it.
+- The default pip snippet should omit `trusted-host`; add it only when the
+  deployment really needs it and keep it aligned with the actual host.
+- The `cargo` preset is informational for now. Xget can rewrite direct
+  `crates.io` HTTP URLs under `/crates/...`, but this skill should not emit
+  Cargo source replacement config until Xget exposes a registry index endpoint.
 - When generating docs or templates without a real domain, prefer
   `https://xget.example.com` over the public demo.

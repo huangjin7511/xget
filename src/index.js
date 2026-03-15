@@ -175,6 +175,11 @@ async function handleRequest(request, env, ctx) {
 
                 // Check if this is a Hugging Face API request
                 const isHF = isHuggingFaceAPIRequest(request, url);
+                const shouldVaryCacheByOrigin =
+                  platform === 'flathub' && isFlatpakReferenceFilePath(effectivePath);
+                const cacheTargetUrl = shouldVaryCacheByOrigin
+                  ? `${targetUrl}${targetUrl.includes('?') ? '&' : '?'}__xget_origin=${encodeURIComponent(url.origin)}`
+                  : targetUrl;
                 const canUseCache = request.method === 'GET' || request.method === 'HEAD';
                 const shouldPassthroughRequest =
                   isGit || isGitLFS || isDocker || isAI || isHF || !canUseCache;
@@ -199,7 +204,7 @@ async function handleRequest(request, env, ctx) {
                 ) {
                   try {
                     // For Range requests, try cache match first
-                    const cacheKey = new Request(targetUrl, {
+                    const cacheKey = new Request(cacheTargetUrl, {
                       method: 'GET',
                       headers: request.headers
                     });
@@ -211,7 +216,7 @@ async function handleRequest(request, env, ctx) {
                       // If Range request missed cache, try with original request to see if we have full content cached
                       const rangeHeader = request.headers.get('Range');
                       if (rangeHeader) {
-                        const fullContentKey = new Request(targetUrl, {
+                        const fullContentKey = new Request(cacheTargetUrl, {
                           method: 'GET', // Always use GET method for cache key consistency
                           headers: new Headers(
                             [...request.headers.entries()].filter(
@@ -631,7 +636,7 @@ async function handleRequest(request, env, ctx) {
                     ) {
                       const rangeHeader = request.headers.get('Range');
                       const cacheKey = rangeHeader
-                        ? new Request(targetUrl, {
+                        ? new Request(cacheTargetUrl, {
                             method: 'GET',
                             headers: new Headers(
                               [...request.headers.entries()].filter(
@@ -639,7 +644,7 @@ async function handleRequest(request, env, ctx) {
                               )
                             )
                           })
-                        : new Request(targetUrl, { method: 'GET' });
+                        : new Request(cacheTargetUrl, { method: 'GET' });
 
                       try {
                         if (ctx && typeof ctx.waitUntil === 'function') {
@@ -652,7 +657,7 @@ async function handleRequest(request, env, ctx) {
 
                         if (rangeHeader && response.status === 200) {
                           const rangedResponse = await cache.match(
-                            new Request(targetUrl, {
+                            new Request(cacheTargetUrl, {
                               method: 'GET',
                               headers: request.headers
                             })

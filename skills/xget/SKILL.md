@@ -22,10 +22,7 @@ Resolve the base URL first:
    or templates that do not have a real deployment yet
 
 Prefer `scripts/xget.mjs` over manual guessing for live platform data, URL
-conversion, and README `Use Cases` lookup. From the repository root, run
-`node scripts/xget.mjs ...`; from the skill directory itself, run
-`node scripts/xget.mjs ...`. Open [the reference guide](references/REFERENCE.md)
-only when the user needs shell setup, deployment, or troubleshooting details.
+conversion, and README `Use Cases` lookup.
 
 ## Workflow
 

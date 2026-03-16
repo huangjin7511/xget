@@ -18,6 +18,7 @@ import {
   handleDockerAuth,
   normalizeRegistryApiPath,
   parseAuthenticate,
+  readRegistryTokenResponse,
   responseUnauthorized
 } from './protocols/docker.js';
 import { configureGitHeaders, isGitLFSRequest, isGitRequest } from './protocols/git.js';
@@ -431,10 +432,10 @@ async function handleRequest(request, env, ctx) {
                             );
 
                             if (tokenResponse.ok) {
-                              const tokenData = await tokenResponse.json();
-                              if (tokenData.token) {
+                              const token = await readRegistryTokenResponse(tokenResponse);
+                              if (token) {
                                 const retryHeaders = new Headers(requestHeaders);
-                                retryHeaders.set('Authorization', `Bearer ${tokenData.token}`);
+                                retryHeaders.set('Authorization', `Bearer ${token}`);
 
                                 const retryOptions = {
                                   ...finalFetchOptions,

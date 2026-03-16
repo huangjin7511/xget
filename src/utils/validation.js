@@ -156,12 +156,12 @@ export function getAllowedMethods(request, url, config = CONFIG) {
  * Validates incoming requests against security rules.
  *
  * Performs security validation including:
- * - HTTP method validation (with special allowances for Git/Docker/AI operations)
+ * - HTTP method validation (with special allowances for protocol-specific operations)
  * - URL path length limits
  *
  * Different protocols have different allowed methods:
  * - Regular requests: GET, HEAD (configurable via SECURITY.ALLOWED_METHODS)
- * - Git/LFS/Docker/AI: GET, HEAD, POST, PUT, PATCH
+ * - Git/LFS/Docker/AI/Hugging Face API: GET, HEAD, POST, PUT, PATCH, DELETE
  * @param {Request} request - The incoming request object
  * @param {URL} url - Parsed URL object
  * @param {import('../config/index.js').ApplicationConfig} config - Configuration object

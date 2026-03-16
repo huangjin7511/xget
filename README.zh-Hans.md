@@ -101,7 +101,7 @@ Xget 已受邀入驻
   - `Content-Security-Policy`：严格的内容安全策略
   - `Referrer-Policy`：控制引用信息泄露
 - **请求验证机制**：
-  - HTTP 方法白名单：常规请求限制为 GET/HEAD，Git 操作动态允许 POST
+  - HTTP 方法白名单：常规请求限制为 GET/HEAD，而 Git/LFS、容器镜像仓库、AI 推理和 Hugging Face API 请求会按需允许 `POST`、`PUT`、`PATCH` 和 `DELETE`
   - 路径长度限制：防止超长 URL 攻击（最大 2048 字符）
   - 输入清理：防止路径遍历和注入攻击
 - **超时保护**：30 秒请求超时，防止资源耗尽和恶意请求
@@ -2777,7 +2777,7 @@ export const CONFIG = {
   RETRY_DELAY_MS: 1000, // 重试延迟时间（毫秒）
   CACHE_DURATION: 1800, // 缓存持续时间（1800秒 = 30分钟）
   SECURITY: {
-    ALLOWED_METHODS: ['GET', 'HEAD'], // 允许的 HTTP 方法（Git 操作会动态允许 POST）
+    ALLOWED_METHODS: ['GET', 'HEAD'], // 常规请求的基础允许列表；协议流量内置了更宽的允许范围
     ALLOWED_ORIGINS: ['*'], // 允许的 CORS 源
     MAX_PATH_LENGTH: 2048 // 最大路径长度（字符）
   }

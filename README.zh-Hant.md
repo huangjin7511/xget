@@ -101,7 +101,7 @@ Xget 已受邀入駐
   - `Content-Security-Policy`：嚴格的內容安全策略
   - `Referrer-Policy`：控制參照來源資訊洩露
 - **請求驗證機制**：
-  - HTTP 方法白名單：常規請求限制為 GET/HEAD，Git 操作動態允許 POST
+  - HTTP 方法白名單：常規請求限制為 GET/HEAD，而 Git/LFS、容器映像倉庫、AI 推理與 Hugging Face API 請求會按需允許 `POST`、`PUT`、`PATCH` 和 `DELETE`
   - 路徑長度限制：防止超長 URL 攻擊（最大 2048 字元）
   - 輸入清理：防止路徑遍歷和注入攻擊
 - **逾時保護**：30 秒請求逾時，防止資源耗盡和惡意請求
@@ -2776,7 +2776,7 @@ export const CONFIG = {
   RETRY_DELAY_MS: 1000, // 重試延遲時間（毫秒）
   CACHE_DURATION: 1800, // 快取持續時間（1800秒 = 30分鐘）
   SECURITY: {
-    ALLOWED_METHODS: ['GET', 'HEAD'], // 允許的 HTTP 方法（Git 操作會動態允許 POST）
+    ALLOWED_METHODS: ['GET', 'HEAD'], // 常規請求的基礎允許清單；協定流量內建了更寬的允許範圍
     ALLOWED_ORIGINS: ['*'], // 允許的 CORS 來源
     MAX_PATH_LENGTH: 2048 // 最大路徑長度（字元）
   }

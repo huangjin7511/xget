@@ -38,7 +38,7 @@ export function parseAuthenticate(authenticateStr) {
   const serviceMatch = authenticateStr.match(/service="([^"]+)"/);
 
   if (!realmMatch || !serviceMatch) {
-    throw new Error(`invalid Www-Authenticate Header: ${authenticateStr}`);
+    throw new Error(`invalid WWW-Authenticate header: ${authenticateStr}`);
   }
 
   return {
@@ -70,6 +70,41 @@ export async function fetchToken(wwwAuthenticate, scope, authorization) {
     headers.set('Authorization', authorization);
   }
   return await fetch(url, { method: 'GET', headers });
+}
+
+/**
+ * Reads a bearer token from an upstream registry token response.
+ *
+ * Registry token services commonly return either `token` or `access_token`.
+ * Some registries also respond with an empty or malformed body on transient
+ * failures, so this parser fails closed and lets the caller fall back to the
+ * standard 401 challenge flow.
+ * @param {Response} response
+ * @returns {Promise<string | null>} Resolved bearer token, or null when unavailable.
+ */
+export async function readRegistryTokenResponse(response) {
+  const rawBody = await response.text().catch(() => '');
+  if (!rawBody.trim()) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(rawBody);
+    if (!parsed || typeof parsed !== 'object') {
+      return null;
+    }
+
+    const tokenValue =
+      'token' in parsed && typeof parsed.token === 'string'
+        ? parsed.token
+        : 'access_token' in parsed && typeof parsed.access_token === 'string'
+          ? parsed.access_token
+          : null;
+
+    return tokenValue;
+  } catch {
+    return null;
+  }
 }
 
 /**

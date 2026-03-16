@@ -124,8 +124,9 @@ standalone `/xget` directory in a skills installation
   - `Content-Security-Policy`: Strict content security policy
   - `Referrer-Policy`: Controls referrer information leakage
 - **Request Validation Mechanism**:
-  - HTTP method whitelist: Regular requests limited to GET/HEAD, Git operations
-    dynamically allow POST
+  - HTTP method whitelist: Regular requests limited to GET/HEAD, while
+    Git/LFS, container registry, AI inference, and Hugging Face API traffic
+    allow `POST`, `PUT`, `PATCH`, and `DELETE` as needed
   - Path length limit: Prevents excessively long URL attacks (max 2048
     characters)
   - Input sanitization: Prevents path traversal and injection attacks
@@ -2859,7 +2860,7 @@ export const CONFIG = {
   RETRY_DELAY_MS: 1000, // Retry delay (milliseconds)
   CACHE_DURATION: 1800, // Cache duration (1800 seconds = 30 minutes)
   SECURITY: {
-    ALLOWED_METHODS: ['GET', 'HEAD'], // Allowed HTTP methods (Git operations dynamically allow POST)
+    ALLOWED_METHODS: ['GET', 'HEAD'], // Base allowlist for regular requests; protocol traffic has broader built-in allowances
     ALLOWED_ORIGINS: ['*'], // Allowed CORS origins
     MAX_PATH_LENGTH: 2048 // Maximum path length (characters)
   }

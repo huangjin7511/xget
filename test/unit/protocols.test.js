@@ -2,7 +2,11 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import worker from '../../src/index.js';
 import { CONFIG } from '../../src/config/index.js';
 import { isAIInferenceRequest } from '../../src/protocols/ai.js';
-import { getScopeFromUrl, handleDockerAuth } from '../../src/protocols/docker.js';
+import {
+  getScopeFromUrl,
+  handleDockerAuth,
+  readRegistryTokenResponse
+} from '../../src/protocols/docker.js';
 import { isDockerRequest } from '../../src/utils/validation.js';
 
 /** @type {ExecutionContext} */
@@ -253,6 +257,49 @@ describe('Docker Authentication', () => {
 
     expect(response.status).toBe(200);
     expect(String(fetchSpy.mock.calls[1][0])).toContain('scope=repository%3Aprivate%2Frepo%3Apull');
+  });
+
+  it('treats empty JSON token responses as unusable instead of throwing', async () => {
+    const token = await readRegistryTokenResponse(
+      new Response('', {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    );
+
+    expect(token).toBeNull();
+  });
+
+  it('falls back cleanly when the token service returns an empty success body', async () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    let callCount = 0;
+
+    vi.spyOn(globalThis, 'fetch').mockImplementation(async () => {
+      callCount++;
+
+      if (callCount === 1) {
+        return new Response('', {
+          status: 401,
+          headers: {
+            'WWW-Authenticate': 'Bearer realm="https://ghcr.io/token",service="ghcr.io"'
+          }
+        });
+      }
+
+      return new Response('', { status: 200 });
+    });
+
+    const request = new Request('https://example.com/cr/ghcr/v2/private/repo/manifests/latest', {
+      headers: { Accept: 'application/vnd.docker.distribution.manifest.v2+json' }
+    });
+    const response = await worker.fetch(request, {}, executionContext);
+
+    expect(response.status).toBe(401);
+    expect(response.headers.get('WWW-Authenticate')).toBe(
+      'Bearer realm="https://example.com/cr/ghcr/v2/auth",service="Xget"'
+    );
+    expect(await response.text()).toContain('UNAUTHORIZED');
+    expect(warnSpy).not.toHaveBeenCalled();
   });
 });
 

@@ -104,15 +104,21 @@ package managers (`npm`, `pip`, `cargo`), runtime tools (`docker`, `kubernetes`,
 `github actions`), AI providers (`openai`, `anthropic`, `gemini`), or hosting
 targets (`cloudflare`, `vercel`, `netlify`, `docker compose`).
 
-## Prefer implementation over paraphrase
+## Execute instead of paraphrase
 
 When the user wants a change in a real project, adapt the live README snippet to
-the target file instead of pasting generic commands back:
+the target file and run the necessary commands instead of pasting generic
+examples back:
 
 - `.npmrc`, `pip.conf`, `NuGet.Config`, `.cargo/config.toml`, `.condarc`
 - `Dockerfile`, `docker-compose.yml`, Kubernetes manifests, GitHub Actions
   workflows
 - `.env`, SDK initialization code, shell profile files
+
+Treat phrasing like "configure this", "change it", "wire it in", "switch to
+Xget", "run this", "fix it", or "deploy it" as a cue to execute. Only fall
+back to example commands when the user explicitly asks for examples or a
+missing fact prevents safe execution.
 
 ## Deployment
 

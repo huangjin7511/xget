@@ -2923,7 +2923,7 @@ npx wrangler dev --log-level debug
 
 版权所有 &copy; Xi Xu。
 
-本存储库采用 GPL-3.0 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+本存储库采用 AGPL-3.0 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
 ---
 

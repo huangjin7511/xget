@@ -3,10 +3,10 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.13.0",
+    "@cloudflare/workers-types": "^4.20260307.1",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
-    "@cloudflare/vitest-pool-workers": "^0.12.20",
-    "@cloudflare/workers-types": "^4.20260307.1",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",

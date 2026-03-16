@@ -1,14 +1,15 @@
-import { defineWorkersConfig } from '@cloudflare/vitest-pool-workers/config';
+import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
+import { defineConfig } from 'vitest/config';
 
-export default defineWorkersConfig({
+export default defineConfig({
+  plugins: [
+    cloudflareTest({
+      wrangler: { configPath: './wrangler.toml' }
+    })
+  ],
   test: {
     testTimeout: 60000,
     hookTimeout: 30000,
-    poolOptions: {
-      workers: {
-        wrangler: { configPath: './wrangler.toml' }
-      }
-    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],

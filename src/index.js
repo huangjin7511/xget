@@ -555,6 +555,7 @@ async function handleRequest(request, env, ctx) {
                     /** @type {string | ReadableStream<Uint8Array> | null} */
                     let responseBody = response.body;
                     let rewrittenContentLength = null;
+                    let hasOriginBoundRewrite = false;
 
                     if (
                       shouldRewriteTextResponse(
@@ -575,6 +576,7 @@ async function handleRequest(request, env, ctx) {
                       );
                       responseBody = rewrittenText;
                       rewrittenContentLength = new TextEncoder().encode(rewrittenText).byteLength;
+                      hasOriginBoundRewrite = platform === 'pypi';
                     }
 
                     const headers = new Headers(response.headers);
@@ -585,6 +587,8 @@ async function handleRequest(request, env, ctx) {
 
                     if (!isGit && !isGitLFS && !isDocker && !isAI && !isHF) {
                       if (!canUseCache) {
+                        headers.set('Cache-Control', 'no-store');
+                      } else if (hasOriginBoundRewrite) {
                         headers.set('Cache-Control', 'no-store');
                       } else if (hasSensitiveHeaders) {
                         headers.set('Cache-Control', 'private, no-store');
@@ -629,6 +633,7 @@ async function handleRequest(request, env, ctx) {
                       !isDocker &&
                       !isAI &&
                       !isHF &&
+                      !hasOriginBoundRewrite &&
                       !hasSensitiveHeaders &&
                       request.method === 'GET' &&
                       response.ok &&

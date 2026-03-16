@@ -64,6 +64,27 @@ describe('Worker regression coverage', () => {
     expect(clearTimeoutSpy).toHaveBeenCalledWith(timeoutToken);
   });
 
+  it('does not cache host-bound PyPI rewritten HTML responses', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response('<a href="https://files.pythonhosted.org/packages/demo.whl">demo</a>', {
+        status: 200,
+        headers: { 'Content-Type': 'text/html; charset=utf-8' }
+      })
+    );
+
+    const response = await worker.fetch(
+      new Request('https://mirror.example/pypi/simple/demo/'),
+      {},
+      executionContext
+    );
+
+    const body = await response.text();
+
+    expect(response.status).toBe(200);
+    expect(body).toContain('https://mirror.example/pypi/files/packages/demo.whl');
+    expect(response.headers.get('Cache-Control')).toBe('no-store');
+    expect(cacheDefault.put).not.toHaveBeenCalled();
+  });
   it('forwards body and content type for configured non-protocol POST requests', async () => {
     /** @type {{ url: string, method: string | undefined, body: string | null, contentType: string | null, cf: unknown }} */
     let observed = {

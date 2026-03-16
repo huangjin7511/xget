@@ -180,18 +180,14 @@ describe('Security Features', () => {
     }, 20000);
 
     it('should handle header injection attempts', async () => {
-      // Headers with CRLF injection should be rejected by the runtime
-      try {
-        await SELF.fetch('https://example.com/gh/test/repo', {
+      // Malformed headers should be rejected before the request is dispatched.
+      expect(() => {
+        new Request('https://example.com/gh/test/repo', {
           headers: {
             'X-Test': 'value\r\nX-Injected: malicious'
           }
         });
-        // If it doesn't throw, it should not be a server error
-      } catch (error) {
-        // Expected to throw TypeError for invalid header value
-        expect(/** @type {Error} */ (error).message).toMatch(/[Ii]nvalid|[Hh]eader/);
-      }
+      }).toThrow(/[Ii]nvalid|[Hh]eader/);
     });
   });
 

@@ -1089,18 +1089,34 @@ npm config set registry https://xget.xi-xu.me/npm/
 npm config get registry
 ```
 
-#### Use in Project
+#### Configure Bun to Use Xget Mirror
+
+```toml
+# bunfig.toml (project-level) or ~/.bunfig.toml (global)
+[install]
+registry = "https://xget.xi-xu.me/npm/"
+```
 
 ```bash
-# Configure project-level mirror in .npmrc file
+# Install dependencies with Bun
+bun install
+
+# Bun also supports .npmrc, so you can reuse existing npm registry settings
+echo "registry=https://xget.xi-xu.me/npm/" > .npmrc
+bun install
+```
+
+#### Use in Project (npm / Bun)
+
+```bash
+# Configure project-level mirror in .npmrc (.npmrc can be reused by npm / Bun)
 echo "registry=https://xget.xi-xu.me/npm/" > .npmrc
 
-# Install dependencies
+# Install dependencies with npm
 npm install
 
-# Or use yarn
-yarn config set registry https://xget.xi-xu.me/npm/
-yarn install
+# Install dependencies with Bun
+bun install
 ```
 
 ### Python Package Acceleration

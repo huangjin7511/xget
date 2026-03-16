@@ -1052,18 +1052,34 @@ npm config set registry https://xget.xi-xu.me/npm/
 npm config get registry
 ```
 
-#### 在项目中使用
+#### 配置 Bun 使用 Xget 镜像
+
+```toml
+# bunfig.toml（项目级）或 ~/.bunfig.toml（全局）
+[install]
+registry = "https://xget.xi-xu.me/npm/"
+```
 
 ```bash
-# 在 .npmrc 文件中配置项目级镜像
+# 使用 Bun 安装依赖
+bun install
+
+# Bun 也支持 .npmrc，可直接复用已有的 npm 镜像配置
+echo "registry=https://xget.xi-xu.me/npm/" > .npmrc
+bun install
+```
+
+#### 在项目中使用（npm / Bun）
+
+```bash
+# 在 .npmrc 文件中配置项目级镜像（npm / Bun 可复用）
 echo "registry=https://xget.xi-xu.me/npm/" > .npmrc
 
-# 安装依赖
+# 使用 npm 安装依赖
 npm install
 
-# 或者使用 yarn
-yarn config set registry https://xget.xi-xu.me/npm/
-yarn install
+# 使用 Bun 安装依赖
+bun install
 ```
 
 ### Python 包管理加速

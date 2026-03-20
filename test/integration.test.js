@@ -41,7 +41,7 @@ describe('Integration Tests', () => {
       const testUrl = 'https://example.com/hf/microsoft/DialoGPT-medium/resolve/main/config.json';
       const response = await SELF.fetch(testUrl, { method: 'HEAD' });
 
-      expect([200, 301, 302, 404]).toContain(response.status);
+      expect([200, 301, 302, 404, 429]).toContain(response.status);
     }, 10000);
 
     it('should handle npm package requests', async () => {

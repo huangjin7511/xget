@@ -3,11 +3,12 @@ import { describe, expect, it } from 'vitest';
 import { createConfig } from '../../src/config/index.js';
 import { isGitLFSRequest, isGitRequest } from '../../src/protocols/git.js';
 import {
+  addCorsHeaders,
   addSecurityHeaders,
   createErrorResponse,
   resolveAllowedOrigin
 } from '../../src/utils/security.js';
-import { getAllowedMethods, validateRequest } from '../../src/utils/validation.js';
+import { getAllowedMethods, isDockerRequest, validateRequest } from '../../src/utils/validation.js';
 
 describe('Utility Functions', () => {
   describe('isGitRequest', () => {
@@ -91,6 +92,73 @@ describe('Utility Functions', () => {
       expect(result.valid).toBe(false);
       expect(result.status).toBe(400);
     });
+
+    it('should reject raw traversal sequences from the original request URL', () => {
+      const request = /** @type {Request} */ ({
+        headers: new Headers(),
+        method: 'GET',
+        url: 'https://example.com/gh/user/repo/../secret'
+      });
+      const url = new URL('https://example.com/gh/user/secret');
+
+      const result = validateRequest(request, url, createConfig());
+      expect(result.valid).toBe(false);
+      expect(result.status).toBe(400);
+    });
+
+    it('should reject paths containing ASCII control characters', () => {
+      const baseUrl = new URL('https://example.com/gh/user/repo/%00file');
+      const request = /** @type {Request} */ ({
+        headers: new Headers(),
+        method: 'GET',
+        url: 'https://example.com/gh/user/repo/%00file'
+      });
+      const url = /** @type {URL} */ ({
+        origin: 'https://example.com',
+        pathname: '/gh/user/repo/\u0000file',
+        searchParams: baseUrl.searchParams
+      });
+
+      const result = validateRequest(request, url, createConfig());
+      expect(result.valid).toBe(false);
+      expect(result.status).toBe(400);
+    });
+
+    it('should reject malformed percent-encoded paths', () => {
+      const baseUrl = new URL('https://example.com/gh/user/repo/%E0%A4%A');
+      const request = /** @type {Request} */ ({
+        headers: new Headers(),
+        method: 'GET',
+        url: 'https://example.com/gh/user/repo/%E0%A4%A'
+      });
+      const url = /** @type {URL} */ ({
+        origin: 'https://example.com',
+        pathname: '/gh/user/repo/%E0%A4%A',
+        searchParams: baseUrl.searchParams
+      });
+
+      const result = validateRequest(request, url, createConfig());
+      expect(result.valid).toBe(false);
+      expect(result.status).toBe(400);
+    });
+
+    it('should reject unsupported methods for regular requests', () => {
+      const request = new Request('https://example.com/gh/user/repo/file.txt', { method: 'PATCH' });
+      const url = new URL(request.url);
+
+      const result = validateRequest(request, url, createConfig());
+      expect(result.valid).toBe(false);
+      expect(result.status).toBe(405);
+    });
+
+    it('should reject paths longer than the configured maximum', () => {
+      const request = new Request(`https://example.com/gh/${'a'.repeat(200)}`);
+      const url = new URL(request.url);
+
+      const result = validateRequest(request, url, createConfig({ MAX_PATH_LENGTH: '32' }));
+      expect(result.valid).toBe(false);
+      expect(result.status).toBe(414);
+    });
   });
 
   describe('getAllowedMethods', () => {
@@ -100,6 +168,52 @@ describe('Utility Functions', () => {
       const url = new URL(request.url);
 
       expect(getAllowedMethods(request, url, config)).toEqual(['GET', 'HEAD', 'POST']);
+    });
+
+    it('should allow mutating methods for Hugging Face API endpoints', () => {
+      const request = new Request('https://example.com/hf/token', { method: 'DELETE' });
+      const url = new URL(request.url);
+
+      expect(getAllowedMethods(request, url)).toEqual([
+        'GET',
+        'HEAD',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE'
+      ]);
+    });
+  });
+
+  describe('isDockerRequest', () => {
+    it('should identify canonical registry API paths', () => {
+      const request = new Request('https://example.com/cr/ghcr/v2/demo/manifests/latest');
+      const url = new URL(request.url);
+
+      expect(isDockerRequest(request, url)).toBe(true);
+    });
+
+    it('should identify Docker requests by user agent or manifest headers', () => {
+      const userAgentRequest = new Request('https://example.com/cr/docker/library/nginx', {
+        headers: { 'User-Agent': 'docker/27.0.0' }
+      });
+      const acceptRequest = new Request('https://example.com/cr/docker/library/nginx', {
+        headers: { Accept: 'application/vnd.oci.image.manifest.v1+json' }
+      });
+      const contentTypeRequest = new Request('https://example.com/cr/docker/library/nginx', {
+        headers: { 'Content-Type': 'application/vnd.docker.distribution.manifest.v2+json' }
+      });
+
+      expect(isDockerRequest(userAgentRequest, new URL(userAgentRequest.url))).toBe(true);
+      expect(isDockerRequest(acceptRequest, new URL(acceptRequest.url))).toBe(true);
+      expect(isDockerRequest(contentTypeRequest, new URL(contentTypeRequest.url))).toBe(true);
+    });
+
+    it('should not treat generic /cr/ requests as Docker traffic without registry hints', () => {
+      const request = new Request('https://example.com/cr/docker/library/nginx/readme');
+      const url = new URL(request.url);
+
+      expect(isDockerRequest(request, url)).toBe(false);
     });
   });
 
@@ -142,6 +256,33 @@ describe('Utility Functions', () => {
 
       expect(resolveAllowedOrigin(request, config)).toBeNull();
     });
+
+    it('should allow any origin when wildcard CORS is configured', () => {
+      const config = createConfig({ ALLOWED_ORIGINS: '*' });
+      const request = new Request('https://example.com/gh/test/repo', {
+        headers: { Origin: 'https://app.example.com' }
+      });
+
+      expect(resolveAllowedOrigin(request, config)).toBe('*');
+    });
+  });
+
+  describe('addCorsHeaders', () => {
+    it('should append allow headers and preserve existing Vary values', () => {
+      const config = createConfig({ ALLOWED_ORIGINS: '*' });
+      const request = new Request('https://example.com/gh/test/repo', {
+        headers: {
+          Origin: 'https://app.example.com',
+          'Access-Control-Request-Headers': 'X-Test-Header'
+        }
+      });
+
+      const headers = addCorsHeaders(new Headers({ Vary: 'Accept-Encoding' }), request, config);
+
+      expect(headers.get('Access-Control-Allow-Origin')).toBe('*');
+      expect(headers.get('Access-Control-Allow-Headers')).toBe('X-Test-Header');
+      expect(headers.get('Vary')).toBe('Accept-Encoding, Origin');
+    });
   });
 
   describe('createErrorResponse', () => {
@@ -152,6 +293,18 @@ describe('Utility Functions', () => {
       expect(response.headers.get('Content-Type')).toBe('text/plain');
       expect(response.headers.get('X-Frame-Options')).toBe('DENY');
       expect(await response.text()).toBe('Bad Request');
+    });
+
+    it('should create detailed JSON error responses when requested', async () => {
+      const response = createErrorResponse('Unauthorized', 401, true);
+      const body = await response.json();
+
+      expect(response.headers.get('Content-Type')).toBe('application/json');
+      expect(body).toMatchObject({
+        error: 'Unauthorized',
+        status: 401
+      });
+      expect(body.timestamp).toBeTruthy();
     });
   });
 });

@@ -89,6 +89,27 @@ jobs:
         env:
           CI: true
 
+      - name: Normalize coverage paths for Codecov
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("coverage/lcov.info")
+          lines = path.read_text(encoding="utf-8").splitlines()
+          normalized = []
+
+          for line in lines:
+            if line.startswith("SF:"):
+              normalized.append("SF:" + line[3:].replace("\\", "/"))
+            else:
+              normalized.append(line)
+
+          path.write_text("\n".join(normalized) + "\n", encoding="utf-8")
+          PY
+
+      - name: Show normalized coverage file entries
+        run: grep '^SF:' coverage/lcov.info | head
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:

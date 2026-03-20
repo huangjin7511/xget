@@ -3,7 +3,7 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "^0.13.0",
+    "@cloudflare/vitest-pool-workers": "^0.13.3",
     "@cloudflare/workers-types": "^4.20260307.1",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
@@ -19,7 +19,7 @@
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3",
     "vitest": "^4.1.0",
-    "wrangler": "^4.71.0"
+    "wrangler": "^4.76.0"
   },
   "name": "xget",
   "license": "AGPL-3.0-or-later",

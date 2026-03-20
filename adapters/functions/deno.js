@@ -16,9 +16,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-/* eslint-disable no-undef, no-unused-vars */
+/* eslint-disable no-undef */
 
-import { handleRequest } from './src/index.js';
+import { handleRequest } from '../../src/app/handle-request.js';
 
 /**
  * Deno Deploy handler.
@@ -40,13 +40,17 @@ async function handler(request) {
     CACHE_DURATION: Deno.env.get('CACHE_DURATION'),
     ALLOWED_METHODS: Deno.env.get('ALLOWED_METHODS'),
     ALLOWED_ORIGINS: Deno.env.get('ALLOWED_ORIGINS'),
-    MAX_PATH_LENGTH: Deno.env.get('MAX_PATH_LENGTH'),
+    MAX_PATH_LENGTH: Deno.env.get('MAX_PATH_LENGTH')
   };
 
   // Create minimal ExecutionContext-like object
   // Deno Deploy doesn't support waitUntil, so cache writes are synchronous
   const ctx = {
-    waitUntil: (promise) => {
+    waitUntil: (
+      /** @type {Promise<unknown>} */
+      promise
+    ) => {
+      void promise;
       // No-op on Deno: background tasks not supported
       console.warn('waitUntil is not supported in Deno Deploy');
     },
@@ -59,5 +63,9 @@ async function handler(request) {
   return handleRequest(request, env, ctx);
 }
 
-// Start the server
-Deno.serve(handler);
+// Start the server only when executing inside Deno.
+if (typeof Deno !== 'undefined' && typeof Deno.serve === 'function') {
+  Deno.serve(handler);
+}
+
+export { handler };

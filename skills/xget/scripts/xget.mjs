@@ -4,9 +4,9 @@ import { get } from 'node:https';
 import { relative } from 'node:path';
 import process from 'node:process';
 import { pathToFileURL } from 'node:url';
-import vm from 'node:vm';
 
-const DEFAULT_SOURCE_URL = 'https://raw.gitcode.com/xixu-me/xget/raw/main/src/config/platforms.js';
+const DEFAULT_SOURCE_URL =
+  'https://raw.gitcode.com/xixu-me/xget/raw/main/src/config/platform-catalog.js';
 const DEFAULT_README_URL = 'https://raw.githubusercontent.com/xixu-me/xget/main/README.md';
 
 const DEFAULT_BASE_PLACEHOLDER = 'https://xget.example.com';
@@ -90,7 +90,7 @@ Commands:
   help                      Show this message.
 
 Global options:
-  --source-url URL          Override the remote platforms.js URL.
+  --source-url URL          Override the remote platform source URL.
   --format FORMAT           json (default), text, or table when supported.
   --help                    Show command help.
 
@@ -179,6 +179,39 @@ function fail(message, code = 1) {
 }
 
 /**
+ * Parses a platform map object literal from repository source.
+ * Supports the simple `key: 'value'` form used by the Xget platform catalog.
+ * @param {string} objectSource
+ * @returns {Record<string, string>}
+ */
+function parsePlatformMapObject(objectSource) {
+  /** @type {Record<string, string>} */
+  const platforms = {};
+
+  for (const rawLine of objectSource.split(/\r?\n/)) {
+    const line = rawLine.trim();
+
+    if (!line || line === '{' || line === '}' || line.startsWith('//')) {
+      continue;
+    }
+
+    const match = line.match(
+      /^(?:'([^']+)'|"([^"]+)"|([A-Za-z0-9_-]+))\s*:\s*(?:'([^']*)'|"([^"]*)")\s*,?$/
+    );
+
+    if (!match) {
+      throw new Error(`unsupported platform entry: ${line}`);
+    }
+
+    const key = match[1] || match[2] || match[3];
+    const value = match[4] || match[5] || '';
+    platforms[key] = value;
+  }
+
+  return platforms;
+}
+
+/**
  * @param {string} url
  * @returns {Promise<string>}
  */
@@ -216,17 +249,31 @@ function httpGet(url) {
  * @returns {Record<string, string>}
  */
 export function extractPlatformsModule(jsSource) {
-  const match = jsSource.match(/export const PLATFORMS = (\{[\s\S]*?\n\});/);
+  const platformExportPatterns = [
+    {
+      name: 'PLATFORM_CATALOG',
+      pattern: /export const PLATFORM_CATALOG = (\{[\s\S]*?\n\});/
+    },
+    {
+      name: 'PLATFORMS',
+      pattern: /export const PLATFORMS = (\{[\s\S]*?\n\});/
+    }
+  ];
 
-  if (!match) {
-    fail('Could not find `export const PLATFORMS = {...}` in the remote source.');
+  for (const { name, pattern } of platformExportPatterns) {
+    const match = jsSource.match(pattern);
+    if (!match) {
+      continue;
+    }
+
+    try {
+      return parsePlatformMapObject(match[1]);
+    } catch (error) {
+      fail(`Could not parse remote ${name} object: ${getErrorMessage(error)}`);
+    }
   }
 
-  try {
-    return vm.runInNewContext(`(${match[1]})`);
-  } catch (error) {
-    fail(`Could not parse remote PLATFORMS object: ${getErrorMessage(error)}`);
-  }
+  fail('Could not find `export const PLATFORM_CATALOG = {...}` or `PLATFORMS = {...}`.');
 }
 
 /**
@@ -507,6 +554,7 @@ function isCodeFenceDelimiter(line) {
  * @returns {MarkdownHeading[]}
  */
 function collectMarkdownHeadings(lines) {
+  /** @type {Array<string | undefined>} */
   const stack = [];
   let inCodeFence = false;
 
@@ -528,7 +576,7 @@ function collectMarkdownHeadings(lines) {
     let parent = null;
     for (let level = heading.level - 1; level >= 1; level -= 1) {
       if (stack[level]) {
-        parent = stack[level];
+        parent = stack[level] ?? null;
         break;
       }
     }

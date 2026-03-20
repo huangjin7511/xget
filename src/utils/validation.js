@@ -28,6 +28,43 @@ import { isGitLFSRequest, isGitRequest } from '../protocols/git.js';
 import { isHuggingFaceAPIRequest } from '../protocols/huggingface.js';
 
 /**
+ * Computes protocol and request traits used across validation, routing, and response handling.
+ * @param {Request} request
+ * @param {URL} url
+ * @returns {{
+ *   isAI: boolean,
+ *   isDocker: boolean,
+ *   isGit: boolean,
+ *   isGitLFS: boolean,
+ *   isHF: boolean
+ * }} Request traits for the current request.
+ */
+export function getRequestTraits(request, url) {
+  return {
+    isAI: isAIInferenceRequest(request, url),
+    isDocker: isDockerRequest(request, url),
+    isGit: isGitRequest(request, url),
+    isGitLFS: isGitLFSRequest(request, url),
+    isHF: isHuggingFaceAPIRequest(request, url)
+  };
+}
+
+/**
+ * Checks whether a request should use protocol passthrough behavior.
+ * @param {{
+ *   isAI: boolean,
+ *   isDocker: boolean,
+ *   isGit: boolean,
+ *   isGitLFS: boolean,
+ *   isHF: boolean
+ * }} traits
+ * @returns {boolean} True when request handling should follow protocol passthrough rules.
+ */
+export function isProtocolRequest(traits) {
+  return traits.isGit || traits.isGitLFS || traits.isDocker || traits.isAI || traits.isHF;
+}
+
+/**
  * Best-effort decode for security validation.
  *
  * URL.pathname may keep some reserved characters percent-encoded (e.g. %2F).
@@ -141,13 +178,9 @@ export { isAIInferenceRequest, isGitLFSRequest, isGitRequest, isHuggingFaceAPIRe
  * @returns {string[]} Allowed HTTP methods for this request shape.
  */
 export function getAllowedMethods(request, url, config = CONFIG) {
-  const isGit = isGitRequest(request, url);
-  const isGitLFS = isGitLFSRequest(request, url);
-  const isDocker = isDockerRequest(request, url);
-  const isAI = isAIInferenceRequest(request, url);
-  const isHF = isHuggingFaceAPIRequest(request, url);
+  const traits = getRequestTraits(request, url);
 
-  return isGit || isGitLFS || isDocker || isAI || isHF
+  return isProtocolRequest(traits)
     ? ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']
     : config.SECURITY.ALLOWED_METHODS;
 }
@@ -165,10 +198,24 @@ export function getAllowedMethods(request, url, config = CONFIG) {
  * @param {Request} request - The incoming request object
  * @param {URL} url - Parsed URL object
  * @param {import('../config/index.js').ApplicationConfig} config - Configuration object
+ * @param {{
+ *   isAI: boolean,
+ *   isDocker: boolean,
+ *   isGit: boolean,
+ *   isGitLFS: boolean,
+ *   isHF: boolean
+ * }} traits - Pre-computed request traits to avoid repeated protocol detection.
  * @returns {{valid: boolean, error?: string, status?: number}} Validation result object
  */
-export function validateRequest(request, url, config = CONFIG) {
-  const allowedMethods = getAllowedMethods(request, url, config);
+export function validateRequest(
+  request,
+  url,
+  config = CONFIG,
+  traits = getRequestTraits(request, url)
+) {
+  const allowedMethods = isProtocolRequest(traits)
+    ? ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE']
+    : config.SECURITY.ALLOWED_METHODS;
 
   if (!allowedMethods.includes(request.method)) {
     return { valid: false, error: 'Method not allowed', status: 405 };

@@ -102,7 +102,8 @@ Xget 已受邀入驻
   - `Content-Security-Policy`：严格的内容安全策略
   - `Referrer-Policy`：控制引用信息泄露
 - **请求验证机制**：
-  - HTTP 方法白名单：常规请求限制为 GET/HEAD，而 Git/LFS、容器镜像仓库、AI 推理和 Hugging Face API 请求会按需允许 `POST`、`PUT`、`PATCH` 和 `DELETE`
+  - HTTP 方法白名单：常规请求限制为 GET/HEAD，而 Git/LFS、容器镜像仓库、AI 推理和 Hugging
+    Face API 请求会按需允许 `POST`、`PUT`、`PATCH` 和 `DELETE`
   - 路径长度限制：防止超长 URL 攻击（最大 2048 字符）
   - 输入清理：防止路径遍历和注入攻击
 - **超时保护**：30 秒请求超时，防止资源耗尽和恶意请求
@@ -189,11 +190,17 @@ graph TD
 ```mermaid
 classDiagram
     class Worker {
-        +handleRequest(request)
+        +fetch(request)
     }
-    class Config {
-        +PLATFORMS
+    class AppHandler {
+        +handleRequest(request, env, ctx)
+    }
+    class PlatformCatalog {
+        +PLATFORM_CATALOG
+    }
+    class PlatformRouting {
         +transformPath()
+        +resolveTarget()
     }
     class Validation {
         +validateRequest()
@@ -210,6 +217,13 @@ classDiagram
     class AIProtocol {
         +configureAIHeaders()
     }
+    class UpstreamPipeline {
+        +tryReadCachedResponse()
+        +fetchUpstreamResponse()
+    }
+    class ResponsePipeline {
+        +finalizeResponse()
+    }
     class Security {
         +addSecurityHeaders()
     }
@@ -217,13 +231,18 @@ classDiagram
         +monitor()
     }
 
-    Worker --> Config
-    Worker --> Validation
-    Worker --> GitProtocol
-    Worker --> DockerProtocol
-    Worker --> AIProtocol
-    Worker --> Security
-    Worker --> Performance
+    Worker --> AppHandler
+    AppHandler --> PlatformCatalog
+    AppHandler --> PlatformRouting
+    AppHandler --> Validation
+    AppHandler --> GitProtocol
+    AppHandler --> DockerProtocol
+    AppHandler --> AIProtocol
+    AppHandler --> UpstreamPipeline
+    AppHandler --> ResponsePipeline
+    AppHandler --> Security
+    AppHandler --> Performance
+    PlatformRouting --> PlatformCatalog
 ```
 
 ## 📖 URL 转换规则
@@ -2793,17 +2812,18 @@ export const CONFIG = {
 
 ### 添加新平台
 
-要添加对新平台的支持，编辑 `src/config/platforms.js`：
+要添加对新平台的支持，请更新平台目录；如果需要特殊路径转换，再补充转换器：
 
 ```javascript
-export const PLATFORMS = {
+// src/config/platform-catalog.js
+export const PLATFORM_CATALOG = {
   // 现有平台...
+  custom: 'https://example.com'
+};
 
-  // 新平台示例
-  custom: {
-    base: 'https://example.com',
-    transform: path => path.replace(/^\/custom\//, '/')
-  }
+// src/routing/platform-transformers.js
+const PLATFORM_PATH_TRANSFORMERS = {
+  custom: path => path.replace(/^\/custom\//, '/')
 };
 ```
 

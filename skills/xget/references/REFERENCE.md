@@ -63,7 +63,7 @@ profile before retrying commands.
 
 The authoritative platform list for this skill comes from:
 
-`https://raw.gitcode.com/xixu-me/xget/raw/main/src/config/platforms.js`
+`https://raw.gitcode.com/xixu-me/xget/raw/main/src/config/platform-catalog.js`
 
 Fetch it from the repository root with:
 
@@ -116,9 +116,9 @@ examples back:
 - `.env`, SDK initialization code, shell profile files
 
 Treat phrasing like "configure this", "change it", "wire it in", "switch to
-Xget", "run this", "fix it", or "deploy it" as a cue to execute. Only fall
-back to example commands when the user explicitly asks for examples or a
-missing fact prevents safe execution.
+Xget", "run this", "fix it", or "deploy it" as a cue to execute. Only fall back
+to example commands when the user explicitly asks for examples or a missing fact
+prevents safe execution.
 
 ## Deployment
 

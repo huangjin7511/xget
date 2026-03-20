@@ -18,3 +18,23 @@ interface ExecutionContext {
    */
   passThroughOnException(): void;
 }
+
+interface DenoEnv {
+  /**
+   * Reads an environment variable from Deno Deploy.
+   * @param name - Environment variable name
+   */
+  get(name: string): string | undefined;
+}
+
+interface DenoGlobal {
+  env: DenoEnv;
+
+  /**
+   * Starts the Deno Deploy HTTP server.
+   * @param handler - Request handler callback
+   */
+  serve(handler: (request: Request) => Promise<Response> | Response): void;
+}
+
+declare const Deno: DenoGlobal;

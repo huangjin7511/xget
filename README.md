@@ -125,9 +125,9 @@ standalone `/xget` directory in a skills installation
   - `Content-Security-Policy`: Strict content security policy
   - `Referrer-Policy`: Controls referrer information leakage
 - **Request Validation Mechanism**:
-  - HTTP method whitelist: Regular requests limited to GET/HEAD, while
-    Git/LFS, container registry, AI inference, and Hugging Face API traffic
-    allow `POST`, `PUT`, `PATCH`, and `DELETE` as needed
+  - HTTP method whitelist: Regular requests limited to GET/HEAD, while Git/LFS,
+    container registry, AI inference, and Hugging Face API traffic allow `POST`,
+    `PUT`, `PATCH`, and `DELETE` as needed
   - Path length limit: Prevents excessively long URL attacks (max 2048
     characters)
   - Input sanitization: Prevents path traversal and injection attacks
@@ -223,11 +223,17 @@ graph TD
 ```mermaid
 classDiagram
     class Worker {
-        +handleRequest(request)
+        +fetch(request)
     }
-    class Config {
-        +PLATFORMS
+    class AppHandler {
+        +handleRequest(request, env, ctx)
+    }
+    class PlatformCatalog {
+        +PLATFORM_CATALOG
+    }
+    class PlatformRouting {
         +transformPath()
+        +resolveTarget()
     }
     class Validation {
         +validateRequest()
@@ -244,6 +250,13 @@ classDiagram
     class AIProtocol {
         +configureAIHeaders()
     }
+    class UpstreamPipeline {
+        +tryReadCachedResponse()
+        +fetchUpstreamResponse()
+    }
+    class ResponsePipeline {
+        +finalizeResponse()
+    }
     class Security {
         +addSecurityHeaders()
     }
@@ -251,13 +264,18 @@ classDiagram
         +monitor()
     }
 
-    Worker --> Config
-    Worker --> Validation
-    Worker --> GitProtocol
-    Worker --> DockerProtocol
-    Worker --> AIProtocol
-    Worker --> Security
-    Worker --> Performance
+    Worker --> AppHandler
+    AppHandler --> PlatformCatalog
+    AppHandler --> PlatformRouting
+    AppHandler --> Validation
+    AppHandler --> GitProtocol
+    AppHandler --> DockerProtocol
+    AppHandler --> AIProtocol
+    AppHandler --> UpstreamPipeline
+    AppHandler --> ResponsePipeline
+    AppHandler --> Security
+    AppHandler --> Performance
+    PlatformRouting --> PlatformCatalog
 ```
 
 ## 📖 URL Conversion Rules
@@ -2879,17 +2897,19 @@ export const CONFIG = {
 
 ### Adding New Platforms
 
-To add support for new platforms, edit `src/config/platforms.js`:
+To add support for new platforms, update the platform catalog and, if needed,
+the path transformers:
 
 ```javascript
-export const PLATFORMS = {
+// src/config/platform-catalog.js
+export const PLATFORM_CATALOG = {
   // Existing platforms...
+  custom: 'https://example.com'
+};
 
-  // New platform example
-  custom: {
-    base: 'https://example.com',
-    transform: path => path.replace(/^\/custom\//, '/')
-  }
+// src/routing/platform-transformers.js
+const PLATFORM_PATH_TRANSFORMERS = {
+  custom: path => path.replace(/^\/custom\//, '/')
 };
 ```
 

@@ -102,7 +102,8 @@ Xget 已受邀入駐
   - `Content-Security-Policy`：嚴格的內容安全策略
   - `Referrer-Policy`：控制參照來源資訊洩露
 - **請求驗證機制**：
-  - HTTP 方法白名單：常規請求限制為 GET/HEAD，而 Git/LFS、容器映像倉庫、AI 推理與 Hugging Face API 請求會按需允許 `POST`、`PUT`、`PATCH` 和 `DELETE`
+  - HTTP 方法白名單：常規請求限制為 GET/HEAD，而 Git/LFS、容器映像倉庫、AI 推理與 Hugging
+    Face API 請求會按需允許 `POST`、`PUT`、`PATCH` 和 `DELETE`
   - 路徑長度限制：防止超長 URL 攻擊（最大 2048 字元）
   - 輸入清理：防止路徑遍歷和注入攻擊
 - **逾時保護**：30 秒請求逾時，防止資源耗盡和惡意請求
@@ -189,11 +190,17 @@ graph TD
 ```mermaid
 classDiagram
     class Worker {
-        +handleRequest(request)
+        +fetch(request)
     }
-    class Config {
-        +PLATFORMS
+    class AppHandler {
+        +handleRequest(request, env, ctx)
+    }
+    class PlatformCatalog {
+        +PLATFORM_CATALOG
+    }
+    class PlatformRouting {
         +transformPath()
+        +resolveTarget()
     }
     class Validation {
         +validateRequest()
@@ -210,6 +217,13 @@ classDiagram
     class AIProtocol {
         +configureAIHeaders()
     }
+    class UpstreamPipeline {
+        +tryReadCachedResponse()
+        +fetchUpstreamResponse()
+    }
+    class ResponsePipeline {
+        +finalizeResponse()
+    }
     class Security {
         +addSecurityHeaders()
     }
@@ -217,13 +231,18 @@ classDiagram
         +monitor()
     }
 
-    Worker --> Config
-    Worker --> Validation
-    Worker --> GitProtocol
-    Worker --> DockerProtocol
-    Worker --> AIProtocol
-    Worker --> Security
-    Worker --> Performance
+    Worker --> AppHandler
+    AppHandler --> PlatformCatalog
+    AppHandler --> PlatformRouting
+    AppHandler --> Validation
+    AppHandler --> GitProtocol
+    AppHandler --> DockerProtocol
+    AppHandler --> AIProtocol
+    AppHandler --> UpstreamPipeline
+    AppHandler --> ResponsePipeline
+    AppHandler --> Security
+    AppHandler --> Performance
+    PlatformRouting --> PlatformCatalog
 ```
 
 ## 📖 URL 轉換規則
@@ -2792,17 +2811,18 @@ export const CONFIG = {
 
 ### 新增新平台
 
-要新增對新平台的支援，編輯 `src/config/platforms.js`：
+要新增對新平台的支援，請更新平台目錄；如果需要特殊路徑轉換，再補上轉換器：
 
 ```javascript
-export const PLATFORMS = {
+// src/config/platform-catalog.js
+export const PLATFORM_CATALOG = {
   // 現有平台...
+  custom: 'https://example.com'
+};
 
-  // 新平台範例
-  custom: {
-    base: 'https://example.com',
-    transform: path => path.replace(/^\/custom\//, '/')
-  }
+// src/routing/platform-transformers.js
+const PLATFORM_PATH_TRANSFORMERS = {
+  custom: path => path.replace(/^\/custom\//, '/')
 };
 ```
 

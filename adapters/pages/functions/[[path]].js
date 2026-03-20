@@ -16,9 +16,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+import { handleRequest } from '../../../src/app/handle-request.js';
 
-
-import { handleRequest } from '../src/index.js';
+/**
+ * @typedef {{
+ *   request: Request,
+ *   env: Record<string, unknown>,
+ *   params: object,
+ *   waitUntil: (promise: Promise<unknown>) => void,
+ *   next: () => Promise<Response>,
+ *   data: object
+ * }} PagesFunctionContext
+ */
 
 /**
  * Pages Function handler for all routes.
@@ -31,13 +40,7 @@ import { handleRequest } from '../src/index.js';
  * The [[path]] syntax in the filename creates a catch-all route that matches
  * any path, allowing this single function to handle all requests to the Pages
  * application.
- * @param {object} context - Pages Function context
- * @param {Request} context.request - The incoming HTTP request
- * @param {object} context.env - Environment variables and bindings (KV, secrets, etc.)
- * @param {object} context.params - Route parameters (path segments from [[path]])
- * @param {(promise: Promise<unknown>) => void} context.waitUntil - Extend function execution for background tasks
- * @param {() => Promise<Response>} context.next - Call next middleware in chain (not used here)
- * @param {object} context.data - Shared data between functions
+ * @param {PagesFunctionContext} context - Pages Function context
  * @returns {Promise<Response>} The HTTP response to return to the client
  * @example
  * // This is called automatically by Pages

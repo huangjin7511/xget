@@ -6,7 +6,8 @@
 
 ### 报告问题
 
-- 使用 [Issue 模板](https://github.com/xixu-me/Xget/issues/new/choose)报告 bug 或提出功能请求
+- 使用
+  [Issue 模板](https://github.com/xixu-me/Xget/issues/new/choose)报告 bug 或提出功能请求
 - 搜索现有 issues 避免重复报告
 - 提供详细的重现步骤和环境信息
 
@@ -15,7 +16,8 @@
 - fork 存储库到您的 GitHub 账户
 - 创建功能分支 (`git checkout -b feature/amazing-feature`)
 - 安装依赖以启用本地 Git hooks (`npm install`)
-- 使用 Conventional Commits 提交更改 (`git commit -m 'feat(platforms): add amazing feature'`)
+- 使用 Conventional
+  Commits 提交更改 (`git commit -m 'feat(platforms): add amazing feature'`)
 - 推送到分支 (`git push origin feature/amazing-feature`)
 - 创建 Pull Request
 
@@ -50,8 +52,8 @@ npm install
 # 启动开发服务器
 npm run dev
 
-# 运行测试
-npm test
+# 单次运行测试
+npm run test:run
 
 # 代码格式化
 npm run format
@@ -101,11 +103,14 @@ function exampleFunction(param1, param2) {
 ### 运行测试
 
 ```bash
-# 运行所有测试
-npm test
+# 单次运行所有测试
+npm run test:run
 
 # 运行特定测试文件
-npm test -- --grep "platform"
+npm run test:run test/platforms/jenkins.test.js
+
+# 按测试名称筛选
+npm run test:run -- --testNamePattern "platform"
 
 # 生成测试覆盖率报告
 npm run test:coverage
@@ -155,7 +160,8 @@ perf(proxy): optimize request handling performance
 ### 自动校验
 
 - `npm install` 会自动安装 `commit-msg` hook，在本地阻止不符合规范的提交
-- GitHub Actions 会在 `push` 和 `pull_request` 中再次校验提交消息，防止绕过本地 hook
+- GitHub Actions 会在 `push` 和 `pull_request`
+  中再次校验提交消息，防止绕过本地 hook
 
 ## 🔍 Pull Request 流程
 
@@ -216,18 +222,19 @@ perf(proxy): optimize request handling performance
 
 ### 常见问题
 
-**Q: 如何添加新平台支持？**
-A: 编辑 `src/config/platforms.js` 文件，添加平台配置，然后更新相关文档和测试。
+**Q: 如何添加新平台支持？** A: 在 `src/config/platform-catalog.js`
+中添加平台地址；如果需要特殊路径转换，再更新
+`src/routing/platform-transformers.js`，然后补充相关文档和测试。
 
-**Q: 如何测试 Cloudflare Workers 功能？**
-A: 使用 `npm run dev` 启动本地开发服务器，或部署到 Cloudflare Workers 测试环境。
+**Q: 如何测试 Cloudflare Workers 功能？** A: 使用 `npm run dev`
+启动本地开发服务器，或部署到 Cloudflare Workers 测试环境。
 
-**Q: 如何处理跨域问题？**
-A: 检查 CORS 配置，确保允许的源和方法设置正确。
+**Q: 如何处理跨域问题？** A: 检查 CORS 配置，确保允许的源和方法设置正确。
 
 ## 📄 许可证
 
-通过贡献代码，您同意您的贡献将在与存储库相同的 [AGPL-3.0 许可证](LICENSE) 下发布。
+通过贡献代码，您同意您的贡献将在与存储库相同的 [AGPL-3.0 许可证](LICENSE)
+下发布。
 
 ## 🙏 致谢
 

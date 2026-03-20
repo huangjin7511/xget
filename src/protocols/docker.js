@@ -20,7 +20,7 @@
  * Docker/OCI Registry protocol handler for Xget
  */
 
-import { SORTED_PLATFORMS } from '../config/platforms.js';
+import { SORTED_PLATFORMS } from '../routing/platform-index.js';
 import { createErrorResponse } from '../utils/security.js';
 
 /**

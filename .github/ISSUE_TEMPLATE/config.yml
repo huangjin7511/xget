@@ -6,9 +6,6 @@ contact_links:
   - name: Contributing Guide
     url: https://github.com/xixu-me/Xget/blob/main/CONTRIBUTING.md
     about: Learn how to prepare a bug report or pull request.
-  - name: Security Policy
-    url: https://github.com/xixu-me/Xget/blob/main/SECURITY.md
-    about: Use this for private vulnerability reporting instructions.
   - name: Maintainer contact page
     url: https://xi-xu.me/#contact
     about: Use a private contact path for sensitive or non-public matters.

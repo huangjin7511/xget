@@ -60,7 +60,7 @@
 
 面向開發者資源的超高效能、安全、一體化加速引擎，其效能顯著優於傳統解決方案，為程式碼儲存庫、模型和資料集中心、軟體包註冊表、容器註冊表、AI 推理供應商等提供統一、高效的加速。
 
-技術深度解析文章已發布：**[《深入剖析 Xget：一個高效能、多協定、高安全性的開發者資源加速引擎》](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)**。
+技術深度解析文章：**[《深入剖析 Xget：一個高效能、多協定、高安全性的開發者資源加速引擎》](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)**。
 
 Xget 已受邀入駐
 [GitCode 平台](https://gitcode.com/xixu-me/xget)，並被認證為 G-Star 畢業專案；同時也獲得多位技術博主自發推薦，包括[阮一峰](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget)、[GitHubDaily](https://x.com/i/status/1956204203937829256)、[魚 C](https://www.bilibili.com/video/BV1EeeBzVEop/)、[玄離 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8)
@@ -68,7 +68,7 @@ Xget 已受邀入駐
 
 ## 🎯 快速開始
 
-**預部署實例（不保證可靠性）：`xget.xi-xu.me`**
+**預部署實例：`xget.xi-xu.me`** - 僅適合評估與試用，正式環境或對可用性敏感的場景建議自行部署。
 
 **URL 轉換器：**[**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - 一鍵轉換任意支援平台的 URL 為 Xget 的加速格式
 
@@ -76,15 +76,16 @@ Xget 已受邀入駐
 
 ## 🌟 核心優勢 - 為什麼選擇 Xget？
 
-### ⚡ 極速效能 - 突破傳統加速器瓶頸
+### ⚡ 面向效能的設計
 
-- **⚡ 毫秒級回應**：Cloudflare 全球 330+ 邊緣節點，平均回應時間 < 50ms
-- **🌐
-  HTTP/3 極速協定**：啟用最新 HTTP/3 協定，連線延遲降低 40%，傳輸速度提升 30%
-- **📦 智慧多重壓縮**：gzip、deflate、brotli 三重壓縮演算法，傳輸效率提升 60%
-- **🔗 零延遲預連線**：連線預熱和保持活躍，消除握手開銷，實現秒級回應
-- **⚡ 平行分片下載**：完整支援 HTTP Range 請求，多執行緒下載速度倍增
-- **🎯 智慧路由最佳化**：自動選擇最佳傳輸路徑，避開網路壅塞節點
+- **🌐 全球邊緣執行環境**：基於 Cloudflare
+  Workers，盡量讓請求更靠近使用者與上游服務
+- **⚡ 協定感知處理**：支援 HTTP/3、Range 請求、Git 流量、容器註冊表流程與 AI 推理 API
+- **📦 快取與重試鏈路**：對可相容回應提供邊緣快取，對暫時性上游失敗提供重試，並對支援的平台做請求規範化
+- **🔗 連線重用**：在執行環境與上游允許的前提下，重用標準 HTTP
+  keep-alive 與連線重用能力
+- **📊 請求耗時可觀測**：在協定相容的情況下，可透過 `X-Performance-Metrics`
+  回應標頭暴露階段性耗時資訊
 
 ### 🌐 多平台深度整合
 
@@ -97,9 +98,10 @@ Xget 已受邀入駐
 - **多層安全標頭**：
   - `Strict-Transport-Security`：強制 HTTPS 傳輸，預防中間人攻擊
   - `X-Frame-Options: DENY`：防止點擊劫持攻擊
-  - `X-XSS-Protection`：內建 XSS 防護機制
   - `Content-Security-Policy`：嚴格的內容安全策略
   - `Referrer-Policy`：控制參照來源資訊洩露
+  - `Permissions-Policy`：預設限制瀏覽器中的隱私敏感能力
+  - `X-XSS-Protection`：面向舊版瀏覽器的相容性回應標頭
 - **請求驗證機制**：
   - HTTP 方法白名單：常規請求限制為 GET/HEAD，而 Git/LFS、容器映像倉庫、AI 推理與 Hugging
     Face API 請求會按需允許 `POST`、`PUT`、`PATCH` 和 `DELETE`

@@ -65,7 +65,7 @@ unified, efficient acceleration across code repositories, model and dataset
 hubs, package registries, container registries, AI inference providers, and
 more.
 
-In-depth technical analysis article published:
+Technical deep dive:
 **_[Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)_**.
 
 Xget was invited to join the
@@ -81,7 +81,8 @@ Xget.
 
 ## 🎯 Quick Start
 
-**Pre-deployed Instance (no reliability guarantee): `xget.xi-xu.me`**
+**Pre-deployed Instance: `xget.xi-xu.me`** - For evaluation and trial only,
+deploy your own instance for production or availability-sensitive workloads
 
 **URL Converter:** [**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - Convert any
 supported platform URL to Xget's acceleration format with one click
@@ -90,20 +91,19 @@ supported platform URL to Xget's acceleration format with one click
 
 ## 🌟 Core Advantages - Why Choose Xget?
 
-### ⚡ Extreme Performance - Breaking Through Traditional Accelerator Bottlenecks
+### ⚡ Performance-Oriented Design
 
-- **⚡ Millisecond Response**: Cloudflare's global 330+ edge nodes, average
-  response time < 50ms
-- **🌐 HTTP/3 Ultra-Fast Protocol**: Latest HTTP/3 protocol enabled, 40%
-  reduction in connection latency, 30% increase in transmission speed
-- **📦 Intelligent Multi-Compression**: Triple compression algorithms (gzip,
-  deflate, brotli), 60% improvement in transmission efficiency
-- **🔗 Zero-Latency Pre-Connection**: Connection warm-up and keep-alive,
-  eliminating handshake overhead for second-level responses
-- **⚡ Parallel Chunked Download**: Full support for HTTP Range requests,
-  multiplied multi-threaded download speeds
-- **🎯 Smart Routing Optimization**: Automatically selects optimal transmission
-  paths, avoiding network congestion nodes
+- **🌐 Global Edge Runtime**: Built on Cloudflare Workers and designed to run
+  close to users and upstream services
+- **⚡ Protocol-Aware Handling**: Supports HTTP/3, range requests, Git traffic,
+  container registry flows, and AI inference APIs
+- **📦 Cache and Retry Pipeline**: Includes edge caching for compatible
+  responses, retry logic for transient upstream failures, and request
+  normalization for supported platforms
+- **🔗 Connection Reuse**: Uses standard HTTP connection reuse and keep-alive
+  behavior where the runtime and upstream allow it
+- **📊 Request Timing Visibility**: Can expose timing data through
+  `X-Performance-Metrics` headers where protocol compatibility allows
 
 ### 🌐 Deep Multi-Platform Integration
 
@@ -120,9 +120,11 @@ supported platform URL to Xget's acceleration format with one click
   - `Strict-Transport-Security`: Enforces HTTPS transmission, prevents
     man-in-the-middle attacks
   - `X-Frame-Options: DENY`: Prevents clickjacking attacks
-  - `X-XSS-Protection`: Built-in XSS protection mechanism
   - `Content-Security-Policy`: Strict content security policy
   - `Referrer-Policy`: Controls referrer information leakage
+  - `Permissions-Policy`: Restricts privacy-sensitive browser features by
+    default
+  - `X-XSS-Protection`: Legacy compatibility header for older browsers
 - **Request Validation Mechanism**:
   - HTTP method whitelist: Regular requests limited to GET/HEAD, while Git/LFS,
     container registry, AI inference, and Hugging Face API traffic allow `POST`,

@@ -1,6 +1,6 @@
 /**
  * Xget - High-performance acceleration engine for developer resources
- * Copyright (C) 2025 Xi Xu
+ * Copyright (C) Xi Xu
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -20,4 +20,3 @@
  * source of truth at /api/index.js.
  */
 export { config, default } from '../../api/index.js';
-

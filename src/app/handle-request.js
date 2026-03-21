@@ -1,6 +1,6 @@
 /**
  * Xget - High-performance acceleration engine for developer resources
- * Copyright (C) 2025 Xi Xu
+ * Copyright (C) Xi Xu
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -8,19 +8,19 @@
  * (at your option) any later version.
  */
 
-import { createRequestContext } from './request-context.js';
+import { handleDockerAuth } from '../protocols/docker.js';
+import { finalizeResponse } from '../response/finalize-response.js';
 import {
   createHomepageRedirect,
   normalizeEffectivePath,
   resolveTarget
 } from '../routing/resolve-target.js';
-import { finalizeResponse } from '../response/finalize-response.js';
-import { handleDockerAuth } from '../protocols/docker.js';
 import { getDefaultCache, tryReadCachedResponse } from '../upstream/cache.js';
 import { fetchUpstreamResponse } from '../upstream/fetch-upstream.js';
 import { PerformanceMonitor, addPerformanceHeaders } from '../utils/performance.js';
 import { addCorsHeaders, addSecurityHeaders, createErrorResponse } from '../utils/security.js';
 import { getAllowedMethods, isProtocolRequest, validateRequest } from '../utils/validation.js';
+import { createRequestContext } from './request-context.js';
 
 /**
  * Main request handler with comprehensive caching, retry logic, and security measures.

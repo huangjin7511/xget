@@ -2923,6 +2923,12 @@ npx wrangler dev --log-level debug
 
 我们欢迎各种形式的贡献！请查看[贡献指南](CONTRIBUTING.md)了解如何参与存储库开发。
 
+社区协作与维护者职责说明请参考：
+
+- [行为准则](CODE_OF_CONDUCT.md)
+- [安全策略](SECURITY.md)
+- [治理说明](GOVERNANCE.md)
+
 1. **报告问题**: 使用
    [issue 模板](https://github.com/xixu-me/Xget/issues/new/choose)报告 bug 或提出功能请求
 2. **提交代码**: fork 存储库，创建功能分支，提交 pull request

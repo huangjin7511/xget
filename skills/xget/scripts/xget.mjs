@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { get } from 'node:https';
 import { relative } from 'node:path';
 import process from 'node:process';

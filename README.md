@@ -3055,6 +3055,12 @@ We welcome all forms of contribution! Please check the
 [Contributing Guide](CONTRIBUTING.md) to learn how to participate in repository
 development.
 
+Community and maintainer expectations are documented in:
+
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security Policy](SECURITY.md)
+- [Governance](GOVERNANCE.md)
+
 1. **Report Issues**: Use
    [issue templates](https://github.com/xixu-me/Xget/issues/new/choose) to
    report bugs or propose feature requests

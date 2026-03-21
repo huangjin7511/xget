@@ -2922,6 +2922,12 @@ npx wrangler dev --log-level debug
 
 我們歡迎各種形式的貢獻！請檢視[貢獻指南](CONTRIBUTING.md)了解如何參與儲存庫開發。
 
+社群協作與維護者職責說明請參考：
+
+- [行為準則](CODE_OF_CONDUCT.md)
+- [安全政策](SECURITY.md)
+- [治理說明](GOVERNANCE.md)
+
 1. **報告問題**: 使用
    [issue 範本](https://github.com/xixu-me/Xget/issues/new/choose)報告 bug 或提出功能請求
 2. **提交程式碼**: fork 儲存庫，建立功能分支，提交 pull request

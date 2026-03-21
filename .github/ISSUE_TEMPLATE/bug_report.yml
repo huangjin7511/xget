@@ -20,7 +20,7 @@ body:
           required: true
         - label: 我已经查看过文档和 README
           required: true
-        - label: 我使用的是最新版本的 Xget
+        - label: 我已经确认当前部署配置与文档一致
           required: false
 
   - type: textarea

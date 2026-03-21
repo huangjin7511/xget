@@ -45,6 +45,5 @@
   "simple-git-hooks": {
     "commit-msg": "npx commitlint --edit $1"
   },
-  "type": "module",
-  "version": "1.0.0"
+  "type": "module"
 }

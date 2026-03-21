@@ -72,8 +72,7 @@ Xget 已受邀入驻
 
 **URL 转换器：**[**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - 一键转换任意支持平台的 URL 为 Xget 的加速格式
 
-**Agent Skills：**[**`skills/xget/`**](skills/xget/) - 可以作为独立的 `/xget`
-目录直接安装到 skills 目录中
+**Agent Skills：**[**`skills/xget/`**](skills/xget/) - `npx skills add https://github.com/xixu-me/xget/tree/main/skills/xget`
 
 ## 🌟 核心优势 - 为什么选择 Xget？
 

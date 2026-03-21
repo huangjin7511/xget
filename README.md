@@ -86,7 +86,7 @@ Xget.
 **URL Converter:** [**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - Convert any
 supported platform URL to Xget's acceleration format with one click
 
-**Agent Skills:** [**`skills/xget/`**](skills/xget/) - `npx skills add https://github.com/xixu-me/xget/tree/main/skills/xget`
+**Agent Skills: `npx skills add https://github.com/xixu-me/xget/tree/main/skills/xget`**
 
 ## 🌟 Core Advantages - Why Choose Xget?
 

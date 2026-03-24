@@ -1,12 +1,11 @@
 ---
 name: xget
 description:
-  Execute Xget work in real developer workflows. Use this skill when a task
-  involves Xget URL rewriting, registry/package/container/API acceleration,
-  integrating Xget into Git, download tools, package managers, container builds,
-  AI SDKs, CI/CD, deployment, or self-hosting, or adapting commands and config
-  from the live README `Use Cases` section into the user's files, environment,
-  shell, or base URL.
+  Use when tasks involve Xget URL rewriting, registry/package/container/API
+  acceleration, integrating Xget into Git, download tools, package managers,
+  container builds, AI SDKs, CI/CD, deployment, self-hosting, or adapting
+  commands and config from the live README `Use Cases` section into files,
+  environments, shells, or base URLs.
 ---
 
 # Xget
@@ -28,12 +27,12 @@ Resolve the base URL first:
 4. use `https://xget.example.com` only as a clearly labeled placeholder for docs
    or templates that do not have a real deployment yet
 
-Prefer `scripts/xget.mjs` over manual guessing for live platform data, URL
-conversion, and README `Use Cases` lookup.
+Prefer [scripts/xget.mjs](scripts/xget.mjs) over manual guessing for live
+platform data, URL conversion, and README `Use Cases` lookup.
 
 Only stop to ask when a missing fact blocks safe execution, such as an unknown
-real base URL for a command that must run against a live deployment. If the
-user only needs docs or templates, use the placeholder path rules below.
+real base URL for a command that must run against a live deployment. If the user
+only needs docs or templates, use the placeholder path rules below.
 
 ## Workflow
 

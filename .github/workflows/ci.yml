@@ -90,6 +90,7 @@ jobs:
           CI: true
 
       - name: Normalize coverage paths for Codecov
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -108,9 +109,11 @@ jobs:
           PY
 
       - name: Show normalized coverage file entries
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: grep '^SF:' coverage/lcov.info | head
 
       - name: Upload coverage to Codecov
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         uses: codecov/codecov-action@v5
         with:
           files: ./coverage/lcov.info

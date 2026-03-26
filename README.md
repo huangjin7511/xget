@@ -85,7 +85,8 @@ Xget.
 **Pre-deployed Instance: `xget.xi-xu.me`** - For evaluation and trial only,
 deploy your own instance for production or availability-sensitive workloads
 
-> [!WARNING] If you self-host it, put it behind authentication, IP allowlists,
+> [!WARNING]
+> If you self-host it, put it behind authentication, IP allowlists,
 > or both unless you explicitly intend to run a public mirror.
 
 **URL Converter:** [**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - Convert any

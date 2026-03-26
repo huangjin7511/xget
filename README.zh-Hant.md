@@ -58,7 +58,7 @@
 [![容器註冊表](https://img.shields.io/badge/容器註冊表-262261?logo=opencontainersinitiative&logoColor=white)](#容器註冊表)
 [![AI 推理供應商](https://img.shields.io/badge/AI%20推理供應商-94A3B8?logo=openrouter&logoColor=white)](#ai-推理供應商)
 
-面向開發者資源的超高效能、安全、一體化加速引擎，其效能顯著優於傳統解決方案，為程式碼儲存庫、模型和資料集中心、軟體包註冊表、容器註冊表、AI 推理供應商等提供統一、高效的加速。
+面向開發者資源的超高效能、安全、一體化加速引擎，其效能顯著優於傳統解決方案，為程式碼託管、模型和資料集中心、軟體包管理儲存庫、容器註冊表、AI 推理供應商等提供統一、高效的加速，同時替你處理快取、重試、安全回應標頭，以及各種協定相容行為。
 
 技術深度解析文章：**[《深入剖析 Xget：一個高效能、多協定、高安全性的開發者資源加速引擎》](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)**。
 
@@ -69,6 +69,9 @@ Xget 已受邀入駐
 ## 🎯 快速開始
 
 **預部署實例：`xget.xi-xu.me`** - 僅適合評估與試用，正式環境或對可用性敏感的場景建議自行部署。
+
+> [!WARNING]
+> 如果你選擇自託管，除非你明確要做公開鏡像，否則請至少加上驗證、IP 白名單，或同時啟用兩者。
 
 **URL 轉換器：**[**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - 一鍵轉換任意支援平台的 URL 為 Xget 的加速格式
 
@@ -103,7 +106,7 @@ Xget 已受邀入駐
   - `Permissions-Policy`：預設限制瀏覽器中的隱私敏感能力
   - `X-XSS-Protection`：面向舊版瀏覽器的相容性回應標頭
 - **請求驗證機制**：
-  - HTTP 方法白名單：常規請求限制為 GET/HEAD，而 Git/LFS、容器映像倉庫、AI 推理與 Hugging
+  - HTTP 方法白名單：常規請求限制為 GET/HEAD，而 Git/LFS、容器映像儲存庫、AI 推理與 Hugging
     Face API 請求會按需允許 `POST`、`PUT`、`PATCH` 和 `DELETE`
   - 路徑長度限制：防止超長 URL 攻擊（最大 2048 字元）
   - 輸入清理：防止路徑遍歷和注入攻擊

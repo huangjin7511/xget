@@ -59,11 +59,12 @@
 [![Container Registries](https://img.shields.io/badge/Container%20Registries-262261?logo=opencontainersinitiative&logoColor=white)](#container-registries)
 [![AI Inference Providers](https://img.shields.io/badge/AI%20Inference%20Providers-94A3B8?logo=openrouter&logoColor=white)](#ai-inference-providers)
 
-Ultra-high-performance, secure, all-in-one acceleration engine for developer
-resources that significantly outperforms traditional solutions, delivering
-unified, efficient acceleration across code repositories, model and dataset
+Xget is an ultra-high-performance, secure, all-in-one acceleration engine for
+developer resources. It significantly outperforms traditional solutions and
+provides unified, efficient acceleration for code hosting, model and dataset
 hubs, package registries, container registries, AI inference providers, and
-more.
+more, while handling caching, retries, security headers, and protocol-specific
+compatibility behavior for you.
 
 Technical deep dive:
 **_[Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)_**.
@@ -83,6 +84,9 @@ Xget.
 
 **Pre-deployed Instance: `xget.xi-xu.me`** - For evaluation and trial only,
 deploy your own instance for production or availability-sensitive workloads
+
+> [!WARNING] If you self-host it, put it behind authentication, IP allowlists,
+> or both unless you explicitly intend to run a public mirror.
 
 **URL Converter:** [**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - Convert any
 supported platform URL to Xget's acceleration format with one click

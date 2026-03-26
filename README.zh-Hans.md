@@ -58,7 +58,7 @@
 [![容器注册表](https://img.shields.io/badge/容器注册表-262261?logo=opencontainersinitiative&logoColor=white)](#容器注册表)
 [![AI 推理提供商](https://img.shields.io/badge/AI%20推理提供商-94A3B8?logo=openrouter&logoColor=white)](#ai-推理提供商)
 
-面向开发者资源的超高性能、安全、一体化加速引擎，其性能显著优于传统解决方案，为代码存储库、模型和数据集中心、软件包注册表、容器注册表、AI 推理提供商等提供统一、高效的加速。
+面向开发者资源的超高性能、安全、一体化加速引擎，其性能显著优于传统解决方案，为代码托管、模型和数据集中心、包管理存储库、容器注册表、AI 推理提供商等提供统一、高效的加速，同时替你处理缓存、重试、安全响应头以及协议相关兼容行为。
 
 技术深度解析文章：**[《深入剖析 Xget：一个高性能、多协议、高安全性的开发者资源加速引擎》](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)**。
 
@@ -69,6 +69,9 @@ Xget 已受邀入驻
 ## 🎯 快速使用
 
 **预部署实例：`xget.xi-xu.me`** - 仅适合评估和试用，生产环境或对可用性敏感的场景建议自部署
+
+> [!WARNING]
+> 如果你选择自托管，除非你明确要做公开镜像，否则请至少加上鉴权、IP 白名单，或同时启用两者。
 
 **URL 转换器：**[**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - 一键转换任意支持平台的 URL 为 Xget 的加速格式
 
@@ -102,7 +105,7 @@ Xget 已受邀入驻
   - `Permissions-Policy`：默认限制浏览器中的隐私敏感能力
   - `X-XSS-Protection`：面向旧浏览器的兼容性响应头
 - **请求验证机制**：
-  - HTTP 方法白名单：常规请求限制为 GET/HEAD，而 Git/LFS、容器镜像仓库、AI 推理和 Hugging
+  - HTTP 方法白名单：常规请求限制为 GET/HEAD，而 Git/LFS、容器镜像存储库、AI 推理和 Hugging
     Face API 请求会按需允许 `POST`、`PUT`、`PATCH` 和 `DELETE`
   - 路径长度限制：防止超长 URL 攻击（最大 2048 字符）
   - 输入清理：防止路径遍历和注入攻击
@@ -1736,7 +1739,7 @@ composer config -l
 flatpak remote-add --if-not-exists flathub \
   https://dl.flathub.org/repo/flathub.flatpakrepo
 
-# 然后把现有 Flathub 远程仓库改写到 Xget 镜像
+# 然后把现有 Flathub 远程存储库改写到 Xget 镜像
 flatpak remote-modify flathub \
   --url=https://xget.xi-xu.me/flathub/repo/
 
@@ -1745,11 +1748,11 @@ flatpak remote-modify flathub \
   --url=https://dl.flathub.org/repo/
 ```
 
-Xget 镜像的是 Flathub 的 OSTree 仓库端点。根据当前 Flatpak 客户端的实际行为，直接导入镜像
+Xget 镜像的是 Flathub 的 OSTree 存储库端点。根据当前 Flatpak 客户端的实际行为，直接导入镜像
 `.flatpakrepo`
-描述文件，或者直接添加镜像仓库 URL，仍然可能回退到上游 Flathub 地址，或者因为未导入签名密钥而失败，因此更可靠的做法是先添加官方 Flathub，再通过
+描述文件，或者直接添加镜像存储库 URL，仍然可能回退到上游 Flathub 地址，或者因为未导入签名密钥而失败，因此更可靠的做法是先添加官方 Flathub，再通过
 `flatpak remote-modify ... --url=...`
-改写远程地址。若你使用系统级远程仓库，请在相同命令前加上 `sudo`。
+改写远程地址。若你使用系统级远程存储库，请在相同命令前加上 `sudo`。
 
 #### 支持的 Flathub 服务
 
@@ -1761,7 +1764,7 @@ https://xget.xi-xu.me/flathub/repo/summary.sig
 https://xget.xi-xu.me/flathub/repo/summary.idx
 https://xget.xi-xu.me/flathub/repo/summaries/...
 
-# Flatpak 远程仓库描述文件
+# Flatpak 远程存储库描述文件
 https://xget.xi-xu.me/flathub/repo/flathub.flatpakrepo
 
 # 应用引用描述文件
@@ -1776,13 +1779,13 @@ https://xget.xi-xu.me/flathub/repo/delta-indexes/...
 #### 使用示例
 
 ```bash
-# 确认保存下来的远程仓库 URL 已经指向 Xget
+# 确认保存下来的远程存储库 URL 已经指向 Xget
 flatpak remotes --show-details
 
-# 查看远程仓库内容
+# 查看远程存储库内容
 flatpak remote-ls flathub
 
-# 在改写 Flathub 远程仓库后安装应用
+# 在改写 Flathub 远程存储库后安装应用
 flatpak install flathub org.gnome.gedit
 
 # 直接通过重写后的 .flatpakref 安装

@@ -91,7 +91,7 @@ jobs:
               ref: pr.head.sha,
             });
 
-            const requiredChecks = ["Lint", "Test", "Type Check"];
+            const requiredChecks = ["Lint", "Test and Coverage", "Type Check"];
             const checkMap = new Map(checks.check_runs.map((run) => [run.name, run]));
             const missing = requiredChecks.filter((name) => !checkMap.has(name));
             if (missing.length > 0) {

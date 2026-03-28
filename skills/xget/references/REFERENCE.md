@@ -2,7 +2,7 @@
 
 Use this file only when the user needs shell setup, deployment, or
 troubleshooting details. Reuse the base URL already resolved from
-[SKILL.md](../SKILL.md), and keep `https://xget.example.com` as a placeholder
+[`SKILL.md`](../SKILL.md), and keep `https://xget.example.com` as a placeholder
 only for docs or templates.
 
 ## Configuring `XGET_BASE_URL`

@@ -27,7 +27,7 @@ Resolve the base URL first:
 4. use `https://xget.example.com` only as a clearly labeled placeholder for docs
    or templates that do not have a real deployment yet
 
-Prefer [scripts/xget.mjs](scripts/xget.mjs) over manual guessing for live
+Prefer [`scripts/xget.mjs`](scripts/xget.mjs) over manual guessing for live
 platform data, URL conversion, and README `Use Cases` lookup.
 
 Only stop to ask when a missing fact blocks safe execution, such as an unknown
@@ -85,5 +85,5 @@ only needs docs or templates, use the placeholder path rules below.
    - OCI registries: `/cr/{registry}/...`
 9. If the live platform fetch fails or an upstream URL does not match any known
    platform, say so explicitly and fall back to the stable guidance in
-   [references/REFERENCE.md](references/REFERENCE.md) instead of inventing a
+   [`references/REFERENCE.md`](references/REFERENCE.md) instead of inventing a
    prefix.

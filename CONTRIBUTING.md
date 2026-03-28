@@ -27,7 +27,7 @@ Before you contribute, please read these repository documents:
 - Keep one report focused on one problem or one proposal
 - Include enough detail for someone else to reproduce the issue
 - Do not use public issues for security vulnerabilities; follow
-  [SECURITY.md](SECURITY.md) instead
+  [`SECURITY.md`](SECURITY.md) instead
 
 Useful details to include:
 
@@ -96,7 +96,7 @@ controls, or protocol compatibility, include test coverage for that behavior.
 - Preserve protocol compatibility for Git, Docker, AI, and package manager
   traffic
 - Avoid logging secrets, tokens, or private request data
-- Document new platform prefixes and examples in [README.md](README.md) when
+- Document new platform prefixes and examples in [`README.md`](README.md) when
   support is added
 
 ## Commit messages
@@ -127,6 +127,6 @@ Examples:
 ## Community standards
 
 By participating in this project, you agree to follow
-[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Please be respectful, assume good
+[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md). Please be respectful, assume good
 intent, and help keep the project welcoming for users and contributors from a
 wide range of backgrounds and experience levels.

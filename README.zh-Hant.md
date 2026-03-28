@@ -75,7 +75,7 @@ Xget 已受邀入駐
 
 **URL 轉換器：**[**`xuc.xi-xu.me`**](https://xuc.xi-xu.me) - 一鍵轉換任意支援平台的 URL 為 Xget 的加速格式
 
-**Agent Skills：`npx skills add xixu-me/xget`**
+**Agent Skills：`npx skills add xixu-me/skills -s xget`**
 
 ## 🌟 核心優勢 - 為什麼選擇 Xget？
 

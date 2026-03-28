@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 
 const DEFAULT_SOURCE_URL =
   'https://raw.gitcode.com/xixu-me/xget/raw/main/src/config/platform-catalog.js';
-const DEFAULT_README_URL = 'https://raw.githubusercontent.com/xixu-me/xget/main/README.md';
+const DEFAULT_README_URL = 'https://raw.gitcode.com/xixu-me/xget/raw/main/README.md';
 
 const DEFAULT_BASE_PLACEHOLDER = 'https://xget.example.com';
 const DEFAULT_PUBLIC_BASE_URL = 'https://xget.xi-xu.me';

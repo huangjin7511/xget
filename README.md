@@ -74,12 +74,14 @@ Xget was invited to join the
 graduation project. As "a widely used public project", it is also supported by
 OpenAI's
 [Codex for Open Source](https://developers.openai.com/community/codex-for-oss).
-The project has additionally been featured or recommended by creators and
-communities such as
+It has also received spontaneous recommendations from several tech creators,
+including
 [Ruan Yifeng](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget),
 [GitHubDaily](https://x.com/i/status/1956204203937829256),
 [FishC](https://www.bilibili.com/video/BV1EeeBzVEop/), and
-[Xuanli 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8).
+[Xuanli 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8). Thanks to every
+individual, team, and community that supports, shares, recommends, or actively
+uses Xget.
 
 ## 🎯 Quick Start
 

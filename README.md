@@ -59,7 +59,7 @@
 [![Container Registries](https://img.shields.io/badge/Container%20Registries-262261?logo=opencontainersinitiative&logoColor=white)](#container-registries)
 [![AI Inference Providers](https://img.shields.io/badge/AI%20Inference%20Providers-94A3B8?logo=openrouter&logoColor=white)](#ai-inference-providers)
 
-Xget is an ultra-high-performance, secure, all-in-one acceleration engine for
+An ultra-high-performance, secure, all-in-one acceleration engine for
 developer resources. It significantly outperforms traditional solutions and
 provides unified, efficient acceleration for code hosting, model and dataset
 hubs, package registries, container registries, AI inference providers, and
@@ -71,14 +71,15 @@ Technical deep dive:
 
 Xget was invited to join the
 [GitCode platform](https://gitcode.com/xixu-me/xget) and recognized as a G-Star
-graduation project. It has also received spontaneous recommendations from
-several well-known tech creators, including
+graduation project. As "a widely used public project", it is also supported by
+OpenAI's
+[Codex for Open Source](https://developers.openai.com/community/codex-for-oss).
+The project has additionally been featured or recommended by creators and
+communities such as
 [Ruan Yifeng](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget),
 [GitHubDaily](https://x.com/i/status/1956204203937829256),
 [FishC](https://www.bilibili.com/video/BV1EeeBzVEop/), and
-[Xuanli 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8). Sincere thanks
-to GitCode and every creator, reader, and user who helped more people discover
-Xget.
+[Xuanli 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8).
 
 ## 🎯 Quick Start
 

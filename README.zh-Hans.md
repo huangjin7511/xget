@@ -63,8 +63,10 @@
 技术深度解析文章：**[《深入剖析 Xget：一个高性能、多协议、高安全性的开发者资源加速引擎》](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)**。
 
 Xget 已受邀入驻
-[GitCode 平台](https://gitcode.com/xixu-me/xget)，并被认证为 G-Star 毕业项目；同时也获得多位技术博主自发推荐，包括[阮一峰](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget)、[GitHubDaily](https://x.com/i/status/1956204203937829256)、[鱼 C](https://www.bilibili.com/video/BV1EeeBzVEop/)、[玄离 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8)
-等。在此感谢 GitCode 的认可，也感谢每一位分享、推荐和实际使用 Xget 的朋友。
+[GitCode 平台](https://gitcode.com/xixu-me/xget)，并被认证为 G-Star 毕业项目；作为“一个广泛使用的公共项目”，Xget 也获得了 OpenAI
+[Codex for Open Source](https://developers.openai.com/community/codex-for-oss)
+项目的支持。此外，项目也被[阮一峰](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget)、[GitHubDaily](https://x.com/i/status/1956204203937829256)、[鱼 C](https://www.bilibili.com/video/BV1EeeBzVEop/)、[玄离 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8)
+等创作者和社区介绍或推荐。
 
 ## 🎯 快速使用
 

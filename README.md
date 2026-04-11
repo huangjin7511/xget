@@ -104,16 +104,16 @@ supported platform URL to Xget's acceleration format with one click
 
 ### Performance-Oriented Design
 
-- **🌐 Global Edge Runtime**: Built on Cloudflare Workers and designed to run
+- **Global Edge Runtime**: Built on Cloudflare Workers and designed to run
   close to users and upstream services
-- **⚡ Protocol-Aware Handling**: Supports HTTP/3, range requests, Git traffic,
+- **Protocol-Aware Handling**: Supports HTTP/3, range requests, Git traffic,
   container registry flows, and AI inference APIs
-- **📦 Cache and Retry Pipeline**: Includes edge caching for compatible
+- **Cache and Retry Pipeline**: Includes edge caching for compatible
   responses, retry logic for transient upstream failures, and request
   normalization for supported platforms
-- **🔗 Connection Reuse**: Uses standard HTTP connection reuse and keep-alive
+- **Connection Reuse**: Uses standard HTTP connection reuse and keep-alive
   behavior where the runtime and upstream allow it
-- **📊 Request Timing Visibility**: Can expose timing data through
+- **Request Timing Visibility**: Can expose timing data through
   `X-Performance-Metrics` headers where protocol compatibility allows
 
 ### Deep Multi-Platform Integration

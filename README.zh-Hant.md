@@ -24,16 +24,12 @@
 
 面向開發者資源的超高效能、安全、一體化加速引擎，為程式碼託管、模型和資料集中心、軟體包管理儲存庫、容器註冊表、AI 推理供應商等提供統一、高效的加速，同時替你處理快取、重試、安全回應標頭，以及各種協定相容行為。
 
-- 基於 Cloudflare Workers，強調邊緣執行與協定感知處理。
-- 面向真實開發流量，涵蓋 Git、套件管理、容器映像與 AI API。
-- 既可以直接試用公開實例，也適合依照正式環境要求自行部署。
-
 技術深度解析文章：**[《深入剖析 Xget：一個高效能、多協定、高安全性的開發者資源加速引擎》](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)**。
 
-Xget 已受邀入駐
-[GitCode 平台](https://gitcode.com/xixu-me/xget)，並被認證為 G-Star 畢業專案。作為「一個被廣泛使用的公共專案」，Xget 也獲得了 OpenAI
+受邀入駐
+[GitCode](https://gitcode.com/xixu-me/xget)，並被認證為 G-Star 畢業專案。作為「一個被廣泛使用的公共專案」，獲得 OpenAI 的
 [Codex for Open Source](https://developers.openai.com/community/codex-for-oss)
-計畫的支援。同時，它也獲得多位技術博主自發推薦，包括[阮一峰](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget)、[GitHubDaily](https://x.com/i/status/1956204203937829256)、[魚 C](https://www.bilibili.com/video/BV1EeeBzVEop/)、[玄離 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8)
+計畫支援，也獲得多位技術博主自發推薦，包括[阮一峰](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget)、[GitHubDaily](https://x.com/i/status/1956204203937829256)、[魚 C](https://www.bilibili.com/video/BV1EeeBzVEop/)、[玄離 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8)
 等。感謝所有支持、分享、推薦和實際使用 Xget 的個人、團隊與社群。
 
 ## 支援的平台

@@ -7,8 +7,8 @@
 [![Ask Zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/xixu-me/Xget)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/xixu-me/Xget)
 [![codecov](https://codecov.io/github/xixu-me/xget/graph/badge.svg?token=KDFMG9YX8G)](https://codecov.io/github/xixu-me/xget)
-[![Chromium](https://img.shields.io/badge/Chromium-4285F4?logo=googlechrome&logoColor=white)](#-ecosystem-integration)
-[![Firefox](https://img.shields.io/badge/Firefox-FF7139?logo=Firefox&logoColor=white)](#-ecosystem-integration)
+[![Chromium](https://img.shields.io/badge/Chromium-4285F4?logo=googlechrome&logoColor=white)](#ecosystem-integration)
+[![Firefox](https://img.shields.io/badge/Firefox-FF7139?logo=Firefox&logoColor=white)](#ecosystem-integration)
 
 [![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?&logo=cloudflare&logoColor=white)](#deploy-to-cloudflare-workers)
 [![EdgeOne](https://img.shields.io/badge/EdgeOne-006EFF?&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAACNklEQVR4nJ1W7XHbMAx96ul/lQnCDapOUG3gdIIkG6QjdINOUGeDNhNYmUDuBHIWiNQF/PqDYAxDoMUGdzx+AXgAAQGqSKKAOgAbma8BXMn5DGAv4wlAv6qJ5KVxR3LkOR3NWu9HkcnqzF0EkoMDcsysLd8oOooAb0lOF7wqpYnkzRrgZkVJ8mp0jLFzotscYOC6ZyNjjLbOnTZI7weSjQc4ZoQmkjuSneIdMoADyR9iVKuB0qglWYOT0n9Uys/qPAD4ZHgfAXwzfO/6LLyxcTxbJEdufFi1aEk32l6Z+1Lhep1lQa1aVwI2O3wBsTIFxOoUADzVspgzQp6S1pztATRyvpG5lTNLTUVykssJwF91OQP4bATuAGzVngBexJD0vJW51/u5VpZc4VSUgViMLX1xlIUCoERNLoYE8Ns579S6chTngGYZh1oWjRGoEGOjKSAGP/HovqblDoiJtAfwLPv5xHnqCrbNeK3K8qX9juQDMx3CVpoesXLop7DeATF+2rsKsbo8oizD3zzsjLWk30RHw7N7R5V68/AgMUpeWg9bLLOxL/AniOw1Yp58t/FZi5+mzuFrJJY/Sb6qFzmmV9PMgzBsHUW/eN5gJwdk54Rm4YTXgHPx00p24qEGydFElb3e09nUbpXVuZ+oS/88Z62rJLMelHAJSDqf6LxWSXvS35/+Vr0SlqrPHsBXxOw/o5IGHDLKE4AucS8A7hG7zAIMACryv371WxkfxYhZFD8jFvt+TdE/deK28xBAUlEAAAAASUVORK5CYII=)](#deploy-to-edgeone-pages)
@@ -22,6 +22,42 @@
 [漢語（繁體）](README.zh-Hant.md)
 
 </div>
+
+The ultra-high-performance, secure, all-in-one acceleration engine for
+developer resources. It provides unified acceleration for code hosting, model
+and dataset hubs, package registries, container registries, AI inference
+providers, and more, while handling caching, retries, security headers, and
+protocol-specific compatibility behavior for you.
+
+- Built on Cloudflare Workers for edge execution and protocol-aware request
+  handling.
+- Designed for real developer workflows across Git, package managers,
+  containers, and AI APIs.
+- Flexible enough to evaluate on the public instance or self-host for
+  production.
+
+Technical deep dive:
+**_[Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)_**.
+
+Xget was invited to join the
+[GitCode platform](https://gitcode.com/xixu-me/xget) and recognized as a G-Star
+graduation project. As "a widely used public project", it is also supported by
+OpenAI's
+[Codex for Open Source](https://developers.openai.com/community/codex-for-oss).
+It has also received spontaneous recommendations from several tech creators,
+including
+[Ruan Yifeng](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget),
+[GitHubDaily](https://x.com/i/status/1956204203937829256),
+[FishC](https://www.bilibili.com/video/BV1EeeBzVEop/), and
+[Xuanli 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8). Thanks to every
+individual, team, and community that supports, shares, recommends, or actively
+uses Xget.
+
+## Supported Platforms
+
+> [!NOTE]
+> The badges below point to the relevant usage or deployment sections in this
+> README.
 
 [![GitHub](https://img.shields.io/badge/GitHub-181717?&logo=github&logoColor=white)](#github)
 [![GitLab](https://img.shields.io/badge/GitLab-FC6D26?&logo=gitlab&logoColor=white)](#gitlab)
@@ -59,31 +95,7 @@
 [![Container Registries](https://img.shields.io/badge/Container%20Registries-262261?logo=opencontainersinitiative&logoColor=white)](#container-registries)
 [![AI Inference Providers](https://img.shields.io/badge/AI%20Inference%20Providers-94A3B8?logo=openrouter&logoColor=white)](#ai-inference-providers)
 
-An ultra-high-performance, secure, all-in-one acceleration engine for
-developer resources. It significantly outperforms traditional solutions and
-provides unified, efficient acceleration for code hosting, model and dataset
-hubs, package registries, container registries, AI inference providers, and
-more, while handling caching, retries, security headers, and protocol-specific
-compatibility behavior for you.
-
-Technical deep dive:
-**_[Deep Dive into Xget: A High-Performance, Multi-Protocol, and Secure Acceleration Engine for Developer Resources](https://blog.xi-xu.me/en/2025/10/07/Deep-Dive-into-Xget.html)_**.
-
-Xget was invited to join the
-[GitCode platform](https://gitcode.com/xixu-me/xget) and recognized as a G-Star
-graduation project. As "a widely used public project", it is also supported by
-OpenAI's
-[Codex for Open Source](https://developers.openai.com/community/codex-for-oss).
-It has also received spontaneous recommendations from several tech creators,
-including
-[Ruan Yifeng](https://www.ruanyifeng.com/blog/2025/12/weekly-issue-379.html#:~:text=Xget),
-[GitHubDaily](https://x.com/i/status/1956204203937829256),
-[FishC](https://www.bilibili.com/video/BV1EeeBzVEop/), and
-[Xuanli 199](https://www.bilibili.com/video/BV197hqzsE8Y/?t=8). Thanks to every
-individual, team, and community that supports, shares, recommends, or actively
-uses Xget.
-
-## 🎯 Quick Start
+## Quick Start
 
 **Pre-deployed Instance: `xget.xi-xu.me`** - For evaluation and trial only,
 deploy your own instance for production or availability-sensitive workloads
@@ -97,9 +109,9 @@ supported platform URL to Xget's acceleration format with one click
 
 **Agent Skills: `npx skills add xixu-me/skills -s xget`**
 
-## 🌟 Core Advantages - Why Choose Xget?
+## Why Xget
 
-### ⚡ Performance-Oriented Design
+### Performance-Oriented Design
 
 - **🌐 Global Edge Runtime**: Built on Cloudflare Workers and designed to run
   close to users and upstream services
@@ -113,7 +125,7 @@ supported platform URL to Xget's acceleration format with one click
 - **📊 Request Timing Visibility**: Can expose timing data through
   `X-Performance-Metrics` headers where protocol compatibility allows
 
-### 🌐 Deep Multi-Platform Integration
+### Deep Multi-Platform Integration
 
 - **All-in-One Multi-Platform Support**: Unified support for mainstream
   platforms in various development scenarios
@@ -122,7 +134,7 @@ supported platform URL to Xget's acceleration format with one click
 - **Consistent Acceleration Experience**: Enjoy unified and stable ultra-fast
   download experience regardless of file type or source
 
-### 🔒 Enterprise-Grade Security
+### Enterprise-Grade Security
 
 - **Multi-Layer Security Headers**:
   - `Strict-Transport-Security`: Enforces HTTPS transmission, prevents
@@ -143,7 +155,7 @@ supported platform URL to Xget's acceleration format with one click
 - **Timeout Protection**: 30-second request timeout, prevents resource
   exhaustion and malicious requests
 
-### 🚀 Modern Architecture and Reliability
+### Modern Architecture and Reliability
 
 - **Intelligent Retry Mechanism**:
   - Maximum 3 retries with linear delay strategy (1000ms × retry count)
@@ -161,7 +173,7 @@ supported platform URL to Xget's acceleration format with one click
     header
   - Cache hit rate statistics and optimization recommendations
 
-### 🎯 Full Git Protocol Compatibility
+### Full Git Protocol Compatibility
 
 - **Smart Protocol Detection**:
   - Automatically recognizes Git-specific endpoints (`/info/refs`,
@@ -179,7 +191,7 @@ supported platform URL to Xget's acceleration format with one click
   - Smart User-Agent handling (default `git/2.34.1`)
   - Supports Git LFS large file transfer
 
-### 📱 Ecosystem Integration
+### Ecosystem Integration
 
 - **Dedicated Browser Extension**:
   [Xget Now](https://github.com/xixu-me/Xget-Now) provides seamless experience
@@ -192,7 +204,7 @@ supported platform URL to Xget's acceleration format with one click
 - **CI/CD Integration**: Can be used directly in GitHub Actions, GitLab CI, and
   other environments
 
-## 🏗️ System Architecture
+## Architecture
 
 ### Request Processing Flow
 
@@ -287,7 +299,7 @@ classDiagram
     PlatformRouting --> PlatformCatalog
 ```
 
-## 📖 URL Conversion Rules
+## URL Conversion Rules
 
 Using the pre-deployed instance **`xget.xi-xu.me`** or your own deployed
 instance, simply replace the domain and add the platform prefix:
@@ -930,7 +942,7 @@ https://xget.xi-xu.me/ip/huggingface/hf-inference/models/openai/whisper-large-v3
 For use cases, see
 [AI Inference API Acceleration](#ai-inference-api-acceleration).
 
-## 🎯 Use Cases
+## Use Cases
 
 ### Git Operations and Configuration
 
@@ -2566,7 +2578,7 @@ client = OpenAI(
 )
 ```
 
-## 🚀 Deployment
+## Deployment
 
 ### Deploy to Cloudflare Workers
 
@@ -2875,7 +2887,7 @@ try Droplets, Kubernetes, App Platform, and more:
 acceleration. Performance depends on your server configuration and network
 environment.
 
-## 🔧 Configuration
+## Configuration
 
 ### Configuration Parameters
 
@@ -2922,7 +2934,7 @@ const PLATFORM_PATH_TRANSFORMERS = {
 };
 ```
 
-## 🚧 Development
+## Development
 
 1. **Repository Setup**
 
@@ -2944,7 +2956,7 @@ const PLATFORM_PATH_TRANSFORMERS = {
    npm run deploy           # Deploy to production
    ```
 
-## 🧪 Testing
+## Testing
 
 The repository includes a complete test suite to ensure code quality and
 functional correctness.
@@ -2974,7 +2986,7 @@ npm run test:watch
 - **Security Tests**: Input validation, security headers, permission control
 - **Performance Tests**: Response time, memory usage, concurrent processing
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -3007,7 +3019,7 @@ Workers console:
 npx wrangler dev --log-level debug
 ```
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 - **Legal and Compliant Use**: This repository aims to provide unified
   acceleration services for code repositories, package registries, AI inference
@@ -3059,27 +3071,34 @@ npx wrangler dev --log-level debug
   distribution, or modification of this repository constitutes acceptance of the
   latest version of this disclaimer
 
-## 🤝 Contributing
+## Project Resources
 
-We welcome all forms of contribution! Please check the
-[Contributing Guide](CONTRIBUTING.md) to learn how to participate in repository
-development.
-
-Community and maintainer expectations are documented in:
+We welcome all forms of contribution. Start with the
+[Contributing Guide](CONTRIBUTING.md), and use these project documents when you
+need the full collaboration and maintenance context:
 
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security Policy](SECURITY.md)
 - [Governance](GOVERNANCE.md)
 
+You can help by:
+
 1. **Report Issues**: Use
    [issue templates](https://github.com/xixu-me/Xget/issues/new/choose) to
-   report bugs or propose feature requests
-2. **Submit Code**: Fork the repository, create a feature branch, submit a pull
-   request
-3. **Improve Documentation**: Fix errors, add examples, improve descriptions
-4. **Testing Feedback**: Test in different environments and provide feedback
+   report bugs or propose feature requests.
+2. **Submit Code**: Fork the repository, create a feature branch, and open a
+   pull request.
+3. **Improve Documentation**: Fix errors, add examples, and improve
+   explanations.
+4. **Testing Feedback**: Validate Xget in different environments and share what
+   you learn.
 
-## 🌟 Star History
+Copyright &copy; Xi Xu.
+
+This repository is licensed under the AGPL-3.0 License. See
+[`LICENSE`](LICENSE) for details.
+
+## Star History
 
 <a href="https://www.star-history.com/#xixu-me/Xget&Date">
  <picture>
@@ -3088,13 +3107,6 @@ Community and maintainer expectations are documented in:
    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=xixu-me/Xget&type=Date" />
  </picture>
 </a>
-
-## 📝 License
-
-Copyright &copy; Xi Xu.
-
-This repository is licensed under the AGPL-3.0 License - see the
-[`LICENSE`](LICENSE) file for details.
 
 ---
 

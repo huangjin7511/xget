@@ -19,6 +19,17 @@
 import { PLATFORMS } from './platform-catalog.js';
 
 /**
+ * Parses an environment value as a positive integer.
+ * @param {unknown} value Environment value.
+ * @param {number} fallback Fallback used for missing or invalid values.
+ * @returns {number} Parsed positive integer or fallback.
+ */
+function parsePositiveInteger(value, fallback) {
+  const parsed = parseInt(String(value), 10);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : fallback;
+}
+
+/**
  * Security-related configuration options for request validation and CORS.
  * @typedef {object} SecurityConfig
  * @property {string[]} ALLOWED_METHODS - List of allowed HTTP methods for incoming requests
@@ -149,7 +160,7 @@ export function createConfig(env = {}) {
     TIMEOUT_SECONDS: parseInt(String(env.TIMEOUT_SECONDS), 10) || 30,
     MAX_RETRIES: parseInt(String(env.MAX_RETRIES), 10) || 3,
     RETRY_DELAY_MS: parseInt(String(env.RETRY_DELAY_MS), 10) || 1000,
-    CACHE_DURATION: parseInt(String(env.CACHE_DURATION), 10) || 300, // 5 minutes
+    CACHE_DURATION: parsePositiveInteger(env.CACHE_DURATION, 300), // 5 minutes
     SECURITY: {
       ALLOWED_METHODS: allowedMethods.length ? allowedMethods : ['GET', 'HEAD'],
       ALLOWED_ORIGINS: allowedOrigins.length ? allowedOrigins : ['*'],

@@ -135,10 +135,24 @@ describe('Pipeline modules', () => {
           'https://example.com/pypi/files/packages/py3/r/requests/requests-2.31.0-py3-none-any.whl'
       },
       {
+        cacheTargetUrl:
+          'https://files.pythonhosted.org/packages/source/r/requests/requests-2.31.0.tar.gz',
+        effectivePath: '/pypi/files/packages/source/r/requests/requests-2.31.0.tar.gz',
+        platform: 'pypi-files',
+        requestUrl:
+          'https://example.com/pypi/files/packages/source/r/requests/requests-2.31.0.tar.gz'
+      },
+      {
         cacheTargetUrl: 'https://repo1.maven.org/maven2/org/example/demo/1.0.0/demo-1.0.0.jar',
         effectivePath: '/maven/maven2/org/example/demo/1.0.0/demo-1.0.0.jar',
         platform: 'maven',
         requestUrl: 'https://example.com/maven/maven2/org/example/demo/1.0.0/demo-1.0.0.jar'
+      },
+      {
+        cacheTargetUrl: 'https://github.com/user/repo/releases/download/v1.2.3/file.tar.gz',
+        effectivePath: '/gh/user/repo/releases/download/v1.2.3/file.tar.gz',
+        platform: 'gh',
+        requestUrl: 'https://example.com/gh/user/repo/releases/download/v1.2.3/file.tar.gz'
       }
     ];
 
@@ -171,6 +185,76 @@ describe('Pipeline modules', () => {
 
       expect(response.headers.get('Cache-Control')).toBe(
         'public, max-age=3600, s-maxage=86400, immutable'
+      );
+    }
+  });
+
+  it('does not treat mutable branch archives as immutable artifacts', async () => {
+    const archiveCases = [
+      {
+        cacheTargetUrl: 'https://github.com/user/repo/archive/refs/heads/main.zip',
+        effectivePath: '/gh/user/repo/archive/refs/heads/main.zip',
+        platform: 'gh',
+        requestUrl: 'https://example.com/gh/user/repo/archive/refs/heads/main.zip'
+      },
+      {
+        cacheTargetUrl:
+          'https://github.com/Homebrew/homebrew-cask/archive/refs/heads/master.tar.gz',
+        effectivePath: '/homebrew/homebrew-cask.git/archive/refs/heads/master.tar.gz',
+        platform: 'homebrew',
+        requestUrl:
+          'https://example.com/homebrew/homebrew-cask.git/archive/refs/heads/master.tar.gz'
+      },
+      {
+        cacheTargetUrl: 'https://github.com/user/repo/releases/download/latest/file.zip',
+        effectivePath: '/gh/user/repo/releases/download/latest/file.zip',
+        platform: 'gh',
+        requestUrl: 'https://example.com/gh/user/repo/releases/download/latest/file.zip'
+      },
+      {
+        cacheTargetUrl: 'https://files.pythonhosted.org/packages/source/p/pkg/latest.tar.gz',
+        effectivePath: '/pypi/files/packages/source/p/pkg/latest.tar.gz',
+        platform: 'pypi-files',
+        requestUrl: 'https://example.com/pypi/files/packages/source/p/pkg/latest.tar.gz'
+      },
+      {
+        cacheTargetUrl:
+          'https://files.pythonhosted.org/packages/py3/p/pkg/pkg-latest-py3-none-any.whl',
+        effectivePath: '/pypi/files/packages/py3/p/pkg/pkg-latest-py3-none-any.whl',
+        platform: 'pypi-files',
+        requestUrl: 'https://example.com/pypi/files/packages/py3/p/pkg/pkg-latest-py3-none-any.whl'
+      }
+    ];
+
+    for (const archiveCase of archiveCases) {
+      const request = new Request(archiveCase.requestUrl);
+      const requestContext = createRequestContext(request, {});
+
+      const response = await finalizeResponse({
+        cache: null,
+        cacheTargetUrl: archiveCase.cacheTargetUrl,
+        canUseCache: true,
+        config: CONFIG,
+        ctx: /** @type {ExecutionContext} */ ({ waitUntil() {}, passThroughOnException() {} }),
+        effectivePath: archiveCase.effectivePath,
+        hasSensitiveHeaders: false,
+        monitor: new PerformanceMonitor(),
+        platform: archiveCase.platform,
+        request,
+        requestContext,
+        response: new Response('archive-data', {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/octet-stream',
+            'Content-Length': '12'
+          }
+        }),
+        responseGeneratedLocally: false,
+        url: new URL(request.url)
+      });
+
+      expect(response.headers.get('Cache-Control')).toBe(
+        'public, max-age=0, s-maxage=300, must-revalidate'
       );
     }
   });

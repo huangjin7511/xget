@@ -21,7 +21,7 @@ import {
   rewriteTextResponse,
   shouldRewriteTextResponse
 } from '../utils/rewrite.js';
-import { resolveCachePolicy } from '../upstream/cache-policy.js';
+import { resolveCachePolicy, resolveResponseCachePolicy } from '../upstream/cache-policy.js';
 import { addSecurityHeaders, createErrorResponse } from '../utils/security.js';
 
 /**
@@ -143,7 +143,7 @@ async function finalizeSuccessfulResponse({
     headers.set('Content-Length', String(rewrittenContentLength));
   }
 
-  const cachePolicy = resolveCachePolicy({
+  const requestCachePolicy = resolveCachePolicy({
     canUseCache,
     config,
     effectivePath,
@@ -153,6 +153,10 @@ async function finalizeSuccessfulResponse({
     request,
     requestContext,
     targetUrl
+  });
+  const cachePolicy = resolveResponseCachePolicy({
+    basePolicy: requestCachePolicy,
+    response
   });
 
   if (!isGit && !isGitLFS && !isDocker && !isAI && !isHF) {

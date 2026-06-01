@@ -20,6 +20,24 @@ describe('Utility Functions', () => {
     ])('should parse CACHE_DURATION=%s as %i', (value, expected) => {
       expect(createConfig({ CACHE_DURATION: value }).CACHE_DURATION).toBe(expected);
     });
+
+    it('should reject invalid numeric runtime overrides', () => {
+      const config = createConfig({
+        MAX_PATH_LENGTH: '-1',
+        MAX_RETRIES: '-2',
+        RETRY_DELAY_MS: '-10',
+        TIMEOUT_SECONDS: '0'
+      });
+
+      expect(config.MAX_RETRIES).toBe(3);
+      expect(config.RETRY_DELAY_MS).toBe(1000);
+      expect(config.TIMEOUT_SECONDS).toBe(30);
+      expect(config.SECURITY.MAX_PATH_LENGTH).toBe(2048);
+    });
+
+    it('should allow zero retry delay for tests and low-latency deployments', () => {
+      expect(createConfig({ RETRY_DELAY_MS: '0' }).RETRY_DELAY_MS).toBe(0);
+    });
   });
 
   describe('isGitRequest', () => {

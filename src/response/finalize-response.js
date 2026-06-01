@@ -67,7 +67,12 @@ async function finalizeErrorResponse({ requestContext, response, responseGenerat
     return response;
   }
 
-  if (requestContext.isAI || requestContext.isHF || requestContext.isGit || requestContext.isGitLFS) {
+  if (
+    requestContext.isAI ||
+    requestContext.isHF ||
+    requestContext.isGit ||
+    requestContext.isGitLFS
+  ) {
     return response;
   }
 

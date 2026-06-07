@@ -26,6 +26,10 @@ import { PLATFORMS } from './platform-catalog.js';
  * @returns {number} Parsed integer or fallback.
  */
 function parseIntegerAtLeast(value, fallback, minimum = 1) {
+  if (typeof value !== 'number' && (typeof value !== 'string' || value.trim() === '')) {
+    return fallback;
+  }
+
   const parsed = Number(value);
   return Number.isInteger(parsed) && parsed >= minimum ? parsed : fallback;
 }

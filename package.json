@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "^0.16.15",
+    "@cloudflare/vitest-pool-workers": "^0.16.18",
     "@cloudflare/workers-types": "^4.20260329.1",
     "@commitlint/cli": "^21.0.2",
     "@commitlint/config-conventional": "^21.0.2",
@@ -17,7 +17,7 @@
     "simple-git-hooks": "^2.13.1",
     "typescript": "^6.0.3",
     "vitest": "^4.1.9",
-    "wrangler": "^4.76.0"
+    "wrangler": "^4.103.0"
   },
   "name": "xget",
   "license": "AGPL-3.0-or-later",

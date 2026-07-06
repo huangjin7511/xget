@@ -3,7 +3,7 @@
     "@cloudflare/vitest-pool-workers": "^0.18.0",
     "@cloudflare/workers-types": "^4.20260621.1",
     "@commitlint/cli": "^21.1.0",
-    "@commitlint/config-conventional": "^21.0.2",
+    "@commitlint/config-conventional": "^21.2.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.0.1",
     "@vitest/coverage-istanbul": "^4.1.10",
